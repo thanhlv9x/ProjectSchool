@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -7,59 +6,37 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Trang chủ</title>
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/style.css" />
 
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            box-sizing: padding-box;
-            box-sizing: padding-box;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-        }
-
-        #container {
-            text-align: center;
-        }
-
-        #bo-phan {
-            float: left;
-            width: 80%;
-        }
-
-        #number {
-            float: right;
-            width: 20%
-        }
-
-        .btnBP {
-            text-align: center;
-            display: block;
-            margin: 1em 10%;
-            height: 7em;
-            line-height: 7em;
-        }
-    </style>
-
 </head>
-
 <body>
     <div id="container">
-        <div id="bo-phan"></div>
-        <div id="number"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <div id="title">
+                            MÁY LẤY SỐ
+                            <span id="refresh" class="k-icon k-i-refresh" style="float: right; cursor: pointer" onclick="refresh()"></span>
+                            <span id="setting" class="k-icon k-i-setting" style="float: right; cursor: pointer" onclick="refresh()"></span>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th><div id="title-left">CHỌN BỘ PHẬN</div></th>
+                    <th><div id="title-right">SỐ</div></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 </body>
 </html>
@@ -69,17 +46,15 @@
         url: window.location.origin + "/Home/GetBP",
         type: "GET",
         dataType: "json",
+        async: false,
         success: function (result) {
             var js = JSON.parse(result);
             var str = "";
-            var str1 = "";
             $.each(js, function (key, val) {
-                console.log(val.MaBP + " - " + val.TenBP + " - " + val.NumberBP)
-                str += "<div id='" + val.MaBP + "' class='btnBP'>" + val.TenBP + "</div>";
-                str1 += "<div id='number" + val.MaBP + ">" + val.NumberBP + "</div>";
+                str += "<tr><td><div id='" + val.MaBP + "' class='btn'>" + val.TenBP + "</div></td>";
+                str += "<td><div class='number' id='number" + val.MaBP + "'>" + val.NumberBP + "</div></td></tr>";
             });
-            $("#bo-phan").html(str);
-            $("#number").html(str1);
+            $("tbody").html(str);
             createButtonBP();
         },
         error: function (xhr) {
@@ -89,15 +64,26 @@
 
     // Nút tên bộ phận: tạo phương thức click
     function onClickBtnBP(e) {
-        clickBP = false;
-        setTimeout(function () {
-            mabp = $(e.event.target).attr("id");
-        }, 500);
+        var mabp = $(e.event.target).attr("id");
+        var id = 'number' + mabp;
+        $.ajax({
+            url: window.location.origin + "/Home/GetSTT",
+            type: "GET",
+            dataType: "json",
+            data: { "_MaBP": mabp },
+            async: false,
+            success: function (result) {
+                $("#" + id).text(result);
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        });
     }
 
     // Nút tên bộ phận: tạo form nút
     function createButtonBP() {
-        $(".btnBP").each(function (index) {
+        $(".btn").each(function (index) {
             $(this).kendoButton({
                 click: onClickBtnBP
             });

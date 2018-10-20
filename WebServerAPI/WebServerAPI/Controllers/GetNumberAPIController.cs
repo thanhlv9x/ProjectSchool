@@ -13,6 +13,10 @@ namespace WebServerAPI.Controllers
     {
         HETHONGDANHGIAsaEntities db = new HETHONGDANHGIAsaEntities();
 
+        /// <summary>
+        /// Dịch vụ lấy thông tin bộ phận và số thứ tự các bộ phận
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Get()
         {
@@ -23,12 +27,13 @@ namespace WebServerAPI.Controllers
                 foreach (var item in listEF)
                 {
                     int mabp = Convert.ToInt32(item.MABP);
+                    DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                     Number NumberMD = new Number()
                     {
                         MaBP = mabp,
                         TenBP = item.TENBP
                     };
-                    var number = db.SOTOIDAs.Where(p => p.MABP == mabp)
+                    var number = db.SOTOIDAs.Where(p => p.MABP == mabp && p.TG >= dt)
                                             .OrderByDescending(p => p.STTTD)
                                             .FirstOrDefault();
                     if(number != null)
@@ -64,7 +69,7 @@ namespace WebServerAPI.Controllers
                                      .FirstOrDefault();
             if (stttdEF != null)
             {
-                DateTime now = new DateTime();
+                DateTime now = DateTime.Now;
                 int next = (int)stttdEF.STTTD + 1;
                 SOTOIDA ef = new SOTOIDA()
                 {
@@ -78,7 +83,7 @@ namespace WebServerAPI.Controllers
             }
             else
             {
-                DateTime now = new DateTime();
+                DateTime now = DateTime.Now;
                 int next = 1;
                 SOTOIDA ef = new SOTOIDA()
                 {

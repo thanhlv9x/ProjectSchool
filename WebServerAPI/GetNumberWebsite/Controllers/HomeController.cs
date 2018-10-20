@@ -21,11 +21,11 @@ namespace GetNumberWebsite.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://192.168.1.5:8888/");
+                client.BaseAddress = new Uri("http://localhost:49930/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync("api/CallNumberAPI/").Result;
+                HttpResponseMessage response = client.GetAsync("api/GetNumberAPI/").Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -42,15 +42,15 @@ namespace GetNumberWebsite.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://192.168.1.5:8888/");
+                client.BaseAddress = new Uri("http://localhost:49930/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_MaBP=" + _MaBP).Result;
+                HttpResponseMessage response = client.GetAsync("api/GetNumberAPI/?_MaBP=" + _MaBP).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Json(response.Content, JsonRequestBehavior.AllowGet);
+                    return Json(response.Content.ReadAsStringAsync().Result, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
