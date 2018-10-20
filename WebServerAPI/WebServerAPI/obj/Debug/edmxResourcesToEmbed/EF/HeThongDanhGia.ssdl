@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HETHONGDANHGIAsaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BOPHAN">
+    <Key>
+      <PropertyRef Name="MABP" />
+    </Key>
+    <Property Name="MABP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENBP" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="CANBO">
+    <Key>
+      <PropertyRef Name="MACB" />
+    </Key>
+    <Property Name="MACB" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HOTEN" Type="nvarchar" MaxLength="100" />
+    <Property Name="MABP" Type="int" />
+    <Property Name="HINHANH" Type="ntext" />
+    <Property Name="ID" Type="nvarchar" MaxLength="100" />
+    <Property Name="PW" Type="nvarchar" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="GOPY">
+    <Key>
+      <PropertyRef Name="MAGY" />
+    </Key>
+    <Property Name="MAGY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NOIDUNG" Type="nvarchar(max)" />
+    <Property Name="MADG" Type="int" />
+  </EntityType>
+  <EntityType Name="KETQUADANHGIA">
+    <Key>
+      <PropertyRef Name="MADG" />
+    </Key>
+    <Property Name="MADG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MUCDO" Type="int" />
+    <Property Name="TG" Type="datetime" />
+    <Property Name="MASTT" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MUCDODANHGIA">
+    <Key>
+      <PropertyRef Name="MUCDO" />
+    </Key>
+    <Property Name="MUCDO" Type="int" Nullable="false" />
+    <Property Name="LOAI" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SOTHUTU">
+    <Key>
+      <PropertyRef Name="MASTT" />
+    </Key>
+    <Property Name="MASTT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="STT" Type="int" />
+    <Property Name="MACB" Type="int" />
+    <Property Name="TG" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SOTOIDA">
+    <Key>
+      <PropertyRef Name="MASTD" />
+    </Key>
+    <Property Name="MASTD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="STTTD" Type="int" />
+    <Property Name="MABP" Type="int" />
+    <Property Name="TG" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TAIKHOANADMIN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PW" Type="varchar" MaxLength="32" />
+  </EntityType>
+  <Association Name="FK_CANBO_BOPHAN">
+    <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
+    <End Role="CANBO" Type="Self.CANBO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOPHAN">
+        <PropertyRef Name="MABP" />
+      </Principal>
+      <Dependent Role="CANBO">
+        <PropertyRef Name="MABP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GOPY_KETQUADANHGIA">
+    <End Role="KETQUADANHGIA" Type="Self.KETQUADANHGIA" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="GOPY" Type="Self.GOPY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KETQUADANHGIA">
+        <PropertyRef Name="MADG" />
+      </Principal>
+      <Dependent Role="GOPY">
+        <PropertyRef Name="MADG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KETQUADANHGIA_MUCDODANHGIA">
+    <End Role="MUCDODANHGIA" Type="Self.MUCDODANHGIA" Multiplicity="0..1" />
+    <End Role="KETQUADANHGIA" Type="Self.KETQUADANHGIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MUCDODANHGIA">
+        <PropertyRef Name="MUCDO" />
+      </Principal>
+      <Dependent Role="KETQUADANHGIA">
+        <PropertyRef Name="MUCDO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KETQUADANHGIA_SOTHUTU">
+    <End Role="SOTHUTU" Type="Self.SOTHUTU" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="KETQUADANHGIA" Type="Self.KETQUADANHGIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOTHUTU">
+        <PropertyRef Name="MASTT" />
+      </Principal>
+      <Dependent Role="KETQUADANHGIA">
+        <PropertyRef Name="MASTT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOTHUTU_CANBO">
+    <End Role="CANBO" Type="Self.CANBO" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SOTHUTU" Type="Self.SOTHUTU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CANBO">
+        <PropertyRef Name="MACB" />
+      </Principal>
+      <Dependent Role="SOTHUTU">
+        <PropertyRef Name="MACB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HETHONGDANHGIAsaModelStoreContainer">
+    <EntitySet Name="BOPHAN" EntityType="Self.BOPHAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CANBO" EntityType="Self.CANBO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GOPY" EntityType="Self.GOPY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KETQUADANHGIA" EntityType="Self.KETQUADANHGIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MUCDODANHGIA" EntityType="Self.MUCDODANHGIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOTHUTU" EntityType="Self.SOTHUTU" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOTOIDA" EntityType="Self.SOTOIDA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAIKHOANADMIN" EntityType="Self.TAIKHOANADMIN" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CANBO_BOPHAN" Association="Self.FK_CANBO_BOPHAN">
+      <End Role="BOPHAN" EntitySet="BOPHAN" />
+      <End Role="CANBO" EntitySet="CANBO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GOPY_KETQUADANHGIA" Association="Self.FK_GOPY_KETQUADANHGIA">
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIA" />
+      <End Role="GOPY" EntitySet="GOPY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KETQUADANHGIA_MUCDODANHGIA" Association="Self.FK_KETQUADANHGIA_MUCDODANHGIA">
+      <End Role="MUCDODANHGIA" EntitySet="MUCDODANHGIA" />
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KETQUADANHGIA_SOTHUTU" Association="Self.FK_KETQUADANHGIA_SOTHUTU">
+      <End Role="SOTHUTU" EntitySet="SOTHUTU" />
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOTHUTU_CANBO" Association="Self.FK_SOTHUTU_CANBO">
+      <End Role="CANBO" EntitySet="CANBO" />
+      <End Role="SOTHUTU" EntitySet="SOTHUTU" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

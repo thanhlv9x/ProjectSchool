@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HETHONGDANHGIAsaModelStoreContainer" CdmEntityContainer="HETHONGDANHGIAsaEntities">
+    <EntitySetMapping Name="BOPHANs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.BOPHAN">
+        <MappingFragment StoreEntitySet="BOPHAN">
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
+          <ScalarProperty Name="TENBP" ColumnName="TENBP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MUCDODANHGIAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MUCDODANHGIA">
+        <MappingFragment StoreEntitySet="MUCDODANHGIA">
+          <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
+          <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOTHUTUs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTHUTU">
+        <MappingFragment StoreEntitySet="SOTHUTU">
+          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
+          <ScalarProperty Name="STT" ColumnName="STT" />
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+          <ScalarProperty Name="TG" ColumnName="TG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAIKHOANADMINs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.TAIKHOANADMIN">
+        <MappingFragment StoreEntitySet="TAIKHOANADMIN">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PW" ColumnName="PW" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CANBOes">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.CANBO">
+        <MappingFragment StoreEntitySet="CANBO">
+          <ScalarProperty Name="PW" ColumnName="PW" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KETQUADANHGIAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.KETQUADANHGIA">
+        <MappingFragment StoreEntitySet="KETQUADANHGIA">
+          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
+          <ScalarProperty Name="TG" ColumnName="TG" />
+          <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
+          <ScalarProperty Name="MADG" ColumnName="MADG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GOPies">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.GOPY">
+        <MappingFragment StoreEntitySet="GOPY">
+          <ScalarProperty Name="MADG" ColumnName="MADG" />
+          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+          <ScalarProperty Name="MAGY" ColumnName="MAGY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOTOIDAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTOIDA">
+        <MappingFragment StoreEntitySet="SOTOIDA">
+          <ScalarProperty Name="TG" ColumnName="TG" />
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
+          <ScalarProperty Name="STTTD" ColumnName="STTTD" />
+          <ScalarProperty Name="MASTD" ColumnName="MASTD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

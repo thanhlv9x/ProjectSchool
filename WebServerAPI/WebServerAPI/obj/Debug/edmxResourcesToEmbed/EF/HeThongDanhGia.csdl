@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HETHONGDANHGIAsaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BOPHAN">
+    <Key>
+      <PropertyRef Name="MABP" />
+    </Key>
+    <Property Name="MABP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENBP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CANBOes" Relationship="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" FromRole="BOPHAN" ToRole="CANBO" />
+  </EntityType>
+  <EntityType Name="MUCDODANHGIA">
+    <Key>
+      <PropertyRef Name="MUCDO" />
+    </Key>
+    <Property Name="MUCDO" Type="Int32" Nullable="false" />
+    <Property Name="LOAI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="KETQUADANHGIAs" Relationship="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_MUCDODANHGIA" FromRole="MUCDODANHGIA" ToRole="KETQUADANHGIA" />
+  </EntityType>
+  <EntityType Name="SOTHUTU">
+    <Key>
+      <PropertyRef Name="MASTT" />
+    </Key>
+    <Property Name="MASTT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STT" Type="Int32" />
+    <Property Name="MACB" Type="Int32" />
+    <Property Name="TG" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CANBO" Relationship="HETHONGDANHGIAsaModel.FK_SOTHUTU_CANBO" FromRole="SOTHUTU" ToRole="CANBO" />
+    <NavigationProperty Name="KETQUADANHGIAs" Relationship="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_SOTHUTU" FromRole="SOTHUTU" ToRole="KETQUADANHGIA" />
+  </EntityType>
+  <EntityType Name="TAIKHOANADMIN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PW" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="HETHONGDANHGIAsaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BOPHANs" EntityType="Self.BOPHAN" />
+    <EntitySet Name="MUCDODANHGIAs" EntityType="Self.MUCDODANHGIA" />
+    <EntitySet Name="SOTHUTUs" EntityType="Self.SOTHUTU" />
+    <EntitySet Name="TAIKHOANADMINs" EntityType="Self.TAIKHOANADMIN" />
+    <EntitySet Name="CANBOes" EntityType="HETHONGDANHGIAsaModel.CANBO" />
+    <AssociationSet Name="FK_CANBO_BOPHAN" Association="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN">
+      <End Role="BOPHAN" EntitySet="BOPHANs" />
+      <End Role="CANBO" EntitySet="CANBOes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOTHUTU_CANBO" Association="HETHONGDANHGIAsaModel.FK_SOTHUTU_CANBO">
+      <End Role="CANBO" EntitySet="CANBOes" />
+      <End Role="SOTHUTU" EntitySet="SOTHUTUs" />
+    </AssociationSet>
+    <EntitySet Name="KETQUADANHGIAs" EntityType="HETHONGDANHGIAsaModel.KETQUADANHGIA" />
+    <AssociationSet Name="FK_KETQUADANHGIA_MUCDODANHGIA" Association="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_MUCDODANHGIA">
+      <End Role="MUCDODANHGIA" EntitySet="MUCDODANHGIAs" />
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KETQUADANHGIA_SOTHUTU" Association="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_SOTHUTU">
+      <End Role="SOTHUTU" EntitySet="SOTHUTUs" />
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIAs" />
+    </AssociationSet>
+    <EntitySet Name="GOPies" EntityType="HETHONGDANHGIAsaModel.GOPY" />
+    <AssociationSet Name="FK_GOPY_KETQUADANHGIA" Association="HETHONGDANHGIAsaModel.FK_GOPY_KETQUADANHGIA">
+      <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIAs" />
+      <End Role="GOPY" EntitySet="GOPies" />
+    </AssociationSet>
+    <EntitySet Name="SOTOIDAs" EntityType="HETHONGDANHGIAsaModel.SOTOIDA" />
+  </EntityContainer>
+  <EntityType Name="CANBO">
+    <Key>
+      <PropertyRef Name="MACB" />
+    </Key>
+    <Property Name="MACB" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HOTEN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MABP" Type="Int32" />
+    <Property Name="HINHANH" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PW" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BOPHAN" Relationship="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" FromRole="CANBO" ToRole="BOPHAN" />
+    <NavigationProperty Name="SOTHUTUs" Relationship="HETHONGDANHGIAsaModel.FK_SOTHUTU_CANBO" FromRole="CANBO" ToRole="SOTHUTU" />
+  </EntityType>
+  <Association Name="FK_CANBO_BOPHAN">
+    <End Type="HETHONGDANHGIAsaModel.BOPHAN" Role="BOPHAN" Multiplicity="0..1" />
+    <End Type="HETHONGDANHGIAsaModel.CANBO" Role="CANBO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOPHAN">
+        <PropertyRef Name="MABP" />
+      </Principal>
+      <Dependent Role="CANBO">
+        <PropertyRef Name="MABP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOTHUTU_CANBO">
+    <End Type="HETHONGDANHGIAsaModel.CANBO" Role="CANBO" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HETHONGDANHGIAsaModel.SOTHUTU" Role="SOTHUTU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CANBO">
+        <PropertyRef Name="MACB" />
+      </Principal>
+      <Dependent Role="SOTHUTU">
+        <PropertyRef Name="MACB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="KETQUADANHGIA">
+    <Key>
+      <PropertyRef Name="MADG" />
+    </Key>
+    <Property Name="MADG" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MUCDO" Type="Int32" />
+    <Property Name="TG" Type="DateTime" Precision="3" />
+    <Property Name="MASTT" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MUCDODANHGIA" Relationship="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_MUCDODANHGIA" FromRole="KETQUADANHGIA" ToRole="MUCDODANHGIA" />
+    <NavigationProperty Name="SOTHUTU" Relationship="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_SOTHUTU" FromRole="KETQUADANHGIA" ToRole="SOTHUTU" />
+    <NavigationProperty Name="GOPies" Relationship="HETHONGDANHGIAsaModel.FK_GOPY_KETQUADANHGIA" FromRole="KETQUADANHGIA" ToRole="GOPY" />
+  </EntityType>
+  <Association Name="FK_KETQUADANHGIA_MUCDODANHGIA">
+    <End Type="HETHONGDANHGIAsaModel.MUCDODANHGIA" Role="MUCDODANHGIA" Multiplicity="0..1" />
+    <End Type="HETHONGDANHGIAsaModel.KETQUADANHGIA" Role="KETQUADANHGIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MUCDODANHGIA">
+        <PropertyRef Name="MUCDO" />
+      </Principal>
+      <Dependent Role="KETQUADANHGIA">
+        <PropertyRef Name="MUCDO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KETQUADANHGIA_SOTHUTU">
+    <End Type="HETHONGDANHGIAsaModel.SOTHUTU" Role="SOTHUTU" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HETHONGDANHGIAsaModel.KETQUADANHGIA" Role="KETQUADANHGIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOTHUTU">
+        <PropertyRef Name="MASTT" />
+      </Principal>
+      <Dependent Role="KETQUADANHGIA">
+        <PropertyRef Name="MASTT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="GOPY">
+    <Key>
+      <PropertyRef Name="MAGY" />
+    </Key>
+    <Property Name="MAGY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOIDUNG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MADG" Type="Int32" />
+    <NavigationProperty Name="KETQUADANHGIA" Relationship="HETHONGDANHGIAsaModel.FK_GOPY_KETQUADANHGIA" FromRole="GOPY" ToRole="KETQUADANHGIA" />
+  </EntityType>
+  <Association Name="FK_GOPY_KETQUADANHGIA">
+    <End Type="HETHONGDANHGIAsaModel.KETQUADANHGIA" Role="KETQUADANHGIA" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HETHONGDANHGIAsaModel.GOPY" Role="GOPY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KETQUADANHGIA">
+        <PropertyRef Name="MADG" />
+      </Principal>
+      <Dependent Role="GOPY">
+        <PropertyRef Name="MADG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SOTOIDA">
+    <Key>
+      <PropertyRef Name="MASTD" />
+    </Key>
+    <Property Name="MASTD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STTTD" Type="Int32" />
+    <Property Name="MABP" Type="Int32" />
+    <Property Name="TG" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>
