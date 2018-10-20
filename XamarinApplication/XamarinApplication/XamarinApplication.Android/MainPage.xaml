@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinApplication"
+             x:Class="XamarinApplication.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Thông tin cán bộ" Grid.Row="0" Grid.ColumnSpan="2"></Label>
+                <Image x:Name="pbImage" Source="Resources/user.png" Grid.Column="0" Grid.RowSpan="3"></Image>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Mã số: " Grid.Column="0"></Label>
+                    <Label x:Name="lbID" Text="123" Grid.Column="1"></Label>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Họ tên: " Grid.Column="0"></Label>
+                    <Label x:Name="lbName" Text="Nguyễn Văn A" Grid.Column="1"></Label>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Bộ phận: " Grid.Column="0"></Label>
+                    <Label x:Name="lbBP" Text="Lĩnh vực tài nguyên và môi trường" Grid.Column="1"></Label>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Text="Số đang gọi" Grid.Row="0"></Label>
+                <Label x:Name="lbNumber" Text="0" Grid.Row="1"></Label>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Text="Xin vui lòng đánh giá" Grid.Row="0" Grid.ColumnSpan="4"></Label>
+            <Label Text="Ô 3" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Text="Ô 4" Grid.Row="1" Grid.Column="1"></Label>
+            <Label Text="Ô 5" Grid.Row="1"  Grid.Column="2"></Label>
+            <Label Text="Ô 6" Grid.Row="1" Grid.Column="3"></Label>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Text="Xin vui lòng góp ý (Không bắt buộc)" Grid.Row="0" Grid.ColumnSpan="2"></Label>
+            <Label Text="Ô 7" Grid.Row="1" Grid.Column="0"></Label>
+            <Label Text="Ô 8" Grid.Row="1"  Grid.Column="1"></Label>
+            <Label Text="Ô 9" Grid.Row="2"  Grid.Column="0"></Label>
+            <Label Text="Ô 10" Grid.Row="2"  Grid.Column="1"></Label>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Text="Ô 11" Grid.Column="0"></Label>
+            <Label Text="Ô 12" Grid.Column="1"></Label>
+            <Label Text="Ô 12" Grid.Column="2"></Label>
+        </Grid>
+    </Grid>
+    <!-- Place new controls here -->
+    <!--
+        <Label Text="Welcome to Xamarin.Forms!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />-->
+</ContentPage>

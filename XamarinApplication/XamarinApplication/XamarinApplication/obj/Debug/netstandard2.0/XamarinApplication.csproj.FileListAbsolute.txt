@@ -1,0 +1,19 @@
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\bin\Debug\netstandard2.0\XamarinApplication.deps.json
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\bin\Debug\netstandard2.0\XamarinApplication.dll
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\bin\Debug\netstandard2.0\XamarinApplication.pdb
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.csprojAssemblyReference.cache
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\App.xaml.g.cs
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.csproj.CoreCompileInputs.cache
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.AssemblyInfoInputs.cache
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.AssemblyInfo.cs
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamlC.stamp
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.dll
+E:\Luận văn\Source\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.pdb
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\App.xaml.g.cs
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.csproj.CoreCompileInputs.cache
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.AssemblyInfoInputs.cache
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.AssemblyInfo.cs
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.dll
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication\obj\Debug\netstandard2.0\XamarinApplication.pdb

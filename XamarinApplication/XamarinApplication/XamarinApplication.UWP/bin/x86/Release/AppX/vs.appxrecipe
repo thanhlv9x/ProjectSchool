@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>DESKTOP-NHC7EBD</Machine>
+    <WindowsUser>luuvi</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Release|x86</SolutionConfiguration>
+    <PackageArchitecture>x86</PackageArchitecture>
+    <PackageIdentityName>ec0cc741-fd3e-485c-81be-68815c480690</PackageIdentityName>
+    <PackageIdentityPublisher>CN=f64e31d1-1652-46df-ada2-b17e300dca95</PackageIdentityPublisher>
+    <IntermediateOutputPath>E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\obj\x86\Release\</IntermediateOutputPath>
+    <RemoteDeploymentType>
+    </RemoteDeploymentType>
+    <PackageRegistrationPath>
+    </PackageRegistrationPath>
+    <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
+    <LayoutDir>E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\AppX</LayoutDir>
+    <RegisteredManifestChecksum>FBD1382F4ACFEF937886C2706C1D7F7DB25827B55FD5CB052221C116215B7516</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>823da26e-dff1-4c3e-8733-d7f1e7d2f4c6_1.0.0.0_x86__kp8n5s4vdae9w</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>823da26e-dff1-4c3e-8733-d7f1e7d2f4c6_kp8n5s4vdae9w!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>823da26e-dff1-4c3e-8733-d7f1e7d2f4c6</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=f64e31d1-1652-46df-ada2-b17e300dca95</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-18T14:27:55.830</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\LargeTile.scale-100.png">
+      <PackagePath>Assets\LargeTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.403</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\LargeTile.scale-200.png">
+      <PackagePath>Assets\LargeTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.407</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\LargeTile.scale-400.png">
+      <PackagePath>Assets\LargeTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.416</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SmallTile.scale-100.png">
+      <PackagePath>Assets\SmallTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.481</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SmallTile.scale-200.png">
+      <PackagePath>Assets\SmallTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.484</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SmallTile.scale-400.png">
+      <PackagePath>Assets\SmallTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.492</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.555</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SplashScreen.scale-200.png">
+      <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.559</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\SplashScreen.scale-400.png">
+      <PackagePath>Assets\SplashScreen.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.566</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square150x150Logo.scale-100.png">
+      <PackagePath>Assets\Square150x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.628</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square150x150Logo.scale-200.png">
+      <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.631</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square150x150Logo.scale-400.png">
+      <PackagePath>Assets\Square150x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.637</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.altform-unplated_targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.700</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.altform-unplated_targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.707</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.altform-unplated_targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.711</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.scale-100.png">
+      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.770</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.scale-200.png">
+      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.774</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.scale-400.png">
+      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.778</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.789</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Square44x44Logo.targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.792</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.852</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\StoreLogo.scale-200.png">
+      <PackagePath>Assets\StoreLogo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.857</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\StoreLogo.scale-400.png">
+      <PackagePath>Assets\StoreLogo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.860</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Wide310x150Logo.scale-100.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.865</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Wide310x150Logo.scale-200.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.869</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Assets\Wide310x150Logo.scale-400.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-15T07:07:59.875</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\clrcompression.dll">
+      <PackagePath>clrcompression.dll</PackagePath>
+      <Modified>2018-05-16T10:28:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-10-18T14:22:48.415</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\AutoSuggestStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\AutoSuggestStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\FormsCommandBarStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\FormsCommandBarStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\FormsEmbeddedPageWrapper.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\FormsEmbeddedPageWrapper.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\FormsFlyout.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\FormsFlyout.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\FormsProgressBarStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\FormsProgressBarStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\FormsTextBoxStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\FormsTextBoxStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\MasterDetailControlStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\MasterDetailControlStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\PageControlStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\PageControlStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\Resources.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\Resources.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\SliderStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\SliderStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\Xamarin.Forms.Platform.UAP\TabbedPageStyle.xbf">
+      <PackagePath>Xamarin.Forms.Platform.UAP\TabbedPageStyle.xbf</PackagePath>
+      <Modified>2018-07-26T12:16:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\XamarinApplication.UWP.dll">
+      <PackagePath>XamarinApplication.UWP.dll</PackagePath>
+      <Modified>2018-10-18T14:27:53.064</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\XamarinApplication.UWP.exe">
+      <PackagePath>XamarinApplication.UWP.exe</PackagePath>
+      <Modified>2018-10-18T14:27:55.308</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="E:\App%28C#%29\XamarinApplication\XamarinApplication\XamarinApplication.UWP\bin\x86\Release\ilc\XamarinApplication.UWP.pdb">
+      <PackagePath>XamarinApplication.UWP.pdb</PackagePath>
+      <Modified>2018-10-18T14:27:55.118</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx">
+      <Name>Microsoft.NET.Native.Framework.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Framework.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx">
+      <Name>Microsoft.NET.Native.Framework.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Framework.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx">
+      <Name>Microsoft.NET.Native.Framework.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Framework.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.native.sharedlibrary\2.1.8\build\..\tools\SharedLibrary\ret\Native\Microsoft.NET.Native.Framework.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\x86\Microsoft.NET.Native.Runtime.2.1.appx">
+      <Name>Microsoft.NET.Native.Runtime.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Runtime.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\x86\Microsoft.NET.Native.Runtime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\x64\Microsoft.NET.Native.Runtime.2.1.appx">
+      <Name>Microsoft.NET.Native.Runtime.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Runtime.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\x64\Microsoft.NET.Native.Runtime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\arm\Microsoft.NET.Native.Runtime.2.1.appx">
+      <Name>Microsoft.NET.Native.Runtime.2.1</Name>
+      <Version>2.1.26424.0</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.Native.Runtime.2.1, MinVersion = 2.1.26424.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-arm.microsoft.net.native.compiler\2.1.8\build\..\tools\Runtime\arm\Microsoft.NET.Native.Runtime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00</Name>
+      <Version>14.0.25426.0</Version>
+      <Architecture>ARM</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00, MinVersion = 14.0.25426.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Retail\ARM\Microsoft.VCLibs.ARM.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00</Name>
+      <Version>14.0.25426.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00, MinVersion = 14.0.25426.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Retail\x64\Microsoft.VCLibs.x64.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00</Name>
+      <Version>14.0.25426.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00, MinVersion = 14.0.25426.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Retail\x86\Microsoft.VCLibs.x86.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>

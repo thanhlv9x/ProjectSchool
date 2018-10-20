@@ -1,0 +1,16 @@
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\DesktopApplication.exe.config
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\DesktopApplication.exe
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\DesktopApplication.pdb
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\Newtonsoft.Json.dll
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\System.Net.Http.Formatting.dll
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\Newtonsoft.Json.xml
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\bin\Release\System.Net.Http.Formatting.xml
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.FormLogin.resources
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.FormMain.resources
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.Properties.Resources.resources
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.csproj.GenerateResource.cache
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.csproj.CoreCompileInputs.cache
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.csproj.CopyComplete
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.exe
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.pdb
+E:\Luận văn\Source\DesktopApplication\DesktopApplication\obj\Release\DesktopApplication.csprojAssemblyReference.cache

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinApplication"
+             x:Class="XamarinApplication.MainPage"
+             Disappearing="ContentPage_Disappearing">
+    <Grid>
+        <Grid x:Name="info" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Vui lòng đợi gọi số" FontSize="Large" FontAttributes="Bold"></Label>
+        </Grid>
+        <Grid x:Name="thanks" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Cảm ơn bạn đã đánh giá" FontSize="Large" FontAttributes="Bold"></Label>
+        </Grid>
+        <Grid x:Name="error" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+            <StackLayout>
+                <Label Text="Mất kết nối. Vui lòng kiểm tra lại kết nối !" FontSize="Large" FontAttributes="Bold"></Label>
+                <Button Text="Kết nối lại" Clicked="Button_Clicked" FontSize="Large" FontAttributes="Bold"></Button>
+                <Label x:Name="lbIpaddress" Text="IP hiện tại: "></Label>
+                <Entry x:Name="txtIpaddress" Text=""></Entry>
+                <Label x:Name="lbPort" Text="Cổng hiện tại: "></Label>
+                <Entry x:Name="txtPort" Text=""></Entry>
+                <Button x:Name="btnChangeIP" Text="Xác nhận" Clicked="btnChangeIP_Clicked"></Button>
+            </StackLayout>
+        </Grid>
+        <Grid x:Name="skip" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center">
+            <Label Text="Số thứ tự này đã được bỏ qua" FontSize="Large" FontAttributes="Bold"></Label>
+        </Grid>
+        <Grid x:Name="main" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="#aaff56">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Thông tin cán bộ" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" TextColor="Black"></Label>
+                    <Image x:Name="pbImage" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Source="user.png"></Image>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Mã số: " FontAttributes="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="lbID" Text="123" Grid.Column="1"></Label>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Họ tên: " FontAttributes="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="lbName" Text="Nguyễn Văn A" Grid.Column="1"></Label>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Bộ phận: " FontAttributes="Bold" Grid.Column="0"></Label>
+                        <Label x:Name="lbBP" Text="Lĩnh vực tài nguyên và môi trường" Grid.Column="1"></Label>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="3*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="lbNumberQuay" Grid.Row="0" HorizontalTextAlignment="Center" Text="Quầy số " TextColor="Black"></Label>
+                    <Label Text="Số đang gọi" Grid.Row="1" HorizontalTextAlignment="Center"></Label>
+                    <Label x:Name="lbNumber" Text="0" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Large"></Label>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Xin vui lòng đánh giá" Grid.Row="0" Grid.ColumnSpan="4" HorizontalTextAlignment="Center" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Grid x:Name="gridRHL" Grid.Row="1" Grid.Column="0" Margin="30, 0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_RHL" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image x:Name="pbRHL" Grid.Row="0" Source="happy.png"></Image>
+                    <Label x:Name="lbRHL" Text="Rất hài lòng" Grid.Row="1" HorizontalTextAlignment="Center"></Label>
+                </Grid>
+                <Grid x:Name="gridHL" Grid.Row="1" Grid.Column="1" Margin="30, 0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_HL" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image x:Name="pbHL" Grid.Row="0" Source="love.png"></Image>
+                    <Label x:Name="lbHL" Text="Hài lòng" Grid.Row="1" HorizontalTextAlignment="Center"></Label>
+                </Grid>
+                <Grid x:Name="gridBT" Grid.Row="1" Grid.Column="2" Margin="30, 0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_BT" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image x:Name="pbBT" Grid.Row="0" Source="smile.png"></Image>
+                    <Label x:Name="lbBT" Text="Bình thường" Grid.Row="1" HorizontalTextAlignment="Center"></Label>
+                </Grid>
+                <Grid x:Name="gridKHL" Grid.Row="1" Grid.Column="3" Margin="30, 0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_KHL" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image x:Name="pbKHL" Grid.Row="0" Source="angry.png"></Image>
+                    <Label x:Name="lbKHL" Text="Không hài lòng" Grid.Row="1" HorizontalTextAlignment="Center"></Label>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lbTitleGopY" Text="Xin vui lòng góp ý (Không bắt buộc)" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Grid x:Name="gridThaiDo" Grid.Row="1"  Grid.Column="0" Margin="10, 0" VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_ThaiDo" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Label x:Name="lbThaiDo" Text="Thái độ tiếp dân tốt" Margin="20, 0"></Label>
+                </Grid>
+                <Grid x:Name="gridThoiGian" Grid.Row="1"  Grid.Column="1" Margin="10, 0" VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_ThoiGian" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Label x:Name="lbThoiGian" Text="Thời gian giải quyết nhanh"  Margin="20, 0" ></Label>
+                </Grid>
+                <Grid x:Name="gridGiaiQuyet" Grid.Row="2"  Grid.Column="0" Margin="10, 0" VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_GiaiQuyet" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Label x:Name="lbGiaiQuyet" Text="Quy trình giải quyết thụ tục rõ ràng" Margin="20, 0"></Label>
+                </Grid>
+                <Grid x:Name="gridKetQua" Grid.Row="2" Grid.Column="1" Margin="10, 0" VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="click_KetQua" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
+                    <Label x:Name="lbKetQua" Text="Kết quả thỏa mãn mong muốn" Margin="20, 0"></Label>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Text="Góp ý khác" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+                <Editor x:Name="txtGopY" Grid.Column="1" Text=""></Editor>
+                <Button x:Name="btnSend" Text="Gửi kết quả" Grid.Column="2" Clicked="btnSend_Clicked"></Button>
+            </Grid>
+        </Grid>
+        <!-- Place new controls here -->
+        <!--
+        <Label Text="Welcome to Xamarin.Forms!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />-->
+    </Grid>
+</ContentPage>

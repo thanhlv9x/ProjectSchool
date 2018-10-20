@@ -1,0 +1,1 @@
+E:\App(C#)\XamarinApplication\XamarinApplication\XamarinApplication.Android\obj\Debug\MonoAndroid81\XamarinApplication.Android.csprojAssemblyReference.cache
