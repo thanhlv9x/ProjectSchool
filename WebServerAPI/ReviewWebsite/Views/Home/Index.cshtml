@@ -1,0 +1,150 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div class="header"><div>MÁY ĐÁNH GIÁ</div></div>
+        <div class="body">
+            <div id="left-title"><div>THÔNG TIN CÁN BỘ</div></div>
+            <div id="right-title"><div></div></div>
+            <div id="info">
+                <div id="image"><input type="image" src="~/user.png" /></div>
+                <div>
+                    <div id="id-group">
+                        <div>Mã số: </div>
+                        <div id="id">123</div>
+                    </div>
+                    <div id="name-group">
+                        <div>Họ tên: </div>
+                        <div id="name">Nguyễn Văn A</div>
+                    </div>
+                    <div id="bo-phan-group">
+                        <div>Bộ phận: </div>
+                        <div id="bo-phan">Lĩnh vực tài nguyên và đất đai</div>
+                    </div>
+                </div>
+            </div>
+            <div id="number">
+                <div id="number-title">SỐ ĐANG GỌI</div>
+                <div id="show-number">100</div>
+            </div>
+            <div id="review-group">
+                <div>Xin vui lòng đánh giá</div>
+                <div id="muc-do">
+                    <div id="RHL">
+                        <input type="image" src="~/happy.png" />
+                        <div id="RHL-title">Rất hài lòng</div>
+                    </div>
+                    <div id="HL">
+                        <input type="image" src="~/smile.png" />
+                        <div id="HL-title">Hài lòng</div>
+                    </div>
+                    <div id="BT">
+                        <input type="image" src="~/love.png"/>
+                        <div id="BT-title">Bình thường</div>
+                    </div>
+                    <div id="KHL">
+                        <input type="image" src="~/angry.png"/>
+                        <div id="KHL-title">Không hài lòng</div>
+                    </div>
+                </div>
+            </div>
+            <div id="feedback-group">
+                <div>Xin vui lòng chọn góp ý</div>
+                <div id="feedback">
+                    <div id="fbRHL">
+                        <input type="checkbox" value="Rất hài lòng" />
+                        <span>Rất hài lòng</span>
+                    </div>
+                    <div id="fbHL">
+                        <input type="checkbox" value="Hài lòng" />
+                        <span>Hài lòng</span>
+                    </div>
+                    <div id="fbBT">
+                        <input type="checkbox" value="Bình thường" />
+                        <span>Bình thường</span>
+                    </div>
+                    <div id="fbKHL">
+                        <input type="checkbox" value="Không hài lòng" />
+                        <span>Không hài lòng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div id="footer-title">Góp ý khác</div>
+            <div id="area-gop-y"><textarea id="txtArea"></textarea></div>
+            <div id="btn-send"><div><button>Gửi</button></div></div>
+        </div>
+        <table border="1" style="width: 100%">
+            <thead style="width: 100%">
+                <tr>
+                    <td colspan="4"><div class="large-title"></div>MÁY ĐÁNH GIÁ</td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="width: 80%"><div class="medium-title">THÔNG TIN CÁN BỘ</div></td>
+                    <td style="width: 20%"><div class="medium-title" id="numberQuay">QUẦY</div></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="3" width="30%"></td>
+                    <td><div class="small-title">Mã số</div></td>
+                    <td><div id="id">1</div></td>
+                    <td><div class="medium-title">SỐ ĐANG GỌI</div></td>
+                </tr>
+                <tr>
+                    <td><div class="small-title">Họ tên</div></td>
+                    <td><div id="name">Nguyễn Văn A</div></td>
+                    <td rowspan="2">0</td>
+                </tr>
+                <tr>
+                    <td><div class="small-title">Bộ phận</div></td>
+                    <td><div id="bo-phan">Lĩnh vực tài nguyên và đất đai</div></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><div class="medium-title">Xin vui lòng đánh giá</div></td>
+                </tr>
+                <tr>
+                    <td><div class="danh-gia">Rất hài lòng</div></td>
+                    <td><div class="danh-gia">Hài lòng</div></td>
+                    <td><div class="danh-gia">Bình thường</div></td>
+                    <td><div class="danh-gia">Không hài lòng</div></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><div class="medium-title">Xin vui lòng góp ý (Không bắt buộc)</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div class="gop-y">Ý 1</div></td>
+                    <td colspan="2"><div class="gop-y">Ý 2</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div class="gop-y">Ý 3</div></td>
+                    <td colspan="2"><div class="gop-y">Ý 4</div></td>
+                </tr>
+                <tr>
+                    <td><div class="small-title">Góp ý khác</div></td>
+                    <td colspan="2"><textarea></textarea></td>
+                    <td><button>Gửi</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

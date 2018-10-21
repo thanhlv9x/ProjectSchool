@@ -25,8 +25,8 @@
                     <th colspan="2">
                         <div id="title">
                             MÁY LẤY SỐ
+                            <span id="setting" class="k-icon k-i-custom" style="float: right; cursor: pointer" onclick="custom()"></span>
                             <span id="refresh" class="k-icon k-i-refresh" style="float: right; cursor: pointer" onclick="refresh()"></span>
-                            <span id="setting" class="k-icon k-i-setting" style="float: right; cursor: pointer" onclick="refresh()"></span>
                         </div>
                     </th>
                 </tr>
@@ -42,26 +42,34 @@
 </html>
 
 <script>
-    $.ajax({
-        url: window.location.origin + "/Home/GetBP",
-        type: "GET",
-        dataType: "json",
-        async: false,
-        success: function (result) {
-            var js = JSON.parse(result);
-            var str = "";
-            $.each(js, function (key, val) {
-                str += "<tr><td><div id='" + val.MaBP + "' class='btn'>" + val.TenBP + "</div></td>";
-                str += "<td><div class='number' id='number" + val.MaBP + "'>" + val.NumberBP + "</div></td></tr>";
-            });
-            $("tbody").html(str);
-            createButtonBP();
-        },
-        error: function (xhr) {
-            console.log(xhr.responseText);
-        }
-    })
-
+    // Tạo danh sách các nút bộ phận và số thứ tự
+    function createGroupBP() {
+        $.ajax({
+            url: window.location.origin + "/Home/GetBP",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                console.log(window.d = result);
+                if (result == false) {
+                    $("tbody").html("");
+                    alert("Lỗi kết nối");
+                } else {
+                    var js = JSON.parse(result);
+                    var str = "";
+                    $.each(js, function (key, val) {
+                        str += "<tr><td><div id='" + val.MaBP + "' class='btn'>" + val.TenBP + "</div></td>";
+                        str += "<td><div class='number' id='number" + val.MaBP + "'>" + val.NumberBP + "</div></td></tr>";
+                    });
+                    $("tbody").html(str);
+                    createButtonBP();
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
     // Nút tên bộ phận: tạo phương thức click
     function onClickBtnBP(e) {
         var mabp = $(e.event.target).attr("id");
@@ -73,14 +81,18 @@
             data: { "_MaBP": mabp },
             async: false,
             success: function (result) {
-                $("#" + id).text(result);
+                if (result == false) {
+                    $("tbody").html("");
+                    alert("Lỗi kết nối");
+                } else {
+                    $("#" + id).text(result);
+                }
             },
             error: function (xhr) {
                 console.log(xhr.responseText);
             }
         });
     }
-
     // Nút tên bộ phận: tạo form nút
     function createButtonBP() {
         $(".btn").each(function (index) {
@@ -89,4 +101,29 @@
             });
         });
     }
+    // Nút refresh thông tin
+    function refresh() {
+        createGroupBP();
+    }
+    // Nút setting địa chỉ IP
+    function custom() {
+        var ip = prompt("Địa chỉ IP: ");
+        var id = prompt("Mã xác nhận: ");
+        $.ajax({
+            url: window.location.origin + "/Home/SettingIP",
+            type: "GET",
+            dataType: "json",
+            data: { "ip": ip, "id": id },
+            success: function (result) {
+                if (result == true) alert("Thay đổi thành công");
+                else alert("Thay đổi không thành công. Vui lòng kiểm tra lại thông tin");
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+    $(document).ready(function () {
+        createGroupBP();
+    })
 </script>
