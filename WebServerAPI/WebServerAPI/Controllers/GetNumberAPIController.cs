@@ -96,6 +96,5 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse<int>(HttpStatusCode.OK, next);
             }
         }
-
     }
 }
