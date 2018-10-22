@@ -48,7 +48,7 @@ namespace DesktopApplication
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (lbStatus.Text.Equals("Trạng thái: Đã kết nối"))
+            if (!lbStatus.Text.Equals("Trạng thái: Đã kết nối"))
             {
                 using (var client = new HttpClient())
                 {

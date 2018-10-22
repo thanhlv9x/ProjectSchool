@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
-    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/style1.css" rel="stylesheet" />
 
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
 <body>
     <div id="container">
-        <div class="header"><div>MÁY ĐÁNH GIÁ</div></div>
+        <div class="header"><div>MÁY ĐÁNH GIÁ - QUẦY 1</div></div>
         <div class="body">
             <div id="left-title"><div>THÔNG TIN CÁN BỘ</div></div>
             <div id="right-title"><div></div></div>
@@ -37,12 +37,14 @@
                     <div id="bo-phan-group">
                         <div>Bộ phận: </div>
                         <div id="bo-phan">Lĩnh vực tài nguyên và đất đai</div>
+                        <span></span>
                     </div>
                 </div>
             </div>
             <div id="number">
                 <div id="number-title">SỐ ĐANG GỌI</div>
-                <div id="show-number">100</div>
+                <div id="show-number">0</div>
+                <span></span>
             </div>
             <div id="review-group">
                 <div>Xin vui lòng đánh giá</div>
@@ -56,11 +58,11 @@
                         <div id="HL-title">Hài lòng</div>
                     </div>
                     <div id="BT">
-                        <input type="image" src="~/love.png"/>
+                        <input type="image" src="~/love.png" />
                         <div id="BT-title">Bình thường</div>
                     </div>
                     <div id="KHL">
-                        <input type="image" src="~/angry.png"/>
+                        <input type="image" src="~/angry.png" />
                         <div id="KHL-title">Không hài lòng</div>
                     </div>
                 </div>
@@ -69,82 +71,238 @@
                 <div>Xin vui lòng chọn góp ý</div>
                 <div id="feedback">
                     <div id="fbRHL">
-                        <input type="checkbox" value="Rất hài lòng" />
-                        <span>Rất hài lòng</span>
+                        <input type="checkbox" value="Thái độ cán bộ tốt" />
+                        <span>Thái độ cán bộ tốt</span>
                     </div>
                     <div id="fbHL">
-                        <input type="checkbox" value="Hài lòng" />
-                        <span>Hài lòng</span>
+                        <input type="checkbox" value="Thời gian giải quyết nhanh" />
+                        <span>Thời gian giải quyết nhanh</span>
                     </div>
                     <div id="fbBT">
-                        <input type="checkbox" value="Bình thường" />
-                        <span>Bình thường</span>
+                        <input type="checkbox" value="Giải quyết thủ tục hiệu quả" />
+                        <span>Giải quyết thủ tục hiệu quả</span>
                     </div>
                     <div id="fbKHL">
-                        <input type="checkbox" value="Không hài lòng" />
-                        <span>Không hài lòng</span>
+                        <input type="checkbox" value="Kết quả như mong muốn" />
+                        <span>Kết quả như mong muốn</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer">
             <div id="footer-title">Góp ý khác</div>
-            <div id="area-gop-y"><textarea id="txtArea"></textarea></div>
-            <div id="btn-send"><div><button>Gửi</button></div></div>
+            <div id="area-gop-y"><input id="txtArea" /></div>
+            <div id="btn-send"><div><div id="send">Gửi</div></div></div>
         </div>
-        <table border="1" style="width: 100%">
-            <thead style="width: 100%">
-                <tr>
-                    <td colspan="4"><div class="large-title"></div>MÁY ĐÁNH GIÁ</td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="width: 80%"><div class="medium-title">THÔNG TIN CÁN BỘ</div></td>
-                    <td style="width: 20%"><div class="medium-title" id="numberQuay">QUẦY</div></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td rowspan="3" width="30%"></td>
-                    <td><div class="small-title">Mã số</div></td>
-                    <td><div id="id">1</div></td>
-                    <td><div class="medium-title">SỐ ĐANG GỌI</div></td>
-                </tr>
-                <tr>
-                    <td><div class="small-title">Họ tên</div></td>
-                    <td><div id="name">Nguyễn Văn A</div></td>
-                    <td rowspan="2">0</td>
-                </tr>
-                <tr>
-                    <td><div class="small-title">Bộ phận</div></td>
-                    <td><div id="bo-phan">Lĩnh vực tài nguyên và đất đai</div></td>
-                </tr>
-                <tr>
-                    <td colspan="4"><div class="medium-title">Xin vui lòng đánh giá</div></td>
-                </tr>
-                <tr>
-                    <td><div class="danh-gia">Rất hài lòng</div></td>
-                    <td><div class="danh-gia">Hài lòng</div></td>
-                    <td><div class="danh-gia">Bình thường</div></td>
-                    <td><div class="danh-gia">Không hài lòng</div></td>
-                </tr>
-                <tr>
-                    <td colspan="4"><div class="medium-title">Xin vui lòng góp ý (Không bắt buộc)</div></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><div class="gop-y">Ý 1</div></td>
-                    <td colspan="2"><div class="gop-y">Ý 2</div></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><div class="gop-y">Ý 3</div></td>
-                    <td colspan="2"><div class="gop-y">Ý 4</div></td>
-                </tr>
-                <tr>
-                    <td><div class="small-title">Góp ý khác</div></td>
-                    <td colspan="2"><textarea></textarea></td>
-                    <td><button>Gửi</button></td>
-                </tr>
-            </tbody>
-        </table>
+    </div>
+    <div id="thanks">
+        <div>CẢM ƠN BẠN ĐÃ ĐÁNH GIÁ</div>
     </div>
 </body>
 </html>
+
+<script>
+    $("#container").show();
+    $("#thanks").hide();
+    var url = window.location.origin;
+    var muc_do = 0;
+    var gop_y = "";
+    var ma_stt = 0;
+
+    $.ajax({
+        url: url + "/Home/GetInfo",
+        type: "GET",
+        dataType: "json",
+        success: function (result) {
+            var js = JSON.parse(result);
+            $("#id").text(js["MaCB"]);
+            $("#name").text(js["HoTen"]);
+            $("#bo-phan").text(js["TenBP"]);
+            $("#bo-phan-group span").attr('id', js["MaBP"]);
+            $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
+            goiSo();
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    })
+    function goiSo() {
+        setInterval(function () {
+            $.ajax({
+                url: url + "/Home/GetNumber",
+                type: "GET",
+                dataType: "json",
+                data: { "_MaCB": $("#id").text(), "_MaBP": $("#bo-phan-group span").prop("id") },
+                success: function (result) {
+                    var js = JSON.parse(result);
+                    if (!js) {
+                    } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
+                        $("#show-number").text(js["STT"]);
+                        $("#number span").prop("id", js["MaSTT"]);
+                        chonMucDo();
+                        $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL input").removeAttr("checked");
+                        gop_y += $("#txtArea").prop("value", "");
+                        muc_do = 0;
+                        gop_y = "";
+                        ma_stt = 0;
+
+                        $("#container").show();
+                        $("#thanks").hide();
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            })
+        }, 1000)
+    }
+
+    function chonMucDo() {
+        $("#RHL").removeAttr("style");
+        $("#HL").removeAttr("style");
+        $("#BT").removeAttr("style");
+        $("#KHL").removeAttr("style");
+    }
+
+    $("#send").kendoButton();
+    $("#txtArea").kendoAutoComplete();
+    $("#RHL").click(function () {
+        chonMucDo();
+        $("#RHL").prop("style", "background-color:#8999FF");
+        muc_do = 1;
+        $("#fbRHL input").prop("value", "Thái độ cán bộ tốt");
+        $("#fbRHL span").html("Thái độ cán bộ tốt");
+        $("#fbHL input").prop("value", "Thời gian giải quyết nhanh");
+        $("#fbHL span").html("Thời gian giải quyết nhanh");
+        $("#fbBT input").prop("value", "Giải quyết thủ tục hiệu quả");
+        $("#fbBT span").html("Giải quyết thủ tục hiệu quả");
+        $("#fbKHL input").prop("value", "Kết quả như mong muốn");
+        $("#fbKHL span").html("Kết quả như mong muốn");
+        $("div#feedback-group > div:first-child").html("Xin vui lòng chọn góp ý (Không bắt buộc)");
+        $("div#feedback-group > div:first-child").prop("style", "color:black");
+    });
+    $("#HL").click(function () {
+        chonMucDo();
+        $("#HL").prop("style", "background-color:#8999FF");
+        muc_do = 2;
+        $("#fbRHL input").prop("value", "Thái độ cán bộ tốt");
+        $("#fbRHL span").html("Thái độ cán bộ tốt");
+        $("#fbHL input").prop("value", "Thời gian giải quyết nhanh");
+        $("#fbHL span").html("Thời gian giải quyết nhanh");
+        $("#fbBT input").prop("value", "Giải quyết thủ tục hiệu quả");
+        $("#fbBT span").html("Giải quyết thủ tục hiệu quả");
+        $("#fbKHL input").prop("value", "Kết quả như mong muốn");
+        $("#fbKHL span").html("Kết quả như mong muốn");
+        $("div#feedback-group > div:first-child").html("Xin vui lòng chọn góp ý (Không bắt buộc)");
+        $("div#feedback-group > div:first-child").prop("style", "color:black");
+    });
+    $("#BT").click(function () {
+        chonMucDo();
+        $("#BT").prop("style", "background-color:#8999FF");
+        muc_do = 3;
+        $("#fbRHL input").prop("value", "Thái độ cán bộ bình thường");
+        $("#fbRHL span").html("Thái độ cán bộ bình thường");
+        $("#fbHL input").prop("value", "Thời gian giải quyết bình thường");
+        $("#fbHL span").html("Thời gian giải quyết bình thường");
+        $("#fbBT input").prop("value", "Giải quyết thủ tục tạm được");
+        $("#fbBT span").html("Giải quyết thủ tục tạm được");
+        $("#fbKHL input").prop("value", "Kết quả như bình thường");
+        $("#fbKHL span").html("Kết quả như bình thường");
+        $("div#feedback-group > div:first-child").html("Xin vui lòng chọn góp ý (Không bắt buộc)");
+        $("div#feedback-group > div:first-child").prop("style", "color:black");
+    });
+    $("#KHL").click(function () {
+        chonMucDo();
+        $("#KHL").prop("style", "background-color:#8999FF");
+        muc_do = 4;
+        $("#fbRHL input").prop("value", "Thái độ cán bộ không tốt");
+        $("#fbRHL span").html("Thái độ cán bộ không tốt");
+        $("#fbHL input").prop("value", "Thời gian giải quyết chậm");
+        $("#fbHL span").html("Thời gian giải quyết chậm");
+        $("#fbBT input").prop("value", "Giải quyết thủ tục không hiệu quả");
+        $("#fbBT span").html("Giải quyết thủ tục không hiệu quả");
+        $("#fbKHL input").prop("value", "Kết quả không như mong muốn");
+        $("#fbKHL span").html("Kết quả không như mong muốn");
+        $("div#feedback-group > div:first-child").html("Xin vui lòng chọn góp ý (Bắt buộc)");
+        $("div#feedback-group > div:first-child").prop("style", "color:red");
+    });
+
+    $("#fbRHL, #fbRHL input").click(function () {
+        if ($("#fbRHL input").prop("checked")) { $("#fbRHL input").removeAttr("checked"); }
+        else { $("#fbRHL input").prop("checked", "checked") }
+    });
+    $("#fbHL, #fbHL input").click(function () {
+        if ($("#fbHL input").prop("checked")) { $("#fbHL input").removeAttr("checked"); }
+        else { $("#fbHL input").prop("checked", "checked") }
+    });
+    $("#fbBT, #fbBT input").click(function () {
+        if ($("#fbBT input").prop("checked")) { $("#fbBT input").removeAttr("checked"); }
+        else { $("#fbBT input").prop("checked", "checked") }
+    });
+    $("#fbKHL, #fbKHL input").click(function () {
+        if ($("#fbKHL input").prop("checked")) { $("#fbKHL input").removeAttr("checked"); }
+        else { $("#fbKHL input").prop("checked", "checked") }
+    });
+
+    $("#send").click(function () {
+        if ($("#fbRHL input").prop("checked")) {
+            gop_y += $("#fbRHL input").prop("value") + ";";
+        }
+        if ($("#fbHL input").prop("checked")) {
+            gop_y += $("#fbHL input").prop("value") + ";";
+        }
+        if ($("#fbBT input").prop("checked")) {
+            gop_y += $("#fbBT input").prop("value") + ";";
+        }
+        if ($("#fbKHL input").prop("checked")) {
+            gop_y += $("#fbKHL input").prop("value") + ";";
+        }
+        gop_y += $("#txtArea").prop("value");
+        if (muc_do == 0) {
+            alert("Vui lòng chọn mức đánh giá");
+            return;
+        }
+        if (muc_do == 4 && gop_y == "") {
+            alert("Vui lòng nhập góp ý");
+            return;
+        }
+        ma_stt = $("#number span").prop("id");
+
+        var dataSource = {
+            "MaCB": $("#id").text(),
+            "MucDo": muc_do,
+            "GopY": gop_y,
+            "MaSTT": ma_stt
+        }
+
+        $.ajax({
+            url: url + "/Home/PostReview",
+            type: "POST",
+            dataType: "json",
+            data: dataSource,
+            success: function (result) {
+                // Thành công
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+
+        chonMucDo();
+        $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL input").removeAttr("checked");
+        gop_y += $("#txtArea").prop("value", "");
+
+        muc_do = 0;
+        gop_y = "";
+        ma_stt = 0;
+
+        $("#container").hide();
+        $("#thanks").show();
+    })
+</script>
+
+<style>
+    span.k-widget.k-autocomplete.k-header.k-autocomplete-clearable.k-state-default {
+        width: 100%;
+    }
+</style>

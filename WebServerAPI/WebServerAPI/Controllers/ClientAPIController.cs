@@ -246,7 +246,7 @@ namespace WebServerAPI.Controllers
                             db.KETQUADANHGIAs.Add(kqEF);
                             db.SaveChanges();
 
-                            if (gop_y != "")
+                            if (gop_y != null && gop_y != "" && gop_y != String.Empty)
                             {
                                 GOPY gyEF = new GOPY()
                                 {
@@ -303,6 +303,31 @@ namespace WebServerAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetNumberInterval(int _MaCB, int _MaBP, int _Interval)
+        {
+            DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            var numberEF = db.SOTHUTUs.Where(p => p.MACB == _MaCB && p.TG >= dt)
+                                      .OrderByDescending(p => p.STT)
+                                      .FirstOrDefault();
+            if(numberEF != null)
+            {
+                SoThuTuUser sttMD = new SoThuTuUser()
+                {
+                    MaSTT = numberEF.MASTT,
+                    STT = numberEF.STT,
+                    MaCB = numberEF.MACB,
+                    TG = numberEF.TG
+                };
+                return Request.CreateResponse<SoThuTuUser>(HttpStatusCode.OK, sttMD);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
 
         /// <summary>
         /// Phương thức chuyển hình ảnh thành chuỗi byte

@@ -30,3 +30,19 @@ E:\Tài liệu\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplicatio
 E:\Tài liệu\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.CopyComplete
 E:\Tài liệu\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.exe
 E:\Tài liệu\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.pdb
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe.config
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.exe
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\DesktopApplication.pdb
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\Newtonsoft.Json.dll
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\System.Net.Http.Formatting.dll
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\Newtonsoft.Json.xml
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\bin\Debug\System.Net.Http.Formatting.xml
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csprojAssemblyReference.cache
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.FormLogin.resources
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.FormMain.resources
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.Properties.Resources.resources
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.GenerateResource.cache
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.CoreCompileInputs.cache
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.csproj.CopyComplete
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.exe
+E:\GitHub\ProjectSchool\DesktopApplication\DesktopApplication\obj\Debug\DesktopApplication.pdb
