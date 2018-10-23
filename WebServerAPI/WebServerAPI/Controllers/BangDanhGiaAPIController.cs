@@ -311,7 +311,10 @@ namespace WebServerAPI.Controllers
                         ThoiGian = (DateTime)item.KETQUADANHGIA.TG,
                         Ngay = (DateTime)item.KETQUADANHGIA.TG
                     };
-                    noi_dung = item.NOIDUNG.ToLower();
+                    if (item.NOIDUNG != null)
+                    {
+                        noi_dung = item.NOIDUNG.ToLower();
+                    }
                     int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == _MaCBGopY &&
                                                      p.NOIDUNG.ToLower().Equals(noi_dung) &&
                                                      p.KETQUADANHGIA.MUCDO == muc_do)

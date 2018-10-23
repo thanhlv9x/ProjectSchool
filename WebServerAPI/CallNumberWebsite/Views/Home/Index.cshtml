@@ -1,31 +1,264 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = null;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@model CallNumberWebsite.Models.Login
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang chủ</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
+    <link href="~/Content/style.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="header"><div>MÁY GỌI SỐ</div></div>
+        <div id="body">
+            <div id="info">
+                <div id="info-left">
+                    <div id="time-group">Thời gian:</div>
+                    <div id="quay-group">Quầy:</div>
+                    <div id="id-group">Mã số:</div>
+                    <div id="name-group">Họ tên:</div>
+                    <div id="bo-phan-group"><span></span>Bộ phận:</div>
+                </div>
+                <div id="info-right">
+                    <div id="time">20/10/2018</div>
+                    <div id="quay">1</div>
+                    <div id="id">0</div>
+                    <div id="name">Nguyễn Văn B</div>
+                    <div id="bo-phan">Lĩnh vực tài nguyên và đất đai, thủy văn</div>
+                </div>
+            </div>
+            <div id="number-group">
+                <div id="title">
+                    <div id="title-number"><span></span>SỐ ĐANG GỌI</div>
+                    <div id="number">0</div>
+                </div>
+                <div id="btn-group">
+                    <div id="btn-next" class="k-primary">TIẾP THEO</div>
+                    <div id="btn-again" class="k-primary">&nbsp; GỌI LẠI &nbsp;</div>
+                    @*<div id="btn-success" class="k-primary">HOÀN TẤT</div>*@
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div id="btn-change-pw">ĐỔI MẬT KHẨU</div>
+            @*<div id="btn-logout">ĐĂNG XUẤT</div>*@
+            @Html.ActionLink("Đăng xuất", "Logout", "Login")
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div id="black">
+        <div id="list-view">
+            <div id="grid"></div>
+        </div>
+        <div id="black-span"></div>
+        <div id="open">Thống kê</div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div id="window">
+        <label>Mật khẩu cũ: </label><div id="mk-cu"><input type="password"></div>
+        <label>Mật khẩu mới: </label><div id="mk-moi1"><input type="password"></div>
+        <label>Nhập lại mật khẩu: </label><div id="mk-moi2"><input type="password"></div>
+        <div id="btn-change">THAY ĐỔI</div>
     </div>
-</div>
+</body>
+</html>
+
+<script>
+    var url = window.location.origin;
+    var today = new Date();
+    var macb = 0;
+    var mabp = 0;
+    var mastt = 0;
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) { dd = '0' + dd }
+    if (mm < 10) { mm = '0' + mm }
+    today = dd + '/' + mm + '/' + yyyy;
+    $("#time").text(today)
+
+    // Lấy thông tin cán bộ
+    function getInfo() {
+        $.ajax({
+            url: url + "/Home/GetInfo",
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                var js = JSON.parse(result);
+                macb = js["MaCB"];
+                mabp = js["MaBP"];
+                $("#id").text(js["MaCB"]);
+                $("#name").text(js["HoTen"]);
+                $("#bo-phan").text(js["TenBP"]);
+                $("#bo-phan-group span").prop("id", js["MaBP"]);
+                getNumber();
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+    // Lấy số trước khi refresh trang
+    function getNumber() {
+        $.ajax({
+            url: url + "/Home/GetNumber",
+            type: "GET",
+            dataType: "json",
+            data: { "_MaCB": macb },
+            success: function (result) {
+                $("#number").text(result);
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+
+    $("#window").kendoWindow({ title: "ĐỔI MẬT KHẨU" });
+    $("#window").data("kendoWindow").close();
+    $("#btn-next").kendoButton();
+    $("#btn-again").kendoButton();
+    //$("#btn-success").kendoButton({ enable: false });
+
+    // Tạo sự kiện nút tiếp theo
+    $("#btn-next").click(function () {
+        if (macb != 0 && mabp != 0) {
+            $.ajax({
+                url: url + "/Home/CallNumber",
+                type: "POST",
+                dataType: "json",
+                data: { "_MaCB": macb, "_MaBP": mabp, "_MaSTT": mastt },
+                success: function (result) {
+                    var js = JSON.parse(result);
+                    if (result == false) {
+                        alert("Hết số thứ tự để gọi");
+                    } else {
+                        mastt = js["MaSTT"];
+                        $("#number").text(js["STT"]);
+                        $("#title-number span").prop("id", js["MaSTT"]);
+                        //$("#btn-next").data("kendoButton").enable(false);
+                        //$("#btn-again").data("kendoButton").enable(true);
+                        //$("#btn-success").data("kendoButton").enable(true);
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            })
+        }
+    })
+    $("#btn-again").click(function () {
+        // Gọi lại
+    })
+    //$("#btn-success").click(function () {
+    //    $("#btn-next").data("kendoButton").enable(true);
+    //    $("#btn-again").data("kendoButton").enable(false);
+    //    $("#btn-success").data("kendoButton").enable(false);
+    //})
+    $("#btn-change-pw").kendoButton();
+    $("#btn-change-pw").click(function () {
+        $("#window").data("kendoWindow").open();
+        $("#btn-change-pw").fadeOut();
+    })
+    $("#btn-change").kendoButton();
+    $("#btn-logout").kendoButton();
+    $("a[href$='/Login/Logout']").text("&nbsp; Đăng xuất &nbsp; &nbsp;");
+    $("a[href$='/Login/Logout']").kendoButton()
+    $("#grid").kendoGrid({
+        dataSource: {
+            type: "odata",
+            transport: {
+                read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
+            },
+            schema: {
+                model: {
+                    fields: {
+                        OrderID: { type: "number" },
+                        Freight: { type: "number" },
+                        ShipName: { type: "string" },
+                        OrderDate: { type: "date" },
+                        ShipCity: { type: "string" }
+                    }
+                }
+            },
+            pageSize: 20,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true
+        },
+        filterable: true,
+        sortable: true,
+        pageable: true,
+        columns: [{
+            field: "OrderID",
+            filterable: false,
+            width: 1
+        },
+        {
+            field: "OrderDate",
+            title: "Order Date",
+            format: "{0:MM/dd/yyyy}",
+            width: 2
+        }
+        ]
+    });
+
+    $("#open").click(function () {
+        console.log("click");
+        $('#grid').data('kendoGrid').dataSource.read();
+        $("#black")[0].classList.toggle("move-right");
+    })
+
+    $("#black-span").click(function () {
+        console.log("click");
+        $("#black")[0].classList.remove("move-right")
+    })
+
+    $(document).ready(function () {
+        getInfo();
+    })
+</script>
+
+<style>
+    div#btn-next {
+        /* position: absolute; */
+        /* top: 30%; */
+        /* left: 44%; */
+        /* transform: translate(-50%,-50%); */
+    }
+
+    div#grid {
+        font-size: 0.8em;
+        height: 100%;
+    }
+
+    div.k-grid-footer, div.k-grid-header {
+        height: 10%;
+    }
+
+    .k-grid-content.k-auto-scrollable.km-widget.km-native-scroller {
+        height: 80%;
+    }
+
+    .k-edge .k-pager-wrap, .k-ff .k-pager-wrap, .k-ie11 .k-pager-wrap, .k-safari .k-pager-wrap, .k-webkit .k-pager-wrap {
+        height: 10%;
+    }
+
+    #window {
+        font-size: 1.2em;
+    }
+
+    #mk-cu input, #mk-moi1 input, #mk-moi2 input {
+        float: right;
+        font-size: 1.2em;
+    }
+</style>
