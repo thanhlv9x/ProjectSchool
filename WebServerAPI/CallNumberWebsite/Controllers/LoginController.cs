@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.NetworkInformation;
 
 namespace CallNumberWebsite.Controllers
 {
@@ -16,7 +17,6 @@ namespace CallNumberWebsite.Controllers
     {
         public static string url;
         public static string result;
-
         // GET: Login
         public ActionResult Index()
         {
@@ -33,7 +33,6 @@ namespace CallNumberWebsite.Controllers
                 return View();
             }
         }
-
         /// <summary>
         /// Phương thức login vào hệ thống
         /// </summary>
@@ -60,18 +59,44 @@ namespace CallNumberWebsite.Controllers
             }
             return View("Index");
         }
-
         /// <summary>
         /// Phương thức thoát ra chuyển về trang login
         /// </summary>
         /// <returns></returns>
         public ActionResult Logout()
         {
+            TaiKhoanUser user = new TaiKhoanUser()
+            {
+                MaDN = (int)Session[CommonConstants.USER_MADN]
+            };
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(InfoUser.URL);
+                } catch {}
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response;
+                // Serialize our concrete class into a JSON String
+                var stringPayload = JsonConvert.SerializeObject(user);
+                // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+                try
+                {
+                    response = client.PostAsync("api/ClientAPI/?_Logout=1", httpContent).Result;
+                }
+                catch {}
+            }
             Session[CommonConstants.USER_SESSION] = null;
             Session[CommonConstants.USER_RESULT] = null;
+            Session[CommonConstants.USER_MACB] = null;
+            Session[CommonConstants.USER_MABP] = null;
+            Session[CommonConstants.USER_MAMAY] = null;
+            Session[CommonConstants.USER_MASTT] = null;
+            Session[CommonConstants.USER_MADN] = null;
             return Redirect("/Home");
         }
-
         /// <summary>
         /// Kiểm tra tài khoản và mật khẩu
         /// </summary>
@@ -81,10 +106,12 @@ namespace CallNumberWebsite.Controllers
         public bool CheckLogin(string id, string pw)
         {
             pw = GetMD5(pw);
+            string mac = GetMacAddress();
             TaiKhoanUser user = new TaiKhoanUser()
             {
                 Id = id,
-                Pw = pw
+                Pw = pw,
+                Mac = mac
             };
             using (var client = new HttpClient())
             {
@@ -131,7 +158,6 @@ namespace CallNumberWebsite.Controllers
                 }
             }
         }
-
         /// <summary>
         /// Phương thức mã hóa MD5
         /// </summary>
@@ -149,5 +175,34 @@ namespace CallNumberWebsite.Controllers
             }
             return str;
         }
+        /// <summary>
+        /// Phương thức lấy địa chỉ MAC của máy tính
+        /// </summary>
+        /// <returns></returns>
+        private string GetMacAddress()
+        {
+            string str = "";
+            IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            if (nics == null || nics.Length < 1)
+            {
+                return str;
+            }
+            foreach (NetworkInterface adapter in nics)
+            {
+                IPInterfaceProperties properties = adapter.GetIPProperties(); //  .GetIPInterfaceProperties();
+                PhysicalAddress address = adapter.GetPhysicalAddress();
+                byte[] bytes = address.GetAddressBytes();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    str += bytes[i].ToString("X2");
+                    // Insert a hyphen after each byte, unless we are at the end of the address.
+                    if (i != bytes.Length - 1) { str += "-"; }
+                }
+                break;
+            }
+            return str;
+        }
+    
     }
 }

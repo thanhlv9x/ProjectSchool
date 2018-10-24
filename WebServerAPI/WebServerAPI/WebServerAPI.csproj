@@ -230,6 +230,9 @@
     <Compile Include="EF\KETQUADANHGIA.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\MAYDANHGIA.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\MUCDODANHGIA.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
@@ -240,6 +243,9 @@
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TAIKHOANADMIN.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TRANGTHAIDANGNHAP.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

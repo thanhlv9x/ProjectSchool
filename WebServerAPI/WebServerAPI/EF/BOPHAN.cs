@@ -18,6 +18,7 @@ namespace WebServerAPI.EF
         public BOPHAN()
         {
             this.CANBOes = new HashSet<CANBO>();
+            this.SOTOIDAs = new HashSet<SOTOIDA>();
         }
     
         public int MABP { get; set; }
@@ -25,5 +26,7 @@ namespace WebServerAPI.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CANBO> CANBOes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SOTOIDA> SOTOIDAs { get; set; }
     }
 }

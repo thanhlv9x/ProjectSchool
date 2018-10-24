@@ -42,7 +42,57 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
+        /// <summary>
+        /// Dịch vụ lấy tất cả mã máy
+        /// </summary>
+        /// <param name="_Port">Tham số xác nhận gọi hàm</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetPort(int _Port)
+        {
+            List<int> lstMD = new List<int>();
+            var lstEF = db.MAYDANHGIAs.ToList();
+            if (lstEF != null)
+            {
+                foreach (var item in lstEF)
+                {
+                    lstMD.Add(item.MAMAY);
+                }
+                return Request.CreateResponse<List<int>>(HttpStatusCode.OK, lstMD);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+        /// <summary>
+        /// Dịch vụ lấy thông tin của cán bộ đang đăng nhập theo mã máy
+        /// </summary>
+        /// <param name="_MaMay"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetInfo(int _MaMay)
+        {
+            var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == _MaMay &&
+                                                         p.BD != null &&
+                                                         p.KT == null)
+                                             .OrderByDescending(p => p.MADN)
+                                             .FirstOrDefault();
+            if (lstEF != null)
+            {
+                string hinh_anh = getImage(lstEF.CANBO.HINHANH);
+                TaiKhoanUser md = new TaiKhoanUser()
+                {
+                    MaCB = lstEF.MACB,
+                    HoTen = lstEF.CANBO.HOTEN,
+                    HinhAnh = hinh_anh,
+                    MaBP = lstEF.CANBO.MABP,
+                    TenBP = lstEF.CANBO.BOPHAN.TENBP,
+                    MaDN = lstEF.MADN,
+                    MaMay = lstEF.MAMAY
+                };
+                return Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.OK, md);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
 
+        }
         /// <summary>
         /// Dịch vụ lấy số thứ tự của người dân theo bộ phận
         /// </summary>
@@ -56,7 +106,7 @@ namespace WebServerAPI.Controllers
                                                  p.TG >= dt)
                                      .OrderByDescending(p => p.STTTD)
                                      .FirstOrDefault();
-            if(stttdEF != null)
+            if (stttdEF != null)
             {
                 DateTime now = new DateTime();
                 int next = (int)stttdEF.STTTD + 1;
@@ -85,7 +135,6 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse<int>(HttpStatusCode.OK, next);
             }
         }
-
         /// <summary>
         /// Dịch vụ gọi số thứ tự theo bộ phận
         /// </summary>
@@ -102,30 +151,44 @@ namespace WebServerAPI.Controllers
                                                      p.TG >= dt)
                                          .OrderByDescending(p => p.STTTD)
                                          .FirstOrDefault();
-                if (stttdEF != null)
+                if (stttdEF != null) // Nếu người dân đã rút số
                 {
                     var sttEF = db.SOTHUTUs.Where(p => p.CANBO.MABP == _MaBP &&
-                                                       p.TG >= dt)
+                                                       p.BD >= dt)
                                            .Select(p => new
                                            {
                                                STT = p.STT,
                                                MACB = p.MACB,
-                                               TG = p.TG
+                                               BD = p.BD,
+                                               KT = p.KT
                                            })
                                            .OrderByDescending(p => p.STT)
                                            .FirstOrDefault();
-                    if (sttEF != null && sttEF.STT < stttdEF.STTTD)
+                    if (sttEF != null && sttEF.STT < stttdEF.STTTD) // Nếu cán bộ đã từng gọi số và số nhỏ hơn số người dân đã rút
                     {
+                        DateTime dtNow = DateTime.Now;
                         try
                         {
-                            DateTime dtNow = DateTime.Now;
+                            // Lưu lại thời gian kết thúc của số thứ tự trước
+                            var sttBefore = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
+                                                                   p.BD >= dt &&
+                                                                   p.KT == null)
+                                                       .OrderByDescending(p => p.MASTT)
+                                                       .FirstOrDefault();
+                            sttBefore.KT = dtNow;
+                            db.SaveChanges();
+                        }
+                        catch { }
+                        try
+                        {
+                            // Khởi tạo số thứ tự mới
                             int stt = (int)sttEF.STT;
                             int next = stt + 1;
                             SOTHUTU ef = new SOTHUTU()
                             {
                                 STT = next,
                                 MACB = _MaCB,
-                                TG = dtNow
+                                BD = dtNow
                             };
                             db.SOTHUTUs.Add(ef);
                             db.SaveChanges();
@@ -141,17 +204,18 @@ namespace WebServerAPI.Controllers
                             return Request.CreateResponse(HttpStatusCode.NotFound);
                         }
                     }
-                    else if(sttEF == null)
+                    else if (sttEF == null) // Nếu cán bộ chưa từng gọi số
                     {
                         try
                         {
+                            // Khởi tạo số mới
                             int next = 1;
                             DateTime dtNow = DateTime.Now;
                             SOTHUTU ef = new SOTHUTU()
                             {
                                 STT = next,
                                 MACB = _MaCB,
-                                TG = dtNow
+                                BD = dtNow
                             };
                             db.SOTHUTUs.Add(ef);
                             db.SaveChanges();
@@ -172,7 +236,7 @@ namespace WebServerAPI.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound);
                     }
                 }
-                else
+                else // Nếu người dân chưa rút số nào
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
@@ -182,7 +246,6 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
-
         /// <summary>
         /// Dịch vụ gọi số thứ tự tự động
         /// </summary>
@@ -194,17 +257,19 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetNumberInterval(int _MaCB, int _MaBP, int _Interval)
         {
             DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            var numberEF = db.SOTHUTUs.Where(p => p.MACB == _MaCB && p.TG >= dt)
-                                      .OrderByDescending(p => p.STT)
+            var numberEF = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
+                                                  p.BD >= dt &&
+                                                  p.KT == null)
+                                      .OrderByDescending(p => p.MASTT)
                                       .FirstOrDefault();
-            if (numberEF != null)
+            if (numberEF != null) // Nếu có số đang gọi
             {
                 SoThuTuUser sttMD = new SoThuTuUser()
                 {
                     MaSTT = numberEF.MASTT,
                     STT = numberEF.STT,
                     MaCB = numberEF.MACB,
-                    TG = numberEF.TG
+                    TG = numberEF.BD
                 };
                 return Request.CreateResponse<SoThuTuUser>(HttpStatusCode.OK, sttMD);
             }
@@ -213,7 +278,6 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
-        
         /// <summary>
         /// Dịch vụ gọi số và lưu lại thời gian hoàn thành số trước theo bộ phận
         /// </summary>
@@ -233,41 +297,46 @@ namespace WebServerAPI.Controllers
                                                      p.TG >= dt)
                                          .OrderByDescending(p => p.STTTD)
                                          .FirstOrDefault();
-                if (stttdEF != null)
+                if (stttdEF != null) // Nếu người dân đã rút số
                 {
                     var sttEF = db.SOTHUTUs.Where(p => p.CANBO.MABP == _MaBP &&
-                                                       p.TG >= dt)
+                                                       p.BD >= dt)
                                            .Select(p => new
                                            {
                                                STT = p.STT,
                                                MACB = p.MACB,
-                                               TG = p.TG
+                                               BD = p.BD,
+                                               KT = p.KT
                                            })
                                            .OrderByDescending(p => p.STT)
                                            .FirstOrDefault();
-                    if (sttEF != null && sttEF.STT < stttdEF.STTTD)
+                    if (sttEF != null && sttEF.STT < stttdEF.STTTD) // Nếu cán bộ đã từng gọi số và số nhỏ hơn số người dân đã rút
                     {
+                        DateTime dtNow = DateTime.Now;
                         try
                         {
-                            DateTime dtNow = DateTime.Now;
+                            // Lưu lại thời gian kết thúc của số thứ tự trước
+                            var sttBefore = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
+                                                                   p.BD >= dt &&
+                                                                   p.KT == null)
+                                                       .OrderByDescending(p => p.MASTT)
+                                                       .FirstOrDefault();
+                            sttBefore.KT = dtNow;
+                            db.SaveChanges();
+                        }
+                        catch { }
+                        try
+                        {
+                            // Khởi tạo số thứ tự tiếp theo
                             int stt = (int)sttEF.STT;
                             int next = stt + 1;
                             SOTHUTU ef = new SOTHUTU()
                             {
                                 STT = next,
                                 MACB = _MaCB,
-                                TG = dtNow
+                                BD = dtNow
                             };
                             db.SOTHUTUs.Add(ef);
-                            if(_MaSTT != 0)
-                            {
-                                KETQUADANHGIA kq = new KETQUADANHGIA()
-                                {
-                                    MASTT = _MaSTT,
-                                    TG = dtNow
-                                };
-                                db.KETQUADANHGIAs.Add(kq);
-                            }
                             db.SaveChanges();
                             SoThuTuUser sttMD = new SoThuTuUser()
                             {
@@ -281,32 +350,38 @@ namespace WebServerAPI.Controllers
                             return Request.CreateResponse(HttpStatusCode.NotFound);
                         }
                     }
-                    else if (sttEF != null && sttEF.STT == stttdEF.STTTD)
+                    else if (sttEF != null && sttEF.STT == stttdEF.STTTD) // Nếu cán bộ đã từng gọi số và số bằng với số người dân đã rút
                     {
-                        if (_MaSTT != 0)
+                        //if (_MaSTT != 0)
+                        //{
+                        DateTime dtNow = DateTime.Now;
+                        try
                         {
-                            DateTime dtNow = DateTime.Now;
-                            KETQUADANHGIA kq = new KETQUADANHGIA()
-                            {
-                                MASTT = _MaSTT,
-                                TG = dtNow
-                            };
-                            db.KETQUADANHGIAs.Add(kq);
+                            // Lưu lại thời gian kết thúc của số thứ tự trước
+                            var sttBefore = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
+                                                                   p.BD >= dt &&
+                                                                   p.KT == null)
+                                                       .OrderByDescending(p => p.MASTT)
+                                                       .FirstOrDefault();
+                            sttBefore.KT = dtNow;
                             db.SaveChanges();
                         }
+                        catch { }
+                        //}
                         return Request.CreateResponse(HttpStatusCode.NotFound);
                     }
-                    else if (sttEF == null)
+                    else if (sttEF == null) // Nếu cán bộ chưa từng gọi số
                     {
                         try
                         {
+                            // Khởi tạo số thứ tự mới
                             int next = 1;
                             DateTime dtNow = DateTime.Now;
                             SOTHUTU ef = new SOTHUTU()
                             {
                                 STT = next,
                                 MACB = _MaCB,
-                                TG = dtNow
+                                BD = dtNow
                             };
                             db.SOTHUTUs.Add(ef);
                             db.SaveChanges();
@@ -337,33 +412,6 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
-
-        [HttpGet]
-        public HttpResponseMessage GetNumberAfterRefresh(int _MaCB, int _Refresh)
-        {
-            int number = 0;
-            DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            var lstSTT = db.SOTHUTUs.Where(p => p.MACB == _MaCB && 
-                                               p.TG >= dt)
-                                   .OrderByDescending(p => p.MASTT)
-                                   .FirstOrDefault();
-            number = (int)lstSTT.STT;
-            int mastt = lstSTT.MASTT;
-            var lstKQ = db.KETQUADANHGIAs.Where(p => p.MASTT == mastt && p.TG >= dt).ToList();
-            if(lstKQ.Count == 0)
-            {
-                DateTime dtNow = DateTime.Now;
-                KETQUADANHGIA kq = new KETQUADANHGIA()
-                {
-                    TG = dtNow,
-                    MASTT = mastt
-                };
-                db.KETQUADANHGIAs.Add(kq);
-                db.SaveChanges();
-            }
-            return Request.CreateResponse<int>(HttpStatusCode.OK, number);
-        }
-
         /// <summary>
         /// Dịch vụ đăng nhập User
         /// </summary>
@@ -376,28 +424,75 @@ namespace WebServerAPI.Controllers
             {
                 string id = _User.Id;
                 string pw = _User.Pw;
+                string mac = _User.Mac;
                 var userEF = db.CANBOes.Where(p => p.ID == id && p.PW == pw).FirstOrDefault();
 
                 if (userEF != null)
                 {
-                    string hinh_anh = getImage(userEF.HINHANH);
-                    TaiKhoanUser userMD = new TaiKhoanUser()
+                    DateTime dtNow = DateTime.Now;
+                    int macb = userEF.MACB;
+                    int mamay = db.MAYDANHGIAs.Where(p => p.MAC == mac).Select(p => p.MAMAY).FirstOrDefault();
+                    if (mamay != null)
                     {
-                        MaCB = userEF.MACB,
-                        MaBP = userEF.MABP,
-                        HoTen = userEF.HOTEN,
-                        HinhAnh = hinh_anh,
-                        TenBP = userEF.BOPHAN.TENBP
-                    };
-                    var httpResponse = Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.Created, userMD);
-                    string uri = Url.Link("DefaultApi", new { id = userMD.MaCB });
-                    httpResponse.Headers.Location = new Uri(uri);
-                    return httpResponse;
+                        TRANGTHAIDANGNHAP login = new TRANGTHAIDANGNHAP()
+                        {
+                            MACB = macb,
+                            MAMAY = mamay,
+                            BD = dtNow,
+                        };
+                        db.TRANGTHAIDANGNHAPs.Add(login);
+                        db.SaveChanges();
+                        string hinh_anh = getImage(userEF.HINHANH);
+                        TaiKhoanUser userMD = new TaiKhoanUser()
+                        {
+                            MaCB = userEF.MACB,
+                            MaBP = userEF.MABP,
+                            HoTen = userEF.HOTEN,
+                            HinhAnh = hinh_anh,
+                            TenBP = userEF.BOPHAN.TENBP,
+                            MaMay = mamay,
+                            MaDN = login.MADN
+                        };
+                        var httpResponse = Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.Created, userMD);
+                        string uri = Url.Link("DefaultApi", new { id = userMD.MaCB });
+                        httpResponse.Headers.Location = new Uri(uri);
+                        return httpResponse;
+                    }
                 }
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
-
+        /// <summary>
+        /// Dịch vụ đăng xuất của User
+        /// </summary>
+        /// <param name="_Logout"></param>
+        /// <param name="_User"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage Post(int _Logout, TaiKhoanUser _User)
+        {
+            if ((this.ModelState.IsValid) && (_User != null))
+            {
+                int madn = (int)_User.MaDN;
+                var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MADN == madn &&
+                                                             p.KT == null)
+                                                 .OrderByDescending(p => p.MADN)
+                                                 .FirstOrDefault();
+                if (lstEF != null)
+                {
+                    lstEF.KT = DateTime.Now;
+                    db.SaveChanges();
+                }
+                var httpResponse = Request.CreateResponse<bool>(HttpStatusCode.Created, true);
+                string uri = Url.Link("DefaultApi", new { id = lstEF.MADN });
+                httpResponse.Headers.Location = new Uri(uri);
+                return httpResponse;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
         /// <summary>
         /// Dịch vụ lưu kết quả đánh giá và góp ý của user
         /// </summary>
@@ -409,16 +504,17 @@ namespace WebServerAPI.Controllers
             if ((this.ModelState.IsValid) && (_DanhGia != null))
             {
                 int macb = _DanhGia.MaCB;
-                int count = db.CANBOes.Where(p=>p.MACB == macb).Count();
+                int count = db.CANBOes.Where(p => p.MACB == macb).Count();
                 if (count > 0)
                 {
                     int mastt = _DanhGia.MaSTT;
                     int muc_do = _DanhGia.MucDo;
                     string gop_y = _DanhGia.GopY;
-                    DateTime dt = DateTime.Now;
-
+                    DateTime dtNow = DateTime.Now;
+                    DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    int count_stt = db.SOTHUTUs.Where(p => p.MASTT == mastt).Count();
                     int count_kq = db.KETQUADANHGIAs.Where(p => p.MASTT == mastt).Count();
-                    if (count_kq == 0)
+                    if (count_kq == 0 && count_stt > 0)
                     {
                         try
                         {
@@ -426,7 +522,7 @@ namespace WebServerAPI.Controllers
                             {
                                 MASTT = mastt,
                                 MUCDO = muc_do,
-                                TG = dt
+                                TG = dtNow
                             };
                             db.KETQUADANHGIAs.Add(kqEF);
                             db.SaveChanges();
@@ -456,7 +552,6 @@ namespace WebServerAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
-
         /// <summary>
         /// Dịch vụ thay đổi mật khẩu
         /// </summary>
@@ -488,7 +583,6 @@ namespace WebServerAPI.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
-
         /// <summary>
         /// Phương thức chuyển hình ảnh thành chuỗi byte
         /// </summary>

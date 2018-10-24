@@ -12,22 +12,15 @@ namespace WebServerAPI.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class SOTHUTU
+    public partial class TRANGTHAIDANGNHAP
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SOTHUTU()
-        {
-            this.KETQUADANHGIAs = new HashSet<KETQUADANHGIA>();
-        }
-    
-        public int MASTT { get; set; }
-        public Nullable<int> STT { get; set; }
+        public int MADN { get; set; }
         public Nullable<int> MACB { get; set; }
+        public Nullable<int> MAMAY { get; set; }
         public Nullable<System.DateTime> BD { get; set; }
         public Nullable<System.DateTime> KT { get; set; }
     
         public virtual CANBO CANBO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<KETQUADANHGIA> KETQUADANHGIAs { get; set; }
+        public virtual MAYDANHGIA MAYDANHGIA { get; set; }
     }
 }

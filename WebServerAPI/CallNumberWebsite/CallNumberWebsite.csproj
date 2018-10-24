@@ -158,6 +158,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\SoThuTuUser.cs" />
     <Compile Include="Models\TaiKhoanUser.cs" />
+    <Compile Include="Models\TaiKhoanUserNew.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

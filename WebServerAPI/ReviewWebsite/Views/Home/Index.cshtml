@@ -13,18 +13,17 @@
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
     <link href="~/Content/style1.css" rel="stylesheet" />
-
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
 <body>
     <div id="container">
-        <div class="header"><div>MÁY ĐÁNH GIÁ - QUẦY 1</div></div>
+        <div class="header"><div>MÁY ĐÁNH GIÁ</div><div id="port"></div></div><span id="port-number"></span>
         <div class="body">
             <div id="left-title"><div>THÔNG TIN CÁN BỘ</div></div>
             <div id="right-title"><div></div></div>
             <div id="info">
-                <div id="image"><input type="image" src="~/user.png" /></div>
+                <div id="image"><input type="image" src="~/user.png" alt="Hình ảnh cán bộ" /></div>
                 <div>
                     <div id="id-group">
                         <div>Mã số: </div>
@@ -92,7 +91,7 @@
         <div class="footer">
             <div id="footer-title">Góp ý khác</div>
             <div id="area-gop-y"><input id="txtArea" /></div>
-            <div id="btn-send"><div><div id="send">Gửi</div></div></div>
+            <div id="btn-send"><div><div id="send">GỬI KẾT QUẢ</div></div></div>
         </div>
     </div>
     <div id="thanks">
@@ -108,33 +107,74 @@
     var muc_do = 0;
     var gop_y = "";
     var ma_stt = 0;
-
-    $.ajax({
-        url: url + "/Home/GetInfo",
-        type: "GET",
-        dataType: "json",
-        success: function (result) {
-            var js = JSON.parse(result);
-            $("#id").text(js["MaCB"]);
-            $("#name").text(js["HoTen"]);
-            $("#bo-phan").text(js["TenBP"]);
-            $("#bo-phan-group span").attr('id', js["MaBP"]);
-            $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
-            goiSo();
-        },
-        error: function (xhr) {
-            console.log(xhr.responseText);
-        }
-    })
+    var macb = 0;
+    var mabp = 0;
+    var mabn = 0;
+    var mamay = 0;
+    // Phương thức lấy thông tin danh sách mã máy
+    function getPort() {
+        var arr = new Array();
+        $.ajax({
+            url: url + "/Home/GetPort",
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                var js = JSON.parse(result);
+                $.each(js, function (key, val) {
+                    var a = { "text": "QUẦY SỐ " + val, "value": val }
+                    arr.push(a)
+                })
+                $("#port").kendoDropDownList({
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataSource: arr,
+                    select: onSelect
+                })
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+    // Tạo sự kiện cho hành động chọn của DropDownList
+    function onSelect(e) {
+        if (e.dataItem) {
+            var dataItem = e.dataItem;
+            mamay = dataItem.value;
+            $("span.k-widget.k-dropdown.k-header").fadeOut();
+            $("#port-number").text(dataItem.text);
+            $.ajax({
+                url: url + "/Home/GetInfo",
+                type: "GET",
+                dataType: "json",
+                data: { "_MaMay": mamay },
+                success: function (result) {
+                    var js = JSON.parse(result);
+                    macb = js["MaCB"];
+                    mabp = js["MaBP"];
+                    $("#id").text(macb);
+                    $("#name").text(js["HoTen"]);
+                    $("#bo-phan").text(js["TenBP"]);
+                    $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
+                    goiSo();
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            })
+        } else {}
+    };
+    // Phương thức gọi số thứ tự tự động
     function goiSo() {
         setInterval(function () {
             $.ajax({
                 url: url + "/Home/GetNumber",
                 type: "GET",
                 dataType: "json",
-                data: { "_MaCB": $("#id").text(), "_MaBP": $("#bo-phan-group span").prop("id") },
+                data: { "_MaCB": macb, "_MaBP": mabp },
                 success: function (result) {
                     var js = JSON.parse(result);
+                    console.log(js);
                     if (!js) {
                     } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
                         $("#show-number").text(js["STT"]);
@@ -144,7 +184,7 @@
                         gop_y += $("#txtArea").prop("value", "");
                         muc_do = 0;
                         gop_y = "";
-                        ma_stt = 0;
+                        ma_stt = parseInt(js["MaSTT"]);
 
                         $("#container").show();
                         $("#thanks").hide();
@@ -156,14 +196,13 @@
             })
         }, 1000)
     }
-
+    // Phương thức hiệu ứng chọn mức độ
     function chonMucDo() {
         $("#RHL").removeAttr("style");
         $("#HL").removeAttr("style");
         $("#BT").removeAttr("style");
         $("#KHL").removeAttr("style");
     }
-
     $("#send").kendoButton();
     $("#txtArea").kendoAutoComplete();
     $("#RHL").click(function () {
@@ -226,7 +265,7 @@
         $("div#feedback-group > div:first-child").html("Xin vui lòng chọn góp ý (Bắt buộc)");
         $("div#feedback-group > div:first-child").prop("style", "color:red");
     });
-
+    // Phương thức hiệu ứng chọn góp ý
     $("#fbRHL, #fbRHL input").click(function () {
         if ($("#fbRHL input").prop("checked")) { $("#fbRHL input").removeAttr("checked"); }
         else { $("#fbRHL input").prop("checked", "checked") }
@@ -243,7 +282,7 @@
         if ($("#fbKHL input").prop("checked")) { $("#fbKHL input").removeAttr("checked"); }
         else { $("#fbKHL input").prop("checked", "checked") }
     });
-
+    // Tạo sự kiện nút gửi
     $("#send").click(function () {
         if ($("#fbRHL input").prop("checked")) {
             gop_y += $("#fbRHL input").prop("value") + ";";
@@ -266,7 +305,6 @@
             alert("Vui lòng nhập góp ý");
             return;
         }
-        ma_stt = $("#number span").prop("id");
 
         var dataSource = {
             "MaCB": $("#id").text(),
@@ -299,10 +337,25 @@
         $("#container").hide();
         $("#thanks").show();
     })
+    $(document).ready(function () {
+        getPort();
+    })
 </script>
 
 <style>
     span.k-widget.k-autocomplete.k-header.k-autocomplete-clearable.k-state-default {
         width: 100%;
+    }
+
+    span.k-widget.k-dropdown.k-header {
+        text-align: center;
+        position: relative;
+        float: right;
+        top: 50%;
+        /* left: 70%; */
+        left: 0%;
+        /*font-size: 1.5em;*/
+        transform: translateY(-50%);
+        /* height: 100%; */
     }
 </style>

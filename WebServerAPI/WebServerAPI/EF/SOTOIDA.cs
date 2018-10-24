@@ -18,5 +18,7 @@ namespace WebServerAPI.EF
         public Nullable<int> STTTD { get; set; }
         public Nullable<int> MABP { get; set; }
         public Nullable<System.DateTime> TG { get; set; }
+    
+        public virtual BOPHAN BOPHAN { get; set; }
     }
 }

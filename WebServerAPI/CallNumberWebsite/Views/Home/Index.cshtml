@@ -52,7 +52,6 @@
         </div>
         <div id="footer">
             <div id="btn-change-pw">ĐỔI MẬT KHẨU</div>
-            @*<div id="btn-logout">ĐĂNG XUẤT</div>*@
             @Html.ActionLink("Đăng xuất", "Logout", "Login")
         </div>
     </div>
@@ -77,7 +76,9 @@
     var today = new Date();
     var macb = 0;
     var mabp = 0;
+    var mamay = 0;
     var mastt = 0;
+    var madn = 0;
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
@@ -96,11 +97,28 @@
                 var js = JSON.parse(result);
                 macb = js["MaCB"];
                 mabp = js["MaBP"];
+                mamay = js["MaMay"];
+                madn = js["MaDN"];
                 $("#id").text(js["MaCB"]);
                 $("#name").text(js["HoTen"]);
                 $("#bo-phan").text(js["TenBP"]);
                 $("#bo-phan-group span").prop("id", js["MaBP"]);
-                getNumber();
+                saveInfo();
+                //getNumber();
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+    // Lưu lại các thông tin
+    function saveInfo() {
+        $.ajax({
+            url: url + "/Home/SaveInfo",
+            type: "GET",
+            dataType: "json",
+            data: { "_MaBP": mabp, "_MaCB": macb, "_MaMay": mamay, "_MaDN": madn },
+            success: function (result) {
             },
             error: function (xhr) {
                 console.log(xhr.responseText);
@@ -122,21 +140,34 @@
             }
         })
     }
+    // Lưu số đã gọi trước đó
+    function saveNumber(mastt) {
+        $.ajax({
+            url: url + "/Home/SaveNumber",
+            type: "GET",
+            dataType: "json",
+            data: { "_MaSTT": mastt },
+            success: function (result) {
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
 
+    // Tạo cửa sổ đổi mật khẩu
     $("#window").kendoWindow({ title: "ĐỔI MẬT KHẨU" });
+    // Tạo sự kiện đóng cửa sổ tự động khi load trang
     $("#window").data("kendoWindow").close();
-    $("#btn-next").kendoButton();
-    $("#btn-again").kendoButton();
-    //$("#btn-success").kendoButton({ enable: false });
-
     // Tạo sự kiện nút tiếp theo
+    $("#btn-next").kendoButton();
     $("#btn-next").click(function () {
         if (macb != 0 && mabp != 0) {
             $.ajax({
                 url: url + "/Home/CallNumber",
                 type: "POST",
                 dataType: "json",
-                data: { "_MaCB": macb, "_MaBP": mabp, "_MaSTT": mastt },
+                data: { "_MaCB": macb, "_MaBP": mabp },
                 success: function (result) {
                     var js = JSON.parse(result);
                     if (result == false) {
@@ -145,10 +176,8 @@
                         mastt = js["MaSTT"];
                         $("#number").text(js["STT"]);
                         $("#title-number span").prop("id", js["MaSTT"]);
-                        //$("#btn-next").data("kendoButton").enable(false);
-                        //$("#btn-again").data("kendoButton").enable(true);
-                        //$("#btn-success").data("kendoButton").enable(true);
                     }
+                    //saveNumber(js["MaSTT"]);
                 },
                 error: function (xhr) {
                     console.log(xhr.responseText);
@@ -156,23 +185,43 @@
             })
         }
     })
+    // Tạo sự kiện nút gọi lại =================================================
+    $("#btn-again").kendoButton();
     $("#btn-again").click(function () {
         // Gọi lại
     })
-    //$("#btn-success").click(function () {
-    //    $("#btn-next").data("kendoButton").enable(true);
-    //    $("#btn-again").data("kendoButton").enable(false);
-    //    $("#btn-success").data("kendoButton").enable(false);
-    //})
+    // Tạo sự kiện nút mở cửa sổ đổi mật khẩu
     $("#btn-change-pw").kendoButton();
     $("#btn-change-pw").click(function () {
         $("#window").data("kendoWindow").open();
-        $("#btn-change-pw").fadeOut();
+        //$("#btn-change-pw").fadeOut();
     })
+    // Tạo sự kiện nút đổi mật khẩu
     $("#btn-change").kendoButton();
-    $("#btn-logout").kendoButton();
-    $("a[href$='/Login/Logout']").text("&nbsp; Đăng xuất &nbsp; &nbsp;");
+    $("#btn-change").click(function () {
+        var mkcu = $("#mk-cu input").val();
+        var mkmoi1 = $("#mk-moi1 input").val();
+        var mkmoi2 = $("#mk-moi2 input").val();
+        if (mkcu.length == 0 || mkmoi1.length == 0 || mkmoi2.length == 0) { alert("Vui lòng điền đầy đủ mật khẩu") }
+        else if (mkcu == mkmoi1) { alert("Mật khẩu mới không được trùng với mật khẩu cũ") }
+        else if (mkmoi1 != mkmoi2) { alert("Mật khẩu nhập lại không đúng") }
+        else {
+            $.ajax({
+                url: url + "/Home/ChangePW",
+                type: "GET",
+                dataType: "json",
+                data: { "_MKCu": mkcu, "_MKMoi": mkmoi1 },
+                success: function (result) {
+                    if (result == true) { alert("Thay đổi thành công"); }
+                    else { alert("Thay đổi không thành công"); }
+                },
+                error: function (xhr) { console.log(xhr.responseText); }
+            })
+        }
+    })
+    // Tạo sự kiện nút đăng xuất
     $("a[href$='/Login/Logout']").kendoButton()
+    // Tạo bảng thời gian các phiên làm việc ====================================
     $("#grid").kendoGrid({
         dataSource: {
             type: "odata",
@@ -211,13 +260,12 @@
         }
         ]
     });
-
+    // Tạo sự kiện nút mở rộng bảng thống kê
     $("#open").click(function () {
-        console.log("click");
         $('#grid').data('kendoGrid').dataSource.read();
         $("#black")[0].classList.toggle("move-right");
     })
-
+    // Tạo sự kiện thu nhỏ bảng thống kê khi click vào mảng đen mờ
     $("#black-span").click(function () {
         console.log("click");
         $("#black")[0].classList.remove("move-right")

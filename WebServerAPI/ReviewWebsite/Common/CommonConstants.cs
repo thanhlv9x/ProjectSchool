@@ -9,5 +9,6 @@ namespace ReviewWebsite.Common
     {
         public static string USER_SESSION = "USER_SESSION";
         public static string USER_RESULT = "USER_RESULT";
+        public static string USER_MAMAY = "USER_MAMAY";
     }
 }

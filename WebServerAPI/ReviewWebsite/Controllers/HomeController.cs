@@ -15,35 +15,78 @@ namespace ReviewWebsite.Controllers
 {
     public class HomeController : Controller
     {
+        public static string url;
         public ActionResult Index()
         {
-            if (Session[CommonConstants.USER_SESSION] != null)
-            {
-                ViewBag.Title = "Home Page";
-                string thuMucGoc = AppDomain.CurrentDomain.BaseDirectory;
-                string thuMucHinh = thuMucGoc + @"\resources\";
-                if (!Directory.Exists(thuMucHinh))
-                {
-                    Directory.CreateDirectory(thuMucHinh);
-                }
-                string thuMucFile = thuMucGoc + @"\Files\";
-                if (!Directory.Exists(thuMucFile))
-                {
-                    Directory.CreateDirectory(thuMucFile);
-                }
-                return View();
-            }
-            else
-            {
-                Session[CommonConstants.USER_SESSION] = null;
-                Session[CommonConstants.USER_RESULT] = null;
-                return Redirect("/Login");
-            }
+            url = "http://localhost:49930";
+            return View();
         }
 
-        public JsonResult GetInfo()
+        /// <summary>
+        /// Phương thức lấy mã máy
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetPort()
         {
-            return Json(Session[CommonConstants.USER_RESULT], JsonRequestBehavior.AllowGet);
+            using(var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(url);
+                }
+                catch { }
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_Port=1").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    if (result != null)
+                    {
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(false, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+            }
+        }
+        /// <summary>
+        /// Phương thức lấy thông tin cán bộ đăng nhập vào mã máy đã chọn
+        /// </summary>
+        /// <param name="_MaMay">Mã máy</param>
+        /// <returns></returns>
+        public JsonResult GetInfo(int _MaMay)
+        {
+            using(var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(url);
+                }
+                catch
+                {
+                    return Json(false, JsonRequestBehavior.AllowGet);
+                }
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_MaMay=" + _MaMay).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    if (result != null)
+                    {
+                        return Json(result, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetNumber(int _MaCB, int _MaBP)
@@ -52,7 +95,7 @@ namespace ReviewWebsite.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
