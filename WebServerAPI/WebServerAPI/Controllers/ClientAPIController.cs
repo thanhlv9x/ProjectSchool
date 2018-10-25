@@ -70,9 +70,11 @@ namespace WebServerAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetInfo(int _MaMay)
         {
+            DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == _MaMay &&
                                                          p.BD != null &&
-                                                         p.KT == null)
+                                                         p.KT == null &&
+                                                         p.BD >= dt)
                                              .OrderByDescending(p => p.MADN)
                                              .FirstOrDefault();
             if (lstEF != null)
@@ -512,7 +514,10 @@ namespace WebServerAPI.Controllers
                     string gop_y = _DanhGia.GopY;
                     DateTime dtNow = DateTime.Now;
                     DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                    int count_stt = db.SOTHUTUs.Where(p => p.MASTT == mastt).Count();
+                    int count_stt = db.SOTHUTUs.Where(p => p.MASTT == mastt &&
+                                                           p.BD >= dt &&
+                                                           p.KT == null)
+                                               .Count();
                     int count_kq = db.KETQUADANHGIAs.Where(p => p.MASTT == mastt).Count();
                     if (count_kq == 0 && count_stt > 0)
                     {

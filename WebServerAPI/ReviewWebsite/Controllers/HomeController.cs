@@ -88,7 +88,12 @@ namespace ReviewWebsite.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
-
+        /// <summary>
+        /// Phương thức gọi số tự động
+        /// </summary>
+        /// <param name="_MaCB">Mã cán bộ</param>
+        /// <param name="_MaBP">Mã bộ phận</param>
+        /// <returns></returns>
         public JsonResult GetNumber(int _MaCB, int _MaBP)
         {
             try
@@ -124,14 +129,18 @@ namespace ReviewWebsite.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
-
+        /// <summary>
+        /// Phương thức gửi kết quả đánh giá lên server
+        /// </summary>
+        /// <param name="_User"></param>
+        /// <returns></returns>
         public JsonResult PostReview(KetQuaDanhGiaUser _User)
         {
             try
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response;

@@ -13,7 +13,7 @@ namespace GetNumberWebsite.Controllers
 {
     public class HomeController : Controller
     {
-        public static string strIP = "192.168.1.3:8888";
+        public static string strIP = "localhost:49930";
         public static string basePath;
 
         public ActionResult Index()
@@ -72,7 +72,6 @@ namespace GetNumberWebsite.Controllers
                 }
             }
         }
-
         /// <summary>
         /// Lấy số thứ tự
         /// </summary>
@@ -103,7 +102,6 @@ namespace GetNumberWebsite.Controllers
                 }
             }
         }
-
         /// <summary>
         /// Thay đổi địa chỉ IP
         /// </summary>

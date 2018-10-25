@@ -11,5 +11,6 @@ namespace WebServerAPI.Models
         public string Loai { get; set; }
         public double TyLe { get; set; }
         public int SoLan { get; set; }
+        public int Diem { get; set; }
     }
 }

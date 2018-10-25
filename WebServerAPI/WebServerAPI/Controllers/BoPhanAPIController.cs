@@ -33,7 +33,6 @@ namespace WebServerAPI.Controllers
             }
             return listMD;
         }
-
         /// <summary>
         /// Lấy thông tin tên các cán bộ theo bộ phận
         /// </summary>

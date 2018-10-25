@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trang chủ</title>
+    <title>Máy đánh giá</title>
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
@@ -118,6 +118,7 @@
             url: url + "/Home/GetPort",
             type: "GET",
             dataType: "json",
+            async: false,
             success: function (result) {
                 var js = JSON.parse(result);
                 $.each(js, function (key, val) {
@@ -138,63 +139,69 @@
     }
     // Tạo sự kiện cho hành động chọn của DropDownList
     function onSelect(e) {
-        if (e.dataItem) {
-            var dataItem = e.dataItem;
-            mamay = dataItem.value;
-            $("span.k-widget.k-dropdown.k-header").fadeOut();
-            $("#port-number").text(dataItem.text);
-            $.ajax({
-                url: url + "/Home/GetInfo",
-                type: "GET",
-                dataType: "json",
-                data: { "_MaMay": mamay },
-                success: function (result) {
-                    var js = JSON.parse(result);
-                    macb = js["MaCB"];
-                    mabp = js["MaBP"];
-                    $("#id").text(macb);
-                    $("#name").text(js["HoTen"]);
-                    $("#bo-phan").text(js["TenBP"]);
-                    $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
-                    goiSo();
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                }
-            })
-        } else {}
+        setInterval(function () {
+            if (e.dataItem) {
+                var dataItem = e.dataItem;
+                mamay = dataItem.value;
+                $("span.k-widget.k-dropdown.k-header").fadeOut();
+                $("#port-number").text(dataItem.text);
+                $.ajax({
+                    url: url + "/Home/GetInfo",
+                    type: "GET",
+                    dataType: "json",
+                    data: { "_MaMay": mamay },
+                    success: function (result) {
+                        var js = JSON.parse(result);
+                        if (js["MaCB"] != macb) {
+                            macb = js["MaCB"];
+                            mabp = js["MaBP"];
+                            $("#id").text(macb);
+                            $("#name").text(js["HoTen"]);
+                            $("#bo-phan").text(js["TenBP"]);
+                            $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
+                            $("#container").show();
+                            $("#thanks").hide();
+                        }
+                        goiSo();
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                })
+            } else { }
+        }, 1000)
     };
     // Phương thức gọi số thứ tự tự động
     function goiSo() {
-        setInterval(function () {
-            $.ajax({
-                url: url + "/Home/GetNumber",
-                type: "GET",
-                dataType: "json",
-                data: { "_MaCB": macb, "_MaBP": mabp },
-                success: function (result) {
-                    var js = JSON.parse(result);
-                    console.log(js);
-                    if (!js) {
-                    } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
-                        $("#show-number").text(js["STT"]);
-                        $("#number span").prop("id", js["MaSTT"]);
-                        chonMucDo();
-                        $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL input").removeAttr("checked");
-                        gop_y += $("#txtArea").prop("value", "");
-                        muc_do = 0;
-                        gop_y = "";
-                        ma_stt = parseInt(js["MaSTT"]);
+        //setInterval(function () {
+        $.ajax({
+            url: url + "/Home/GetNumber",
+            type: "GET",
+            dataType: "json",
+            data: { "_MaCB": macb, "_MaBP": mabp },
+            success: function (result) {
+                var js = JSON.parse(result);
+                console.log(js);
+                if (!js) {
+                } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
+                    $("#show-number").text(js["STT"]);
+                    $("#number span").prop("id", js["MaSTT"]);
+                    chonMucDo();
+                    $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL input").removeAttr("checked");
+                    gop_y += $("#txtArea").prop("value", "");
+                    muc_do = 0;
+                    gop_y = "";
+                    ma_stt = parseInt(js["MaSTT"]);
 
-                        $("#container").show();
-                        $("#thanks").hide();
-                    }
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
+                    $("#container").show();
+                    $("#thanks").hide();
                 }
-            })
-        }, 1000)
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+        //}, 1000)
     }
     // Phương thức hiệu ứng chọn mức độ
     function chonMucDo() {

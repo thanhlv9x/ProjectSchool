@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -73,7 +75,6 @@ namespace WebServerAPI.Controllers
                 return listMD;
             }
         }
-
         /// <summary>
         /// Lấy thời gian của kết quả đánh giá theo bộ phận
         /// </summary>
@@ -109,7 +110,6 @@ namespace WebServerAPI.Controllers
                 return listMD;
             }
         }
-
         /// <summary>
         /// Lấy thời gian của kết quả đánh giá theo cán bộ
         /// </summary>
@@ -145,5 +145,40 @@ namespace WebServerAPI.Controllers
                 return listMD;
             }
         }
+        /// <summary>
+        /// Lấy thông tin cán bộ
+        /// </summary>
+        /// <param name="_MaCB"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public CanBo GetInfo(int _MaCB, int _Info)
+        {
+            var lstEF = db.CANBOes.Where(p => p.MACB == _MaCB).FirstOrDefault();
+            string img = getImage(lstEF.HINHANH);
+            CanBo md = new CanBo()
+            {
+                MaCB = lstEF.MACB,
+                HoTen = lstEF.HOTEN,
+                MaBP = lstEF.MABP,
+                TenBP = lstEF.BOPHAN.TENBP,
+                HinhAnh = img
+            };
+            return md;
+        }
+        /// <summary>
+        /// Phương thức chuyển hình ảnh thành chuỗi byte
+        /// </summary>
+        /// <param name="path">Đường dẫn hình ảnh</param>
+        /// <returns></returns>
+        public string getImage(string path)
+        {
+            MemoryStream ms = new MemoryStream();
+            Image img = Image.FromFile(path);
+            img.Save(ms, img.RawFormat);
+            byte[] data = ms.ToArray();
+            string strImg = Convert.ToBase64String(data);
+            return strImg;
+        }
+
     }
 }
