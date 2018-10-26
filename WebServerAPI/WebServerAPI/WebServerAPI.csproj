@@ -202,6 +202,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\TaiKhoanAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\ThuTucAPIController.cs" />
     <Compile Include="Controllers\ValuesAPIController.cs" />
     <Compile Include="EF\BOPHAN.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
@@ -269,6 +270,7 @@
     <Compile Include="Models\TaiKhoanUserNew.cs" />
     <Compile Include="Models\ThoiGian.cs" />
     <Compile Include="Models\ThongTinCanBo.cs" />
+    <Compile Include="Models\ThuTucChart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -321,6 +323,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style1.css" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
