@@ -17,34 +17,253 @@
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
+
 <body>
     <div id="container">
         <div id="top-menu"></div> @*#top-menu*@
         <div id="main-menu">
             <div id="tabstrip-left">
                 <ul>
-                    <li id="getting-started" class="k-state-active">Giới thiệu</li>
-                    <li id="menu-xem-ket-qua">Thống kê kết quả đánh giá</li>
-                    <li id="menu-xem-thu-tuc">Thời gian giải quyết thủ tục</li>
-                    <li id="menu-thong-tin-can-bo">Thông tin tài khoản</li>
-                    <li id="menu-thong-ke-bao-cao">Báo cáo</li>
+                    <li id="getting-started" class="k-state-active" onclick="showSubTabstrip();">Giới thiệu</li>
+                    <li id="menu-xem-ket-qua" onclick="showSubTabstrip();">Thống kê</li>
+                    <li id="menu-thong-tin-can-bo" onclick="showSubTabstrip();">Thông tin tài khoản</li>
+                    <li id="menu-thong-ke-bao-cao" onclick="showSubTabstrip();">Báo cáo</li>
                     <li>@Html.ActionLink("Đăng xuất", "Logout", "Login")</li>
                 </ul> @*#tabstrip-left*@
 
                 <div>Giới thiệu</div>
-                <div id="xem-ket-qua">
-                    <div id="tong-hop">
-                        <div id="header-th">
-                            <h1>Kết quả đánh giá tổng hợp</h1>
-                            <hr style="clear: both" />
+                <div id="sub-tabstrip-ket-qua">
+                    <ul>
+                        <li>Kết quả đánh giá</li>
+                        <li id="menu-xem-thu-tuc">Thời gian giải quyết thủ tục</li>
+                        <li>Thời gian đăng nhập</li>
+                    </ul>
+                    <div id="xem-ket-qua">
+                        <div id="tong-hop">
+                            <div id="header-th">
+                                <h1>Kết quả đánh giá tổng hợp</h1>
+                                <hr style="clear: both" />
+                            </div>
+                            <div id="body-th">
+                                <div id="part-1" style="clear: both">
+                                    <div style="float: left; width: 70%">
+                                        <div id="chart-column-th" style="margin: 1em 5em 0 5em;"></div>
+                                        <div id="year-group-th" style="width: 20%; margin: 1em 40%">
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column-th" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                    <div style="float: right; width: 30%">
+                                        <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
+                                            <div style="width: 100%; background-color: #88aff5">
+                                                <center><h2 style="display: inline">BỘ PHẬN</h2></center>
+                                            </div>
+                                            <div id="cac-bo-phan"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="clear: both" />
+                                <div id="part-2" style="clear: both">
+                                    <div style="float: left; width: 50%">
+                                        <div id="chart-circle-th"></div>
+                                        <div id="month-group-th" style="width: 20%; margin: 1em 40%">
+                                            <div style="height: 2em; text-align:center">
+                                                <input type="checkbox" id="cb-all-th" checked="checked" style="line-height: 2em" />
+                                                <span style="line-height: 2em">Xem tất cả</span>
+                                            </div>
+                                            <div id="div-month-circle-th">
+                                                <input id="month-circle-th" title="Chọn thời gian" style="width: 100%" />
+                                            </div>
+                                            <div style="margin-top: 2em">
+                                                <center><span id="click-details-th" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="float: right; width: 50%">
+                                        <div style="border-color: #cecece; background-color: #cecece; margin-right: 2em" class="border-style">
+                                            <h3 id="title-all-th">Bảng kết quả đánh giá (Tổng hợp)</h3>
+                                            <div id="grid-all-th"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="clear: both" />
+                            </div>
+                            <div id="footer-th" style="display: none">
+                                <div id="table-RHL-th" style="width: 50%; float: left">
+                                    <div style="border-color: #37b24d; background-color: #37b24d; margin: 2em; width: 90%" class="border-style">
+                                        <h3 id="title-RHL-th">Mức độ - Rất hài lòng (Tổng hợp)</h3>
+                                        <div id="grid-RHL-th"></div>
+                                    </div>
+                                </div>
+                                <div id="table-HL-th" style="width: 50%; float: right">
+                                    <div style="border-color: #228be6; background-color: #228be6; margin-right: 2em; width: 90%" class="border-style">
+                                        <h3 id="title-HL-th">Mức độ - Hài lòng (Tổng hợp)</h3>
+                                        <div id="grid-HL-th"></div>
+                                    </div>
+                                </div>
+                                <div id="table-BT-th" style="clear: both; width: 50%; float: left">
+                                    <div style="border-color: #ffd43b; background-color: #ffd43b; margin-left: 2em; width: 90%" class="border-style">
+                                        <h3 id="title-BT-th">Mức độ - Bình thường (Tổng hợp)</h3>
+                                        <div id="grid-BT-th"></div>
+                                    </div>
+                                </div>
+                                <div id="table-KHL-th" style="width: 50%; float: left">
+                                    <div style="border-color: #fa5252; background-color: #fa5252; margin-right: 2em; width: 90%" class="border-style">
+                                        <h3 id="title-KHL-th">Mức độ - Không hài lòng (Tổng hợp)</h3>
+                                        <div id="grid-KHL-th"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="body-th">
-                            <div id="part-1" style="clear: both">
+                        <div id="bo-phan">
+                            <div>
+                                <h1 style="display: inline">@*Tên bộ phận*@</h1>
+                                <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBP()"></span>
+                                <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBP()">Quay lại</span>
+                                <hr />
+                                <div id="content-ten-can-bo" style="width: 30%; float: right">
+                                    <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
+                                        <div style="width: 100%; background-color: #88aff5">
+                                            <center><h2 style="display: inline">CÁN BỘ</h2></center>
+                                        </div>
+                                        <div id="div-button-canbo"></div>@*#div-button-canbo*@
+                                    </div>
+                                </div>
+                                <div id="content-bp">
+                                    <div id="div-chart-column-bp" style="margin: 1em 5em 0 5em; width: 55%; float: left">
+                                        <div id="chart-column-bp">@*Biểu đồ cột*@</div>
+                                        <div id="div-year-column" style="width: 20%; margin: 1em 40%">
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                    </div>@*#div-chart-column-bp*@
+                                    <div style="clear:both"></div>
+                                    <hr />
+                                    <div style="width: 50%; float: left">
+                                        <div id="chart-circle-bp">@*Biểu đồ tròn*@</div>
+                                        <div id="div-month-circle" style="width: 20%; margin: 1em 40%">
+                                            <div style="height: 2em; text-align:center">
+                                                <input type="checkbox" id="cb-all" checked="checked" style="line-height: 2em" />
+                                                <span style="line-height: 2em">Xem tất cả</span>
+                                            </div>
+                                            <div id="div-month-circle-1">
+                                                <input id="month-circle" title="Chọn thời gian" style="width: 100%" />
+                                            </div>
+                                            <div style="margin-top: 2em">
+                                                <center><span id="click-details-bp" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
+                                            </div>
+                                        </div>@*#div-month-circle*@
+                                    </div>
+                                    <div style="width: 48%; float:right">
+                                        <div style="border-color: #cecece; background-color: #cecece; margin-right: 2em" class="border-style">
+                                            <h3 id="span-title-table-1">Bảng kết quả đánh giá (Tổng hợp)</h3>
+                                            <div id="grid-ty-le"></div>
+                                        </div>
+                                    </div>
+                                    <hr style="clear: both" />
+                                    <div id="table-details-bp" style="clear:both; width: 100%">
+                                        <div style="border-color: #37b24d; background-color: #37b24d; width: 45%; float:left; margin-left: 2em" class="border-style">
+                                            <h3 id="span-title-table-2">Mức độ - Rất hài lòng (Tổng hợp)</h3>
+                                            <div id="grid-rat-hai-long"></div>
+                                        </div>
+                                        <div style="border-color: #228be6; background-color: #228be6; width: 45%; float:right; margin-right: 2em" class="border-style">
+                                            <h3 id="span-title-table-3">Mức độ - Hài lòng (Tổng hợp)</h3>
+                                            <div id="grid-hai-long"></div>
+                                        </div>
+                                        <div style="border-color: #ffd43b; background-color: #ffd43b; width: 45%; float:left; margin-left: 2em" class="border-style">
+                                            <h3 id="span-title-table-4">Mức độ - Bình thường (Tổng hợp)</h3>
+                                            <div id="grid-binh-thuong"></div>
+                                        </div>
+                                        <div style="border-color: #fa5252; background-color: #fa5252; width: 45%; float:right; margin-right: 2em" class="border-style">
+                                            <h3 id="span-title-table-5">Mức độ - Không hài lòng (Tổng hợp)</h3>
+                                            <div id="grid-khong-hai-long"></div>
+                                        </div>
+                                    </div>@*#table-details-bp*@
+                                </div>
+                            </div>
+                        </div> @*#bo-phan*@
+                        <div id="can-bo">
+                            <div>
+                                <h1 style="display: inline">@*Tên cán bộ*@</h1>
+                                <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCB()"></span>
+                                <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCB()">Quay lại</span>
+                                <hr />
+                                <div id="content-can-bo">
+                                    <div id="div-chart-column-cb" style="margin: 1em 5em 0 5em; width: 55%; float: left; text-align:center">
+                                        <div id="chart-column-cb">@*Biểu đồ cột*@</div>
+                                        <div id="div-year-column-cb" style="width: 20%; margin: 1em 40%">
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column-cb" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                    </div>@*#div-chart-column-cb*@
+                                    <div id="table-core-cb">
+                                        <div id="image-cb" style="text-align: center"><input type="image" @*src="~/user.png"*@ alt="Hình ảnh cán bộ" /></div>
+                                        <div id="info-left" style="float:left; width: 32%">
+                                            <div>Mã cán bộ: </div>
+                                            <div>Họ tên: </div>
+                                            <div>Mã bộ phận: </div>
+                                            <div>Tên bộ phận: </div>
+                                        </div>
+                                        <div id="info-right" style="float:right; width: 68%">
+                                            <div id="id-cb"><span></span></div>
+                                            <div id="name-cb"><span></span></div>
+                                            <div id="id-bp"><span></span></div>
+                                            <div id="name-bp"><span></span></div>
+                                        </div>
+                                    </div>
+                                    <hr style="clear: both" />
+                                    <div style="width: 50%; float: left">
+                                        <div id="chart-circle-cb">@*Biểu đồ tròn*@</div>
+                                        <div id="div-month-circle-cb" style="width: 20%; margin: 1em 40%">
+                                            <div style="height: 2em; text-align:center">
+                                                <input type="checkbox" id="cb-all-cb" checked="checked" style="line-height: 2em" />
+                                                <span style="line-height: 2em">Xem tất cả</span>
+                                            </div>
+                                            <div id="div-month-circle-cb-1">
+                                                <input id="month-circle-cb" title="Chọn thời gian" style="width: 100%" />
+                                            </div>
+                                            <div style="margin-top: 2em">
+                                                <center><span id="click-details-cb" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
+                                            </div>
+                                        </div>@*#div-month-circle-cb*@
+                                    </div>
+                                </div>
+                                <div style="width: 48%; float:right">
+                                    <div style="border-color: #cecece; background-color: #cecece" class="border-style">
+                                        <h3 id="span-title-table-cb-1">Bảng kết quả đánh giá (Tổng hợp)</h3>
+                                        <div id="grid-ty-le-cb"></div>
+                                    </div>@*Bảng kết quả đánh giá*@
+                                </div>
+                                <hr style="clear: both" />
+                                <div id="table-details-cb" style="clear:both; width: 100%">
+                                    <div style="border-color: #cecece; background-color: #cecece" class="border-style">
+                                        <h3 id="span-title-table-gop-y">Bảng góp ý (Tổng hợp)</h3>
+                                        <div id="grid-gop-y"></div>
+                                    </div>@*Bảng góp ý*@
+                                </div>@*#table-details-cb*@
+                            </div>
+                        </div>@*#can-bo*@
+                    </div> @*#xem-ket-qua*@
+                    <div id="div-thu-tuc">
+                        <div id="thu-tuc-th">
+                            <div id="header-thu-tuc-th">
+                                <h1>Thời gian giải quyết thủ tục tổng hợp</h1>
+                            </div>
+                            <hr />
+                            <div id="body-thu-tuc-th">
                                 <div style="float: left; width: 70%">
-                                    <div id="chart-column-th" style="margin: 1em 5em 0 5em;"></div>
-                                    <div id="year-group-th" style="width: 20%; margin: 1em 40%">
-                                        <label>Chọn năm:</label>
-                                        <input id="year-column-th" title="Chọn thời gian" style="width: 100%" />
+                                    <div id="chart-column-thu-tuc-th" style="margin: 1em 5em 0 5em;"></div>
+                                    <div id="year-group-thu-tuc-th">
+                                        <div>
+                                            <input type="checkbox" id="cbx-month-thu-tuc-th" />
+                                            <label>Chọn tháng:</label>
+                                            <input id="month-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" id="cbx-year-thu-tuc-th" checked="checked" />
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div style="float: right; width: 30%">
@@ -52,295 +271,168 @@
                                         <div style="width: 100%; background-color: #88aff5">
                                             <center><h2 style="display: inline">BỘ PHẬN</h2></center>
                                         </div>
-                                        <div id="cac-bo-phan"></div>
+                                        <div id="cac-bo-phan-thu-tuc"></div>
                                     </div>
                                 </div>
                             </div>
-                            <hr style="clear: both" />
-                            <div id="part-2" style="clear: both">
-                                <div style="float: left; width: 50%">
-                                    <div id="chart-circle-th"></div>
-                                    <div id="month-group-th" style="width: 20%; margin: 1em 40%">
-                                        <div style="height: 2em; text-align:center">
-                                            <input type="checkbox" id="cb-all-th" checked="checked" style="line-height: 2em" />
-                                            <span style="line-height: 2em">Xem tất cả</span>
-                                        </div>
-                                        <div id="div-month-circle-th">
-                                            <input id="month-circle-th" title="Chọn thời gian" style="width: 100%" />
-                                        </div>
-                                        <div style="margin-top: 2em">
-                                            <center><span id="click-details-th" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="float: right; width: 50%">
-                                    <div style="border-color: #cecece; background-color: #cecece; margin-right: 2em" class="border-style">
-                                        <h3 id="title-all-th">Bảng kết quả đánh giá (Tổng hợp)</h3>
-                                        <div id="grid-all-th"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr style="clear: both" />
-                        </div>
-                        <div id="footer-th" style="display: none">
-                            <div id="table-RHL-th" style="width: 50%; float: left">
-                                <div style="border-color: #37b24d; background-color: #37b24d; margin: 2em; width: 90%" class="border-style">
-                                    <h3 id="title-RHL-th">Mức độ - Rất hài lòng (Tổng hợp)</h3>
-                                    <div id="grid-RHL-th"></div>
-                                </div>
-                            </div>
-                            <div id="table-HL-th" style="width: 50%; float: right">
-                                <div style="border-color: #228be6; background-color: #228be6; margin-right: 2em; width: 90%" class="border-style">
-                                    <h3 id="title-HL-th">Mức độ - Hài lòng (Tổng hợp)</h3>
-                                    <div id="grid-HL-th"></div>
-                                </div>
-                            </div>
-                            <div id="table-BT-th" style="clear: both; width: 50%; float: left">
-                                <div style="border-color: #ffd43b; background-color: #ffd43b; margin-left: 2em; width: 90%" class="border-style">
-                                    <h3 id="title-BT-th">Mức độ - Bình thường (Tổng hợp)</h3>
-                                    <div id="grid-BT-th"></div>
-                                </div>
-                            </div>
-                            <div id="table-KHL-th" style="width: 50%; float: left">
-                                <div style="border-color: #fa5252; background-color: #fa5252; margin-right: 2em; width: 90%" class="border-style">
-                                    <h3 id="title-KHL-th">Mức độ - Không hài lòng (Tổng hợp)</h3>
-                                    <div id="grid-KHL-th"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="bo-phan">
-                        <div>
-                            <h1 style="display: inline">@*Tên bộ phận*@</h1>
-                            <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBP()"></span>
-                            <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBP()">Quay lại</span>
                             <hr />
-                            <div id="content-ten-can-bo" style="width: 30%; float: right">
-                                <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
-                                    <div style="width: 100%; background-color: #88aff5">
-                                        <center><h2 style="display: inline">CÁN BỘ</h2></center>
-                                    </div>
-                                    <div id="div-button-canbo"></div>@*#div-button-canbo*@
-                                </div>
-                            </div>
-                            <div id="content-bp">
-                                <div id="div-chart-column-bp" style="margin: 1em 5em 0 5em; width: 55%; float: left">
-                                    <div id="chart-column-bp">@*Biểu đồ cột*@</div>
-                                    <div id="div-year-column" style="width: 20%; margin: 1em 40%">
-                                        <label>Chọn năm:</label>
-                                        <input id="year-column" title="Chọn thời gian" style="width: 100%" />
-                                    </div>
-                                </div>@*#div-chart-column-bp*@
-                                <div style="clear:both"></div>
-                                <hr />
-                                <div style="width: 50%; float: left">
-                                    <div id="chart-circle-bp">@*Biểu đồ tròn*@</div>
-                                    <div id="div-month-circle" style="width: 20%; margin: 1em 40%">
-                                        <div style="height: 2em; text-align:center">
-                                            <input type="checkbox" id="cb-all" checked="checked" style="line-height: 2em" />
-                                            <span style="line-height: 2em">Xem tất cả</span>
-                                        </div>
-                                        <div id="div-month-circle-1">
-                                            <input id="month-circle" title="Chọn thời gian" style="width: 100%" />
-                                        </div>
-                                        <div style="margin-top: 2em">
-                                            <center><span id="click-details-bp" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
-                                        </div>
-                                    </div>@*#div-month-circle*@
-                                </div>
-                                <div style="width: 48%; float:right">
-                                    <div style="border-color: #cecece; background-color: #cecece; margin-right: 2em" class="border-style">
-                                        <h3 id="span-title-table-1">Bảng kết quả đánh giá (Tổng hợp)</h3>
-                                        <div id="grid-ty-le"></div>
-                                    </div>
-                                </div>
-                                <hr style="clear: both" />
-                                <div id="table-details-bp" style="clear:both; width: 100%">
-                                    <div style="border-color: #37b24d; background-color: #37b24d; width: 45%; float:left; margin-left: 2em" class="border-style">
-                                        <h3 id="span-title-table-2">Mức độ - Rất hài lòng (Tổng hợp)</h3>
-                                        <div id="grid-rat-hai-long"></div>
-                                    </div>
-                                    <div style="border-color: #228be6; background-color: #228be6; width: 45%; float:right; margin-right: 2em" class="border-style">
-                                        <h3 id="span-title-table-3">Mức độ - Hài lòng (Tổng hợp)</h3>
-                                        <div id="grid-hai-long"></div>
-                                    </div>
-                                    <div style="border-color: #ffd43b; background-color: #ffd43b; width: 45%; float:left; margin-left: 2em" class="border-style">
-                                        <h3 id="span-title-table-4">Mức độ - Bình thường (Tổng hợp)</h3>
-                                        <div id="grid-binh-thuong"></div>
-                                    </div>
-                                    <div style="border-color: #fa5252; background-color: #fa5252; width: 45%; float:right; margin-right: 2em" class="border-style">
-                                        <h3 id="span-title-table-5">Mức độ - Không hài lòng (Tổng hợp)</h3>
-                                        <div id="grid-khong-hai-long"></div>
-                                    </div>
-                                </div>@*#table-details-bp*@
+                            <div id="footer-thu-tuc-th" class="border-style title-border-style">
+                                <h3 id="title-grid-thu-tuc-th"></h3>
+                                <div id="grid-thu-tuc-th"></div>
                             </div>
                         </div>
-                    </div> @*#bo-phan*@
-                    <div id="can-bo">
-                        <div>
-                            <h1 style="display: inline">@*Tên cán bộ*@</h1>
-                            <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCB()"></span>
-                            <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCB()">Quay lại</span>
+                        <div id="thu-tuc-bp">
+                            <div id="header-thu-tuc-bp">
+                                <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
+                                <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBPThuTuc()"></span>
+                                <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBPThuTuc()">Quay lại</span>
+                            </div>
                             <hr />
-                            <div id="content-can-bo">
-                                <div id="div-chart-column-cb" style="margin: 1em 5em 0 5em; width: 55%; float: left; text-align:center">
-                                    <div id="chart-column-cb">@*Biểu đồ cột*@</div>
-                                    <div id="div-year-column-cb" style="width: 20%; margin: 1em 40%">
-                                        <label>Chọn năm:</label>
-                                        <input id="year-column-cb" title="Chọn thời gian" style="width: 100%" />
+                            <div id="body-thu-tuc-bp">
+                                <div style="float: left; width: 70%">
+                                    <div id="chart-column-thu-tuc-bp" style="margin: 1em 5em 0 5em;"></div>
+                                    <div id="year-group-thu-tuc-bp">
+                                        <div>
+                                            <input type="checkbox" id="cbx-month-thu-tuc-bp" />
+                                            <label>Chọn tháng:</label>
+                                            <input id="month-column-thu-tuc-bp" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" id="cbx-year-thu-tuc-bp" checked="checked" />
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column-thu-tuc-bp" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
                                     </div>
-                                </div>@*#div-chart-column-cb*@
-                                <div id="table-core-cb">
-                                    <div id="image-cb" style="text-align: center"><input type="image" @*src="~/user.png"*@ alt="Hình ảnh cán bộ" /></div>
-                                    <div id="info-left" style="float:left; width: 32%">
+                                </div>
+                                <div style="float: right; width: 30%">
+                                    <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
+                                        <div style="width: 100%; background-color: #88aff5">
+                                            <center><h2 style="display: inline">CÁN BỘ</h2></center>
+                                        </div>
+                                        <div id="cac-can-bo-thu-tuc"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div id="footer-thu-tuc-bp" class="border-style title-border-style">
+                                <h3 id="title-grid-thu-tuc-bp"></h3>
+                                <div id="grid-thu-tuc-bp"></div>
+                            </div>
+                        </div>
+                        <div id="thu-tuc-cb">
+                            <div id="header-thu-tuc-cb">
+                                <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
+                                <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCBThuTuc()"></span>
+                                <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCBThuTuc()">Quay lại</span>
+                            </div>
+                            <hr />
+                            <div id="body-thu-tuc-cb">
+                                <div style="float: left; width: 65%">
+                                    <div id="chart-column-thu-tuc-cb" style="margin: 1em 5em 0 5em;"></div>
+                                    <div id="year-group-thu-tuc-cb">
+                                        <div>
+                                            <input type="checkbox" id="cbx-month-thu-tuc-cb" />
+                                            <label>Chọn tháng:</label>
+                                            <input id="month-column-thu-tuc-cb" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                        <div>
+                                            <input type="checkbox" id="cbx-year-thu-tuc-cb" checked="checked" />
+                                            <label>Chọn năm:</label>
+                                            <input id="year-column-thu-tuc-cb" title="Chọn thời gian" style="width: 100%" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="table-core-thu-tuc-cb">
+                                    <div id="image-thu-tuc-cb" style="text-align: center"><input type="image" @*src="~/user.png"*@ alt="Hình ảnh cán bộ" /></div>
+                                    <div id="info-thu-tuc-left" style="float:left; width: 32%">
                                         <div>Mã cán bộ: </div>
                                         <div>Họ tên: </div>
                                         <div>Mã bộ phận: </div>
                                         <div>Tên bộ phận: </div>
                                     </div>
-                                    <div id="info-right" style="float:right; width: 68%">
-                                        <div id="id-cb"><span></span></div>
-                                        <div id="name-cb"><span></span></div>
-                                        <div id="id-bp"><span></span></div>
-                                        <div id="name-bp"><span></span></div>
-                                    </div>
-                                </div>
-                                <hr style="clear: both" />
-                                <div style="width: 50%; float: left">
-                                    <div id="chart-circle-cb">@*Biểu đồ tròn*@</div>
-                                    <div id="div-month-circle-cb" style="width: 20%; margin: 1em 40%">
-                                        <div style="height: 2em; text-align:center">
-                                            <input type="checkbox" id="cb-all-cb" checked="checked" style="line-height: 2em" />
-                                            <span style="line-height: 2em">Xem tất cả</span>
-                                        </div>
-                                        <div id="div-month-circle-cb-1">
-                                            <input id="month-circle-cb" title="Chọn thời gian" style="width: 100%" />
-                                        </div>
-                                        <div style="margin-top: 2em">
-                                            <center><span id="click-details-cb" style="cursor:pointer; color:cornflowerblue">Xem chi tiết</span></center>
-                                        </div>
-                                    </div>@*#div-month-circle-cb*@
-                                </div>
-                            </div>
-                            <div style="width: 48%; float:right">
-                                <div style="border-color: #cecece; background-color: #cecece" class="border-style">
-                                    <h3 id="span-title-table-cb-1">Bảng kết quả đánh giá (Tổng hợp)</h3>
-                                    <div id="grid-ty-le-cb"></div>
-                                </div>@*Bảng kết quả đánh giá*@
-                            </div>
-                            <hr style="clear: both" />
-                            <div id="table-details-cb" style="clear:both; width: 100%">
-                                <div style="border-color: #cecece; background-color: #cecece" class="border-style">
-                                    <h3 id="span-title-table-gop-y">Bảng góp ý (Tổng hợp)</h3>
-                                    <div id="grid-gop-y"></div>
-                                </div>@*Bảng góp ý*@
-                            </div>@*#table-details-cb*@
-                        </div>
-                    </div>@*#can-bo*@
-                </div> @*#xem-ket-qua*@
-                <div id="div-thu-tuc">
-                    <div id="thu-tuc-th">
-                        <div id="header-thu-tuc-th">
-                            <h1>Thời gian giải quyết thủ tục tổng hợp</h1>
-                        </div>
-                        <hr />
-                        <div id="body-thu-tuc-th">
-                            <div style="float: left; width: 70%">
-                                <div id="chart-column-thu-tuc-th" style="margin: 1em 5em 0 5em;"></div>
-                                <div id="year-group-thu-tuc-th">
-                                    <div>
-                                        <input type="checkbox" id="cbx-month-thu-tuc-th" />
-                                        <label>Chọn tháng:</label>
-                                        <input id="month-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" id="cbx-year-thu-tuc-th" checked="checked" />
-                                        <label>Chọn năm:</label>
-                                        <input id="year-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
+                                    <div id="info-thu-tuc-right" style="float:right; width: 68%">
+                                        <div id="id-thu-tuc-cb"><span></span></div>
+                                        <div id="name-thu-tuc-cb"><span></span></div>
+                                        <div id="id-thu-tuc-bp"><span></span></div>
+                                        <div id="name-thu-tuc-bp"><span></span></div>
                                     </div>
                                 </div>
                             </div>
-                            <div style="float: right; width: 30%">
-                                <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
-                                    <div style="width: 100%; background-color: #88aff5">
-                                        <center><h2 style="display: inline">BỘ PHẬN</h2></center>
-                                    </div>
-                                    <div id="cac-bo-phan-thu-tuc"></div>
-                                </div>
+                            <hr />
+                            <div id="footer-thu-tuc-cb" class="border-style title-border-style">
+                                <h3 id="title-grid-thu-tuc-cb"></h3>
+                                <div id="grid-thu-tuc-cb"></div>
                             </div>
-                        </div>
-                        <hr />
-                        <div id="footer-thu-tuc-th">
-                            <div id="grid-thu-tuc-th"></div>
                         </div>
                     </div>
-                    <div id="thu-tuc-bp">
-                        <div id="header-thu-tuc-bp">
-                            <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
-                            <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBPThuTuc()"></span>
-                            <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBPThuTuc()">Quay lại</span>
+                    <div id="div-thoi-gian-dang-nhap">
+                        <div id="div-chon-can-bo">
+                            <div>
+                                <label>Bộ phận</label>
+                                <div id="bo-phan-dang-nhap"></div>
+                            </div>
+                            <div>
+                                <label>Cán bộ</label>
+                                <div id="can-bo-dang-nhap"></div>
+                            </div>
                         </div>
-                        <hr />
-                        <div id="body-thu-tuc-bp">
-                            <div style="float: left; width: 70%">
-                                <div id="chart-column-thu-tuc-bp" style="margin: 1em 5em 0 5em;"></div>
-                                <div id="year-group-thu-tuc-bp" style="width: 20%; margin: 1em 40%">
+                        <div id="div-loai-dang-nhap">
+                            <div>
+                                <div>
+                                    <input type="checkbox" id="cbx-thang-dang-nhap" />
+                                    <label>Chọn tháng:</label>
+                                </div>
+                                <div>
+                                    <input id="thang-dang-nhap" title="Chọn thời gian" />
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <input type="checkbox" id="cbx-nam-dang-nhap" checked="checked" />
                                     <label>Chọn năm:</label>
-                                    <input id="year-column-thu-tuc-bp" title="Chọn thời gian" style="width: 100%" />
                                 </div>
-                            </div>
-                            <div style="float: right; width: 30%">
-                                <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
-                                    <div style="width: 100%; background-color: #88aff5">
-                                        <center><h2 style="display: inline">CÁN BỘ</h2></center>
-                                    </div>
-                                    <div id="cac-can-bo-thu-tuc"></div>
+                                <div>
+                                    <input id="nam-dang-nhap" title="Chọn thời gian" />
                                 </div>
                             </div>
                         </div>
-                        <hr />
-                        <div id="footer-thu-tuc-bp"></div>
-                    </div>
-                    <div id="thu-tuc-cb">
-                        <div id="header-thu-tuc-cb">
-                            <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
-                            <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCBThuTuc()"></span>
-                            <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCBThuTuc()">Quay lại</span>
-                        </div>
-                        <hr />
-                        <div id="body-thu-tuc-cb">
-                            <div style="float: left; width: 70%">
-                                <div id="chart-column-thu-tuc-cb" style="margin: 1em 5em 0 5em;"></div>
-                                <div id="year-group-thu-tuc-cb" style="width: 20%; margin: 1em 40%">
-                                    <label>Chọn năm:</label>
-                                    <input id="year-column-thu-tuc-cb" title="Chọn thời gian" style="width: 100%" />
-                                </div>
-                            </div>
-                            <div style="float: right; width: 30%">
-                                <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
-                                    <div style="width: 100%; background-color: #88aff5">
-                                        <center><h2 style="display: inline">CÁN BỘ</h2></center>
-                                    </div>
-                                    <div id="cac-can-bo-thu-tuc"></div>
-                                </div>
+                        <div id="btn-dang-nhap">Xem</div>
+                        <hr style="clear: both" />
+                        <div id="chart"></div>
+                        <div>
+                            <div id="div-grid-dang-nhap" class="border-style title-border-style">
+                                <h3>Thông tin thời gian đăng nhập</h3>
+                                <div id="grid-dang-nhap"></div>
                             </div>
                         </div>
-                        <hr />
-                        <div id="footer-thu-tuc-cb"></div>
+
                     </div>
                 </div>
-                <div id="tai-khoan-can-bo">
-                    @*<div id="tai-khoan-ten-bo-phan"></div>*@
-                    <div id="div-tai-khoan-can-bo">
-                        <h1 style="display: inline">Thông tin tài khoản cán bộ</h1>
-                        <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backTK()"></span>
-                        <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backTK()">Quay lại</span>
-                        <hr style="clear: both" />
-                        <div style="margin: 1em 5em 0 5em">
+                <div id="sub-tabstrip-thong-tin">
+                    <ul>
+                        <li>Tài khoản cán bộ</li>
+                        <li>Bộ phận</li>
+                        <li>Số quầy</li>
+                    </ul>
+                    <div>
+                        <div id="div-tai-khoan-can-bo" class="border-style title-border-style">
+                            <h3>Thông tin tài khoản cán bộ</h3>
                             <div id="grid-tai-khoan-can-bo"></div>
                         </div>
                     </div>
-                </div> @*#tai-khoan-can-bo*@
+                    <div>
+                        <div id="div-thong-tin-bo-phan" class="border-style title-border-style">
+                            <h3>Thông tin bộ phận</h3>
+                            <div id="grid-thong-tin-bo-phan"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="div-thong-tin-quay" class="border-style title-border-style">
+                            <h3>Thông tin quầy</h3>
+                            <div id="grid-thong-tin-quay"></div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="thong-ke-bao-cao">
                     <div id="tieu-chi-bao-cao" style="width: 100%">
@@ -437,6 +529,8 @@
                         <div id="grid-report-1"></div>
                         <div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div>
                         <div id="grid-report-2"></div>
+                        <div id="title-bao-cao-3" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div>
+                        <div id="grid-report-3"></div>
                     </div>
                 </div> @*#thong-ke-bao-cao*@
             </div> @*#tabstrip-left*@
@@ -499,2738 +593,53 @@
 </script>
 
 <script>
-    var mabp;
-    var macb;
     var url = window.location.origin;
-    //var url = window.location.origin + "/htdg";
-    var clickBP = false;
-    var clickCB = false;
-    var clickTH = false;
-    // Tạo tabstrip vị trí bên trái
+    // Tạo tabstrip
     function createTabStrip() {
         $("#tabstrip-left").kendoTabStrip({
             tabPosition: "top",
             animation: { open: { effects: "fadeIn" } }
         });
     }
-
-    // ============ Tổng hợp =============
-    // Nút tên bộ phận: sự kiện click vào menu xem kết quả
-    $("#menu-xem-ket-qua").click(function () {
-        $("#footer-th").hide();
-        $("#div-month-circle-th").hide();
-        getBPName();
-    })
-    // Tạo biểu đồ cột
-    function createChartColumnTH(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        async: false,
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        thang: { type: "string" },
-                        RHL: { type: "number" },
-                        HL: { type: "number" },
-                        BT: { type: "number" },
-                        KHL: { type: "number" },
-                    }
-                }
-            }
-        });
-        $("#chart-column-th").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                type: "column",
-                stack: { type: "100%" }
-            },
-            series:
-                [{
-                    field: "RHL",
-                    categoryField: "thang",
-                    name: "Rất hài lòng",
-                    color: "#37b24d"
-                }, {
-                    field: "HL",
-                    categoryField: "thang",
-                    name: "Hài lòng",
-                    color: "#228be6"
-                }, {
-                    field: "BT",
-                    categoryField: "thang",
-                    name: "Bình thường",
-                    color: "#ffd43b"
-                }, {
-                    field: "KHL",
-                    categoryField: "thang",
-                    name: "Không hài lòng",
-                    color: "#fa5252"
-                }],
-            categoryAxis: {
-                labels: {
-                    rotation: -90
-                },
-                majorGridLines: {
-                    visible: false
-                }
-            },
-            valueAxis: {
-                labels: {
-                    format: "{0:p0}"
-                },
-                line: {
-                    visible: false
-                },
-                axisCrossingValue: 0
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}%",
-                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-            }
+    createTabStrip();
+    function createSubTabStripTT() {
+        $("#sub-tabstrip-thong-tin").kendoTabStrip({
+            tabPosition: "top",
+            animation: { open: { effects: "fadeIn" } }
         });
     }
-    // Tạo dropdownlist chọn năm
-    function createYearColumnTH() {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI",
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#part-1").show();
-                    var arr = [];
-                    var j = 0;
-                    var arr1 = data[0].split(" ");
-                    var arr2 = data[1].split(" ");
-                    for (var i = Number.parseInt(arr1[0]); i <= Number.parseInt(arr2[0]); i++) {
-                        arr[j] = { text: i.toString(), value: i.toString() };
-                        j++;
-                    }
-                    $("#year-column-th").kendoDropDownList({
-                        dataTextField: "text",
-                        dataValueField: "value",
-                        dataSource: arr
-                    });
-                    createChartColumnTH(url + "/api/CotDanhGiaAPI/?_Year=" + $("#year-column-th").val(), "Kết quả tổng hợp năm " + $("#year-column-th").val());
-                } else {
-                    $("#year-column-th").val(0);
-                    $("#part-1").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
+    createSubTabStripTT();
+    function createSubTabStripKQ() {
+        $("#sub-tabstrip-ket-qua").kendoTabStrip({
+            tabPosition: "top",
+            animation: { open: { effects: "fadeIn" } }
+        });
     }
-    // Tạo sự kiện cho dropdownlist chọn năm
-    $("#year-column-th").change(function () {
-        createChartColumnTH(url + "/api/CotDanhGiaAPI/?_Year=" + $("#year-column").val(), "Kết quả tổng hợp năm " + $("#year-column-th").val());
-    })
-    // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
-    $("#cb-all-th").change(function () {
-        if ($("#cb-all-th").prop("checked") == true) {
-            createChartTableTHAll();
-            $("#div-month-circle-th").hide("slow");
+    createSubTabStripKQ();
+    function showSubTabstrip() {
+        if ($("#menu-thong-tin-can-bo.k-state-active").length > 0) {
+            $("#sub-tabstrip-thong-tin").show();
         } else {
-            createChartTableTHTime();
-            $("#div-month-circle-th").show("slow");
+            $("#sub-tabstrip-thong-tin").hide();
         }
-    });
-    // Tạo biểu đồ tròn
-    function createChartCircleTH(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        category: { type: "string" },
-                        value: { type: "number" },
-                        color: { type: "string" },
-                    }
-                }
-            },
-        });
-        $("#chart-circle-th").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr,
-                position: "bottom",
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                labels: {
-                    template: "#= category # - #= kendo.format('{0:P}', percentage)#",
-                    position: "outsideEnd",
-                    visible: true,
-                    background: "transparent"
-                },
-                type: "pie"
-            },
-            series: [
-                {
-                    field: "value",
-                    categoryField: "category",
-                    color: "color"
-                }
-            ],
-            tooltip: {
-                visible: true,
-                template: "#= category # - #= kendo.format('{0:P}', percentage) #"
-            }
-        });
 
-    }
-    // Tạo thanh chọn thời gian cho biểu đồ tròn
-    function createMonthCircleTH() {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI",
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#body-th").show();
-                    $("#footer-th").show();
-                    $("#month-circle-th").kendoDatePicker({
-                        start: "year",
-                        depth: "year",
-                        format: "MM yyyy",
-                        dateInput: false,
-                        value: new Date(),
-                        min: new Date(data[0]),
-                        max: new Date(data[1]),
-                        //disableDates: ["sa", "su"]
-                    });
-                } else {
-                    $("#month-circle-th").val("09 2018");
-                    $("#body-th").hide();
-                    $("#footer-th").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện chọn thời gian
-    $("#month-circle-th").change(function () {
-        createChartTableTHTime();
-    })
-    // Tạo bảng chi tiết
-    function createTableTH(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MucDo",
-                    fields: {
-                        MucDo: { type: "number" },
-                        Loai: {
-                            type: "string", validation: { required: true }
-                        },
-                        TyLe: {
-                            type: "number", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        },
-                        Diem: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: [
-                { field: "SoLan", aggregate: "sum" },
-                { field: "Diem", aggregate: "sum" }]
-        });
-
-        var grid = $("#grid-all-th").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "Loai", title: "Mức độ đánh giá", width: 1 },
-                { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
-                {
-                    field: "SoLan", title: "Số lần", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                },
-                {
-                    field: "Diem", title: "Điểm", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $("#title-all-th").text(titleStr);
-    }
-    // Tạo bảng chi tiết (Mức độ đánh giá)
-    function createTableTH_MucDo(urlStr, titleStr, idGrid, idSpan) {
-        //$(idGrid).html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaCB",
-                    fields: {
-                        MaCB: { type: "number" },
-                        HoTen: {
-                            type: "string", validation: { required: true }
-                        },
-                        TyLe: {
-                            type: "number", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        },
-                        Diem: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: [
-                { field: "SoLan", aggregate: "sum" },
-                { field: "Diem", aggregate: "sum" },
-                { field: "Diem", aggregate: "average" }]
-        });
-
-        var grid = $(idGrid).kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "HoTen", title: "Bộ phận", width: 5 },
-                { field: "TyLe", title: "Tỷ lệ (%)", width: 2 },
-                {
-                    field: "SoLan", title: "Số lần", width: 3,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                },
-                {
-                    field: "Diem", title: "Điểm", width: 3,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $(idSpan).text(titleStr);
-    }
-    // Phương thức tạo đồ thị và bảng
-    function createChartTableTHAll() {
-        var urlStr = url + "/api/KetQuaDanhGiaAPI";
-        createChartCircleTH(urlStr, "Kết quả đánh giá (Tổng hợp)");
-
-        var urlStr1 = url + "/api/BangDanhGiaAPI";
-        createTableTH(urlStr1, "Kết quả đánh giá (Tổng hợp)");
-
-        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 1;
-        createTableTH_MucDo(urlStr2, "Mức độ - Rất hài lòng (Tổng hợp)", "#grid-RHL-th", "#title-RHL-th")
-
-        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 2;
-        createTableTH_MucDo(urlStr3, "Mức độ - Hài lòng (Tổng hợp)", "#grid-HL-th", "#title-HL-th")
-
-        var urlStr4 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 3;
-        createTableTH_MucDo(urlStr4, "Mức độ - Bình thường (Tổng hợp)", "#grid-BT-th", "#title-BT-th")
-
-        var urlStr5 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 4;
-        createTableTH_MucDo(urlStr5, "Mức độ - Không hài lòng (Tổng hợp)", "#grid-KHL-th", "#title-KHL-th")
-    }
-    // Phương thức tạo đồ thị và bảng theo thời gian
-    function createChartTableTHTime() {
-        var date = $("#month-circle-th").val();
-        var time = '_ThoiGian=' + date;
-        var urlStr = url + "/api/KetQuaDanhGiaAPI/?" + time;
-        createChartCircleTH(urlStr, "Kết quả đánh giá (" + date + ")");
-
-        var urlStr1 = url + "/api/BangDanhGiaAPI/?" + time;
-        createTableTH(urlStr1, "Kết quả đánh giá (" + date + ")");
-
-        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 1 + "&" + time;
-        createTableTH_MucDo(urlStr2, "Mức độ - Rất hài lòng (" + date + ")", "#grid-RHL-th", "#title-RHL-th")
-
-        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 2 + "&" + time;
-        createTableTH_MucDo(urlStr3, "Mức độ - Hài lòng (" + date + ")", "#grid-HL-th", "#title-HL-th")
-
-        var urlStr4 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 3 + "&" + time;
-        createTableTH_MucDo(urlStr4, "Mức độ - Bình thường (" + date + ")", "#grid-BT-th", "#title-BT-th")
-
-        var urlStr5 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 4 + "&" + time;
-        createTableTH_MucDo(urlStr5, "Mức độ - Không hài lòng (" + date + ")", "#grid-KHL-th", "#title-KHL-th")
-    }
-    // Tạo sự kiện nút xem chi tiết
-    $("#click-details-th").click(function () {
-        if (!clickTH) {
-            $("#footer-th").show("slow");
-            $("#click-details-th").text("Thu gọn");
-            clickTH = true;
+        if ($("#menu-xem-ket-qua.k-state-active").length > 0) {
+            $("#sub-tabstrip-ket-qua").show();
         } else {
-            $("#footer-th").hide("slow");
-            $("#click-details-th").text("Xem chi tiết");
-            clickTH = false;
-        }
-    })
-
-    // ============ Bộ phận ==============
-    // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
-    function getBPName() {
-        var str = "";
-        $.ajax({
-            type: "GET",
-            url: url + "/api/BoPhanAPI",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (key, val) {
-                    str += "<div id='" + val.MaBP + "' class='btnBP'>" + val.TenBP + "</div>";
-                });
-                $("#cac-bo-phan").html(str);
-                createButtonBP();
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-    }
-    // Nút tên bộ phận: tạo phương thức click
-    function onClickBtnBP(e) {
-        $("#tong-hop").hide("slow");
-        $("#cac-bo-phan").hide("slow");
-        $("#bo-phan").show("slow");
-        $("#div-month-circle-1").hide();
-        $("#table-details-bp").hide();
-        $("#click-details-bp").text("Xem chi tiết");
-        $("#content-ten-bo-phan").hide();
-        clickBP = false;
-        setTimeout(function () {
-            mabp = $(e.event.target).attr("id");
-            $("#bo-phan div h1").text($(e.event.target).text());
-            createMonthCircle(mabp);
-            createChartTableAll();
-            createYearColumn(mabp);
-            $("#cb-all").prop("checked", true);
-            getCBName(url + "/api/BoPhanAPI/?_MaBP=" + mabp);
-        }, 500);
-    }
-    // Nút tên bộ phận: tạo form nút
-    function createButtonBP() {
-        $(".btnBP").each(function (index) {
-            $(this).kendoButton({
-                click: onClickBtnBP
-            });
-        });
-    }
-    // Tạo sự kiện nút quay lại bộ phận
-    function backBP() {
-        $("#cac-bo-phan").show("slow");
-        $("#bo-phan").hide("slow");
-        $("#tong-hop").show("slow");
-    }
-    // Tạo biểu đồ tròn
-    function createChartCircleBP(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        category: { type: "string" },
-                        value: { type: "number" },
-                        color: { type: "string" },
-                    }
-                }
-            },
-        });
-        $("#chart-circle-bp").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr,
-                position: "bottom",
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                labels: {
-                    template: "#= category # - #= kendo.format('{0:P}', percentage)#",
-                    position: "outsideEnd",
-                    visible: true,
-                    background: "transparent"
-                },
-                type: "pie"
-            },
-            series: [
-                {
-                    field: "value",
-                    categoryField: "category",
-                    color: "color"
-                }
-            ],
-            tooltip: {
-                visible: true,
-                template: "#= category # - #= kendo.format('{0:P}', percentage) #"
-            }
-        });
-
-    }
-    // Tạo bảng chi tiết
-    function createTableBP(urlStr, titleStr) {
-        //$("#grid-ty-le").html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MucDo",
-                    fields: {
-                        MucDo: { type: "number" },
-                        Loai: {
-                            type: "string", validation: { required: true }
-                        },
-                        TyLe: {
-                            type: "number", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        },
-                        Diem: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: [
-                { field: "SoLan", aggregate: "sum" },
-                { field: "Diem", aggregate: "sum" }]
-        });
-
-        var grid = $("#grid-ty-le").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "Loai", title: "Mức độ đánh giá", width: 1 },
-                { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
-                {
-                    field: "SoLan", title: "Số lần", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                },
-                {
-                    field: "Diem", title: "Điểm", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $("#span-title-table-1").text(titleStr);
-    }
-    // Tạo bảng chi tiết (Mức độ đánh giá)
-    function createTableBP_MucDo(urlStr, titleStr, idGrid, idSpan) {
-        //$(idGrid).html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaCB",
-                    fields: {
-                        MaCB: { type: "number" },
-                        HoTen: {
-                            type: "string", validation: { required: true }
-                        },
-                        TyLe: {
-                            type: "number", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        },
-                        Diem: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: [
-                { field: "SoLan", aggregate: "sum" },
-                { field: "Diem", aggregate: "sum" },
-                { field: "Diem", aggregate: "average" }]
-        });
-
-        var grid = $(idGrid).kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "HoTen", title: "Họ tên cán bộ", width: 5 },
-                { field: "TyLe", title: "Tỷ lệ (%)", width: 2 },
-                {
-                    field: "SoLan", title: "Số lần", width: 3,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                },
-                {
-                    field: "Diem", title: "Điểm", width: 3,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $(idSpan).text(titleStr);
-    }
-    // Tạo biểu đồ cột
-    function createChartColumnBP(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        async: false,
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        thang: { type: "string" },
-                        RHL: { type: "number" },
-                        HL: { type: "number" },
-                        BT: { type: "number" },
-                        KHL: { type: "number" },
-                    }
-                }
-            }
-        });
-        $("#chart-column-bp").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                type: "column",
-                stack: { type: "100%" }
-            },
-            series:
-                [{
-                    field: "RHL",
-                    categoryField: "thang",
-                    name: "Rất hài lòng",
-                    color: "#37b24d"
-                }, {
-                    field: "HL",
-                    categoryField: "thang",
-                    name: "Hài lòng",
-                    color: "#228be6"
-                }, {
-                    field: "BT",
-                    categoryField: "thang",
-                    name: "Bình thường",
-                    color: "#ffd43b"
-                }, {
-                    field: "KHL",
-                    categoryField: "thang",
-                    name: "Không hài lòng",
-                    color: "#fa5252"
-                }],
-            categoryAxis: {
-                labels: {
-                    rotation: -90
-                },
-                majorGridLines: {
-                    visible: false
-                }
-            },
-            valueAxis: {
-                labels: {
-                    format: "{0:p0}"
-                },
-                line: {
-                    visible: false
-                },
-                axisCrossingValue: 0
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}%",
-                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-            }
-        });
-    }
-    // Phương thức tạo đồ thị và bảng
-    function createChartTableAll() {
-        var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaBP=" + mabp;
-        createChartCircleBP(urlStr, "Kết quả đánh giá (Tổng hợp)");
-
-        var urlStr1 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp;
-        createTableBP(urlStr1, "Kết quả đánh giá (Tổng hợp)");
-
-        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 1;
-        createTableBP_MucDo(urlStr2, "Mức độ - Rất hài lòng (Tổng hợp)", "#grid-rat-hai-long", "#span-title-table-2")
-
-        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 2;
-        createTableBP_MucDo(urlStr3, "Mức độ - Hài lòng (Tổng hợp)", "#grid-hai-long", "#span-title-table-3")
-
-        var urlStr4 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 3;
-        createTableBP_MucDo(urlStr4, "Mức độ - Bình thường (Tổng hợp)", "#grid-binh-thuong", "#span-title-table-4")
-
-        var urlStr5 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 4;
-        createTableBP_MucDo(urlStr5, "Mức độ - Không hài lòng (Tổng hợp)", "#grid-khong-hai-long", "#span-title-table-5")
-    }
-    // Phương thức tạo đồ thị và bảng theo thời gian
-    function createChartTableTime() {
-        var time = '&_ThoiGian=' + $("#month-circle").val();
-        var date = $("#month-circle").val();
-        var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaBP=" + mabp + time;
-        createChartCircleBP(urlStr, "Kết quả đánh giá (" + date + ")");
-
-        var urlStr1 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + time;
-        createTableBP(urlStr1, "Kết quả đánh giá (" + date + ")");
-
-        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 1 + time;
-        createTableBP_MucDo(urlStr2, "Mức độ - Rất hài lòng (" + date + ")", "#grid-rat-hai-long", "#span-title-table-2")
-
-        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 2 + time;
-        createTableBP_MucDo(urlStr3, "Mức độ - Hài lòng (" + date + ")", "#grid-hai-long", "#span-title-table-3")
-
-        var urlStr4 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 3 + time;
-        createTableBP_MucDo(urlStr4, "Mức độ - Bình thường (" + date + ")", "#grid-binh-thuong", "#span-title-table-4")
-
-        var urlStr5 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 4 + time;
-        createTableBP_MucDo(urlStr5, "Mức độ - Không hài lòng (" + date + ")", "#grid-khong-hai-long", "#span-title-table-5")
-    }
-    // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
-    $("#cb-all").change(function () {
-        if ($("#cb-all").prop("checked") == true) {
-            createChartTableAll();
-            $("#div-month-circle-1").hide("slow");
-        } else {
-            createMonthCircle(mabp);
-            createChartTableTime();
-            $("#div-month-circle-1").show("slow");
-        }
-    });
-    // Tạo thanh chọn thời gian cho biểu đồ tròn
-    function createMonthCircle(MaBP) {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI/?_MaBP=" + MaBP,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#content-bp").show();
-                    $("#month-circle").kendoDatePicker({
-                        start: "year",
-                        depth: "year",
-                        format: "MM yyyy",
-                        dateInput: false,
-                        value: new Date(),
-                        min: new Date(data[0]),
-                        max: new Date(data[1]),
-                        //disableDates: ["sa", "su"]
-                    });
-                } else {
-                    $("#month-circle").val("09 2018");
-                    $("#content-bp").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện chọn thời gian
-    $("#month-circle").change(function () {
-        createChartTableTime();
-    })
-    // Tạo nút xem chi tiết
-    $("#click-details-bp").click(function () {
-        if (!clickBP) {
-            $("#table-details-bp").show("slow");
-            $("#click-details-bp").text("Thu gọn");
-            clickBP = true;
-        } else {
-            $("#table-details-bp").hide("slow");
-            $("#click-details-bp").text("Xem chi tiết");
-            clickBP = false;
-        }
-    })
-    // Tạo dropdownlist chọn năm
-    function createYearColumn(MaBP) {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI/?_MaBP=" + MaBP,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#content-bp").show();
-                    var arr = [];
-                    var j = 0;
-                    var arr1 = data[0].split(" ");
-                    var arr2 = data[1].split(" ");
-                    for (var i = Number.parseInt(arr1[0]); i <= Number.parseInt(arr2[0]); i++) {
-                        arr[j] = { text: i.toString(), value: i.toString() };
-                        j++;
-                    }
-                    $("#year-column").kendoDropDownList({
-                        dataTextField: "text",
-                        dataValueField: "value",
-                        dataSource: arr
-                    });
-                    createChartColumnBP(url + "/api/CotDanhGiaAPI/?_MaBP=" + mabp + "&_Year=" + $("#year-column").val(), "Kết quả tổng hợp năm " + $("#year-column").val());
-                } else {
-                    $("#div-year-column").val(0);
-                    $("#content-bp").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện cho dropdownlist chọn năm
-    $("#year-column").change(function () {
-        createChartColumnBP(url + "/api/CotDanhGiaAPI/?_MaBP=" + mabp + "&_Year=" + $("#year-column").val(), "Kết quả tổng hợp năm " + $("#year-column").val());
-    })
-
-    // ============ Cán bộ ==============
-    // Tạo sự kiện nút quay lại cán bộ
-    function backCB() {
-        $("#bo-phan").show("slow");
-        $("#can-bo").hide("slow");
-    }
-    // Nút tên cán bộ: sử dụng ajax để lấy dữ liệu tên và mã cán bộ
-    function getCBName(urlStr) {
-        var str = "<table style='width: 98%; margin: 1%'>";
-        $.ajax({
-            type: "GET",
-            url: urlStr,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    //var i = 0;
-                    $.each(data, function (key, val) {
-                        str += "<tr><td><div id='" + val.MaCB + "' class='btnCB' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td></tr>";
-                        //if (i == 3) {
-                        //    str += "</tr><tr><td><div id='" + val.MaCB + "' class='btnCB' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td>";
-                        //    i = 0;
-                        //}
-                        //i++;
-                    });
-                    str += "</table>";
-                    $("#div-button-canbo").html(str);
-                    createButtonCB();
-                } else {
-                    $("#content-ten-can-bo").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Nút tên cán bộ: tạo form nút
-    function createButtonCB() {
-        $(".btnCB").each(function (index) {
-            $(this).kendoButton({
-                click: onClickBtnCB
-            });
-        });
-    }
-    // Nút tên cán bộ: tạo phương thức click
-    function onClickBtnCB(e) {
-        $("#bo-phan").hide("slow");
-        $("#can-bo").show("slow");
-        $("#div-month-circle-cb-1").hide();
-        $("#table-details-cb").hide();
-        $("#click-details-cb").text("Xem chi tiết");
-        clickCB = false;
-        macb = $(e.event.target).attr("id");
-        createInfoCB(macb);
-        setTimeout(function () {
-            $("#can-bo div h1").text("Cán bộ: " + $(e.event.target).text().substring(0, $(e.event.target).text().indexOf('-')).trim() + " - Mã số: " + $(e.event.target)[0].id);
-            createYearColumnCB(macb);
-            createChartCircleCB(url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
-            createMonthCircleCB(macb);
-            createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
-            createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
-            $("#cb-all-cb").prop("checked", true);
-        }, 800);
-    }
-    // Tạo biểu đồ cột
-    function createChartColumnCB(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        thang: { type: "string" },
-                        RHL: { type: "number" },
-                        HL: { type: "number" },
-                        BT: { type: "number" },
-                        KHL: { type: "number" },
-                    }
-                }
-            }
-        });
-        $("#chart-column-cb").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                type: "column",
-                stack: { type: "100%" }
-            },
-            series:
-                [{
-                    field: "RHL",
-                    categoryField: "thang",
-                    name: "Rất hài lòng",
-                    color: "#37b24d"
-                }, {
-                    field: "HL",
-                    categoryField: "thang",
-                    name: "Hài lòng",
-                    color: "#228be6"
-                }, {
-                    field: "BT",
-                    categoryField: "thang",
-                    name: "Bình thường",
-                    color: "#ffd43b"
-                }, {
-                    field: "KHL",
-                    categoryField: "thang",
-                    name: "Không hài lòng",
-                    color: "#fa5252"
-                }],
-            categoryAxis: {
-                labels: {
-                    rotation: -90
-                },
-                majorGridLines: {
-                    visible: false
-                }
-            },
-            valueAxis: {
-                labels: {
-                    format: "{0:p0}"
-                },
-                line: {
-                    visible: false
-                },
-                axisCrossingValue: 0
-            },
-            tooltip: {
-                visible: true,
-                format: "{0}%",
-                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-            }
-        });
-    }
-    // Tạo biểu đồ tròn
-    function createChartCircleCB(urlStr, titleStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    fields: {
-                        category: { type: "string" },
-                        value: { type: "number" },
-                        color: { type: "string" },
-                    }
-                }
-            },
-        });
-        $("#chart-circle-cb").kendoChart({
-            dataSource: dataSource,
-            title: {
-                text: titleStr,
-                position: "bottom",
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                labels: {
-                    template: "#= category # - #= kendo.format('{0:P}', percentage)#",
-                    position: "outsideEnd",
-                    visible: true,
-                    background: "transparent"
-                },
-                type: "pie"
-            },
-            series: [
-                {
-                    field: "value",
-                    categoryField: "category",
-                    color: "color"
-                }
-            ],
-            tooltip: {
-                visible: true,
-                template: "#= category # - #= kendo.format('{0:P}', percentage) #"
-            }
-        });
-    }
-    // Tạo bảng chi tiết
-    function createTableCB(urlStr, titleStr) {
-        //$("#grid-ty-le-cb").html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MucDo",
-                    fields: {
-                        MucDo: { type: "number" },
-                        Loai: {
-                            type: "string", validation: { required: true }
-                        },
-                        TyLe: {
-                            type: "number", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        },
-                        Diem: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: [
-                { field: "SoLan", aggregate: "sum" },
-                { field: "Diem", aggregate: "sum" }
-            ]
-        });
-
-        var grid = $("#grid-ty-le-cb").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "Loai", title: "Mức độ đánh giá", width: 1 },
-                { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
-                {
-                    field: "SoLan", title: "Số lần", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                },
-                {
-                    field: "Diem", title: "Điểm", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $("#span-title-table-cb-1").text(titleStr);
-    }
-    // Tạo bảng góp ý
-    function createTableGopY(urlStr, titleStr) {
-        //$("#grid-gop-y").html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaDG",
-                    fields: {
-                        MaDG: { type: "number" },
-                        MucDo: {
-                            type: "string", validation: { required: true }
-                        },
-                        GopY: {
-                            type: "string", validation: { required: true }
-                        },
-                        ThoiGian: {
-                            type: "date", validation: { required: true }
-                        },
-                        Ngay: {
-                            type: "date", validation: { required: true }
-                        },
-                        SoLan: {
-                            type: "number", validation: { required: true }
-                        }
-                    }
-                }
-            },
-            aggregate: { field: "SoLan", aggregate: "sum" }
-        });
-
-        var grid = $("#grid-gop-y").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
-                //{ field: "ThoiGian", title: "Thời gian", width: 1, format: "{0:hh mm ss}" },
-                { field: "MucDo", title: "Mức độ đánh giá", width: 1 },
-                { field: "GopY", title: "Góp ý", width: 5 },
-                {
-                    field: "SoLan", title: "Số lần", width: 1,
-                    aggregates: ["sum"],
-                    footerTemplate: "<div>Tổng cộng: #=sum#</div>"
-                }
-            ],
-        }).data("kendoGrid");
-        $("#span-title-table-gop-y").text(titleStr);
-    }
-    // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
-    $("#cb-all-cb").change(function () {
-        var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb;
-        if ($("#cb-all-cb").prop("checked") == true) {
-            createChartCircleCB(urlStr, "Kết quả đánh giá (Tổng hợp)");
-            createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
-            createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
-            $("#div-month-circle-cb-1").hide("slow");
-        } else {
-            var time = '&_ThoiGian=' + $("#month-circle-cb").val();
-            var date = $("#month-circle-cb").val();
-            var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb + time;
-            createChartCircleCB(urlStr, "Kết quả đánh giá (" + date + ")");
-            var urlStr1 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time;
-            createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
-            var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
-            createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
-            $("#div-month-circle-cb-1").show("slow");
-        }
-    });
-    // Tạo thanh chọn thời gian cho biểu đồ tròn
-    function createMonthCircleCB(MaCB) {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#content-can-bo").show();
-                    $("#month-circle-cb").kendoDatePicker({
-                        start: "year",
-                        depth: "year",
-                        format: "MM yyyy",
-                        dateInput: false,
-                        value: new Date(),
-                        min: new Date(data[0]),
-                        max: new Date(data[1]),
-                        //disableDates: ["sa", "su"]
-                    });
-                } else {
-                    $("#month-circle-cb").val("09 2018");
-                    $("#content-can-bo").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện chọn thời gian
-    $("#month-circle-cb").change(function () {
-        var time = '&_ThoiGian=' + $("#month-circle-cb").val();
-        var date = $("#month-circle-cb").val();
-        var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb + time;
-        createChartCircleCB(urlStr, "Kết quả đánh giá (" + date + ")");
-        var urlStr1 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time;
-        createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
-        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
-        createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
-    })
-    // Tạo nút xem chi tiết
-    $("#click-details-cb").click(function () {
-        if (!clickCB) {
-            $("#table-details-cb").show("slow");
-            $("#click-details-cb").text("Thu gọn");
-            clickCB = true;
-        } else {
-            $("#table-details-cb").hide("slow");
-            $("#click-details-cb").text("Xem chi tiết");
-            clickCB = false;
-        }
-    })
-    // Tạo dropdownlist chọn năm
-    function createYearColumnCB(MaCB) {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#content-can-bo").show();
-                    var arr = [];
-                    var j = 0;
-                    var arr1 = data[0].split(" ");
-                    var arr2 = data[1].split(" ");
-                    for (var i = Number.parseInt(arr1[0]); i <= Number.parseInt(arr2[0]); i++) {
-                        arr[j] = { text: i.toString(), value: i.toString() };
-                        j++;
-                    }
-                    $("#year-column-cb").kendoDropDownList({
-                        dataTextField: "text",
-                        dataValueField: "value",
-                        dataSource: arr
-                    });
-                    createChartColumnCB(url + "/api/CotDanhGiaAPI/?_MaCB=" + MaCB + "&_Year=" + $("#year-column-cb").val(), "Kết quả tổng hợp năm " + $("#year-column-cb").val());
-                } else {
-                    $("#div-year-column-cb").val(0);
-                    $("#content-can-bo").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện cho dropdownlist chọn năm
-    $("#year-column-cb").change(function () {
-        createChartColumnCB(url + "/api/CotDanhGiaAPI/?_MaCB=" + macb + "&_Year=" + $("#year-column-cb").val(), "Kết quả tổng hợp năm " + $("#year-column-cb").val());
-    })
-    // Tạo thông tin cán bộ
-    function createInfoCB(MaCB) {
-        //table - core - cb
-        $.ajax({
-            url: url + "/api/ValuesAPI/?_MaCB=" + MaCB + "&_Info=1",
-            type: "GET",
-            dataType: "json",
-            success: function (result) {
-                console.log(window.d = result)
-                $("#image-cb input").attr('src', `data:image/png;base64,${result["HinhAnh"]}`);
-                $("#id-cb span").text(result["MaCB"]);
-                $("#name-cb span").text(result["HoTen"]);
-                $("#id-bp span").text(result["MaBP"]);
-                $("#name-bp span").text(result["TenBP"]);
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-
-    // ============ Thời gian giải quyết thủ tục ============
-    // Tạo sự kiện khi click vào tab xem thời gian giải quyết thủ tục
-    $("#menu-xem-thu-tuc").click(function () {
-    })
-    // ============ Tổng hợp ================================
-    var clickBPThuTuc = false;
-    var clickCBThuTuc = false;
-    var mabp_thutuc = 0;
-    var macb_thutuc = 0;
-    // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
-    function getBPNameThuTuc() {
-        var str = "";
-        $.ajax({
-            type: "GET",
-            url: url + "/api/BoPhanAPI",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (key, val) {
-                    str += "<div id='" + val.MaBP + "' class='btnBPThuTuc'>" + val.TenBP + "</div>";
-                });
-                $("#cac-bo-phan-thu-tuc").html(str);
-                createButtonBPThuc();
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-    }
-    // Nút tên bộ phận: tạo phương thức click
-    function onClickBtnBPThuTuc(e) {
-        //$("#tong-hop").hide("slow");
-        //$("#cac-bo-phan").hide("slow");
-        //$("#bo-phan").show("slow");
-        //$("#div-month-circle-1").hide();
-        //$("#table-details-bp").hide();
-        //$("#click-details-bp").text("Xem chi tiết");
-        //$("#content-ten-bo-phan").hide();
-        $("#thu-tuc-th").hide("slow");
-        $("#thu-tuc-bp").show("slow");
-        clickBPThuTuc = false;
-        setTimeout(function () {
-            mabp_thutuc = $(e.event.target).attr("id");
-            $("#header-thu-tuc-bp h1").text($(e.event.target).text());
-            getCBNameThuTuc(url + "/api/BoPhanAPI/?_MaBP=" + mabp_thutuc);
-            //$("#bo-phan div h1").text($(e.event.target).text());
-            //createMonthCircle(mabp);
-            //createChartTableAll();
-            //createYearColumn(mabp);
-            //$("#cb-all").prop("checked", true);
-            //getCBName(url + "/api/BoPhanAPI/?_MaBP=" + mabp);
-        }, 500);
-    }
-    // Nút tên bộ phận: tạo form nút
-    function createButtonBPThuc() {
-        $(".btnBPThuTuc").each(function (index) {
-            $(this).kendoButton({
-                click: onClickBtnBPThuTuc
-            });
-        });
-    }
-    getBPNameThuTuc();
-    // Tạo sự kiện nút quay lại
-    function backBPThuTuc() {
-        $("#thu-tuc-th").show("slow");
-        $("#thu-tuc-bp").hide("slow");
-    }
-    // Tạo biểu đồ miền theo năm/tháng
-    function createChartThuTucTH(urlStr, titleStr) {
-        $("#chart-column-thu-tuc-th").kendoChart({
-            dataSource: {
-                transport: {
-                    read: {
-                        url: urlStr,
-                        dataType: "json"
-                    }
-                },
-                sort: {
-                    field: "ThoiGian",
-                    //dir: "asc"
-                }
-            },
-            title: {
-                text: titleStr
-            },
-            legend: {
-                position: "top"
-            },
-            seriesDefaults: {
-                type: "area"
-            },
-            series:
-                [{
-                    field: "ThoiGianCho",
-                    categoryField: "ThoiGian",
-                    name: "Phiên chờ",
-                    color: "#FFFF00",
-                }, {
-                    field: "ThoiGianGiaiQuyet",
-                    categoryField: "ThoiGian",
-                    name: "Phiên giải quyết",
-                    color: "#33FF00"
-                }, {
-                    field: "TongThoiGian",
-                    categoryField: "ThoiGian",
-                    name: "Tổng phiên",
-                    color: "#0066FF"
-                }],
-            categoryAxis: {
-                labels: {
-                    rotation: -90
-                },
-                crosshair: {
-                    visible: true
-                }
-            },
-            valueAxis: {
-                name: "value",
-                labels: {
-                    format: "{0:n0}",
-                },
-            },
-            tooltip: {
-                visible: true,
-                shared: true,
-                format: "N0"
-            },
-            render: function (e) {
-                // Effective axis range is available in the render event
-                //
-                // See
-                // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-                // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-                // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-                var range = e.sender.getAxis("value").range();
-                if (range > 20) var majorUnit = range.max / 4;
-                else if (range > 100) var majorUnit = range.max / 20;
-                else if (range > 500) var majorUnit = range.max / 100;
-                else if (range > 1000) var majorUnit = range.max / 200;
-                var axis = e.sender.options.valueAxis;
-
-                if (axis.majorUnit !== majorUnit) {
-                    axis.majorUnit = majorUnit;
-
-                    // We need to redraw the chart to apply the changes
-                    e.sender.redraw();
-                }
-            }
-        });
-    }
-    // Tạo dropdownlist chọn năm
-    function createYearColumnThuTucTH() {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI",
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    var arr = [];
-                    var j = 0;
-                    var arr1 = data[0].split(" ");
-                    var arr2 = data[1].split(" ");
-                    for (var i = Number.parseInt(arr1[0]); i <= Number.parseInt(arr2[0]); i++) {
-                        arr[j] = { text: i.toString(), value: i.toString() };
-                        j++;
-                    }
-                    $("#year-column-thu-tuc-th").kendoDropDownList({
-                        dataTextField: "text",
-                        dataValueField: "value",
-                        dataSource: arr
-                    });
-                    createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
-                    //createChartColumnTH(url + "/api/CotDanhGiaAPI/?_Year=" + $("#year-column-th").val(), "Kết quả tổng hợp năm " + $("#year-column-th").val());
-                } else {
-                    $("#year-column-thu-tuc-th").val(0);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện cho dropdownlist chọn năm
-    $("#year-column-thu-tuc-th").change(function () {
-        //createChartColumnTH(url + "/api/CotDanhGiaAPI/?_Year=" + $("#year-column").val(), "Kết quả tổng hợp năm " + $("#year-column-th").val());
-        createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
-    })
-    // Tạo thanh chọn thời gian cho biểu đồ tròn
-    function createMonthCircleThuTucTH() {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/ValuesAPI",
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $("#month-column-thu-tuc-th").kendoDatePicker({
-                        start: "year",
-                        depth: "year",
-                        format: "MM yyyy",
-                        dateInput: false,
-                        value: new Date(),
-                        min: new Date(data[0]),
-                        max: new Date(data[1]),
-                        //disableDates: ["sa", "su"]
-                    });
-                    createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp tháng " + $("#month-column-thu-tuc-th").val());
-                } else {
-                    $("#month-column-thu-tuc-th").val("09 2018");
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện chọn thời gian
-    $("#month-column-thu-tuc-th").change(function () {
-        createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp tháng " + $("#month-column-thu-tuc-th").val());
-        //createChartTableTHTime();
-    })
-    createMonthCircleThuTucTH();
-    createYearColumnThuTucTH();
-    // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
-    $("#cbx-month-thu-tuc-th").change(function () {
-        if (!$("#cbx-month-thu-tuc-th").prop("checked")) {
-            createYearColumnThuTucTH();
-            $("#cbx-year-thu-tuc-th").prop("checked", "checked")
-        } else {
-            createMonthCircleThuTucTH();
-            $("#cbx-year-thu-tuc-th").removeAttr("checked")
-        }
-    })
-    $("#cbx-year-thu-tuc-th").change(function () {
-        if (!$("#cbx-year-thu-tuc-th").prop("checked")) {
-            createMonthCircleThuTucTH();
-            $("#cbx-month-thu-tuc-th").prop("checked", "checked")
-        } else {
-            createYearColumnThuTucTH();
-            $("#cbx-month-thu-tuc-th").removeAttr("checked")
-        }
-    })
-    // Phương thức tạo bảng kết quả báo cáo
-    function createGridThuTucTH(urlStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: {
-                    url: urlStr,
-                    dataType: "json"
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaSTT",
-                    fields: {
-                        SoThuTu: { type: "number" },
-                        TenBP: { type: "string", validation: { required: true } },
-                        Ngay: { type: "date", validation: { required: true }, },
-                        ThoiGianRut: { type: "date", validation: { required: true } },
-                        ThoiGianGoi: { type: "date", validation: { required: true } },
-                        ThoiGianHoanTat: { type: "date", validation: { required: true } },
-                        ThoiGianCho: { type: "number", validation: { required: true } },
-                        ThoiGianGiaiQuyet: { type: "number", validation: { required: true } },
-                        TongThoiGian: { type: "number", validation: { required: true } }
-                    }
-                },
-                group: {
-                    field: "TenBP", aggregates: [
-                        { field: "TenBP", aggregate: "count" },                        
-                        { field: "SoThuTu", aggregate: "count" },
-                        { field: "ThoiGianCho", aggregate: "average" },
-                        { field: "ThoiGianCho", aggregate: "sum" },
-                        { field: "ThoiGianCho", aggregate: "min" },
-                        { field: "ThoiGianCho", aggregate: "max" },
-                        { field: "ThoiGianGiaiQuyet", aggregate: "average" },
-                        { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
-                        { field: "ThoiGianGiaiQuyet", aggregate: "min" },
-                        { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-                        { field: "TongThoiGian", aggregate: "average" },
-                        { field: "TongThoiGian", aggregate: "sum" },
-                        { field: "TongThoiGian", aggregate: "min" },
-                        { field: "TongThoiGian", aggregate: "max" },
-                    ]
-                },
-
-                aggregate: [
-                    { field: "TenBP", aggregate: "count" },     
-                    { field: "SoThuTu", aggregate: "count" },
-                    { field: "ThoiGianCho", aggregate: "average" },
-                    { field: "ThoiGianCho", aggregate: "sum" },
-                    { field: "ThoiGianCho", aggregate: "min" },
-                    { field: "ThoiGianCho", aggregate: "max" },
-                    { field: "ThoiGianGiaiQuyet", aggregate: "average" },
-                    { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
-                    { field: "ThoiGianGiaiQuyet", aggregate: "min" },
-                    { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-                    { field: "TongThoiGian", aggregate: "average" },
-                    { field: "TongThoiGian", aggregate: "sum" },
-                    { field: "TongThoiGian", aggregate: "min" },
-                    { field: "TongThoiGian", aggregate: "max" },
-                ]
-            }
-        });
-
-        var grid = $("#grid-thu-tuc-th").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "TenBP", title: "Tên bộ phận", width: 1, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng cộng: #=count#" },
-                { field: "SoThuTu", title: "Số thứ tự", width: 1 },
-                { field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
-                { field: "ThoiGianRut", title: "Thời điểm lấy số", width: 1, format: "{0:hh mm ss}" },
-                { field: "ThoiGianGoi", title: "Thời điểm gọi số", width: 1, format: "{0:hh mm ss}" },
-                { field: "ThoiGianHoanTat", title: "Thời điểm hoàn tất", width: 1, format: "{0:hh mm ss}" },
-                { field: "ThoiGianCho", title: "Thời gian chờ (Phút)", width: 1, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-                { field: "ThoiGianGiaiQuyet", title: "Thời gian chờ (Phút)", width: 1, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-                { field: "TongThoiGian", title: "Thời gian chờ (Phút)", width: 1, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            ],
-        }).data("kendoGrid");
-        //grid.hideColumn("TenBP");
-        //$("#span-title-table-cb-1").text(titleStr);
-    }
-    createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=10 2018&_Tong=1");
-
-    // ============ Bộ phận =================================
-    // Nút tên cán bộ: sử dụng ajax để lấy dữ liệu tên và mã cán bộ
-    function getCBNameThuTuc(urlStr) {
-        var str = "<table style='width: 98%; margin: 1%'>";
-        $.ajax({
-            type: "GET",
-            url: urlStr,
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    $.each(data, function (key, val) {
-                        str += "<tr><td><div id='" + val.MaCB + "' class='btnCBThuTuc' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td></tr>";
-                    });
-                    str += "</table>";
-                    $("#cac-can-bo-thu-tuc").html(str);
-                    createButtonCBThuTuc();
-                } else {
-                    $("#body-thu-tuc-bp").hide();
-                    $("#footer-thu-tuc-bp").hide();
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Nút tên cán bộ: tạo form nút
-    function createButtonCBThuTuc() {
-        $(".btnCBThuTuc").each(function (index) {
-            $(this).kendoButton({
-                click: onClickBtnCBThuTuc
-            });
-        });
-    }
-    // Nút tên cán bộ: tạo phương thức click
-    function onClickBtnCBThuTuc(e) {
-        //$("#bo-phan").hide("slow");
-        //$("#can-bo").show("slow");
-        //$("#div-month-circle-cb-1").hide();
-        //$("#table-details-cb").hide();
-        //$("#click-details-cb").text("Xem chi tiết");
-        clickCBThuTuc = false;
-        macb_thutuc = $(e.event.target).attr("id");
-        $("#thu-tuc-bp").hide("slow");
-        $("#thu-tuc-cb").show("slow");
-        //createInfoCB(macb);
-        setTimeout(function () {
-            $("#header-thu-tuc-cb h1").text("Cán bộ: " + $(e.event.target).text().substring(0, $(e.event.target).text().indexOf('-')).trim() + " - Mã số: " + $(e.event.target)[0].id);
-            //createYearColumnCB(macb);
-            //createChartCircleCB(url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
-            //createMonthCircleCB(macb);
-            //createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
-            //createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
-            //$("#cb-all-cb").prop("checked", true);
-        }, 800);
-    }
-    // Tạo sự kiện nút quay lại
-    function backCBThuTuc() {
-        $("#thu-tuc-bp").show("slow");
-        $("#thu-tuc-cb").hide("slow");
-    }
-    // Tạo biểu đồ miền
-
-    // ============ Thông tin tài khoản cán bộ ==============
-    // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
-    function getTKName() {
-        var str = "";
-        $.ajax({
-            type: "GET",
-            url: url + "/api/BoPhanAPI",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (key, val) {
-                    str += "<div id='tk" + val.MaBP + "' class='btnTK'>" + val.TenBP + "</div>";
-                });
-                $("#tai-khoan-ten-bo-phan").html(str);
-                createButtonTK();
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        });
-    }
-    // Nút tên bộ phận: tạo phương thức click
-    function onClickBtnTK(e) {
-        $("#tai-khoan-ten-bo-phan").hide("slow");
-        $("#div-tai-khoan-can-bo").show("slow");
-        setTimeout(function () {
-            mabp = $(e.event.target).attr("id").substring(2);
-            $("#div-tai-khoan-can-bo h1").text($(e.event.target).text());
-            createTableTk(url + "/api/TaiKhoanAPI/?_MaBP=" + mabp);
-        }, 500);
-    }
-    // Nút tên bộ phận: tạo form nút
-    function createButtonTK() {
-        $(".btnTK").each(function (index) {
-            $(this).kendoButton({
-                click: onClickBtnTK
-            });
-        });
-    }
-    // Nút tên bộ phận: sự kiện click vào menu xem kết quả
-    $("#menu-thong-tin-can-bo").click(getTKName)
-    // Tạo sự kiện nút quay lại bộ phận
-    function backTK() {
-        $("#tai-khoan-ten-bo-phan").show("slow");
-        $("#div-tai-khoan-can-bo").hide("slow");
-    }
-    // Tạo bảng thông tin tài khoản của cán bộ
-    function createTableTk(urlGet) {
-        //$("#grid-tai-khoan-can-bo").html("");
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlGet,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                update: function (options) {
-                    $.ajax({
-                        type: "POST",
-                        url: url + "/TaiKhoan/Update",
-                        data: { model: options.data.models },
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result) {
-                                alert("Cập nhật thành công")
-                            }
-                            else {
-                                alert("Cập nhật không thành công")
-                            }
-                            var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
-                            grid.dataSource.read();
-                        },
-                        error: function (xhr) {
-                            console.log(xhr.responseJSON);
-                        }
-                    });
-                },
-                destroy: function (options) {
-                    $.ajax({
-                        type: "POST",
-                        url: url + "/TaiKhoan/Delete",
-                        data: { model: options.data.models },
-                        dataType: 'json',
-                        success: function (result) {
-                            if (result) {
-                                alert("Xóa thành công")
-                            }
-                            else {
-                                alert("Xóa không thành công")
-                            }
-                            var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
-                            grid.dataSource.read();
-                        },
-                        error: function (xhr) {
-                            console.log(xhr.responseJSON);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaCB",
-                    fields: {
-                        MaCB: { type: "number", editable: false, validation: { required: true } },
-                        HoTen: { type: "string", editable: false, validation: { required: true } },
-                        HinhAnh: { type: "string", editable: false, validation: { required: true } },
-                        MaBP: { type: "number", editable: false, validation: { required: true } },
-                        Id: { type: "string", validation: { required: true } },
-                        Pw: { type: "string", validation: { required: true } },
-                        TenBP: { type: "string", editable: false, validation: { required: true } }
-                    }
-                }
-            },
-            group: {
-                field: "TenBP", aggregates: [{ field: "HoTen", aggregate: "count" }]
-            },
-            aggregate: [{ field: "HoTen", aggregate: "count" }]
-        });
-
-        var grid = $("#grid-tai-khoan-can-bo").kendoGrid({
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            toolbar: [{ name: "custom", text: "Nhập excel", iconClass: "k-icon k-i-file-add" }],
-            columns: [
-                { field: "MaCB", title: "Mã số", width: 80 },
-                { field: "HoTen", title: "Họ tên", width: 100, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
-                { field: "HinhAnh", title: "Hình ảnh", width: 100 },
-                { field: "TenBP", title: "Tên bộ phận", width: 100 },
-                { field: "Id", title: "Tài khoản", width: 100 },
-                { field: "Pw", title: "Mật khẩu", width: 100 },
-                { command: [{ name: "edit", title: "Cập nhật" }, { name: "destroy", title: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
-            ],
-            editable: "popup"
-        }).data("kendoGrid");
-
-        // Nhập file excel
-        var myWindow = $("#windowPopup");
-        myWindow.kendoWindow({
-            width: "600px",
-            height: "250px",
-            title: "Nhập excel",
-            visible: false,
-            actions: [
-                "Close"
-            ],
-        }).data("kendoWindow").center();
-        $("#files").kendoUpload({ text: "Chọn file cần nhập" });
-
-        $("form#formUpload").submit(function (e) {
-            e.preventDefault();
-            var excelfile = new FormData(this);
-            $.ajax({
-                url: url + "/TaiKhoan/Upload",
-                type: 'POST',
-                data: excelfile,
-                //async: false,
-                success: function (data) {
-                    alert(data)
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-            var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
-            grid.dataSource.read();
-            return false;
-        });
-
-
-        // Tạo nút nhập excel
-        var importBtn = $(".k-button.k-button-icontext.k-grid-custom");
-        importBtn.click(function () {
-            console.log("ok");
-            var myWindow = $("#windowPopup");
-            myWindow.kendoWindow({
-                width: "600px",
-                title: "Nhập excel",
-                visible: false,
-                actions: [
-                    "Close"
-                ],
-                close: onClose
-            }).data("kendoWindow").center();
-            function onClose() {
-                importBtn.fadeIn();
-            }
-            myWindow.data("kendoWindow").open();
-            importBtn.fadeOut();
-        });
-    }
-    // Nhập file excel
-    var myWindow = $("#windowPopup");
-    myWindow.kendoWindow({
-        width: "600px",
-        height: "250px",
-        title: "Nhập excel",
-        visible: false,
-        actions: [
-            "Close"
-        ],
-    }).data("kendoWindow").center();
-    $("#files").kendoUpload({ text: "Chọn file cần nhập" });
-
-    // ============ Báo cáo ============
-    var mabp_report = 0;
-    var macb_report = 0;
-    var date_report = 0;
-    var start_report;
-    var end_report;
-    // Tạo dropdownlist chọn bộ phận
-    function createBPbaocao() {
-        $.ajax({
-            type: "GET",
-            url: url + "/api/BoPhanAPI",
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                $("#bo-phan-bao-cao").show();
-                var arr = [{ text: "Chọn tất cả", value: 0 }];
-                data.forEach(function (item) {
-                    arr.push({ text: item.TenBP, value: item.MaBP });
-                });
-                $("#bo-phan-bao-cao").kendoDropDownList({
-                    dataTextField: "text",
-                    dataValueField: "value",
-                    dataSource: arr,
-                    select: selectBPbaocao
-                });
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện cho dropdownlist bộ phận
-    function selectBPbaocao(e) {
-        mabp_report = e.dataItem.value;
-        if (mabp_report == 0) {
-            $("#can-bo-report-1").hide();
-            $("#can-bo-report-2").hide();
-        } else {
-            $("#can-bo-report-1").show();
-            $("#can-bo-report-2").show();
-            createCBbaocao(mabp_report);
-        }
-        getDate(mabp_report);
-        createDPbaocao(date_report);
-    }
-    // Tạo dropdownlist chọn cán bộ
-    function createCBbaocao(MaBP) {
-        var url_report;
-        if (MaBP == 0) {
-            url_report = url + "/api/BoPhanAPI";
-        } else {
-            url_report = url + "/api/BoPhanAPI/?_MaBP=" + MaBP;
-        }
-        $.ajax({
-            type: "GET",
-            url: url_report,
-            dataType: "json",
-            success: function (data) {
-                $("#can-bo-bao-cao").show();
-                var arr = [{ text: "Chọn tất cả", value: 0 }];
-                data.forEach(function (item) {
-                    arr.push({ text: item.HoTen, value: item.MaCB });
-                });
-                $("#can-bo-bao-cao").kendoDropDownList({
-                    dataTextField: "text",
-                    dataValueField: "value",
-                    dataSource: arr,
-                    select: selectCBbaocao
-                });
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo sự kiện cho dropdownlist cán bộ
-    function selectCBbaocao(e) {
-        macb_report = e.dataItem.value;
-    }
-    // Tạo phương thức lấy ngày bắt đầu và kết thúc
-    function getDate(MaBP) {
-        var url_report;
-        if (MaBP == 0) {
-            url_report = url + "/api/ValuesAPI";
-        } else {
-            url_report = url + "/api/ValuesAPI/?_MaBP=" + MaBP;
-        }
-        $.ajax({
-            type: "GET",
-            url: url_report,
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                start_report = data[0];
-                end_report = data[1];
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
-    }
-    // Tạo dropdownlist chọn kiểu thời gian
-    function createTGbaocao() {
-        var arr = [
-            { text: "Chọn tất cả", value: 0 },
-            { text: "Ngày", value: 1 },
-            { text: "Tháng", value: 2 },
-            { text: "Năm", value: 3 },
-        ];
-        $("#thoi-gian-bao-cao").kendoDropDownList({
-            dataTextField: "text",
-            dataValueField: "value",
-            dataSource: arr,
-            change: changeTGbaocao
-        });
-    }
-    // Tạo sự kiện chọn kiểu thời gian
-    function changeTGbaocao() {
-        date_report = this.value();
-        getDate(mabp_report);
-        createDPbaocao(date_report);
-    }
-    // Tạo datepicker chọn thời gian
-    function createDPbaocao(value) {
-        var date = new Date(Date.now());
-        var start;
-        var end;
-        $("#start-report-1").show();
-        $("#start-report-2").show();
-        $("#end-report-1").show();
-        $("#end-report-2").show();
-        if (value == 0) {
-            $("#start-report-1").hide();
-            $("#start-report-2").hide();
-            $("#end-report-1").hide();
-            $("#end-report-2").hide();
-        } else if (value == 1) {
-            start = $("#start-bao-cao").kendoDatePicker({
-                start: "month",
-                depth: "month",
-                dateInput: false,
-                value: date,
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: startChange
-            }).data("kendoDatePicker");
-            end = $("#end-bao-cao").kendoDatePicker({
-                start: "month",
-                depth: "month",
-                dateInput: false,
-                value: date,
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: endChange
-            }).data("kendoDatePicker");
-            start.max(end.value());
-            end.min(start.value());
-        } else if (value == 2) {
-            start = $("#start-bao-cao").kendoDatePicker({
-                start: "year",
-                depth: "year",
-                dateInput: false,
-                value: date,
-                format: "MM/yyyy",
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: startChange
-            }).data("kendoDatePicker");
-            end = $("#end-bao-cao").kendoDatePicker({
-                start: "year",
-                depth: "year",
-                dateInput: false,
-                value: date,
-                format: "MM/yyyy",
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: endChange
-            }).data("kendoDatePicker");
-            start.max(end.value());
-            end.min(start.value());
-        } else if (value == 3) {
-            start = $("#start-bao-cao").kendoDatePicker({
-                start: "decade",
-                depth: "decade",
-                dateInput: false,
-                value: date,
-                format: "yyyy",
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: startChange
-            }).data("kendoDatePicker");
-            end = $("#end-bao-cao").kendoDatePicker({
-                start: "decade",
-                depth: "decade",
-                dateInput: false,
-                value: date,
-                format: "yyyy",
-                min: new Date(start_report),
-                max: new Date(end_report),
-                change: endChange
-            }).data("kendoDatePicker");
-            start.max(end.value());
-            end.min(start.value());
-        }
-        function startChange() {
-            var startDate = start.value(),
-                endDate = end.value();
-
-            if (startDate) {
-                startDate = new Date(startDate);
-                startDate.setDate(startDate.getDate());
-                end.min(startDate);
-            } else if (endDate) {
-                start.max(new Date(endDate));
-            } else {
-                endDate = new Date();
-                start.max(endDate);
-                end.min(endDate);
-            }
-        }
-
-        function endChange() {
-            var endDate = end.value(),
-                startDate = start.value();
-
-            if (endDate) {
-                endDate = new Date(endDate);
-                endDate.setDate(endDate.getDate());
-                start.max(endDate);
-            } else if (startDate) {
-                end.min(new Date(startDate));
-            } else {
-                endDate = new Date();
-                start.max(endDate);
-                end.min(endDate);
-            }
+            $("#sub-tabstrip-ket-qua").hide();
         }
     }
-    // Tạo nút xem báo cáo
-    function createButtonReport() {
-        $("#btn-view").kendoButton({
-            click: onClickBtnReport
-        });
-        $("#btn-report").kendoButton();
-    }
-    // Tạo sự kiện nút xem báo cáo
-    function onClickBtnReport() {
-        $("#noi-dung-bao-cao").html('<div id="title-bao-cao-1" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div><div id = "grid-report-1" ></div ><div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div><div id="grid-report-2"></div>');
-        var start;
-        var end;
-        var title1 = "<h2>BẢNG KẾT QUẢ ĐÁNH GIÁ</h2>";
-        var title2 = "<h2>BẢNG GÓP Ý</h2> ";
-        mabp_report = $("#bo-phan-bao-cao").val();
-        if (mabp_report == 0) {
-            macb_report = 0;
-        }
-        else {
-            macb_report = $("#can-bo-bao-cao").val();
-            title1 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
-            title2 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
-            if (macb_report != 0) {
-                title1 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
-                title2 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
-            }
-        }
-        if ($("#thoi-gian-bao-cao").val() == 0) {
-            start = "";
-            end = "";
-            title1 += "<div>Tổng hợp</div>";
-            title2 += "<div>Tổng hợp</div>";
-        } else {
-            start = $("#start-bao-cao").val();
-            end = $("#end-bao-cao").val();
-            title1 += "<div>(" + start + " - " + end + ")</div>";
-            title2 += "<div>(" + start + " - " + end + ")</div>";
-        }
-        if ($("#cb-kq").prop("checked") && $("#cb-gy").prop("checked")) {
-            createGridReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
-            createGridFeedBack(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=" + "GopY");
-            $("#title-bao-cao-1").html(title1);
-            $("#title-bao-cao-2").html(title2);
-        }
-        else if ($("#cb-kq").prop("checked") && !$("#cb-gy").prop("checked")) {
-            createGridReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
-            $("#title-bao-cao-1").html(title1);
-        }
-        else if (!$("#cb-kq").prop("checked") && $("#cb-gy").prop("checked")) {
-            createGridFeedBack(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=" + "GopY");
-            $("#title-bao-cao-2").html(title2);
-        }
-    }
-    // Phương thức tạo bảng kết quả báo cáo
-    function createGridReport(urlStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaCB",
-                    fields: {
-                        MaCB: { type: "number" },
-                        MaBP: { type: "number", validation: { required: true } },
-                        TenBP: { type: "string", validation: { required: true } },
-                        HoTen: { type: "string", validation: { required: true } },
-                        RHL_TyLe: { type: "number", validation: { required: true } },
-                        RHL_SoLan: { type: "number", validation: { required: true } },
-                        HL_TyLe: { type: "number", validation: { required: true } },
-                        HL_SoLan: { type: "number", validation: { required: true } },
-                        BT_TyLe: { type: "number", validation: { required: true } },
-                        BT_SoLan: { type: "number", validation: { required: true } },
-                        KHL_TyLe: { type: "number", validation: { required: true } },
-                        KHL_SoLan: { type: "number", validation: { required: true } },
-                        TongCong_TyLe: { type: "number", validation: { required: true } },
-                        TongCong_SoLan: { type: "number", validation: { required: true } }
-                    }
-                }
-            },
-            group: {
-                field: "TenBP", aggregates: [
-                    { field: "HoTen", aggregate: "count" },
-                    { field: "RHL_TyLe", aggregate: "average" },
-                    { field: "RHL_SoLan", aggregate: "sum" },
-                    { field: "HL_TyLe", aggregate: "average" },
-                    { field: "HL_SoLan", aggregate: "sum" },
-                    { field: "BT_TyLe", aggregate: "average" },
-                    { field: "BT_SoLan", aggregate: "sum" },
-                    { field: "KHL_TyLe", aggregate: "average" },
-                    { field: "KHL_SoLan", aggregate: "sum" },
-                    { field: "TongCong_TyLe", aggregate: "average" },
-                    { field: "TongCong_SoLan", aggregate: "sum" },
-                    { field: "RHL_TyLe", aggregate: "min" },
-                    { field: "RHL_SoLan", aggregate: "min" },
-                    { field: "HL_TyLe", aggregate: "min" },
-                    { field: "HL_SoLan", aggregate: "min" },
-                    { field: "BT_TyLe", aggregate: "min" },
-                    { field: "BT_SoLan", aggregate: "min" },
-                    { field: "KHL_TyLe", aggregate: "min" },
-                    { field: "KHL_SoLan", aggregate: "min" },
-                    { field: "TongCong_TyLe", aggregate: "min" },
-                    { field: "TongCong_SoLan", aggregate: "min" },
-                    { field: "RHL_TyLe", aggregate: "max" },
-                    { field: "RHL_SoLan", aggregate: "max" },
-                    { field: "HL_TyLe", aggregate: "max" },
-                    { field: "HL_SoLan", aggregate: "max" },
-                    { field: "BT_TyLe", aggregate: "max" },
-                    { field: "BT_SoLan", aggregate: "max" },
-                    { field: "KHL_TyLe", aggregate: "max" },
-                    { field: "KHL_SoLan", aggregate: "max" },
-                    { field: "TongCong_TyLe", aggregate: "max" },
-                    { field: "TongCong_SoLan", aggregate: "max" }
-                ]
-            },
-
-            aggregate: [
-                { field: "HoTen", aggregate: "count" },
-                { field: "RHL_TyLe", aggregate: "average" },
-                { field: "RHL_TyLe", aggregate: "sum" },
-                { field: "RHL_TyLe", aggregate: "count" },
-                { field: "RHL_SoLan", aggregate: "sum" },
-                { field: "HL_TyLe", aggregate: "average" },
-                { field: "HL_TyLe", aggregate: "sum" },
-                { field: "HL_TyLe", aggregate: "count" },
-                { field: "HL_SoLan", aggregate: "sum" },
-                { field: "BT_TyLe", aggregate: "average" },
-                { field: "BT_TyLe", aggregate: "sum" },
-                { field: "BT_TyLe", aggregate: "count" },
-                { field: "BT_SoLan", aggregate: "sum" },
-                { field: "KHL_TyLe", aggregate: "average" },
-                { field: "KHL_TyLe", aggregate: "sum" },
-                { field: "KHL_TyLe", aggregate: "count" },
-                { field: "KHL_SoLan", aggregate: "sum" },
-                { field: "TongCong_TyLe", aggregate: "average" },
-                { field: "TongCong_TyLe", aggregate: "sum" },
-                { field: "TongCong_TyLe", aggregate: "count" },
-                { field: "TongCong_SoLan", aggregate: "sum" },
-                { field: "RHL_TyLe", aggregate: "min" },
-                { field: "RHL_SoLan", aggregate: "min" },
-                { field: "HL_TyLe", aggregate: "min" },
-                { field: "HL_SoLan", aggregate: "min" },
-                { field: "BT_TyLe", aggregate: "min" },
-                { field: "BT_SoLan", aggregate: "min" },
-                { field: "KHL_TyLe", aggregate: "min" },
-                { field: "KHL_SoLan", aggregate: "min" },
-                { field: "TongCong_TyLe", aggregate: "min" },
-                { field: "TongCong_SoLan", aggregate: "min" },
-                { field: "RHL_TyLe", aggregate: "max" },
-                { field: "RHL_SoLan", aggregate: "max" },
-                { field: "HL_TyLe", aggregate: "max" },
-                { field: "HL_SoLan", aggregate: "max" },
-                { field: "BT_TyLe", aggregate: "max" },
-                { field: "BT_SoLan", aggregate: "max" },
-                { field: "KHL_TyLe", aggregate: "max" },
-                { field: "KHL_SoLan", aggregate: "max" },
-                { field: "TongCong_TyLe", aggregate: "max" },
-                { field: "TongCong_SoLan", aggregate: "max" }
-            ]
-        });
-
-        var grid = $("#grid-report-1").kendoGrid({
-            pdf: {
-                allPages: true,
-                avoidLinks: true,
-                paperSize: "A4",
-                margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
-                landscape: true,
-                repeatHeaders: true,
-                template: $("#page-template-report").html(),
-                scale: 0.8
-            },
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "MaCB", title: "Mã số", width: 50 },
-                { field: "HoTen", title: "Họ tên", width: 100, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
-                { field: "TenBP", title: "Bộ phận", width: 1, },
-                {
-                    title: "Rất hài lòng",
-                    columns: [
-                        { field: "RHL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
-                        { field: "RHL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-                    ]
-                },
-                {
-                    title: "Hài lòng",
-                    columns: [
-                        { field: "HL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
-                        { field: "HL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-                    ]
-                },
-                {
-                    title: "Bình thường",
-                    columns: [
-                        { field: "BT_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
-                        { field: "BT_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-                    ]
-                },
-                {
-                    title: "Không hài lòng",
-                    columns: [
-                        { field: "KHL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
-                        { field: "KHL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-                    ]
-                },
-                {
-                    title: "Tổng hợp",
-                    columns: [
-                        { field: "TongCong_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
-                        { field: "TongCong_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-                    ]
-                }
-            ],
-        }).data("kendoGrid");
-        grid.hideColumn("TenBP");
-        //$("#span-title-table-cb-1").text(titleStr);
-    }
-    // Phương thức tạo bảng góp ý
-    function createGridFeedBack(urlStr) {
-        dataSource = new kendo.data.DataSource({
-            transport: {
-                serverFiltering: true,
-                read: function (options) {
-                    $.ajax({
-                        type: "GET",
-                        url: urlStr,
-                        dataType: 'json',
-                        success: function (result) {
-                            options.success(result);
-                        },
-                        error: function (result) {
-                            options.error(result);
-                        }
-                    });
-                },
-                parameterMap: function (options, operation) {
-                    if (operation !== "read" && options.models) {
-                        return { models: kendo.stringify(options.models) };
-                    }
-                }
-            },
-            batch: true,
-            pageSize: 20,
-            schema: {
-                model: {
-                    id: "MaCB",
-                    fields: {
-                        MaCB: { type: "number" },
-                        MaBP: { type: "number", validation: { required: true } },
-                        TenBP: { type: "string", validation: { required: true } },
-                        HoTen: { type: "string", validation: { required: true } },
-                        MucDoDanhGia: { type: "string", validation: { required: true } },
-                        GopY: { type: "string", validation: { required: true } },
-                        SoLan: { type: "number", validation: { required: true } }
-                    }
-                }
-            },
-            group: {
-                field: "TenBP", aggregates: [
-                    { field: "HoTen", aggregate: "count" },
-                    { field: "SoLan", aggregate: "average" },
-                    { field: "SoLan", aggregate: "sum" },
-                    { field: "SoLan", aggregate: "min" },
-                    { field: "SoLan", aggregate: "max" }
-                ]
-            },
-
-            aggregate: [
-                { field: "HoTen", aggregate: "count" },
-                { field: "SoLan", aggregate: "average" },
-                { field: "SoLan", aggregate: "sum" },
-                { field: "SoLan", aggregate: "min" },
-                { field: "SoLan", aggregate: "max" }
-            ]
-        });
-
-        var grid = $("#grid-report-2").kendoGrid({
-            pdf: {
-                allPages: true,
-                avoidLinks: true,
-                paperSize: "A4",
-                margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
-                landscape: true,
-                repeatHeaders: true,
-                template: $("#page-template-feedback").html(),
-                scale: 0.8
-            },
-            dataSource: dataSource,
-            navigatable: true,
-            pageable: true,
-            columns: [
-                { field: "MaCB", title: "Mã số", width: 80 },
-                { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
-                { field: "TenBP", title: "Bộ phận", width: 1 },
-                { field: "MucDoDanhGia", title: "Mức độ đánh giá", width: 150 },
-                { field: "GopY", title: "Góp ý", width: 0 },
-                { field: "SoLan", title: "Số lần", width: 120, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
-            ],
-        }).data("kendoGrid");
-        grid.hideColumn("TenBP");
-        //$("#span-title-table-cb-1").text(titleStr);
-    }
-    // Phương thức click nút xuất báo cáo
-    $('#btn-report').on('click', function () {
-        try {
-            if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0) {
-                var grid1 = $('#grid-report-1').data('kendoGrid');
-                var grid2 = $('#grid-report-2').data('kendoGrid');
-
-                var progress = $.Deferred();
-                kendo.drawing.drawDOM($("#title-bao-cao-1"))
-                    .done(function (header) {
-                        grid1._drawPDF(progress)
-                            .then(function (firstGrid) {
-                                kendo.drawing.drawDOM($("#title-bao-cao-2"))
-                                    .done(function (footer) {
-                                        grid2._drawPDF(progress)
-                                            .then(function (secondGrid) {
-                                                firstGrid.children.unshift(header);
-                                                secondGrid.children.unshift(footer)
-                                                secondGrid.children.forEach(function (x) {
-                                                    firstGrid.children.push(x);
-                                                })
-                                                return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
-
-                                            }).done(function (dataURI) {
-                                                kendo.saveAs({
-                                                    dataURI: dataURI,
-                                                    fileName: "BaoCao-GopY.pdf"
-                                                });
-                                                progress.resolve();
-                                            })
-                                    })
-                            })
-                    })
-            }
-            else if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length == 0) {
-                var grid1 = $('#grid-report-1').data('kendoGrid');
-
-                var progress = $.Deferred();
-                kendo.drawing.drawDOM($("#title-bao-cao-1"))
-                    .done(function (header) {
-                        grid1._drawPDF(progress)
-                            .then(function (firstGrid) {
-                                firstGrid.children.unshift(header);
-                                return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
-
-                            }).done(function (dataURI) {
-                                kendo.saveAs({
-                                    dataURI: dataURI,
-                                    fileName: "BaoCao.pdf"
-                                });
-                                progress.resolve();
-                            })
-                    })
-            }
-            else if ($('#grid-report-1').html().length == 0 && $('#grid-report-2').html().length > 0) {
-                var grid2 = $('#grid-report-2').data('kendoGrid');
-
-                var progress = $.Deferred();
-                kendo.drawing.drawDOM($("#title-bao-cao-2"))
-                    .done(function (header) {
-                        grid2._drawPDF(progress)
-                            .then(function (firstGrid) {
-                                firstGrid.children.unshift(header);
-                                return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
-
-                            }).done(function (dataURI) {
-                                kendo.saveAs({
-                                    dataURI: dataURI,
-                                    fileName: "GopY.pdf"
-                                });
-                                progress.resolve();
-                            })
-                    })
-            }
-        } catch (ex) {
-            alert("Yêu cầu phải xem trước hai bảng")
-        }
-    })
-
     $(document).ready(function () {
-        createTabStrip();
-        // Tổng hợp
-        createYearColumnTH();
-        createMonthCircleTH();
-        createChartTableTHAll();
-
-        createTableTk(url + "/TaiKhoan/Read");
+        $("#sub-tabstrip-thong-tin").hide();
+        $("#sub-tabstrip-ket-qua").hide();
         $("#table-details-bp").hide();
         $("#div-month-circle-1").hide();
         $("#table-details-cb").hide();
         $("#div-month-circle-cb-1").hide();
         $("#bo-phan").hide();
         $("#can-bo").hide();
-        //$("#div-tai-khoan-can-bo").hide();
         $("#can-bo-report-1").hide();
         $("#can-bo-report-2").hide();
-        createBPbaocao();
-        createTGbaocao();
         var arr = [{ text: "Chọn tất cả", value: 0 }];
         $("#can-bo-bao-cao").kendoDropDownList({
             dataTextField: "text",
@@ -3255,10 +664,14 @@
         $("#start-report-2").hide();
         $("#end-report-2").hide();
 
-        createButtonReport();
 
         $("#thu-tuc-bp").hide();
         $("#thu-tuc-cb").hide();
     })
 </script>
-<link href="~/Content/style1.css" rel="stylesheet" /> 
+<script src="~/Content/KetQuaJs.js"></script>
+<script src="~/Content/ThuTucJs.js"></script>
+<script src="~/Content/DangNhapJs.js"></script>
+<script src="~/Content/BaoCao.js"></script>
+<script src="~/Content/ThongTinJs.js"></script>
+<link href="~/Content/ServerStyle.css" rel="stylesheet" />

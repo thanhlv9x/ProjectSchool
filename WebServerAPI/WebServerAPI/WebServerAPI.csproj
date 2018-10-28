@@ -194,12 +194,15 @@
     <Compile Include="Controllers\BaoCaoAPIController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BoPhanAPIController.cs" />
+    <Compile Include="Controllers\BoPhanController.cs" />
+    <Compile Include="Controllers\DangNhapAPIController.cs" />
     <Compile Include="Controllers\GetNumberAPIController.cs" />
     <Compile Include="Controllers\ClientAPIController.cs" />
     <Compile Include="Controllers\CotDanhGiaAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KetQuaDanhGiaAPIController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SoQuayController.cs" />
     <Compile Include="Controllers\TaiKhoanAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThuTucAPIController.cs" />
@@ -254,6 +257,7 @@
     </Compile>
     <Compile Include="Models\BangGopY%28BaoCao%29.cs" />
     <Compile Include="Models\BangGopY.cs" />
+    <Compile Include="Models\BangThuTuc%28BaoCao%29.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\CanBo.cs" />
     <Compile Include="Models\DanhGiaUser.cs" />
@@ -265,10 +269,12 @@
     <Compile Include="Models\KetQuaDanhGiaUser.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Number.cs" />
+    <Compile Include="Models\SoQuay.cs" />
     <Compile Include="Models\SoThuTuUser.cs" />
     <Compile Include="Models\TaiKhoanUser.cs" />
     <Compile Include="Models\TaiKhoanUserNew.cs" />
     <Compile Include="Models\ThoiGian.cs" />
+    <Compile Include="Models\ThoiGianDangNhap.cs" />
     <Compile Include="Models\ThongTinCanBo.cs" />
     <Compile Include="Models\ThuTucChart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -319,11 +325,16 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
+    <Content Include="Content\BaoCao.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\style1.css" />
+    <Content Include="Content\DangNhapJs.js" />
+    <Content Include="Content\KetQuaJs.js" />
+    <Content Include="Content\ServerStyle.css" />
+    <Content Include="Content\ThongTinJs.js" />
+    <Content Include="Content\ThuTucJs.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
@@ -360,13 +371,6 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="EF\HeThongDanhGia.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HeThongDanhGia.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="EF\HeThongDanhGia.edmx.diagram">
-      <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
     </Content>
     <Content Include="Assets\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
@@ -429,6 +433,13 @@
     <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Assets\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <EntityDeploy Include="EF\HeThongDanhGia.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HeThongDanhGia.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="EF\HeThongDanhGia.edmx.diagram">
+      <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -454,7 +465,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\BoPhan\" />
     <Folder Include="Views\GetDiemSo\" />
+    <Folder Include="Views\SoQuay\" />
     <Folder Include="Views\TaiKhoan\" />
   </ItemGroup>
   <ItemGroup>

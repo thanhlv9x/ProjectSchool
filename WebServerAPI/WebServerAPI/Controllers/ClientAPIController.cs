@@ -595,8 +595,10 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public string getImage(string path)
         {
+            string thuMucGoc = AppDomain.CurrentDomain.BaseDirectory;
+            string thuMucHinh = thuMucGoc + @"\resources\";
             MemoryStream ms = new MemoryStream();
-            Image img = Image.FromFile(path);
+            Image img = Image.FromFile(thuMucHinh + path);
             img.Save(ms, img.RawFormat);
             byte[] data = ms.ToArray();
             string strImg = Convert.ToBase64String(data);

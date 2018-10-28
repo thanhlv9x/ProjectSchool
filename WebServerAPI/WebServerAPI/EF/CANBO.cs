@@ -17,8 +17,8 @@ namespace WebServerAPI.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CANBO()
         {
-            this.TRANGTHAIDANGNHAPs = new HashSet<TRANGTHAIDANGNHAP>();
             this.SOTHUTUs = new HashSet<SOTHUTU>();
+            this.TRANGTHAIDANGNHAPs = new HashSet<TRANGTHAIDANGNHAP>();
         }
     
         public int MACB { get; set; }
@@ -30,8 +30,8 @@ namespace WebServerAPI.EF
     
         public virtual BOPHAN BOPHAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TRANGTHAIDANGNHAP> TRANGTHAIDANGNHAPs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTHUTU> SOTHUTUs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TRANGTHAIDANGNHAP> TRANGTHAIDANGNHAPs { get; set; }
     }
 }

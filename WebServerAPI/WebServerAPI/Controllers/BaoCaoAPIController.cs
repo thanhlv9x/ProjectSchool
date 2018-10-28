@@ -58,6 +58,7 @@ namespace WebServerAPI.Controllers
                         int total = total_RHL + total_HL + total_BT + total_KHL;
                         int count = count_RHL + count_HL + count_BT + count_KHL;
                         double tyle = Math.Round(((double)count / (double)total) * 100.00, 2);
+                        int diem = count_RHL * 3 + count_HL * 2 + count_BT;
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -73,7 +74,8 @@ namespace WebServerAPI.Controllers
                             HL_TyLe = tyle_HL,
                             BT_TyLe = tyle_BT,
                             KHL_TyLe = tyle_KHL,
-                            TongCong_TyLe = tyle
+                            TongCong_TyLe = tyle,
+                            Diem = diem
                         };
                         listMD.Add(md);
                     }
@@ -136,6 +138,7 @@ namespace WebServerAPI.Controllers
                         int total = total_RHL + total_HL + total_BT + total_KHL;
                         int count = count_RHL + count_HL + count_BT + count_KHL;
                         double tyle = Math.Round(((double)count / (double)total) * 100.00, 2);
+                        int diem = count_RHL * 3 + count_HL * 2 + count_BT;
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -151,7 +154,8 @@ namespace WebServerAPI.Controllers
                             HL_TyLe = tyle_HL,
                             BT_TyLe = tyle_BT,
                             KHL_TyLe = tyle_KHL,
-                            TongCong_TyLe = tyle
+                            TongCong_TyLe = tyle,
+                            Diem = diem
                         };
                         listMD.Add(md);
                     }
@@ -174,6 +178,7 @@ namespace WebServerAPI.Controllers
                     double tyle_BT = Math.Round(((double)count_BT / (double)total) * 100.00, 2);
                     int count_KHL = db.KETQUADANHGIAs.Count(p => p.MUCDO == 4 && p.SOTHUTU.MACB == _MaCB);
                     double tyle_KHL = Math.Round(((double)count_KHL / (double)total) * 100.00, 2);
+                    int diem = count_RHL * 3 + count_HL * 2 + count_BT;
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -189,7 +194,8 @@ namespace WebServerAPI.Controllers
                         HL_TyLe = tyle_HL,
                         BT_TyLe = tyle_BT,
                         KHL_TyLe = tyle_KHL,
-                        TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL
+                        TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
+                        Diem = diem
                     };
                     listMD.Add(md);
                 }
@@ -245,6 +251,7 @@ namespace WebServerAPI.Controllers
                     double tyle_BT = Math.Round(((double)count_BT / (double)total) * 100.00, 2);
                     int count_KHL = db.KETQUADANHGIAs.Count(p => p.MUCDO == 4 && p.SOTHUTU.MACB == _MaCB && p.TG >= start && p.TG <= end);
                     double tyle_KHL = Math.Round(((double)count_KHL / (double)total) * 100.00, 2);
+                    int diem = count_RHL * 3 + count_HL * 2 + count_BT;
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -260,7 +267,8 @@ namespace WebServerAPI.Controllers
                         HL_TyLe = tyle_HL,
                         BT_TyLe = tyle_BT,
                         KHL_TyLe = tyle_KHL,
-                        TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL
+                        TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
+                        Diem = diem
                     };
                     listMD.Add(md);
                 }
@@ -680,5 +688,435 @@ namespace WebServerAPI.Controllers
             }
             return listMD;
         }
+
+        /// <summary>
+        /// Phương thức lấy góp ý để báo cáo
+        /// </summary>
+        /// <param name="_MaBP">Mã bộ phận</param>
+        /// <param name="_MaCB">Mã cán bộ</param>
+        /// <param name="_Start">Thời gian bắt đầu</param>
+        /// <param name="_End">Thời gian kết thúc</param>
+        /// <returns></returns>
+        //[HttpGet]
+        //public IEnumerable<BangThuTuc_BaoCao_> GetPhien(int _MaBP, int _MaCB, string _Start, string _End, string _Phien)
+        //{
+        //    IList<BangThuTuc_BaoCao_> listMD = new List<BangThuTuc_BaoCao_>();
+
+        //    if (_MaCB == 0)
+        //    {
+        //        if (_MaBP == 0)
+        //        {
+        //            if (_Start == null && _End == null)
+        //            {
+        //                var listEF = db.KETQUADANHGIAs.OrderBy(p => p.MASTT).ToList();
+        //                foreach (var item in listEF)
+        //                {
+        //                    var macb = item.SOTHUTU.MACB;
+        //                    var hoten = item.SOTHUTU.CANBO.HOTEN;
+        //                    var mabp = item.SOTHUTU.CANBO.MABP;
+        //                    var tenbp = item.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                    var mastt = item.MASTT;
+        //                    var stt = item.SOTHUTU.STT;
+        //                    DateTime start = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+        //                    DateTime end = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+        //                    var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+        //                                                     p.STTTD == stt &&
+        //                                                     p.TG >= start &&
+        //                                                     p.TG <= end)
+        //                                         .FirstOrDefault();
+        //                    var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt).FirstOrDefault();
+        //                    double phiencho = Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+        //                    double phienxuly = Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+        //                    double tongphien = phiencho + phienxuly;
+        //                    bool doub = false;
+        //                    foreach (var itemMD in listMD)
+        //                    {
+        //                        if (itemMD.GopY == item.NOIDUNG &&
+        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                    }
+        //                    if (!doub)
+        //                    {
+        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                        string gopy = item.NOIDUNG;
+        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                         p.NOIDUNG == gopy &&
+        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                             .Count();
+
+        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                        {
+        //                            MaBP = mabp,
+        //                            TenBP = tenbp,
+        //                            MaCB = macb,
+        //                            HoTen = hoten,
+        //                            MucDoDanhGia = mucdo_danhgia,
+        //                            GopY = gopy,
+        //                            SoLan = count
+        //                        };
+        //                        listMD.Add(md);
+        //                    }
+        //                }
+        //            }
+        //            else if (_Start != null && _End != null)
+        //            {
+
+        //                string[] arrS = _Start.Split('/');
+        //                DateTime start = new DateTime();
+        //                if (arrS.Length == 3)
+        //                {
+        //                    int ngayS = Convert.ToInt32(arrS[1]);
+        //                    int thangS = Convert.ToInt32(arrS[0]);
+        //                    int namS = Convert.ToInt32(arrS[2]);
+        //                    start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+        //                }
+        //                else if (arrS.Length == 2)
+        //                {
+        //                    int thangS = Convert.ToInt32(arrS[0]);
+        //                    int namS = Convert.ToInt32(arrS[1]);
+        //                    start = new DateTime(namS, thangS, 1, 0, 0, 0);
+        //                }
+        //                else if (arrS.Length == 1)
+        //                {
+        //                    int namS = Convert.ToInt32(arrS[0]);
+        //                    start = new DateTime(namS, 1, 1, 0, 0, 0);
+        //                }
+        //                string[] arrE = _End.Split('/');
+        //                DateTime end = new DateTime();
+        //                if (arrE.Length == 3)
+        //                {
+        //                    int ngayE = Convert.ToInt32(arrE[1]);
+        //                    int thangE = Convert.ToInt32(arrE[0]);
+        //                    int namE = Convert.ToInt32(arrE[2]);
+        //                    end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+        //                }
+        //                else if (arrE.Length == 2)
+        //                {
+        //                    int thangE = Convert.ToInt32(arrE[0]);
+        //                    int namE = Convert.ToInt32(arrE[1]);
+        //                    end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+        //                }
+        //                else if (arrS.Length == 1)
+        //                {
+        //                    int namE = Convert.ToInt32(arrE[0]);
+        //                    end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+        //                }
+
+        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start && p.KETQUADANHGIA.TG <= end)
+        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.CANBO.MABP)
+        //                                      .ToList();
+        //                foreach (var item in listEF)
+        //                {
+        //                    bool doub = false;
+        //                    foreach (var itemMD in listMD)
+        //                    {
+        //                        if (itemMD.GopY == item.NOIDUNG &&
+        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                    }
+        //                    if (!doub)
+        //                    {
+        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                        string gopy = item.NOIDUNG;
+        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                         p.KETQUADANHGIA.TG >= start &&
+        //                                                         p.KETQUADANHGIA.TG <= end &&
+        //                                                         p.NOIDUNG == gopy &&
+        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                             .Count();
+
+        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                        {
+        //                            MaBP = mabp,
+        //                            TenBP = tenbp,
+        //                            MaCB = macb,
+        //                            HoTen = hoten,
+        //                            MucDoDanhGia = mucdo_danhgia,
+        //                            GopY = gopy,
+        //                            SoLan = count
+        //                        };
+        //                        listMD.Add(md);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (_Start == null && _End == null)
+        //            {
+        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.CANBO.MABP == _MaBP)
+        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.MACB)
+        //                                      .ToList();
+        //                foreach (var item in listEF)
+        //                {
+        //                    bool doub = false;
+        //                    foreach (var itemMD in listMD)
+        //                    {
+        //                        if (itemMD.GopY == item.NOIDUNG &&
+        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                    }
+        //                    if (!doub)
+        //                    {
+        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                        string gopy = item.NOIDUNG;
+        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                         p.NOIDUNG == gopy &&
+        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                             .Count();
+
+        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                        {
+        //                            MaBP = mabp,
+        //                            TenBP = tenbp,
+        //                            MaCB = macb,
+        //                            HoTen = hoten,
+        //                            MucDoDanhGia = mucdo_danhgia,
+        //                            GopY = gopy,
+        //                            SoLan = count
+        //                        };
+        //                        listMD.Add(md);
+        //                    }
+        //                }
+        //            }
+        //            else if (_Start != null && _End != null)
+        //            {
+        //                string[] arrS = _Start.Split('/');
+        //                DateTime start = new DateTime();
+        //                if (arrS.Length == 3)
+        //                {
+        //                    int ngayS = Convert.ToInt32(arrS[1]);
+        //                    int thangS = Convert.ToInt32(arrS[0]);
+        //                    int namS = Convert.ToInt32(arrS[2]);
+        //                    start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+        //                }
+        //                else if (arrS.Length == 2)
+        //                {
+        //                    int thangS = Convert.ToInt32(arrS[0]);
+        //                    int namS = Convert.ToInt32(arrS[1]);
+        //                    start = new DateTime(namS, thangS, 1, 0, 0, 0);
+        //                }
+        //                else if (arrS.Length == 1)
+        //                {
+        //                    int namS = Convert.ToInt32(arrS[0]);
+        //                    start = new DateTime(namS, 1, 1, 0, 0, 0);
+        //                }
+        //                string[] arrE = _End.Split('/');
+        //                DateTime end = new DateTime();
+        //                if (arrE.Length == 3)
+        //                {
+        //                    int ngayE = Convert.ToInt32(arrE[1]);
+        //                    int thangE = Convert.ToInt32(arrE[0]);
+        //                    int namE = Convert.ToInt32(arrE[2]);
+        //                    end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+        //                }
+        //                else if (arrE.Length == 2)
+        //                {
+        //                    int thangE = Convert.ToInt32(arrE[0]);
+        //                    int namE = Convert.ToInt32(arrE[1]);
+        //                    end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+        //                }
+        //                else if (arrS.Length == 1)
+        //                {
+        //                    int namE = Convert.ToInt32(arrE[0]);
+        //                    end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+        //                }
+
+        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start &&
+        //                                                  p.KETQUADANHGIA.TG <= end &&
+        //                                                  p.KETQUADANHGIA.SOTHUTU.CANBO.MABP == _MaBP)
+        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.MACB)
+        //                                      .ToList();
+        //                foreach (var item in listEF)
+        //                {
+        //                    bool doub = false;
+        //                    foreach (var itemMD in listMD)
+        //                    {
+        //                        if (itemMD.GopY == item.NOIDUNG &&
+        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                    }
+        //                    if (!doub)
+        //                    {
+        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                        string gopy = item.NOIDUNG;
+        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                         p.KETQUADANHGIA.TG >= start &&
+        //                                                         p.KETQUADANHGIA.TG <= end &&
+        //                                                         p.NOIDUNG == gopy &&
+        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                             .Count();
+
+        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                        {
+        //                            MaBP = mabp,
+        //                            TenBP = tenbp,
+        //                            MaCB = macb,
+        //                            HoTen = hoten,
+        //                            MucDoDanhGia = mucdo_danhgia,
+        //                            GopY = gopy,
+        //                            SoLan = count
+        //                        };
+        //                        listMD.Add(md);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (_Start == null && _End == null)
+        //        {
+        //            var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == _MaCB)
+        //                                  .OrderBy(p => p.KETQUADANHGIA.MUCDO)
+        //                                  .ToList();
+        //            foreach (var item in listEF)
+        //            {
+        //                bool doub = false;
+        //                foreach (var itemMD in listMD)
+        //                {
+        //                    if (itemMD.GopY == item.NOIDUNG &&
+        //                        itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                        itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                }
+        //                if (!doub)
+        //                {
+        //                    int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                    string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                    int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                    string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                    int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                    string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                    string gopy = item.NOIDUNG;
+        //                    int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                     p.NOIDUNG == gopy &&
+        //                                                     p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                         .Count();
+
+        //                    BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                    {
+        //                        MaBP = mabp,
+        //                        TenBP = tenbp,
+        //                        MaCB = macb,
+        //                        HoTen = hoten,
+        //                        MucDoDanhGia = mucdo_danhgia,
+        //                        GopY = gopy,
+        //                        SoLan = count
+        //                    };
+        //                    listMD.Add(md);
+        //                }
+        //            }
+        //        }
+        //        else if (_Start != null && _End != null)
+        //        {
+
+        //            string[] arrS = _Start.Split('/');
+        //            DateTime start = new DateTime();
+        //            if (arrS.Length == 3)
+        //            {
+        //                int ngayS = Convert.ToInt32(arrS[1]);
+        //                int thangS = Convert.ToInt32(arrS[0]);
+        //                int namS = Convert.ToInt32(arrS[2]);
+        //                start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+        //            }
+        //            else if (arrS.Length == 2)
+        //            {
+        //                int thangS = Convert.ToInt32(arrS[0]);
+        //                int namS = Convert.ToInt32(arrS[1]);
+        //                start = new DateTime(namS, thangS, 1, 0, 0, 0);
+        //            }
+        //            else if (arrS.Length == 1)
+        //            {
+        //                int namS = Convert.ToInt32(arrS[0]);
+        //                start = new DateTime(namS, 1, 1, 0, 0, 0);
+        //            }
+        //            string[] arrE = _End.Split('/');
+        //            DateTime end = new DateTime();
+        //            if (arrE.Length == 3)
+        //            {
+        //                int ngayE = Convert.ToInt32(arrE[1]);
+        //                int thangE = Convert.ToInt32(arrE[0]);
+        //                int namE = Convert.ToInt32(arrE[2]);
+        //                end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+        //            }
+        //            else if (arrE.Length == 2)
+        //            {
+        //                int thangE = Convert.ToInt32(arrE[0]);
+        //                int namE = Convert.ToInt32(arrE[1]);
+        //                end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+        //            }
+        //            else if (arrS.Length == 1)
+        //            {
+        //                int namE = Convert.ToInt32(arrE[0]);
+        //                end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+        //            }
+
+        //            var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start &&
+        //                                              p.KETQUADANHGIA.TG <= end &&
+        //                                              p.KETQUADANHGIA.SOTHUTU.MACB == _MaCB)
+        //                                  .OrderBy(p => p.KETQUADANHGIA.MUCDO)
+        //                                  .ToList();
+        //            foreach (var item in listEF)
+        //            {
+        //                bool doub = false;
+        //                foreach (var itemMD in listMD)
+        //                {
+        //                    if (itemMD.GopY == item.NOIDUNG &&
+        //                        itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
+        //                        itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
+        //                }
+        //                if (!doub)
+        //                {
+        //                    int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
+        //                    string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
+        //                    int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
+        //                    string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
+        //                    int mucdo = (int)item.KETQUADANHGIA.MUCDO;
+        //                    string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
+        //                    string gopy = item.NOIDUNG;
+        //                    int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
+        //                                                     p.KETQUADANHGIA.TG >= start &&
+        //                                                     p.KETQUADANHGIA.TG <= end &&
+        //                                                     p.NOIDUNG == gopy &&
+        //                                                     p.KETQUADANHGIA.MUCDO == mucdo)
+        //                                         .Count();
+
+        //                    BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
+        //                    {
+        //                        MaBP = mabp,
+        //                        TenBP = tenbp,
+        //                        MaCB = macb,
+        //                        HoTen = hoten,
+        //                        MucDoDanhGia = mucdo_danhgia,
+        //                        GopY = gopy,
+        //                        SoLan = count
+        //                    };
+        //                    listMD.Add(md);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return listMD;
+        //}
     }
 }

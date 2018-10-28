@@ -9,11 +9,63 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CANBOes">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.CANBO">
+        <MappingFragment StoreEntitySet="CANBO">
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
+          <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PW" ColumnName="PW" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GOPies">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.GOPY">
+        <MappingFragment StoreEntitySet="GOPY">
+          <ScalarProperty Name="MAGY" ColumnName="MAGY" />
+          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
+          <ScalarProperty Name="MADG" ColumnName="MADG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KETQUADANHGIAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.KETQUADANHGIA">
+        <MappingFragment StoreEntitySet="KETQUADANHGIA">
+          <ScalarProperty Name="MADG" ColumnName="MADG" />
+          <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
+          <ScalarProperty Name="TG" ColumnName="TG" />
+          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="MUCDODANHGIAs">
       <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MUCDODANHGIA">
         <MappingFragment StoreEntitySet="MUCDODANHGIA">
           <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
           <ScalarProperty Name="LOAI" ColumnName="LOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOTHUTUs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTHUTU">
+        <MappingFragment StoreEntitySet="SOTHUTU">
+          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
+          <ScalarProperty Name="STT" ColumnName="STT" />
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+          <ScalarProperty Name="BD" ColumnName="BD" />
+          <ScalarProperty Name="KT" ColumnName="KT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOTOIDAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTOIDA">
+        <MappingFragment StoreEntitySet="SOTOIDA">
+          <ScalarProperty Name="MASTD" ColumnName="MASTD" />
+          <ScalarProperty Name="STTTD" ColumnName="STTTD" />
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
+          <ScalarProperty Name="TG" ColumnName="TG" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -25,55 +77,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CANBOes">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.CANBO">
-        <MappingFragment StoreEntitySet="CANBO">
-          <ScalarProperty Name="PW" ColumnName="PW" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="HINHANH" ColumnName="HINHANH" />
-          <ScalarProperty Name="MABP" ColumnName="MABP" />
-          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
-          <ScalarProperty Name="MACB" ColumnName="MACB" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="KETQUADANHGIAs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.KETQUADANHGIA">
-        <MappingFragment StoreEntitySet="KETQUADANHGIA">
-          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
-          <ScalarProperty Name="TG" ColumnName="TG" />
-          <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
-          <ScalarProperty Name="MADG" ColumnName="MADG" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="GOPies">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.GOPY">
-        <MappingFragment StoreEntitySet="GOPY">
-          <ScalarProperty Name="MADG" ColumnName="MADG" />
-          <ScalarProperty Name="NOIDUNG" ColumnName="NOIDUNG" />
-          <ScalarProperty Name="MAGY" ColumnName="MAGY" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SOTOIDAs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTOIDA">
-        <MappingFragment StoreEntitySet="SOTOIDA">
-          <ScalarProperty Name="TG" ColumnName="TG" />
-          <ScalarProperty Name="MABP" ColumnName="MABP" />
-          <ScalarProperty Name="STTTD" ColumnName="STTTD" />
-          <ScalarProperty Name="MASTD" ColumnName="MASTD" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TRANGTHAIDANGNHAPs">
       <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP">
         <MappingFragment StoreEntitySet="TRANGTHAIDANGNHAP">
-          <ScalarProperty Name="KT" ColumnName="KT" />
-          <ScalarProperty Name="BD" ColumnName="BD" />
-          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-          <ScalarProperty Name="MACB" ColumnName="MACB" />
           <ScalarProperty Name="MADN" ColumnName="MADN" />
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
+          <ScalarProperty Name="BD" ColumnName="BD" />
+          <ScalarProperty Name="KT" ColumnName="KT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -82,17 +93,6 @@
         <MappingFragment StoreEntitySet="MAYDANHGIA">
           <ScalarProperty Name="MAC" ColumnName="MAC" />
           <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SOTHUTUs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.SOTHUTU">
-        <MappingFragment StoreEntitySet="SOTHUTU">
-          <ScalarProperty Name="KT" ColumnName="KT" />
-          <ScalarProperty Name="BD" ColumnName="BD" />
-          <ScalarProperty Name="MACB" ColumnName="MACB" />
-          <ScalarProperty Name="STT" ColumnName="STT" />
-          <ScalarProperty Name="MASTT" ColumnName="MASTT" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

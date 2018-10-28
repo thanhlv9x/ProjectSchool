@@ -21,5 +21,6 @@ namespace WebServerAPI.Models
         public double BT_TyLe { get; set; }
         public double KHL_TyLe { get; set; }
         public double TongCong_TyLe { get; set; }
+        public int Diem { get; set; }
     }
 }

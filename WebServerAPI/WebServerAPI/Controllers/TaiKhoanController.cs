@@ -238,7 +238,7 @@ namespace WebServerAPI.Controllers
                                 db.SaveChanges();
                                 id += "-" + cb.MACB + "-" + tenbp_id;
                                 img.Save(thuMucHinh + cb.MACB + ".png");
-                                cb.HINHANH = thuMucHinh + cb.MACB + ".png";
+                                cb.HINHANH = cb.MACB + ".png";
                                 cb.ID = id;
                                 db.SaveChanges();
                             }

@@ -1,0 +1,224 @@
+﻿function createBPDangNhap() {
+    $.ajax({
+        type: "GET",
+        url: url + "/api/BoPhanAPI",
+        dataType: "json",
+        success: function (data) {
+            if (data.length > 0) {
+                var arr = [];
+                for (var i = 0; i < data.length; i++) {
+                    arr[i] = { text: data[i]["TenBP"], value: data[i]["MaBP"] };
+                }
+                $("#bo-phan-dang-nhap").kendoDropDownList({
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataSource: arr
+                });
+                createCBDangNhap($("#bo-phan-dang-nhap").val());
+            } else { }
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    })
+}
+createBPDangNhap()
+$("#bo-phan-dang-nhap").change(function () {
+    createCBDangNhap($("#bo-phan-dang-nhap").val())
+})
+function createCBDangNhap(MaBP) {
+    $.ajax({
+        type: "GET",
+        url: url + "/api/BoPhanAPI/?_MaBP=" + MaBP,
+        dataType: "json",
+        success: function (data) {
+            if (data.length > 0) {
+                var arr = [];
+                for (var i = 0; i < data.length; i++) {
+                    arr[i] = { text: data[i]["HoTen"], value: data[i]["MaCB"] };
+                }
+                $("#can-bo-dang-nhap").kendoDropDownList({
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataSource: arr
+                });
+                createMonthDangNhap($("#can-bo-dang-nhap").val());
+                createYearDangNhap($("#can-bo-dang-nhap").val());
+            } else { }
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    })
+}
+$("#can-bo-dang-nhap").change(function () {
+    createYearDangNhap($("#can-bo-dang-nhap").val());
+    createMonthDangNhap($("#can-bo-dang-nhap").val());
+})
+function createGridDangNhap(MaCB, Loai, ThoiGian) {
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: url + "/api/DangNhapAPI/?_MaCB=" + MaCB + "&_Loai=" + Loai + "&_ThoiGian=" + ThoiGian,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "MaCB",
+                fields: {
+                    MaCB: { type: "number" },
+                    HoTen: { type: "string", validation: { required: true } },
+                    MaMay: { type: "number", validation: { required: true } },
+                    Ngay: { type: "date", validation: { required: true } },
+                    BD: { type: "date", validation: { required: true } },
+                    KT: { type: "date", validation: { required: true } },
+                    ThoiGian: { type: "number", validation: { required: true } }
+                }
+            }
+        },
+        group: {
+            field: "Ngay", aggregates: [
+                { field: "ThoiGian", aggregate: "average" },
+                { field: "ThoiGian", aggregate: "sum" },
+                { field: "ThoiGian", aggregate: "min" },
+                { field: "ThoiGian", aggregate: "max" }
+            ]
+        },
+
+        aggregate: [
+            { field: "ThoiGian", aggregate: "average" },
+            { field: "ThoiGian", aggregate: "sum" },
+            { field: "ThoiGian", aggregate: "min" },
+            { field: "ThoiGian", aggregate: "max" }
+        ]
+    });
+
+    var grid = $("#grid-dang-nhap").kendoGrid({
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: true,
+        columns: [
+            { field: "MaMay", title: "Số quầy", width: 100 },
+            { field: "BD", title: "Thời điểm đăng nhập", width: 100, format: "{0: HH:mm:ss}" },
+            { field: "KT", title: "Thời điểm đăng xuất", width: 100, format: "{0: HH:mm:ss}" },
+            {
+                field: "ThoiGian", title: "Thời gian truy xuất (Phút)", width: 100,
+                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
+            { field: "Ngay", title: "Ngày", width: 100, format: "{0: dd mm yyyy}" },
+        ],
+    }).data("kendoGrid");
+    grid.hideColumn("Ngay");
+    $("#div-grid-dang-nhap h3").text("Thời gian đăng nhập của " + $("#can-bo-dang-nhap").data("kendoDropDownList").text() + "(" + ThoiGian + ")");
+}
+
+function createMonthDangNhap(MaCB) {
+    $.ajax({
+        type: "GET",
+        url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            if (data.length > 0) {
+                $("#thang-dang-nhap").kendoDatePicker({
+                    start: "year",
+                    depth: "year",
+                    format: "MM yyyy",
+                    dateInput: false,
+                    value: new Date(),
+                    min: new Date(data[0]),
+                    max: new Date(data[1]),
+                    //disableDates: ["sa", "su"]
+                });
+            } else {
+                $("#thang-dang-nhap").val("09 2018");
+            }
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    })
+}
+
+function createYearDangNhap(MaCB) {
+    $.ajax({
+        type: "GET",
+        url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            if (data.length > 0) {
+                var arr = [];
+                var j = 0;
+                var arr1 = data[0].split(" ");
+                var arr2 = data[1].split(" ");
+                for (var i = Number.parseInt(arr1[0]); i <= Number.parseInt(arr2[0]); i++) {
+                    arr[j] = { text: i.toString(), value: i.toString() };
+                    j++;
+                }
+                $("#nam-dang-nhap").kendoDropDownList({
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataSource: arr
+                });
+            } else { }
+        },
+        error: function (xhr) {
+            console.log(xhr.responseText);
+        }
+    })
+}
+
+function onClick(e) {
+    if ($("#cbx-thang-dang-nhap").prop("checked")) {
+        createGridDangNhap($("#can-bo-dang-nhap").val(), "thang", $("#thang-dang-nhap").val())
+    }
+    if ($("#cbx-nam-dang-nhap").prop("checked")) {
+        createGridDangNhap($("#can-bo-dang-nhap").val(), "nam", $("#nam-dang-nhap").val())
+    }
+}
+
+$("#btn-dang-nhap").kendoButton({
+    click: onClick
+});
+
+$("#cbx-thang-dang-nhap").change(function () {
+    if (!$("#cbx-thang-dang-nhap").prop("checked")) {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+    }
+    else {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+    }
+})
+
+$("#cbx-nam-dang-nhap").change(function () {
+    if (!$("#cbx-nam-dang-nhap").prop("checked")) {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+    }
+    else {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+    }
+})

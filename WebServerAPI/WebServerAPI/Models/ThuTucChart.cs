@@ -12,6 +12,7 @@ namespace WebServerAPI.Models
         public int MaBP { get; set; }
         public string TenBP { get; set; }
         public int MaCB { get; set; }
+        public string HoTen { get; set; }
         public DateTime ThoiGianRut { get; set; }
         public DateTime ThoiGianGoi { get; set; }
         public DateTime ThoiGianHoanTat { get; set; }
