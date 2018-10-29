@@ -453,7 +453,8 @@ namespace WebServerAPI.Controllers
                             HinhAnh = hinh_anh,
                             TenBP = userEF.BOPHAN.TENBP,
                             MaMay = mamay,
-                            MaDN = login.MADN
+                            MaDN = login.MADN,
+                            BD = (DateTime)login.BD
                         };
                         var httpResponse = Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.Created, userMD);
                         string uri = Url.Link("DefaultApi", new { id = userMD.MaCB });

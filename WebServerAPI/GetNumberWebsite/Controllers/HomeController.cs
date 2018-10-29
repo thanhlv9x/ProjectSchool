@@ -46,8 +46,9 @@ namespace GetNumberWebsite.Controllers
         /// Lấy thông tin bộ phận và số thứ tự
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetBP()
+        public JsonResult GetBP(string url)
         {
+            // "http://localhost:61443"
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://" + strIP + "/");
@@ -77,7 +78,7 @@ namespace GetNumberWebsite.Controllers
         /// </summary>
         /// <param name="_MaBP"></param>
         /// <returns></returns>
-        public JsonResult GetSTT(int _MaBP)
+        public JsonResult GetSTT(int _MaBP, string url)
         {
             using (var client = new HttpClient())
             {

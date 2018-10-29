@@ -329,12 +329,11 @@ function createGridThuTucTH(urlStr, titleStr) {
             { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "ThoiGianGiaiQuyet", title: "Phiên giải quyết (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "TongThoiGian", title: "Tổng phiên (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "TenBP", title: "Tên bộ phận", width: 1 },
-            { field: "MaSTT", title: "", width: 1 },
+            { hidden: true, field: "TenBP", title: "Tên bộ phận", width: 1 },
         ],
     }).data("kendoGrid");
     $("#title-grid-thu-tuc-th").text(titleStr);
-    grid.hideColumn("TenBP");
+    //grid.hideColumn("TenBP");
 }
 
 // ============ Bộ phận =================================
@@ -657,11 +656,10 @@ function createGridThuTucBP(urlStr, titleStr) {
             { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "ThoiGianGiaiQuyet", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "TongThoiGian", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "HoTen", title: "Họ tên", width: 1 },
-            { field: "MaSTT", title: "", width: 1 },
+            { hidden: true, field: "HoTen", title: "Họ tên", width: 1 },
         ],
     }).data("kendoGrid");
-    grid.hideColumn("HoTen");
+    //grid.hideColumn("HoTen");
 }
 
 // ============ Cán bộ =================================
@@ -673,7 +671,6 @@ function createInfoThuTucCB(MaCB) {
         type: "GET",
         dataType: "json",
         success: function (result) {
-            console.log(window.d = result)
             $("#image-thu-tuc-cb input").attr('src', `data:image/png;base64,${result["HinhAnh"]}`);
             $("#id-thu-tuc-cb span").text(result["MaCB"]);
             $("#name-thu-tuc-cb span").text(result["HoTen"]);
@@ -950,9 +947,8 @@ function createGridThuTucCB(urlStr, titleStr) {
             { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "ThoiGianGiaiQuyet", title: "Phiên giải quyết (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { field: "TongThoiGian", title: "Tổng phiên (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
-            { field: "MaSTT", title: "", width: 1 },
+            { hidden: true, field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
         ],
     }).data("kendoGrid");
-    grid.hideColumn("Ngay");
+    //grid.hideColumn("Ngay");
 }

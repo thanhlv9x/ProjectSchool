@@ -690,433 +690,434 @@ namespace WebServerAPI.Controllers
         }
 
         /// <summary>
-        /// Phương thức lấy góp ý để báo cáo
+        /// Phương thức lấy thủ tục để báo cáo
         /// </summary>
         /// <param name="_MaBP">Mã bộ phận</param>
         /// <param name="_MaCB">Mã cán bộ</param>
         /// <param name="_Start">Thời gian bắt đầu</param>
         /// <param name="_End">Thời gian kết thúc</param>
+        /// <param name="_Phien">Tham số xác nhận phương thức</param>
         /// <returns></returns>
-        //[HttpGet]
-        //public IEnumerable<BangThuTuc_BaoCao_> GetPhien(int _MaBP, int _MaCB, string _Start, string _End, string _Phien)
-        //{
-        //    IList<BangThuTuc_BaoCao_> listMD = new List<BangThuTuc_BaoCao_>();
+        [HttpGet]
+        public IEnumerable<BangThuTuc_BaoCao_> GetPhien(int _MaBP, int _MaCB, string _Start, string _End, string _Phien)
+        {
+            IList<BangThuTuc_BaoCao_> listMD = new List<BangThuTuc_BaoCao_>();
 
-        //    if (_MaCB == 0)
-        //    {
-        //        if (_MaBP == 0)
-        //        {
-        //            if (_Start == null && _End == null)
-        //            {
-        //                var listEF = db.KETQUADANHGIAs.OrderBy(p => p.MASTT).ToList();
-        //                foreach (var item in listEF)
-        //                {
-        //                    var macb = item.SOTHUTU.MACB;
-        //                    var hoten = item.SOTHUTU.CANBO.HOTEN;
-        //                    var mabp = item.SOTHUTU.CANBO.MABP;
-        //                    var tenbp = item.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                    var mastt = item.MASTT;
-        //                    var stt = item.SOTHUTU.STT;
-        //                    DateTime start = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
-        //                    DateTime end = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
-        //                    var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
-        //                                                     p.STTTD == stt &&
-        //                                                     p.TG >= start &&
-        //                                                     p.TG <= end)
-        //                                         .FirstOrDefault();
-        //                    var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt).FirstOrDefault();
-        //                    double phiencho = Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-        //                    double phienxuly = Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-        //                    double tongphien = phiencho + phienxuly;
-        //                    bool doub = false;
-        //                    foreach (var itemMD in listMD)
-        //                    {
-        //                        if (itemMD.GopY == item.NOIDUNG &&
-        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                    }
-        //                    if (!doub)
-        //                    {
-        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                        string gopy = item.NOIDUNG;
-        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                         p.NOIDUNG == gopy &&
-        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                             .Count();
+            if (_MaCB == 0)
+            {
+                if (_MaBP == 0)
+                {
+                    if (_Start == null && _End == null)
+                    {
+                        // Lấy thời gian xử lý thủ tục của toàn bộ cán bộ trong tất cả thời gian
+                        var listCB = db.CANBOes.OrderBy(p => p.MABP).ToList();
+                        foreach (var itemCB in listCB)
+                        {
+                            var mabp = itemCB.MABP;
+                            string tenbp = itemCB.BOPHAN.TENBP;
+                            var macb = itemCB.MACB;
+                            string hoten = itemCB.HOTEN;
+                            var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb)
+                                                          .OrderBy(p => p.MASTT)
+                                                          .ToList();
+                            double phiencho = 0;
+                            double phienxuly = 0;
+                            double tongphien = 0;
+                            foreach (var item in listEF)
+                            {
+                                var mastt = item.MASTT;
+                                var stt = item.SOTHUTU.STT;
+                                DateTime start = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                                DateTime end = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                                var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                                 p.STTTD == stt &&
+                                                                 p.TG >= start &&
+                                                                 p.TG <= end)
+                                                     .FirstOrDefault();
+                                var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null & p.BD != null & p.KT != null).FirstOrDefault();
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                            }
+                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                            {
+                                MaBP = (int)mabp,
+                                TenBP = tenbp,
+                                MaCB = macb,
+                                HoTen = hoten,
+                                PhienCho = phiencho,
+                                PhienXuLy = phienxuly,
+                                TongPhien = tongphien
+                            };
+                            listMD.Add(md);
+                        }
+                    }
+                    
+                    else if (_Start != null && _End != null)
+                    {
+                        string[] arrS = _Start.Split('/');
+                        DateTime start = new DateTime();
+                        if (arrS.Length == 3)
+                        {
+                            int ngayS = Convert.ToInt32(arrS[1]);
+                            int thangS = Convert.ToInt32(arrS[0]);
+                            int namS = Convert.ToInt32(arrS[2]);
+                            start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+                        }
+                        else if (arrS.Length == 2)
+                        {
+                            int thangS = Convert.ToInt32(arrS[0]);
+                            int namS = Convert.ToInt32(arrS[1]);
+                            start = new DateTime(namS, thangS, 1, 0, 0, 0);
+                        }
+                        else if (arrS.Length == 1)
+                        {
+                            int namS = Convert.ToInt32(arrS[0]);
+                            start = new DateTime(namS, 1, 1, 0, 0, 0);
+                        }
+                        string[] arrE = _End.Split('/');
+                        DateTime end = new DateTime();
+                        if (arrE.Length == 3)
+                        {
+                            int ngayE = Convert.ToInt32(arrE[1]);
+                            int thangE = Convert.ToInt32(arrE[0]);
+                            int namE = Convert.ToInt32(arrE[2]);
+                            end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+                        }
+                        else if (arrE.Length == 2)
+                        {
+                            int thangE = Convert.ToInt32(arrE[0]);
+                            int namE = Convert.ToInt32(arrE[1]);
+                            end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+                        }
+                        else if (arrS.Length == 1)
+                        {
+                            int namE = Convert.ToInt32(arrE[0]);
+                            end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+                        }
 
-        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                        {
-        //                            MaBP = mabp,
-        //                            TenBP = tenbp,
-        //                            MaCB = macb,
-        //                            HoTen = hoten,
-        //                            MucDoDanhGia = mucdo_danhgia,
-        //                            GopY = gopy,
-        //                            SoLan = count
-        //                        };
-        //                        listMD.Add(md);
-        //                    }
-        //                }
-        //            }
-        //            else if (_Start != null && _End != null)
-        //            {
+                        // Lấy thời gian xử lý thủ tục của toàn bộ cán bộ trong khoảng thời gian nhất định
+                        var listCB = db.CANBOes.OrderBy(p => p.MABP).ToList();
+                        foreach (var itemCB in listCB)
+                        {
+                            var mabp = itemCB.MABP;
+                            string tenbp = itemCB.BOPHAN.TENBP;
+                            var macb = itemCB.MACB;
+                            string hoten = itemCB.HOTEN;
+                            var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb &&
+                                                                      p.TG >= start &&
+                                                                      p.TG <= end)
+                                                          .OrderBy(p => p.MASTT)
+                                                          .ToList();
+                            double phiencho = 0;
+                            double phienxuly = 0;
+                            double tongphien = 0;
+                            foreach (var item in listEF)
+                            {
+                                var mastt = item.MASTT;
+                                var stt = item.SOTHUTU.STT;
+                                DateTime startSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                                DateTime endSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                                var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                                 p.STTTD == stt &&
+                                                                 p.TG >= startSTT &&
+                                                                 p.TG <= endSTT)
+                                                     .FirstOrDefault();
+                                var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                            }
+                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                            {
+                                MaBP = (int)mabp,
+                                TenBP = tenbp,
+                                MaCB = macb,
+                                HoTen = hoten,
+                                PhienCho = phiencho,
+                                PhienXuLy = phienxuly,
+                                TongPhien = tongphien
+                            };
+                            listMD.Add(md);
+                        }
+                    }
+                }
+                else
+                {
+                    if (_Start == null && _End == null)
+                    {
+                        // Lấy thời gian xử lý thủ tục của toàn bộ cán bộ theo bộ phận trong tất cả thời gian
+                        var listCB = db.CANBOes.Where(p=>p.MABP == _MaBP).OrderBy(p => p.MABP).ToList();
+                        foreach (var itemCB in listCB)
+                        {
+                            var mabp = itemCB.MABP;
+                            string tenbp = itemCB.BOPHAN.TENBP;
+                            var macb = itemCB.MACB;
+                            string hoten = itemCB.HOTEN;
+                            var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb)
+                                                          .OrderBy(p => p.MASTT)
+                                                          .ToList();
+                            double phiencho = 0;
+                            double phienxuly = 0;
+                            double tongphien = 0;
+                            foreach (var item in listEF)
+                            {
+                                var mastt = item.MASTT;
+                                var stt = item.SOTHUTU.STT;
+                                DateTime start = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                                DateTime end = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                                var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                                 p.STTTD == stt &&
+                                                                 p.TG >= start &&
+                                                                 p.TG <= end)
+                                                     .FirstOrDefault();
+                                var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                            }
+                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                            {
+                                MaBP = (int)mabp,
+                                TenBP = tenbp,
+                                MaCB = macb,
+                                HoTen = hoten,
+                                PhienCho = phiencho,
+                                PhienXuLy = phienxuly,
+                                TongPhien = tongphien
+                            };
+                            listMD.Add(md);
+                        }
+                    }
+                    else if (_Start != null && _End != null)
+                    {
+                        string[] arrS = _Start.Split('/');
+                        DateTime start = new DateTime();
+                        if (arrS.Length == 3)
+                        {
+                            int ngayS = Convert.ToInt32(arrS[1]);
+                            int thangS = Convert.ToInt32(arrS[0]);
+                            int namS = Convert.ToInt32(arrS[2]);
+                            start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+                        }
+                        else if (arrS.Length == 2)
+                        {
+                            int thangS = Convert.ToInt32(arrS[0]);
+                            int namS = Convert.ToInt32(arrS[1]);
+                            start = new DateTime(namS, thangS, 1, 0, 0, 0);
+                        }
+                        else if (arrS.Length == 1)
+                        {
+                            int namS = Convert.ToInt32(arrS[0]);
+                            start = new DateTime(namS, 1, 1, 0, 0, 0);
+                        }
+                        string[] arrE = _End.Split('/');
+                        DateTime end = new DateTime();
+                        if (arrE.Length == 3)
+                        {
+                            int ngayE = Convert.ToInt32(arrE[1]);
+                            int thangE = Convert.ToInt32(arrE[0]);
+                            int namE = Convert.ToInt32(arrE[2]);
+                            end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+                        }
+                        else if (arrE.Length == 2)
+                        {
+                            int thangE = Convert.ToInt32(arrE[0]);
+                            int namE = Convert.ToInt32(arrE[1]);
+                            end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+                        }
+                        else if (arrS.Length == 1)
+                        {
+                            int namE = Convert.ToInt32(arrE[0]);
+                            end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+                        }
 
-        //                string[] arrS = _Start.Split('/');
-        //                DateTime start = new DateTime();
-        //                if (arrS.Length == 3)
-        //                {
-        //                    int ngayS = Convert.ToInt32(arrS[1]);
-        //                    int thangS = Convert.ToInt32(arrS[0]);
-        //                    int namS = Convert.ToInt32(arrS[2]);
-        //                    start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
-        //                }
-        //                else if (arrS.Length == 2)
-        //                {
-        //                    int thangS = Convert.ToInt32(arrS[0]);
-        //                    int namS = Convert.ToInt32(arrS[1]);
-        //                    start = new DateTime(namS, thangS, 1, 0, 0, 0);
-        //                }
-        //                else if (arrS.Length == 1)
-        //                {
-        //                    int namS = Convert.ToInt32(arrS[0]);
-        //                    start = new DateTime(namS, 1, 1, 0, 0, 0);
-        //                }
-        //                string[] arrE = _End.Split('/');
-        //                DateTime end = new DateTime();
-        //                if (arrE.Length == 3)
-        //                {
-        //                    int ngayE = Convert.ToInt32(arrE[1]);
-        //                    int thangE = Convert.ToInt32(arrE[0]);
-        //                    int namE = Convert.ToInt32(arrE[2]);
-        //                    end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
-        //                }
-        //                else if (arrE.Length == 2)
-        //                {
-        //                    int thangE = Convert.ToInt32(arrE[0]);
-        //                    int namE = Convert.ToInt32(arrE[1]);
-        //                    end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
-        //                }
-        //                else if (arrS.Length == 1)
-        //                {
-        //                    int namE = Convert.ToInt32(arrE[0]);
-        //                    end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
-        //                }
+                        // Lấy thời gian xử lý thủ tục của toàn bộ cán bộ theo bộ phận trong khoảng thời gian nhất định
+                        var listCB = db.CANBOes.Where(p => p.MABP == _MaBP).OrderBy(p => p.MABP).ToList();
+                        foreach (var itemCB in listCB)
+                        {
+                            var mabp = itemCB.MABP;
+                            string tenbp = itemCB.BOPHAN.TENBP;
+                            var macb = itemCB.MACB;
+                            string hoten = itemCB.HOTEN;
+                            var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb &&
+                                                                      p.TG >= start &&
+                                                                      p.TG <= end)
+                                                          .OrderBy(p => p.MASTT)
+                                                          .ToList();
+                            double phiencho = 0;
+                            double phienxuly = 0;
+                            double tongphien = 0;
+                            foreach (var item in listEF)
+                            {
+                                var mastt = item.MASTT;
+                                var stt = item.SOTHUTU.STT;
+                                DateTime startSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                                DateTime endSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                                var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                                 p.STTTD == stt &&
+                                                                 p.TG >= startSTT &&
+                                                                 p.TG <= endSTT)
+                                                     .FirstOrDefault();
+                                var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                            }
+                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                            {
+                                MaBP = (int)mabp,
+                                TenBP = tenbp,
+                                MaCB = macb,
+                                HoTen = hoten,
+                                PhienCho = phiencho,
+                                PhienXuLy = phienxuly,
+                                TongPhien = tongphien
+                            };
+                            listMD.Add(md);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (_Start == null && _End == null)
+                {
+                    // Lấy thời gian xử lý thủ tục của cán bộ trong tất cả thời gian
+                    var listCB = db.CANBOes.Where(p=>p.MACB == _MaCB).ToList();
+                    foreach (var itemCB in listCB)
+                    {
+                        var mabp = itemCB.MABP;
+                        string tenbp = itemCB.BOPHAN.TENBP;
+                        var macb = itemCB.MACB;
+                        string hoten = itemCB.HOTEN;
+                        var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb)
+                                                      .OrderBy(p => p.MASTT)
+                                                      .ToList();
+                        double phiencho = 0;
+                        double phienxuly = 0;
+                        double tongphien = 0;
+                        foreach (var item in listEF)
+                        {
+                            var mastt = item.MASTT;
+                            var stt = item.SOTHUTU.STT;
+                            DateTime start = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                            DateTime end = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                            var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                             p.STTTD == stt &&
+                                                             p.TG >= start &&
+                                                             p.TG <= end)
+                                                 .FirstOrDefault();
+                            var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
+                            phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                            phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                            tongphien += phiencho + phienxuly;
+                        }
+                        BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                        {
+                            MaBP = (int)mabp,
+                            TenBP = tenbp,
+                            MaCB = macb,
+                            HoTen = hoten,
+                            PhienCho = phiencho,
+                            PhienXuLy = phienxuly,
+                            TongPhien = tongphien
+                        };
+                        listMD.Add(md);
+                    }
+                }
+                else if (_Start != null && _End != null)
+                {
 
-        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start && p.KETQUADANHGIA.TG <= end)
-        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.CANBO.MABP)
-        //                                      .ToList();
-        //                foreach (var item in listEF)
-        //                {
-        //                    bool doub = false;
-        //                    foreach (var itemMD in listMD)
-        //                    {
-        //                        if (itemMD.GopY == item.NOIDUNG &&
-        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                    }
-        //                    if (!doub)
-        //                    {
-        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                        string gopy = item.NOIDUNG;
-        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                         p.KETQUADANHGIA.TG >= start &&
-        //                                                         p.KETQUADANHGIA.TG <= end &&
-        //                                                         p.NOIDUNG == gopy &&
-        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                             .Count();
+                    string[] arrS = _Start.Split('/');
+                    DateTime start = new DateTime();
+                    if (arrS.Length == 3)
+                    {
+                        int ngayS = Convert.ToInt32(arrS[1]);
+                        int thangS = Convert.ToInt32(arrS[0]);
+                        int namS = Convert.ToInt32(arrS[2]);
+                        start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
+                    }
+                    else if (arrS.Length == 2)
+                    {
+                        int thangS = Convert.ToInt32(arrS[0]);
+                        int namS = Convert.ToInt32(arrS[1]);
+                        start = new DateTime(namS, thangS, 1, 0, 0, 0);
+                    }
+                    else if (arrS.Length == 1)
+                    {
+                        int namS = Convert.ToInt32(arrS[0]);
+                        start = new DateTime(namS, 1, 1, 0, 0, 0);
+                    }
+                    string[] arrE = _End.Split('/');
+                    DateTime end = new DateTime();
+                    if (arrE.Length == 3)
+                    {
+                        int ngayE = Convert.ToInt32(arrE[1]);
+                        int thangE = Convert.ToInt32(arrE[0]);
+                        int namE = Convert.ToInt32(arrE[2]);
+                        end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
+                    }
+                    else if (arrE.Length == 2)
+                    {
+                        int thangE = Convert.ToInt32(arrE[0]);
+                        int namE = Convert.ToInt32(arrE[1]);
+                        end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
+                    }
+                    else if (arrS.Length == 1)
+                    {
+                        int namE = Convert.ToInt32(arrE[0]);
+                        end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
+                    }
 
-        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                        {
-        //                            MaBP = mabp,
-        //                            TenBP = tenbp,
-        //                            MaCB = macb,
-        //                            HoTen = hoten,
-        //                            MucDoDanhGia = mucdo_danhgia,
-        //                            GopY = gopy,
-        //                            SoLan = count
-        //                        };
-        //                        listMD.Add(md);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (_Start == null && _End == null)
-        //            {
-        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.CANBO.MABP == _MaBP)
-        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.MACB)
-        //                                      .ToList();
-        //                foreach (var item in listEF)
-        //                {
-        //                    bool doub = false;
-        //                    foreach (var itemMD in listMD)
-        //                    {
-        //                        if (itemMD.GopY == item.NOIDUNG &&
-        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                    }
-        //                    if (!doub)
-        //                    {
-        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                        string gopy = item.NOIDUNG;
-        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                         p.NOIDUNG == gopy &&
-        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                             .Count();
+                    // Lấy thời gian xử lý thủ tục của cán bộ trong khoảng thời gian nhất định
+                    var listCB = db.CANBOes.Where(p => p.MACB == _MaCB).ToList();
+                    foreach (var itemCB in listCB)
+                    {
+                        var mabp = itemCB.MABP;
+                        string tenbp = itemCB.BOPHAN.TENBP;
+                        var macb = itemCB.MACB;
+                        string hoten = itemCB.HOTEN;
+                        var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb &&
+                                                                  p.TG >= start &&
+                                                                  p.TG <= end)
+                                                      .OrderBy(p => p.MASTT)
+                                                      .ToList();
+                        double phiencho = 0;
+                        double phienxuly = 0;
+                        double tongphien = 0;
+                        foreach (var item in listEF)
+                        {
+                            var mastt = item.MASTT;
+                            var stt = item.SOTHUTU.STT;
+                            DateTime startSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 0, 0, 0);
+                            DateTime endSTT = new DateTime(((DateTime)item.TG).Year, ((DateTime)item.TG).Month, ((DateTime)item.TG).Day, 23, 59, 59);
+                            var rut = db.SOTOIDAs.Where(p => p.MABP == mabp &&
+                                                             p.STTTD == stt &&
+                                                             p.TG >= startSTT &&
+                                                             p.TG <= endSTT)
+                                                 .FirstOrDefault();
+                            var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
+                            phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                            phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                            tongphien += phiencho + phienxuly;
+                        }
+                        BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                        {
+                            MaBP = (int)mabp,
+                            TenBP = tenbp,
+                            MaCB = macb,
+                            HoTen = hoten,
+                            PhienCho = phiencho,
+                            PhienXuLy = phienxuly,
+                            TongPhien = tongphien
+                        };
+                        listMD.Add(md);
+                    }
 
-        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                        {
-        //                            MaBP = mabp,
-        //                            TenBP = tenbp,
-        //                            MaCB = macb,
-        //                            HoTen = hoten,
-        //                            MucDoDanhGia = mucdo_danhgia,
-        //                            GopY = gopy,
-        //                            SoLan = count
-        //                        };
-        //                        listMD.Add(md);
-        //                    }
-        //                }
-        //            }
-        //            else if (_Start != null && _End != null)
-        //            {
-        //                string[] arrS = _Start.Split('/');
-        //                DateTime start = new DateTime();
-        //                if (arrS.Length == 3)
-        //                {
-        //                    int ngayS = Convert.ToInt32(arrS[1]);
-        //                    int thangS = Convert.ToInt32(arrS[0]);
-        //                    int namS = Convert.ToInt32(arrS[2]);
-        //                    start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
-        //                }
-        //                else if (arrS.Length == 2)
-        //                {
-        //                    int thangS = Convert.ToInt32(arrS[0]);
-        //                    int namS = Convert.ToInt32(arrS[1]);
-        //                    start = new DateTime(namS, thangS, 1, 0, 0, 0);
-        //                }
-        //                else if (arrS.Length == 1)
-        //                {
-        //                    int namS = Convert.ToInt32(arrS[0]);
-        //                    start = new DateTime(namS, 1, 1, 0, 0, 0);
-        //                }
-        //                string[] arrE = _End.Split('/');
-        //                DateTime end = new DateTime();
-        //                if (arrE.Length == 3)
-        //                {
-        //                    int ngayE = Convert.ToInt32(arrE[1]);
-        //                    int thangE = Convert.ToInt32(arrE[0]);
-        //                    int namE = Convert.ToInt32(arrE[2]);
-        //                    end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
-        //                }
-        //                else if (arrE.Length == 2)
-        //                {
-        //                    int thangE = Convert.ToInt32(arrE[0]);
-        //                    int namE = Convert.ToInt32(arrE[1]);
-        //                    end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
-        //                }
-        //                else if (arrS.Length == 1)
-        //                {
-        //                    int namE = Convert.ToInt32(arrE[0]);
-        //                    end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
-        //                }
-
-        //                var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start &&
-        //                                                  p.KETQUADANHGIA.TG <= end &&
-        //                                                  p.KETQUADANHGIA.SOTHUTU.CANBO.MABP == _MaBP)
-        //                                      .OrderBy(p => p.KETQUADANHGIA.SOTHUTU.MACB)
-        //                                      .ToList();
-        //                foreach (var item in listEF)
-        //                {
-        //                    bool doub = false;
-        //                    foreach (var itemMD in listMD)
-        //                    {
-        //                        if (itemMD.GopY == item.NOIDUNG &&
-        //                            itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                            itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                    }
-        //                    if (!doub)
-        //                    {
-        //                        int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                        string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                        int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                        string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                        int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                        string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                        string gopy = item.NOIDUNG;
-        //                        int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                         p.KETQUADANHGIA.TG >= start &&
-        //                                                         p.KETQUADANHGIA.TG <= end &&
-        //                                                         p.NOIDUNG == gopy &&
-        //                                                         p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                             .Count();
-
-        //                        BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                        {
-        //                            MaBP = mabp,
-        //                            TenBP = tenbp,
-        //                            MaCB = macb,
-        //                            HoTen = hoten,
-        //                            MucDoDanhGia = mucdo_danhgia,
-        //                            GopY = gopy,
-        //                            SoLan = count
-        //                        };
-        //                        listMD.Add(md);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (_Start == null && _End == null)
-        //        {
-        //            var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == _MaCB)
-        //                                  .OrderBy(p => p.KETQUADANHGIA.MUCDO)
-        //                                  .ToList();
-        //            foreach (var item in listEF)
-        //            {
-        //                bool doub = false;
-        //                foreach (var itemMD in listMD)
-        //                {
-        //                    if (itemMD.GopY == item.NOIDUNG &&
-        //                        itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                        itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                }
-        //                if (!doub)
-        //                {
-        //                    int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                    string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                    int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                    string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                    int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                    string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                    string gopy = item.NOIDUNG;
-        //                    int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                     p.NOIDUNG == gopy &&
-        //                                                     p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                         .Count();
-
-        //                    BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                    {
-        //                        MaBP = mabp,
-        //                        TenBP = tenbp,
-        //                        MaCB = macb,
-        //                        HoTen = hoten,
-        //                        MucDoDanhGia = mucdo_danhgia,
-        //                        GopY = gopy,
-        //                        SoLan = count
-        //                    };
-        //                    listMD.Add(md);
-        //                }
-        //            }
-        //        }
-        //        else if (_Start != null && _End != null)
-        //        {
-
-        //            string[] arrS = _Start.Split('/');
-        //            DateTime start = new DateTime();
-        //            if (arrS.Length == 3)
-        //            {
-        //                int ngayS = Convert.ToInt32(arrS[1]);
-        //                int thangS = Convert.ToInt32(arrS[0]);
-        //                int namS = Convert.ToInt32(arrS[2]);
-        //                start = new DateTime(namS, thangS, ngayS, 0, 0, 0);
-        //            }
-        //            else if (arrS.Length == 2)
-        //            {
-        //                int thangS = Convert.ToInt32(arrS[0]);
-        //                int namS = Convert.ToInt32(arrS[1]);
-        //                start = new DateTime(namS, thangS, 1, 0, 0, 0);
-        //            }
-        //            else if (arrS.Length == 1)
-        //            {
-        //                int namS = Convert.ToInt32(arrS[0]);
-        //                start = new DateTime(namS, 1, 1, 0, 0, 0);
-        //            }
-        //            string[] arrE = _End.Split('/');
-        //            DateTime end = new DateTime();
-        //            if (arrE.Length == 3)
-        //            {
-        //                int ngayE = Convert.ToInt32(arrE[1]);
-        //                int thangE = Convert.ToInt32(arrE[0]);
-        //                int namE = Convert.ToInt32(arrE[2]);
-        //                end = new DateTime(namE, thangE, ngayE, 23, 59, 59);
-        //            }
-        //            else if (arrE.Length == 2)
-        //            {
-        //                int thangE = Convert.ToInt32(arrE[0]);
-        //                int namE = Convert.ToInt32(arrE[1]);
-        //                end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
-        //            }
-        //            else if (arrS.Length == 1)
-        //            {
-        //                int namE = Convert.ToInt32(arrE[0]);
-        //                end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
-        //            }
-
-        //            var listEF = db.GOPies.Where(p => p.KETQUADANHGIA.TG >= start &&
-        //                                              p.KETQUADANHGIA.TG <= end &&
-        //                                              p.KETQUADANHGIA.SOTHUTU.MACB == _MaCB)
-        //                                  .OrderBy(p => p.KETQUADANHGIA.MUCDO)
-        //                                  .ToList();
-        //            foreach (var item in listEF)
-        //            {
-        //                bool doub = false;
-        //                foreach (var itemMD in listMD)
-        //                {
-        //                    if (itemMD.GopY == item.NOIDUNG &&
-        //                        itemMD.MucDoDanhGia == item.KETQUADANHGIA.MUCDODANHGIA.LOAI &&
-        //                        itemMD.MaCB == item.KETQUADANHGIA.SOTHUTU.MACB) doub = true;
-        //                }
-        //                if (!doub)
-        //                {
-        //                    int mabp = (int)item.KETQUADANHGIA.SOTHUTU.CANBO.MABP;
-        //                    string tenbp = item.KETQUADANHGIA.SOTHUTU.CANBO.BOPHAN.TENBP;
-        //                    int macb = (int)item.KETQUADANHGIA.SOTHUTU.MACB;
-        //                    string hoten = item.KETQUADANHGIA.SOTHUTU.CANBO.HOTEN;
-        //                    int mucdo = (int)item.KETQUADANHGIA.MUCDO;
-        //                    string mucdo_danhgia = item.KETQUADANHGIA.MUCDODANHGIA.LOAI;
-        //                    string gopy = item.NOIDUNG;
-        //                    int count = db.GOPies.Where(p => p.KETQUADANHGIA.SOTHUTU.MACB == macb &&
-        //                                                     p.KETQUADANHGIA.TG >= start &&
-        //                                                     p.KETQUADANHGIA.TG <= end &&
-        //                                                     p.NOIDUNG == gopy &&
-        //                                                     p.KETQUADANHGIA.MUCDO == mucdo)
-        //                                         .Count();
-
-        //                    BangGopY_BaoCao_ md = new BangGopY_BaoCao_()
-        //                    {
-        //                        MaBP = mabp,
-        //                        TenBP = tenbp,
-        //                        MaCB = macb,
-        //                        HoTen = hoten,
-        //                        MucDoDanhGia = mucdo_danhgia,
-        //                        GopY = gopy,
-        //                        SoLan = count
-        //                    };
-        //                    listMD.Add(md);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return listMD;
-        //}
+                }
+            }
+            return listMD;
+        }
     }
 }

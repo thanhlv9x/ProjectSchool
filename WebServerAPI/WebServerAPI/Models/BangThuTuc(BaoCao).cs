@@ -11,8 +11,8 @@ namespace WebServerAPI.Models
         public string TenBP { get; set; }
         public int MaCB { get; set; }
         public string HoTen { get; set; }
-        public int PhienCho { get; set; }
-        public int PhienXuLy { get; set; }
-        public int TongPhien { get; set; }
+        public double PhienCho { get; set; }
+        public double PhienXuLy { get; set; }
+        public double TongPhien { get; set; }
     }
 }

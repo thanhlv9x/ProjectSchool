@@ -269,6 +269,7 @@
     <Compile Include="Models\KetQuaDanhGiaUser.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Number.cs" />
+    <Compile Include="Models\PhienClient.cs" />
     <Compile Include="Models\SoQuay.cs" />
     <Compile Include="Models\SoThuTuUser.cs" />
     <Compile Include="Models\TaiKhoanUser.cs" />
@@ -441,11 +442,20 @@
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\ChuyenSlide.css" />
+    <Content Include="Scripts\ChuyenSlideJs.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SlideImages\slide-1.jpg" />
+    <Content Include="SlideImages\slide1.jpg" />
+    <Content Include="SlideImages\slide2.jpg" />
+    <Content Include="SlideImages\slide3.jpg" />
+    <Content Include="SlideImages\slide3_cover1.jpg" />
+    <Content Include="SlideImages\slide3_cover2.jpg" />
+    <Content Include="SlideImages\slide4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
-    <link href="~/Content/style1.css" rel="stylesheet" />
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
@@ -53,11 +52,11 @@
                         <div id="RHL-title">Rất hài lòng</div>
                     </div>
                     <div id="HL">
-                        <input type="image" src="~/smile.png" />
+                        <input type="image" src="~/love.png" />
                         <div id="HL-title">Hài lòng</div>
                     </div>
                     <div id="BT">
-                        <input type="image" src="~/love.png" />
+                        <input type="image" src="~/smile.png" />
                         <div id="BT-title">Bình thường</div>
                     </div>
                     <div id="KHL">
@@ -89,9 +88,9 @@
             </div>
         </div>
         <div class="footer">
-            <div id="footer-title">Góp ý khác</div>
+            <div id="footer-title"><input type="checkbox" />Góp ý khác</div>
             <div id="area-gop-y"><input id="txtArea" /></div>
-            <div id="btn-send"><div><div id="send">GỬI KẾT QUẢ</div></div></div>
+            <div id="btn-send"><div><div id="send">GỬI</div></div></div>
         </div>
     </div>
     <div id="thanks">
@@ -111,6 +110,14 @@
     var mabp = 0;
     var mabn = 0;
     var mamay = 0;
+    $("#area-gop-y").hide();
+    $("#footer-title input").change(function () {
+        if ($("#footer-title input").prop("checked")) {
+            $("#area-gop-y").show();
+        } else {
+            $("#area-gop-y").hide();
+        }
+    })
     // Phương thức lấy thông tin danh sách mã máy
     function getPort() {
         var arr = new Array();
@@ -125,6 +132,7 @@
                     var a = { "text": "QUẦY SỐ " + val, "value": val }
                     arr.push(a)
                 })
+                $(".body, .footer").hide();
                 $("#port").kendoDropDownList({
                     dataTextField: "text",
                     dataValueField: "value",
@@ -161,6 +169,8 @@
                             $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
                             $("#container").show();
                             $("#thanks").hide();
+
+                            $(".body, .footer").show();
                         }
                         goiSo();
                     },
@@ -181,7 +191,6 @@
             data: { "_MaCB": macb, "_MaBP": mabp },
             success: function (result) {
                 var js = JSON.parse(result);
-                console.log(js);
                 if (!js) {
                 } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
                     $("#show-number").text(js["STT"]);
@@ -366,3 +375,4 @@
         /* height: 100%; */
     }
 </style>
+<link href="~/Content/style.css" rel="stylesheet" />

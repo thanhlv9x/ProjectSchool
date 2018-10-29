@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
-    <link href="~/Content/style.css" rel="stylesheet" />
-
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
@@ -29,13 +27,15 @@
                     <div id="id-group">Mã số:</div>
                     <div id="name-group">Họ tên:</div>
                     <div id="bo-phan-group"><span></span>Bộ phận:</div>
+                    <div id="time-login">Đăng nhập:</div>
                 </div>
                 <div id="info-right">
-                    <div id="time">20/10/2018</div>
-                    <div id="quay">1</div>
-                    <div id="id">0</div>
-                    <div id="name">Nguyễn Văn B</div>
-                    <div id="bo-phan">Lĩnh vực tài nguyên và đất đai, thủy văn</div>
+                    <div id="time"></div>
+                    <div id="quay"></div>
+                    <div id="id"></div>
+                    <div id="name"></div>
+                    <div id="bo-phan"></div>
+                    <div id="timelogin"></div>
                 </div>
             </div>
             <div id="number-group">
@@ -95,16 +95,96 @@
             dataType: "json",
             success: function (result) {
                 var js = JSON.parse(result);
+                var d = new Date(js["BD"]);
+                var timelogin = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
                 macb = js["MaCB"];
                 mabp = js["MaBP"];
                 mamay = js["MaMay"];
                 madn = js["MaDN"];
                 $("#id").text(js["MaCB"]);
                 $("#name").text(js["HoTen"]);
+                $("#quay").text(js["MaMay"]);
                 $("#bo-phan").text(js["TenBP"]);
                 $("#bo-phan-group span").prop("id", js["MaBP"]);
+                $("#timelogin").text(timelogin);
                 saveInfo();
                 //getNumber();
+                // Tạo bảng thời gian các phiên làm việc ====================================
+                $("#grid").kendoGrid({
+                    dataSource: {
+                        transport: {
+                            serverFiltering: true,
+                            read: function (options) {
+                                $.ajax({
+                                    url: url + "/Home/GetPhien",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        "_MaCB": macb,
+                                        "_Ngay": dd,
+                                        "_Thang": mm,
+                                        "_Nam": yyyy,
+                                    },
+                                    success: function (result) {
+                                        var js = JSON.parse(result)
+                                        options.success(js)
+                                    },
+                                    error: function (xhr) {
+                                        console.log(xhr.responseText);
+                                    }
+                                })
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return { models: kendo.stringify(options.models) };
+                                }
+                            }
+                        },
+                        batch: true,
+                        pageSize: 10,
+                        schema: {
+                            model: {
+                                fields: {
+                                    MaSTT: { type: "number" },
+                                    STT: { type: "number" },
+                                    PhienCho: { type: "number" },
+                                    PhienXuLy: { type: "number" },
+                                    TongPhien: { type: "number" }
+                                }
+                            }
+                        },
+                        aggregate: [
+                            { field: "TongPhien", aggregate: "average" },
+                            { field: "TongPhien", aggregate: "sum" },
+                            { field: "TongPhien", aggregate: "min" },
+                            { field: "TongPhien", aggregate: "max" },
+                        ]
+                    },
+                    navigatable: true,
+                    pageable: true,
+                    columns: [{
+                        field: "STT", title: "STT",
+                        width: 2
+                    },
+                    {
+                        field: "PhienCho",
+                        title: "Chờ (Phút)",
+                        width: 3
+                    },
+                    {
+                        field: "PhienXuLy",
+                        title: "Xử lý (Phút)",
+                        width: 3
+                    },
+                    {
+                        field: "TongPhien",
+                        title: "Tổng",
+                        width: 2,
+                        groupHeaderColumnTemplate: "Sum: #=sum#",
+                        groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+                    }
+                    ]
+                }); 
             },
             error: function (xhr) {
                 console.log(xhr.responseText);
@@ -193,7 +273,7 @@
     // Tạo sự kiện nút mở cửa sổ đổi mật khẩu
     $("#btn-change-pw").kendoButton();
     $("#btn-change-pw").click(function () {
-        $("#window").data("kendoWindow").open();
+        $("#window").data("kendoWindow").open().center();
         //$("#btn-change-pw").fadeOut();
     })
     // Tạo sự kiện nút đổi mật khẩu
@@ -221,45 +301,7 @@
     })
     // Tạo sự kiện nút đăng xuất
     $("a[href$='/Login/Logout']").kendoButton()
-    // Tạo bảng thời gian các phiên làm việc ====================================
-    $("#grid").kendoGrid({
-        dataSource: {
-            type: "odata",
-            transport: {
-                read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Orders"
-            },
-            schema: {
-                model: {
-                    fields: {
-                        OrderID: { type: "number" },
-                        Freight: { type: "number" },
-                        ShipName: { type: "string" },
-                        OrderDate: { type: "date" },
-                        ShipCity: { type: "string" }
-                    }
-                }
-            },
-            pageSize: 20,
-            serverPaging: true,
-            serverFiltering: true,
-            serverSorting: true
-        },
-        filterable: true,
-        sortable: true,
-        pageable: true,
-        columns: [{
-            field: "OrderID",
-            filterable: false,
-            width: 1
-        },
-        {
-            field: "OrderDate",
-            title: "Order Date",
-            format: "{0:MM/dd/yyyy}",
-            width: 2
-        }
-        ]
-    });
+
     // Tạo sự kiện nút mở rộng bảng thống kê
     $("#open").click(function () {
         $('#grid').data('kendoGrid').dataSource.read();
@@ -284,12 +326,9 @@
         /* transform: translate(-50%,-50%); */
     }
 
-    div#grid {
-        font-size: 0.8em;
-        height: 100%;
-    }
 
-    div.k-grid-footer, div.k-grid-header {
+
+    /*div.k-grid-footer, div.k-grid-header {
         height: 10%;
     }
 
@@ -299,7 +338,7 @@
 
     .k-edge .k-pager-wrap, .k-ff .k-pager-wrap, .k-ie11 .k-pager-wrap, .k-safari .k-pager-wrap, .k-webkit .k-pager-wrap {
         height: 10%;
-    }
+    }*/
 
     #window {
         font-size: 1.2em;
@@ -310,3 +349,4 @@
         font-size: 1.2em;
     }
 </style>
+<link href="~/Content/style1.css" rel="stylesheet" />

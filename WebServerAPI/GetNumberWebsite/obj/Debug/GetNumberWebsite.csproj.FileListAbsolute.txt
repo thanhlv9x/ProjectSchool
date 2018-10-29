@@ -266,8 +266,8 @@ D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\Microsoft.AI.Dependenc
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\Microsoft.AI.WindowsServer.xml
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\Microsoft.AI.Web.xml
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.csprojAssemblyReference.cache
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.csproj.CoreCompileInputs.cache
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.csproj.CopyComplete
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.dll
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.pdb
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.csprojAssemblyReference.cache

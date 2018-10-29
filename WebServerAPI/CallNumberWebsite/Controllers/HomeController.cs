@@ -49,6 +49,49 @@ namespace CallNumberWebsite.Controllers
             return Json(Session[CommonConstants.USER_RESULT], JsonRequestBehavior.AllowGet);
         }
         /// <summary>
+        /// Phương thức lấy thông tin phiên giải quyết thủ tục
+        /// </summary>
+        /// <param name="_MaCB">Mã cán bộ</param>
+        /// <param name="_Ngay">Ngày</param>
+        /// <param name="_Thang">Tháng</param>
+        /// <param name="_Nam">Năm</param>
+        /// <returns></returns>
+        public JsonResult GetPhien(int _MaCB, int _Ngay, int _Thang, int _Nam)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = client.GetAsync("api/GetNumberAPI/?_MaCB=" + _MaCB + "&_Ngay=" + _Ngay + "&_Thang=" + _Thang + "&_Nam=" + _Nam).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(false, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        return Json(false, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+        /// <summary>
         /// Phương thức lưu lại thông tin cán bộ
         /// </summary>
         /// <param name="_MaCB">Mã cán bộ</param>

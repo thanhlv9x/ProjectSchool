@@ -245,11 +245,12 @@ function createButtonReport() {
 }
 // Tạo sự kiện nút xem báo cáo
 function onClickBtnReport() {
-    $("#noi-dung-bao-cao").html('<div id="title-bao-cao-1" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div><div id = "grid-report-1" ></div ><div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div><div id="grid-report-2"></div>');
+    $("#noi-dung-bao-cao").html('<div id="title-bao-cao-1" style="margin: 1em 0 1em 0; padding: 0.8em; "></div><div id = "grid-report-1" ></div ><div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em;"></div><div id="grid-report-2"></div><div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div><div id="title-bao-cao-3" style="margin: 1em 0 1em 0; padding: 0.8em;"></div><div id="grid-report-3"></div><div id="title-bao-cao-2" style="margin: 1em 0 1em 0; padding: 0.8em; text-align:center"></div>');
     var start;
     var end;
     var title1 = "<h2>BẢNG KẾT QUẢ ĐÁNH GIÁ</h2>";
     var title2 = "<h2>BẢNG GÓP Ý</h2> ";
+    var title3 = "<h2>BẢNG THỜI GIAN GIẢI QUYẾT THỦ TỤC</h2>";
     mabp_report = $("#bo-phan-bao-cao").val();
     if (mabp_report == 0) {
         macb_report = 0;
@@ -258,9 +259,11 @@ function onClickBtnReport() {
         macb_report = $("#can-bo-bao-cao").val();
         title1 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
         title2 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
+        title3 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
         if (macb_report != 0) {
             title1 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
             title2 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
+            title3 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
         }
     }
     if ($("#thoi-gian-bao-cao").val() == 0) {
@@ -268,26 +271,127 @@ function onClickBtnReport() {
         end = "";
         title1 += "<div>Tổng hợp</div>";
         title2 += "<div>Tổng hợp</div>";
+        title3 += "<div>Tổng hợp</div>";
     } else {
         start = $("#start-bao-cao").val();
         end = $("#end-bao-cao").val();
         title1 += "<div>(" + start + " - " + end + ")</div>";
         title2 += "<div>(" + start + " - " + end + ")</div>";
+        title3 += "<div>(" + start + " - " + end + ")</div>";
     }
-    if ($("#cb-kq").prop("checked") && $("#cb-gy").prop("checked")) {
-        createGridReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
-        createGridFeedBack(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=" + "GopY");
-        $("#title-bao-cao-1").html(title1);
-        $("#title-bao-cao-2").html(title2);
-    }
-    else if ($("#cb-kq").prop("checked") && !$("#cb-gy").prop("checked")) {
+    if ($("#cb-kq").prop("checked")) {
         createGridReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
         $("#title-bao-cao-1").html(title1);
     }
-    else if (!$("#cb-kq").prop("checked") && $("#cb-gy").prop("checked")) {
-        createGridFeedBack(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=" + "GopY");
+    if ($("#cb-gy").prop("checked")) {
+        createGridFeedBack(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=GopY");
         $("#title-bao-cao-2").html(title2);
     }
+    if ($("#cb-tt").prop("checked")) {
+        createGridThuTucReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
+        $("#title-bao-cao-3").html(title3);
+    }
+}
+// Phương thức tạo bảng thời gian giải quyết thủ tục
+function createGridThuTucReport(urlStr) {
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: urlStr,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "MaCB",
+                fields: {
+                    MaCB: { type: "number" },
+                    MaBP: { type: "number", validation: { required: true } },
+                    TenBP: { type: "string", validation: { required: true } },
+                    HoTen: { type: "string", validation: { required: true } },
+                    PhienCho: { type: "number", validation: { required: true } },
+                    PhienXuLy: { type: "number", validation: { required: true } },
+                    TongPhien: { type: "number", validation: { required: true } }
+                }
+            }
+        },
+        group: {
+            field: "TenBP", aggregates: [
+                { field: "HoTen", aggregate: "count" },
+                { field: "PhienCho", aggregate: "average" },
+                { field: "PhienCho", aggregate: "sum" },
+                { field: "PhienCho", aggregate: "min" },
+                { field: "PhienCho", aggregate: "max" },
+                { field: "PhienXuLy", aggregate: "average" },
+                { field: "PhienXuLy", aggregate: "sum" },
+                { field: "PhienXuLy", aggregate: "min" },
+                { field: "PhienXuLy", aggregate: "max" },
+                { field: "TongPhien", aggregate: "average" },
+                { field: "TongPhien", aggregate: "sum" },
+                { field: "TongPhien", aggregate: "min" },
+                { field: "TongPhien", aggregate: "max" }
+            ]
+        },
+
+        aggregate: [
+            { field: "HoTen", aggregate: "count" },
+            { field: "PhienCho", aggregate: "average" },
+            { field: "PhienCho", aggregate: "sum" },
+            { field: "PhienCho", aggregate: "min" },
+            { field: "PhienCho", aggregate: "max" },
+            { field: "PhienXuLy", aggregate: "average" },
+            { field: "PhienXuLy", aggregate: "sum" },
+            { field: "PhienXuLy", aggregate: "min" },
+            { field: "PhienXuLy", aggregate: "max" },
+            { field: "TongPhien", aggregate: "average" },
+            { field: "TongPhien", aggregate: "sum" },
+            { field: "TongPhien", aggregate: "min" },
+            { field: "TongPhien", aggregate: "max" }
+        ]
+    });
+
+    var grid = $("#grid-report-3").kendoGrid({
+        pdf: {
+            allPages: true,
+            avoidLinks: true,
+            paperSize: "A4",
+            margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
+            landscape: true,
+            repeatHeaders: true,
+            template: $("#page-template-thutuc").html(),
+            scale: 0.8
+        },
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: true,
+        columns: [
+            { field: "MaCB", title: "Mã số", width: 80 },
+            { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
+            { field: "TenBP", title: "Bộ phận", width: 1 },
+            { field: "PhienCho", title: "Phiên chờ", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
+            { field: "PhienXuLy", title: "Phiên xử lý", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
+            { field: "TongPhien", title: "Tổng phiên", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+        ],
+    }).data("kendoGrid");
+    grid.hideColumn("TenBP");
+    //$("#span-title-table-cb-1").text(titleStr);
 }
 // Phương thức tạo bảng kết quả báo cáo
 function createGridReport(urlStr) {
@@ -496,6 +600,7 @@ function createGridFeedBack(urlStr) {
                     url: urlStr,
                     dataType: 'json',
                     success: function (result) {
+                        console.log(result)
                         options.success(result);
                     },
                     error: function (result) {
@@ -572,10 +677,12 @@ function createGridFeedBack(urlStr) {
 }
 // Phương thức click nút xuất báo cáo
 $('#btn-report').on('click', function () {
+    debugger;
     try {
-        if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0) {
+        if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length > 0) {
             var grid1 = $('#grid-report-1').data('kendoGrid');
             var grid2 = $('#grid-report-2').data('kendoGrid');
+            var grid3 = $('#grid-report-3').data('kendoGrid');
 
             var progress = $.Deferred();
             kendo.drawing.drawDOM($("#title-bao-cao-1"))
@@ -583,28 +690,38 @@ $('#btn-report').on('click', function () {
                     grid1._drawPDF(progress)
                         .then(function (firstGrid) {
                             kendo.drawing.drawDOM($("#title-bao-cao-2"))
-                                .done(function (footer) {
+                                .done(function (body) {
                                     grid2._drawPDF(progress)
                                         .then(function (secondGrid) {
-                                            firstGrid.children.unshift(header);
-                                            secondGrid.children.unshift(footer)
-                                            secondGrid.children.forEach(function (x) {
-                                                firstGrid.children.push(x);
-                                            })
-                                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
+                                            kendo.drawing.drawDOM($("#title-bao-cao-3"))
+                                                .done(function (footer) {
+                                                    grid3._drawPDF(progress)
+                                                        .then(function (thirdGrid) {
+                                                            firstGrid.children.unshift(header);
+                                                            secondGrid.children.unshift(body);
+                                                            thirdGrid.children.unshift(footer);
+                                                            secondGrid.children.forEach(function (x) {
+                                                                firstGrid.children.push(x);
+                                                            })
+                                                            thirdGrid.children.forEach(function (x) {
+                                                                firstGrid.children.push(x);
+                                                            })
+                                                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
 
-                                        }).done(function (dataURI) {
-                                            kendo.saveAs({
-                                                dataURI: dataURI,
-                                                fileName: "BaoCao-GopY.pdf"
-                                            });
-                                            progress.resolve();
+                                                        }).done(function (dataURI) {
+                                                            kendo.saveAs({
+                                                                dataURI: dataURI,
+                                                                fileName: "BaoCao-GopY-ThuTuc.pdf"
+                                                            });
+                                                            progress.resolve();
+                                                        })
+                                                })
                                         })
                                 })
                         })
                 })
         }
-        else if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length == 0) {
+        else if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length == 0 && $('#grid-report-3').html().length == 0) {
             var grid1 = $('#grid-report-1').data('kendoGrid');
 
             var progress = $.Deferred();
@@ -624,7 +741,7 @@ $('#btn-report').on('click', function () {
                         })
                 })
         }
-        else if ($('#grid-report-1').html().length == 0 && $('#grid-report-2').html().length > 0) {
+        else if ($('#grid-report-1').html().length == 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length == 0) {
             var grid2 = $('#grid-report-2').data('kendoGrid');
 
             var progress = $.Deferred();
@@ -644,8 +761,122 @@ $('#btn-report').on('click', function () {
                         })
                 })
         }
+        else if ($('#grid-report-1').html().length == 0 && $('#grid-report-2').html().length == 0 && $('#grid-report-3').html().length > 0) {
+            var grid3 = $('#grid-report-3').data('kendoGrid');
+
+            var progress = $.Deferred();
+            kendo.drawing.drawDOM($("#title-bao-cao-3"))
+                .done(function (header) {
+                    grid3._drawPDF(progress)
+                        .then(function (firstGrid) {
+                            firstGrid.children.unshift(header);
+                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
+
+                        }).done(function (dataURI) {
+                            kendo.saveAs({
+                                dataURI: dataURI,
+                                fileName: "ThuTuc.pdf"
+                            });
+                            progress.resolve();
+                        })
+                })
+        }
+        else if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length == 0) {
+            var grid1 = $('#grid-report-1').data('kendoGrid');
+            var grid2 = $('#grid-report-2').data('kendoGrid');
+
+            var progress = $.Deferred();
+            kendo.drawing.drawDOM($("#title-bao-cao-1"))
+                .done(function (header) {
+                    grid1._drawPDF(progress)
+                        .then(function (firstGrid) {
+                            kendo.drawing.drawDOM($("#title-bao-cao-2"))
+                                .done(function (body) {
+                                    grid2._drawPDF(progress)
+                                        .then(function (secondGrid) {
+                                            firstGrid.children.unshift(header);
+                                            secondGrid.children.unshift(body);
+                                            secondGrid.children.forEach(function (x) {
+                                                firstGrid.children.push(x);
+                                            })
+                                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
+
+                                        }).done(function (dataURI) {
+                                            kendo.saveAs({
+                                                dataURI: dataURI,
+                                                fileName: "BaoCao-GopY.pdf"
+                                            });
+                                            progress.resolve();
+                                        })
+                                })
+                        })
+                })
+        }
+        else if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length == 0 && $('#grid-report-3').html().length > 0) {
+            var grid1 = $('#grid-report-1').data('kendoGrid');
+            var grid3 = $('#grid-report-3').data('kendoGrid');
+
+            var progress = $.Deferred();
+            kendo.drawing.drawDOM($("#title-bao-cao-1"))
+                .done(function (header) {
+                    grid1._drawPDF(progress)
+                        .then(function (firstGrid) {
+                            kendo.drawing.drawDOM($("#title-bao-cao-3"))
+                                .done(function (body) {
+                                    grid3._drawPDF(progress)
+                                        .then(function (secondGrid) {
+                                            firstGrid.children.unshift(header);
+                                            secondGrid.children.unshift(body);
+                                            secondGrid.children.forEach(function (x) {
+                                                firstGrid.children.push(x);
+                                            })
+                                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
+
+                                        }).done(function (dataURI) {
+                                            kendo.saveAs({
+                                                dataURI: dataURI,
+                                                fileName: "BaoCao-ThuTuc.pdf"
+                                            });
+                                            progress.resolve();
+                                        })
+                                })
+                        })
+                })
+        }
+        else if ($('#grid-report-1').html().length == 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length > 0) {
+            var grid2 = $('#grid-report-2').data('kendoGrid');
+            var grid3 = $('#grid-report-3').data('kendoGrid');
+
+            var progress = $.Deferred();
+            kendo.drawing.drawDOM($("#title-bao-cao-2"))
+                .done(function (header) {
+                    grid2._drawPDF(progress)
+                        .then(function (firstGrid) {
+                            kendo.drawing.drawDOM($("#title-bao-cao-3"))
+                                .done(function (body) {
+                                    grid3._drawPDF(progress)
+                                        .then(function (secondGrid) {
+                                            firstGrid.children.unshift(header);
+                                            secondGrid.children.unshift(body);
+                                            secondGrid.children.forEach(function (x) {
+                                                firstGrid.children.push(x);
+                                            })
+                                            return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
+
+                                        }).done(function (dataURI) {
+                                            kendo.saveAs({
+                                                dataURI: dataURI,
+                                                fileName: "GopY-ThuTuc.pdf"
+                                            });
+                                            progress.resolve();
+                                        })
+                                })
+                        })
+                })
+        }
     } catch (ex) {
-        alert("Yêu cầu phải xem trước hai bảng")
+        console.log(ex);
+        alert("Yêu cầu phải xem trước")
     }
 })
 createButtonReport();

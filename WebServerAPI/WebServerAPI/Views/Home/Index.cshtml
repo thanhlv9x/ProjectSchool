@@ -19,10 +19,10 @@
 </head>
 
 <body>
-    <div id="container">
+    <div id="container" style="height:100%">
         <div id="top-menu"></div> @*#top-menu*@
-        <div id="main-menu">
-            <div id="tabstrip-left">
+        <div id="main-menu" style="height:100%">
+            <div id="tabstrip-left" style="height:100%">
                 <ul>
                     <li id="getting-started" class="k-state-active" onclick="showSubTabstrip();">Giới thiệu</li>
                     <li id="menu-xem-ket-qua" onclick="showSubTabstrip();">Thống kê</li>
@@ -31,7 +31,86 @@
                     <li>@Html.ActionLink("Đăng xuất", "Logout", "Login")</li>
                 </ul> @*#tabstrip-left*@
 
-                <div>Giới thiệu</div>
+                <div id="slide-gioi-thieu" style="height:100%">
+                    <link href="~/Scripts/ChuyenSlide.css" rel="stylesheet" />
+                    <div class="slidewrapper" style="height:100%">
+                        <div class="slides" style="height:100%">
+                            <ul>
+                                <li>
+                                    <div class="slide">
+                                        <div class="img" style="background-image: url('../../SlideImages/slide1.jpg');"></div>
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover2">
+                                        <img src="~/SlideImages/slide3_cover2.jpg" alt="" class="cover3">
+                                        <div class="text-content">
+                                            <h2>1</h2>
+                                            <small>Slide 1</small>
+                                            <div class="ke"></div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla officiis perferendis quaerat temporibus ipsum debitis accusantium, tenetur error illo odit qui ex quis numquam, laudantium at quos optio ut vero.</p>
+                                            <a href="" class="btn">See the Project</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="active">
+                                    <div class="slide">
+                                        <div class="img" style="background-image: url('../../SlideImages/slide2.jpg');"></div>
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover2">
+                                        <img src="~/SlideImages/slide3_cover2.jpg" alt="" class="cover3">
+                                        <div class="text-content">
+                                            <h2>2</h2>
+                                            <small>Slide 2</small>
+                                            <div class="ke"></div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla officiis perferendis quaerat temporibus ipsum debitis accusantium, tenetur error illo odit qui ex quis numquam, laudantium at quos optio ut vero.</p>
+                                            <a href="" class="btn">See the Project</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="slide">
+                                        <div class="img" style="background-image: url('../../SlideImages/slide3.jpg');"></div>
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover2">
+                                        <img src="~/SlideImages/slide3_cover2.jpg" alt="" class="cover3">
+                                        <div class="text-content">
+                                            <h2>3</h2>
+                                            <small>Slide 3</small>
+                                            <div class="ke"></div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla officiis perferendis quaerat temporibus ipsum debitis accusantium, tenetur error illo odit qui ex quis numquam, laudantium at quos optio ut vero.</p>
+                                            <a href="" class="btn">See the Project</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="slide">
+                                        <div class="img" style="background-image: url('../../SlideImages/slide-1.jpg');"></div>
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
+                                        <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover2">
+                                        <img src="~/SlideImages/slide3_cover2.jpg" alt="" class="cover3">
+                                        <div class="text-content">
+                                            <h2>4</h2>
+                                            <small>Slide 4</small>
+                                            <div class="ke"></div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla officiis perferendis quaerat temporibus ipsum debitis accusantium, tenetur error illo odit qui ex quis numquam, laudantium at quos optio ut vero.</p>
+                                            <a href="" class="btn">See the Project</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <div class="chuyenslide">
+                            <ul>
+                                <li>1</li>
+                                <li class="hienthi">2</li>
+                                <li>3</li>
+                                <li>4</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <script src="~/Scripts/ChuyenSlideJs.js"></script>
+                </div>
                 <div id="sub-tabstrip-ket-qua">
                     <ul>
                         <li>Kết quả đánh giá</li>
@@ -486,25 +565,31 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="height: 3em">
-                                    <div style="float:left">
+                                <td colspan="4" style="height: 3em">
+                                    <div style="float:left; margin: 0 1em">
                                         <input type="checkbox" value="Bảng kết quả đánh giá" id="cb-kq" />
                                         <label id="lb-kq" style="cursor:pointer">Bảng kết quả đánh giá</label>
                                     </div>
-                                    <div style="float:right">
-                                        <input type="checkbox" value="Bảng kết quả góp ý" id="cb-gy" />
-                                        <label id="lb-gy" style="cursor:pointer">Bảng kết quả góp ý</label>
-                                        <script>
-                                            $("#lb-kq").click(function () {
-                                                $("#cb-kq").prop("checked", !$("#cb-kq").prop("checked"))
-                                            })
-                                            $("#lb-gy").click(function () {
-                                                $("#cb-gy").prop("checked", !$("#cb-gy").prop("checked"))
-                                            })
-                                        </script>
+                                    <div style="float:left; margin: 0 1em">
+                                        <input type="checkbox" value="Bảng góp ý" id="cb-gy" />
+                                        <label id="lb-gy" style="cursor:pointer">Bảng góp ý</label>
                                     </div>
+                                    <div style="float:left; margin: 0 1em">
+                                        <input type="checkbox" value="Bảng thời gian giải quyết thủ tục" id="cb-tt" />
+                                        <label id="lb-tt" style="cursor:pointer">Bảng thời gian giải quyết thủ tục</label>
+                                    </div>
+                                    <script>
+                                        $("#lb-kq").click(function () {
+                                            $("#cb-kq").prop("checked", !$("#cb-kq").prop("checked"))
+                                        })
+                                        $("#lb-gy").click(function () {
+                                            $("#cb-gy").prop("checked", !$("#cb-gy").prop("checked"))
+                                        })
+                                        $("#lb-tt").click(function () {
+                                            $("#cb-tt").prop("checked", !$("#cb-tt").prop("checked"))
+                                        })
+                                    </script>
                                 </td>
-                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
@@ -591,6 +676,18 @@
         </div>
     </div>
 </script>
+<script type="x/kendo-template" id="page-template-thutuc">
+    <div class="page-template">
+        <div class="header">
+            <div style="float: right">Trang #: pageNum # / #: totalPages #</div>
+            Bảng thời gian giải quyết thủ tục
+        </div>
+        <div class="watermark">GIẢI QUYẾT THỦ TỤC</div>
+        <div class="footer">
+            Trang #: pageNum # / #: totalPages #
+        </div>
+    </div>
+</script>
 
 <script>
     var url = window.location.origin;
@@ -629,6 +726,7 @@
             $("#sub-tabstrip-ket-qua").hide();
         }
     }
+    $("#slide-gioi-thieu").prop("style", "height: 93%; display: block; opacity: 1");
     $(document).ready(function () {
         $("#sub-tabstrip-thong-tin").hide();
         $("#sub-tabstrip-ket-qua").hide();
