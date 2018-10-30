@@ -73,7 +73,7 @@ namespace CallNumberWebsite.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                 } catch {}
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -117,7 +117,7 @@ namespace CallNumberWebsite.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                 }
                 catch
                 {
@@ -203,6 +203,5 @@ namespace CallNumberWebsite.Controllers
             }
             return str;
         }
-    
     }
 }

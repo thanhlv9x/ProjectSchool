@@ -13,32 +13,10 @@ namespace GetNumberWebsite.Controllers
 {
     public class HomeController : Controller
     {
-        public static string strIP = "localhost:49930";
         public static string basePath;
 
         public ActionResult Index()
         {
-            try
-            {
-                basePath = AppDomain.CurrentDomain.BaseDirectory;
-                if (!System.IO.File.Exists(basePath + "id.txt"))
-                {
-                    using (StreamWriter sw = new StreamWriter(basePath + "id.txt"))
-                    {
-                        sw.WriteLine("admin");
-                    }
-                }
-                // Đọc dữ liệu từ file idaddress.txt
-                string line = "";
-                using (StreamReader sr = new StreamReader(basePath + "ipaddress.txt"))
-                {
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        strIP = line;
-                    }
-                }
-            }
-            catch { }
             return View();
         }
 
@@ -51,7 +29,7 @@ namespace GetNumberWebsite.Controllers
             // "http://localhost:61443"
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://" + strIP + "/");
+                client.BaseAddress = new Uri(GetUriServer.GetUri());
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
@@ -82,7 +60,7 @@ namespace GetNumberWebsite.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://" + strIP + "/");
+                client.BaseAddress = new Uri(GetUriServer.GetUri());
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
@@ -101,43 +79,6 @@ namespace GetNumberWebsite.Controllers
                 {
                     return Json(false, JsonRequestBehavior.AllowGet);
                 }
-            }
-        }
-        /// <summary>
-        /// Thay đổi địa chỉ IP
-        /// </summary>
-        /// <param name="ip">Địa chỉ IP</param>
-        /// <param name="id">Tên tài khoản</param>
-        /// <param name="pw">Mật khẩu</param>
-        /// <returns></returns>
-        public JsonResult SettingIP(string ip, string id)
-        {
-            try
-            {
-                bool access = false;
-                // Đọc dữ liệu từ file idaddress.txt
-                string line = "";
-                using (StreamReader sr = new StreamReader(basePath + "id.txt"))
-                {
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        if (id == line) access = true;
-                    }
-                }
-                if (access)
-                {
-                    using (StreamWriter sw = new StreamWriter(basePath + "ipaddress.txt"))
-                    {
-                        sw.WriteLine(ip);
-                    }
-                    strIP = ip;
-                    return Json(true, JsonRequestBehavior.AllowGet);
-                }
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
     }

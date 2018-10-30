@@ -1,0 +1,499 @@
+﻿* {
+    margin: 0;
+    /* padding: 0; */
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+#thanks div {
+    font-size: 0.7em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div#fbKHL {
+    width: 50%;
+    float: right;
+    margin: 0.3em 0;
+}
+
+div#fbBT {
+    width: 50%;
+    float: left;
+    margin: 0.3em 0;
+}
+
+div#fbHL {
+    width: 50%;
+    float: right;
+    margin: 0.3em 0;
+}
+
+div#fbRHL {
+    width: 50%;
+    float: left;
+    margin: 0.3em 0;
+}
+
+div#btn-send div {
+    position: absolute;
+    /* top: 50%; */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+div#btn-send {
+    float: right;
+    width: 30%;
+    height: 100%;
+    position: relative;
+}
+
+textarea#txtArea {
+    width: 100%;
+}
+
+div#area-gop-y {
+    width: 40%;
+    float: left;
+    height: 100%;
+}
+
+div#footer-title {
+    width: 30%;
+    height: 100%;
+    float: left;
+    font-size: 1.1em;
+    text-align: center;
+    padding: 0.5em 0;
+}
+
+div#feedback {
+    height: 80%;
+    /* line-height: 1.7em; */
+    font-size: 0.8em;
+    /* padding: 0 5%; */
+}
+
+div#feedback-group > div:first-child {
+    text-align: center;
+    height: 20%;
+    font-size: 0.9em;
+}
+
+div#feedback-group {
+    height: 30%;
+    padding: 1em 0.1em 0 0.1em;
+}
+
+div#review-group > div:first-child {
+    height: 25%;
+    /* padding: 0.5em 0; */
+    font-size: 1.2em;
+}
+
+input[type="image"] {
+    height: 50px;
+    width: 50px;
+    /* border: 0; */
+}
+
+    input[type="image"]:focus {
+        outline: none;
+    }
+
+    input[type="image"]:active {
+        border: 0;
+    }
+
+div#RHL, div#HL, div#BT, div#KHL {
+    height: 124%;
+    width: 25%;
+    float: left;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+div#muc-do {
+    height: 70%;
+}
+
+div#review-group {
+}
+
+div#review-group {
+    /* margin: 5% 0; */
+    height: 30%;
+    text-align: center;
+    clear: both;
+    padding: em 0 0 0;
+    /* margin: 3% 0 0 0; */
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    font-weight: 300;
+}
+
+#thanks {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+}
+
+.header {
+    height: 10%;
+    background-color: #8999FF;
+    position: relative;
+}
+
+    .header div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-50%, -50%);
+        font-size: 1.3em;
+    }
+
+
+span#port-number {
+    position: absolute;
+    right: 0%;
+    font-size: 1.2em;
+}
+
+.body {
+    height: 80%;
+    background-color: #f1f1f1;
+}
+
+    .body #left-title {
+        height: 10%;
+        width: 65%;
+        float: left;
+        position: relative;
+    }
+
+        .body #left-title div {
+            font-size: 1.2em;
+            /* font-weight: bold; */
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+        }
+
+    .body #right-title {
+        width: 35%;
+        height: 10%;
+        float: right;
+        position: relative;
+    }
+
+        .body #right-title div {
+            text-align: center;
+            font-size: 1.5em;
+            /* font-weight: bold; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    .body #info {
+        clear: both;
+        float: left;
+        width: 80%;
+        height: 30%;
+    }
+
+        .body #info #image {
+            width: 43%;
+            height: 100%;
+            /* padding: 3%; */
+            float: left;
+            text-align: center;
+        }
+
+            .body #info #image input {
+                width: 108px;
+                height: 144px;
+                /* margin: 10%; */
+            }
+
+        .body #info div {
+            width: 57%;
+            height: 100%;
+            float: right;
+        }
+
+            .body #info div div#id-group, .body #info div div#name-group, .body #info div div#bo-phan-group {
+                height: 33.33%;
+                width: 100%;
+                font-size: 0.8em;
+            }
+
+                .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+                    float: left;
+                    height: 100%;
+                    width: 30%;
+                }
+
+                    .body #info div div#id-group div#id, .body #info div div#name-group div#name, .body #info div div#bo-phan-group div#bo-phan {
+                        float: right;
+                        height: 100%;
+                        width: 70%;
+                        padding: 0 3%;
+                    }
+
+    .body #number {
+        float: right;
+        width: 20%;
+        height: 30%;
+        position: relative
+    }
+
+        .body #number #number-title {
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .body #number #show-number {
+            font-size: 1.8em;
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+.footer {
+    height: 10%;
+    background-color: #8999FF;
+    padding: 0.5em 0em;
+}
+
+#RHL, #HL, #BT, #KHL, #fbRHL, #fbHL, #fbBT, #fbKHL, input[type="checkbox"] {
+    cursor: pointer;
+}
+
+#fbRHL, #fbHL, #fbBT, #fbKHL {
+    padding: 0.7em;
+}
+
+@media screen and (min-width: 600px) {
+    .header div {
+        font-size: 2em;
+    }
+
+    #thanks div {
+        font-size: 1.8em;
+    }
+
+    .body #number #number-title {
+        font-size: 1.6em;
+    }
+
+    .body #number #show-number {
+        font-size: 3em;
+    }
+
+    .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+        font-size: 1.3em;
+    }
+
+    .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+        width: 20%
+    }
+
+        .body #info div div#id-group div#id, .body #info div div#name-group div#name, .body #info div div#bo-phan-group div#bo-phan {
+            width: 80%;
+        }
+
+    div#review-group > div:first-child {
+        font-size: 1.3em;
+    }
+
+    input[type="image"] {
+        height: 70px;
+        width: 70px;
+    }
+
+    #RHL-title, #HL-title, #BT-title, #KHL-title {
+        font-size: 1.2em;
+    }
+
+    div#feedback-group > div:first-child {
+        font-size: 1.3em;
+        margin: 0.5em;
+    }
+
+    div#feedback {
+        padding: 0 4em;
+    }
+
+    input[type="checkbox"] {
+        height: 20px;
+        width: 20px;
+    }
+
+    #feedback span {
+        font-size: 1.2em;
+    }
+
+    div#footer-title {
+        padding: 0.2em 0;
+        font-size: 1em;
+    }
+
+    div#area-gop-y, div#btn-send {
+        /* padding: 0em 0; */
+    }
+
+    span#port-number {
+        position: absolute;
+        right: 2%;
+        font-size: 2.1em;
+        top: 2%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .header div {
+        font-size: 2.5em;
+        color: white;
+    }
+
+    #thanks div {
+        font-size: 2.4em;
+    }
+
+    .body #left-title div {
+        font-size: 1.5em;
+    }
+
+    .body #number #number-title {
+        font-size: 1.6em;
+    }
+
+    .body #number #show-number {
+        font-size: 4em;
+    }
+
+    .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+        font-size: 1.8em;
+    }
+
+
+    .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+        width: 17%;
+    }
+
+        .body #info div div#id-group div#id, .body #info div div#name-group div#name, .body #info div div#bo-phan-group div#bo-phan {
+            width: 83%;
+        }
+
+    div#review-group > div:first-child {
+        /* font-size: 1.5em; */
+    }
+
+    input[type="image"] {
+        height: 100px;
+        width: 100px;
+    }
+
+    #RHL-title, #HL-title, #BT-title, #KHL-title {
+        font-size: 1.5em;
+    }
+
+    div#feedback-group > div:first-child {
+        /* font-size: 1.8em; */
+    }
+
+    input[type="checkbox"] {
+        height: 20px;
+        width: 20px;
+        margin: 0 1em;
+    }
+
+    #feedback span {
+        font-size: 1.7em;
+    }
+
+    div#footer-title {
+        font-size: 1.5em;
+        color: white;
+    }
+
+    div#area-gop-y, div#btn-send {
+        padding: 0em 0;
+    }
+
+    .body #info div {
+        width: 70%;
+    }
+
+    .body #info #image {
+        width: 30%;
+    }
+
+    div#RHL, div#HL, div#BT, div#KHL {
+        width: 15%;
+        margin: 0 5%;
+        padding: 0;
+        border-radius: 1em;
+    }
+
+    span#port-number {
+        position: absolute;
+        right: 1%;
+        font-size: 2.5em;
+        color: white;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    html {
+        position: relative;
+    }
+
+    body {
+        position: absolute;
+        max-width: 1920px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+
+    .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
+        width: 12%;
+    }
+
+        .body #info div div#id-group div#id, .body #info div div#name-group div#name, .body #info div div#bo-phan-group div#bo-phan {
+            width: 88%;
+        }
+
+    div#RHL, div#HL, div#BT, div#KHL {
+        width: 15%;
+        margin: 0 5%;
+        padding: 1% 0;
+    }
+
+    span#port-number {
+        position: absolute;
+        right: 3%;
+        font-size: 2.5em;
+        top: 1%;
+    }
+}

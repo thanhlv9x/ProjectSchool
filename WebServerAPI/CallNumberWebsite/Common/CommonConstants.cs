@@ -14,5 +14,7 @@ namespace CallNumberWebsite.Common
         public static string USER_MASTT = "USER_MASTT";
         public static string USER_MAMAY = "USER_MAMAY";
         public static string USER_MADN = "USER_MADN";
+        public static string USER_MACBSD = "USER_MACBSD";
+        public static string USER_VIETTAT = "USER_VIETTAT";
     }
 }

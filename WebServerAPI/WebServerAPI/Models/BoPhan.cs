@@ -9,5 +9,6 @@ namespace WebServerAPI.Models
     {
         public int MaBP { get; set; }
         public string TenBP { get; set; }
+        public string VietTat { get; set; }
     }
 }

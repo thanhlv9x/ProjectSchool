@@ -15,10 +15,8 @@ namespace ReviewWebsite.Controllers
 {
     public class HomeController : Controller
     {
-        public static string url;
         public ActionResult Index()
         {
-            url = "http://localhost:49930";
             return View();
         }
 
@@ -32,7 +30,7 @@ namespace ReviewWebsite.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri(url);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                 }
                 catch { }
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -68,7 +66,7 @@ namespace ReviewWebsite.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri(url);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                 }
                 catch
                 {
@@ -100,7 +98,7 @@ namespace ReviewWebsite.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(url);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -140,7 +138,7 @@ namespace ReviewWebsite.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(url);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response;

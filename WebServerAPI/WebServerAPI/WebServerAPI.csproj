@@ -261,6 +261,7 @@
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\CanBo.cs" />
     <Compile Include="Models\DanhGiaUser.cs" />
+    <Compile Include="Models\InfoNumber.cs" />
     <Compile Include="Models\KetQuaDanhGia%28BaoCao%29.cs" />
     <Compile Include="Models\KetQuaDanhGia%28ChiTiet%29.cs" />
     <Compile Include="Models\KetQuaDanhGia%28Circle%29.cs" />
@@ -331,10 +332,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\DangNhapJs.js" />
+    <Content Include="Content\DangNhap.js" />
     <Content Include="Content\KetQuaJs.js" />
     <Content Include="Content\ServerStyle.css" />
-    <Content Include="Content\ThongTinJs.js" />
+    <Content Include="Content\ThongTin.js" />
     <Content Include="Content\ThuTucJs.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

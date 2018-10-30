@@ -14,6 +14,8 @@ namespace WebServerAPI.Models
         public Nullable<int> MaSTT { get; set; }
         public Nullable<int> MaMay { get; set; }
         public Nullable<int> MaDN { get; set; }
+        public string MaCBSD { get; set; }
+        public string VietTat { get; set; }
         public DateTime BD { get; set; }
         public string Mac { get; set; }
         public string TenBP { get; set; }

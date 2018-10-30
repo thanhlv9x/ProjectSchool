@@ -88,7 +88,9 @@ namespace WebServerAPI.Controllers
                     MaBP = lstEF.CANBO.MABP,
                     TenBP = lstEF.CANBO.BOPHAN.TENBP,
                     MaDN = lstEF.MADN,
-                    MaMay = lstEF.MAMAY
+                    MaMay = lstEF.MAMAY,
+                    MaCBSD = lstEF.CANBO.MACBSD,
+                    VietTat = lstEF.CANBO.BOPHAN.VIETTAT
                 };
                 return Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.OK, md);
             }
@@ -295,14 +297,17 @@ namespace WebServerAPI.Controllers
             if (canboEF > 0)
             {
                 DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                DateTime dtEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
                 var stttdEF = db.SOTOIDAs.Where(p => p.MABP == _MaBP &&
-                                                     p.TG >= dt)
+                                                     p.TG >= dt &&
+                                                     p.TG <= dtEnd)
                                          .OrderByDescending(p => p.STTTD)
                                          .FirstOrDefault();
                 if (stttdEF != null) // Nếu người dân đã rút số
                 {
                     var sttEF = db.SOTHUTUs.Where(p => p.CANBO.MABP == _MaBP &&
-                                                       p.BD >= dt)
+                                                       p.BD >= dt &&
+                                                       p.BD <= dtEnd)
                                            .Select(p => new
                                            {
                                                STT = p.STT,
@@ -320,7 +325,8 @@ namespace WebServerAPI.Controllers
                             // Lưu lại thời gian kết thúc của số thứ tự trước
                             var sttBefore = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
                                                                    p.BD >= dt &&
-                                                                   p.KT == null)
+                                                                   p.KT == null &&
+                                                                   p.BD <= dtEnd)
                                                        .OrderByDescending(p => p.MASTT)
                                                        .FirstOrDefault();
                             sttBefore.KT = dtNow;
@@ -362,7 +368,8 @@ namespace WebServerAPI.Controllers
                             // Lưu lại thời gian kết thúc của số thứ tự trước
                             var sttBefore = db.SOTHUTUs.Where(p => p.MACB == _MaCB &&
                                                                    p.BD >= dt &&
-                                                                   p.KT == null)
+                                                                   p.KT == null &&
+                                                                   p.BD <= dtEnd)
                                                        .OrderByDescending(p => p.MASTT)
                                                        .FirstOrDefault();
                             sttBefore.KT = dtNow;
@@ -414,6 +421,36 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
+        [HttpGet]
+        public HttpResponseMessage GetInfoNumber(int _ShowNumber)
+        {
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            var listEF = db.SOTHUTUs.Where(p => p.BD != null &&
+                                                p.KT == null &&
+                                                p.BD >= start &&
+                                                p.BD <= end)
+                                    .OrderByDescending(p => p.MASTT)
+                                    .FirstOrDefault();
+            var mastt = listEF.MASTT;
+            var stt = listEF.STT;
+            var macb = listEF.MACB;
+            var mamay = db.TRANGTHAIDANGNHAPs.Where(p => p.MACB == macb &&
+                                                       p.BD != null &&
+                                                       p.KT == null &&
+                                                       p.BD >= start &&
+                                                       p.BD <= end)
+                                             .OrderByDescending(p => p.BD)
+                                             .FirstOrDefault();
+            var soquay = mamay.MAMAY;
+            InfoNumber md = new InfoNumber()
+            {
+                MaSTT = mastt,
+                SoQuay = (int)soquay,
+                STT = (int)stt
+            };
+            return Request.CreateResponse<InfoNumber>(HttpStatusCode.OK, md);
+        }
         /// <summary>
         /// Dịch vụ đăng nhập User
         /// </summary>
@@ -454,7 +491,9 @@ namespace WebServerAPI.Controllers
                             TenBP = userEF.BOPHAN.TENBP,
                             MaMay = mamay,
                             MaDN = login.MADN,
-                            BD = (DateTime)login.BD
+                            BD = (DateTime)login.BD,
+                            MaCBSD = userEF.MACBSD,
+                            VietTat = userEF.BOPHAN.VIETTAT,
                         };
                         var httpResponse = Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.Created, userMD);
                         string uri = Url.Link("DefaultApi", new { id = userMD.MaCB });

@@ -62,7 +62,7 @@ namespace CallNumberWebsite.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -98,12 +98,14 @@ namespace CallNumberWebsite.Controllers
         /// <param name="_MaBP">Mã bộ phận</param>
         /// <param name="_MaMay">Mã máy</param>
         /// <returns></returns>
-        public JsonResult SaveInfo(int _MaCB, int _MaBP, int _MaMay, int _MaDN)
+        public JsonResult SaveInfo(int _MaCB, int _MaBP, int _MaMay, int _MaDN, string _MaCBSD, string _VietTat)
         {
             Session[CommonConstants.USER_MACB] = _MaCB;
             Session[CommonConstants.USER_MABP] = _MaBP;
             Session[CommonConstants.USER_MAMAY] = _MaMay;
             Session[CommonConstants.USER_MADN] = _MaDN;
+            Session[CommonConstants.USER_MACBSD] = _MaCBSD;
+            Session[CommonConstants.USER_VIETTAT] = _VietTat;
             return Json(true, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -138,7 +140,7 @@ namespace CallNumberWebsite.Controllers
                 using (var client = new HttpClient())
                 {
                     int mastt;
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     try
@@ -195,7 +197,7 @@ namespace CallNumberWebsite.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri(InfoUser.URL);
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
                 }
                 catch { }
                 client.DefaultRequestHeaders.Accept.Clear();

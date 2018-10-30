@@ -26,7 +26,7 @@
                 <ul>
                     <li id="getting-started" class="k-state-active" onclick="showSubTabstrip();">Giới thiệu</li>
                     <li id="menu-xem-ket-qua" onclick="showSubTabstrip();">Thống kê</li>
-                    <li id="menu-thong-tin-can-bo" onclick="showSubTabstrip();">Thông tin tài khoản</li>
+                    <li id="menu-thong-tin-can-bo" onclick="showSubTabstrip();">Thông tin</li>
                     <li id="menu-thong-ke-bao-cao" onclick="showSubTabstrip();">Báo cáo</li>
                     <li>@Html.ActionLink("Đăng xuất", "Logout", "Login")</li>
                 </ul> @*#tabstrip-left*@
@@ -36,7 +36,7 @@
                     <div class="slidewrapper" style="height:100%">
                         <div class="slides" style="height:100%">
                             <ul>
-                                <li>
+                                <li class="active">
                                     <div class="slide">
                                         <div class="img" style="background-image: url('../../SlideImages/slide1.jpg');"></div>
                                         <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="active">
+                                <li>
                                     <div class="slide">
                                         <div class="img" style="background-image: url('../../SlideImages/slide2.jpg');"></div>
                                         <img src="~/SlideImages/slide3_cover1.jpg" alt="" class="cover1">
@@ -769,7 +769,7 @@
 </script>
 <script src="~/Content/KetQuaJs.js"></script>
 <script src="~/Content/ThuTucJs.js"></script>
-<script src="~/Content/DangNhapJs.js"></script>
+<script src="~/Content/DangNhap.js"></script>
 <script src="~/Content/BaoCao.js"></script>
-<script src="~/Content/ThongTinJs.js"></script>
+<script src="~/Content/ThongTin.js"></script>
 <link href="~/Content/ServerStyle.css" rel="stylesheet" />

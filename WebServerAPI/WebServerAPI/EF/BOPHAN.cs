@@ -23,6 +23,7 @@ namespace WebServerAPI.EF
     
         public int MABP { get; set; }
         public string TENBP { get; set; }
+        public string VIETTAT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CANBO> CANBOes { get; set; }

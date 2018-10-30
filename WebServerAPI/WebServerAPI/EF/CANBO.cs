@@ -27,6 +27,7 @@ namespace WebServerAPI.EF
         public string HINHANH { get; set; }
         public string ID { get; set; }
         public string PW { get; set; }
+        public string MACBSD { get; set; }
     
         public virtual BOPHAN BOPHAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -23,19 +23,19 @@
             <div id="info">
                 <div id="info-left">
                     <div id="time-group">Thời gian:</div>
+                    <div id="time-login">Đăng nhập:</div>
                     <div id="quay-group">Quầy:</div>
-                    <div id="id-group">Mã số:</div>
+                    <div id="id-group">Mã cán bộ:</div>
                     <div id="name-group">Họ tên:</div>
                     <div id="bo-phan-group"><span></span>Bộ phận:</div>
-                    <div id="time-login">Đăng nhập:</div>
                 </div>
                 <div id="info-right">
                     <div id="time"></div>
+                    <div id="timelogin"></div>
                     <div id="quay"></div>
                     <div id="id"></div>
                     <div id="name"></div>
                     <div id="bo-phan"></div>
-                    <div id="timelogin"></div>
                 </div>
             </div>
             <div id="number-group">
@@ -79,12 +79,15 @@
     var mamay = 0;
     var mastt = 0;
     var madn = 0;
+    var macbsd = "";
+    var viettat = "";
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
     if (dd < 10) { dd = '0' + dd }
     if (mm < 10) { mm = '0' + mm }
     today = dd + '/' + mm + '/' + yyyy;
+    var click_next = false;
     $("#time").text(today)
 
     // Lấy thông tin cán bộ
@@ -101,7 +104,9 @@
                 mabp = js["MaBP"];
                 mamay = js["MaMay"];
                 madn = js["MaDN"];
-                $("#id").text(js["MaCB"]);
+                macbsd = js["MaCBSD"];
+                viettat = js["VietTat"];
+                $("#id").text(js["MaCBSD"]);
                 $("#name").text(js["HoTen"]);
                 $("#quay").text(js["MaMay"]);
                 $("#bo-phan").text(js["TenBP"]);
@@ -184,7 +189,7 @@
                         groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
                     }
                     ]
-                }); 
+                });
             },
             error: function (xhr) {
                 console.log(xhr.responseText);
@@ -197,7 +202,7 @@
             url: url + "/Home/SaveInfo",
             type: "GET",
             dataType: "json",
-            data: { "_MaBP": mabp, "_MaCB": macb, "_MaMay": mamay, "_MaDN": madn },
+            data: { "_MaBP": mabp, "_MaCB": macb, "_MaMay": mamay, "_MaDN": madn, "_MaCBSD": macbsd, "_VietTat": viettat },
             success: function (result) {
             },
             error: function (xhr) {
@@ -242,27 +247,33 @@
     // Tạo sự kiện nút tiếp theo
     $("#btn-next").kendoButton();
     $("#btn-next").click(function () {
-        if (macb != 0 && mabp != 0) {
-            $.ajax({
-                url: url + "/Home/CallNumber",
-                type: "POST",
-                dataType: "json",
-                data: { "_MaCB": macb, "_MaBP": mabp },
-                success: function (result) {
-                    var js = JSON.parse(result);
-                    if (result == false) {
-                        alert("Hết số thứ tự để gọi");
-                    } else {
-                        mastt = js["MaSTT"];
-                        $("#number").text(js["STT"]);
-                        $("#title-number span").prop("id", js["MaSTT"]);
+        if (!click_next) {
+            if (macb != 0 && mabp != 0) {
+                $.ajax({
+                    url: url + "/Home/CallNumber",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "_MaCB": macb, "_MaBP": mabp },
+                    success: function (result) {
+                        var js = JSON.parse(result);
+                        if (result == false) {
+                            alert("Hết số thứ tự để gọi");
+                        } else {
+                            mastt = js["MaSTT"];
+                            $("#number").text(js["STT"]);
+                            $("#title-number span").prop("id", js["MaSTT"]);
+                        }
+                        //saveNumber(js["MaSTT"]);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
                     }
-                    //saveNumber(js["MaSTT"]);
-                },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
-                }
-            })
+                })
+            }
+            click_next = true;
+            setTimeout(function () {
+                click_next = false;
+            }, 5000);
         }
     })
     // Tạo sự kiện nút gọi lại =================================================

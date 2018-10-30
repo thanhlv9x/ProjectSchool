@@ -1,4 +1,5 @@
 ﻿@import url('style1.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -75,7 +76,7 @@ div#number {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2.5em;
+    font-size: 3.5em;
 }
 
 div#title-number {
@@ -96,7 +97,7 @@ div#title {
 }
 
 div#footer {
-    background-color: #77a;
+    background-color: #8999FF;
     height: 10%;
     position: relative;
     padding: 0.6em 0;
@@ -105,13 +106,14 @@ div#footer {
 
 div#info-right {
     float: right;
-    width: 70%;
+    width: 65%;
 }
 
 div#info-left {
     float: left;
-    width: 30%;
+    width: 35%;
     font-weight: bold;
+    text-align: right;
 }
 
 div#time-group, div#quay-group {
@@ -142,12 +144,13 @@ div#header div {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5em;
+    color: white;
 }
 
 div#header {
     width: 100%;
     height: 10%;
-    background-color: #f1f1f1;
+    background-color: #8999FF;
     position: relative;
 }
 
@@ -168,6 +171,31 @@ div#container {
     position: absolute;
 }
 
+@media screen and (max-height: 500px) {
+    #info {
+        display: none;
+    }
+
+    div#body {
+        height: 70%;
+    }
+
+    div#number-group {
+        height: 80%;
+    }
+
+    div#footer {
+        height: 20%;
+    }
+
+    div#title {
+        height: 80%
+    }
+
+    div#open {
+        display: none;
+    }
+}
 
 @media screen and (min-width: 600px) {
     div#grid {
@@ -200,17 +228,17 @@ div#container {
     div#info {
         padding: 1em 12em;
         font-size: 1em;
-        line-height: 140%;
+        line-height: 200%;
     }
 
     div#info-right {
         /* float: right; */
-        width: 70%;
+        width: 65%;
     }
 
     div#info-left {
         /* float: left; */
-        width: 30%;
+        width: 35%;
         /* font-weight: bold; */
     }
 
@@ -245,7 +273,8 @@ div#container {
 
     div#info {
         padding: 1em 15em;
-        line-height: 170%;
+        line-height: 180%;
+        font-size: 1.1em;
     }
 
     div#info-right {
@@ -279,17 +308,17 @@ div#container {
     div#info {
         padding: 1em 18em;
         font-size: 1.2em;
-        line-height: 150%;
+        line-height: 170%;
     }
 
     div#info-right {
         float: right;
-        width: 80%;
+        width: 65%;
     }
 
     div#info-left {
         float: left;
-        width: 20%;
+        width: 35%;
         font-weight: bold;
     }
 

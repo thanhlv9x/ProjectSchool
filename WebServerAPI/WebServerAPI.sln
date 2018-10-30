@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewWebsite", "ReviewWebs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallNumberWebsite", "CallNumberWebsite\CallNumberWebsite.csproj", "{ABCE07B5-A516-4DAB-BE5B-31419DB94AAF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowNumber", "ShowNumber\ShowNumber.csproj", "{77775E22-B217-471A-A61C-1B4020899511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ABCE07B5-A516-4DAB-BE5B-31419DB94AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABCE07B5-A516-4DAB-BE5B-31419DB94AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABCE07B5-A516-4DAB-BE5B-31419DB94AAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77775E22-B217-471A-A61C-1B4020899511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77775E22-B217-471A-A61C-1B4020899511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77775E22-B217-471A-A61C-1B4020899511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77775E22-B217-471A-A61C-1B4020899511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,8 +26,8 @@ namespace WebServerAPI.EF
         public Nullable<System.DateTime> BD { get; set; }
         public Nullable<System.DateTime> KT { get; set; }
     
-        public virtual CANBO CANBO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KETQUADANHGIA> KETQUADANHGIAs { get; set; }
+        public virtual CANBO CANBO { get; set; }
     }
 }

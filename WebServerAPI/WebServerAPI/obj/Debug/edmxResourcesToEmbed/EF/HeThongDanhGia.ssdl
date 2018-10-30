@@ -6,6 +6,7 @@
     </Key>
     <Property Name="MABP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TENBP" Type="nvarchar" MaxLength="100" />
+    <Property Name="VIETTAT" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="CANBO">
     <Key>
@@ -17,6 +18,7 @@
     <Property Name="HINHANH" Type="ntext" />
     <Property Name="ID" Type="nvarchar" MaxLength="100" />
     <Property Name="PW" Type="nvarchar" MaxLength="32" />
+    <Property Name="MACBSD" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="GOPY">
     <Key>

@@ -26,15 +26,15 @@
                 <div>
                     <div id="id-group">
                         <div>Mã số: </div>
-                        <div id="id">123</div>
+                        <div id="id"></div>
                     </div>
                     <div id="name-group">
                         <div>Họ tên: </div>
-                        <div id="name">Nguyễn Văn A</div>
+                        <div id="name"></div>
                     </div>
                     <div id="bo-phan-group">
                         <div>Bộ phận: </div>
-                        <div id="bo-phan">Lĩnh vực tài nguyên và đất đai</div>
+                        <div id="bo-phan"></div>
                         <span></span>
                     </div>
                 </div>
@@ -110,6 +110,8 @@
     var mabp = 0;
     var mabn = 0;
     var mamay = 0;
+    var macbsd = "";
+    var viettat = "";
     $("#area-gop-y").hide();
     $("#footer-title input").change(function () {
         if ($("#footer-title input").prop("checked")) {
@@ -163,7 +165,9 @@
                         if (js["MaCB"] != macb) {
                             macb = js["MaCB"];
                             mabp = js["MaBP"];
-                            $("#id").text(macb);
+                            macbsd = js["MaCBSD"];
+                            viettat = js["VietTat"];
+                            $("#id").text(macbsd);
                             $("#name").text(js["HoTen"]);
                             $("#bo-phan").text(js["TenBP"]);
                             $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
@@ -179,7 +183,7 @@
                     }
                 })
             } else { }
-        }, 1000)
+        }, 500)
     };
     // Phương thức gọi số thứ tự tự động
     function goiSo() {
@@ -343,7 +347,8 @@
         })
 
         chonMucDo();
-        $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL input").removeAttr("checked");
+        $("#fbRHL input, #fbHL input, #fbBT input, #fbKHL, #footer-title input").removeAttr("checked");
+        $("#area-gop-y").hide();
         gop_y += $("#txtArea").prop("value", "");
 
         muc_do = 0;
@@ -375,4 +380,4 @@
         /* height: 100%; */
     }
 </style>
-<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style1.css" rel="stylesheet" />

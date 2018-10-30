@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hệ thống gọi số thứ tự</title>
+    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div class="header">
+            <div class="title">HỆ THỐNG GỌI SỐ THỨ TỰ</div>
+            <div class="time"></div>
+            <div class="info-quay">QUẦY</div>
+            <div class="info-stt">SỐ THỨ TỰ</div>
+        </div>
+        <div class="body">
+            <div class="quay"></div>
+            <div class="stt"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var url = window.location.origin;
+    var mastt = 0;
+    setInterval(function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        var HH = today.getHours();
+        var MM = today.getMinutes();
+        var SS = today.getSeconds();
+        if (dd < 10) { dd = '0' + dd }
+        if (mm < 10) { mm = '0' + mm }
+        if (HH < 10) { HH = '0' + HH }
+        if (MM < 10) { MM = '0' + MM }
+        if (SS < 10) { SS = '0' + SS }
+        today = dd + '/' + mm + '/' + yyyy + ' - ' + HH + ':' + MM + ':' + SS;
+        $("div.time").text(today);
+    }, 1000);
+    setInterval(function () {
+        var count = $(".quay div").length;
+        if (count > 10) {
+            $(".quay div")[0].remove();
+            $(".quay hr")[0].remove();
+        }
+        var count = $(".stt div").length;
+        if (count > 10) {
+            $(".stt div")[0].remove();
+            $(".stt hr")[0].remove();
+        }
+        $.ajax({
+            url: url + "/Home/GetInfoCallNumber",
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                var js = JSON.parse(result);
+                var str = "";
+                if (js["MaSTT"] > mastt) {
+                    mastt = js["MaSTT"];
+                    $(".quay").append("<div>" + js["SoQuay"] + "</div><hr />");
+                    $(".stt").append("<div>" + js["STT"] + "</div><hr />");
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }, 300);
+</script>
+<link href="~/Content/style1.css" rel="stylesheet" />

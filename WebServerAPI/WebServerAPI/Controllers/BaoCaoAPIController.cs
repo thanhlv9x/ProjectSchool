@@ -735,24 +735,27 @@ namespace WebServerAPI.Controllers
                                                                  p.TG <= end)
                                                      .FirstOrDefault();
                                 var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null & p.BD != null & p.KT != null).FirstOrDefault();
-                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                                tongphien += phiencho + phienxuly;
+                                if (goi != null && rut != null)
+                                {
+                                    phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                    phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                    tongphien += phiencho + phienxuly;
+                                    BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                    {
+                                        MaBP = (int)mabp,
+                                        TenBP = tenbp,
+                                        MaCB = macb,
+                                        HoTen = hoten,
+                                        PhienCho = phiencho,
+                                        PhienXuLy = phienxuly,
+                                        TongPhien = tongphien
+                                    };
+                                    listMD.Add(md);
+                                }
                             }
-                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                            {
-                                MaBP = (int)mabp,
-                                TenBP = tenbp,
-                                MaCB = macb,
-                                HoTen = hoten,
-                                PhienCho = phiencho,
-                                PhienXuLy = phienxuly,
-                                TongPhien = tongphien
-                            };
-                            listMD.Add(md);
                         }
                     }
-                    
+
                     else if (_Start != null && _End != null)
                     {
                         string[] arrS = _Start.Split('/');
@@ -824,21 +827,24 @@ namespace WebServerAPI.Controllers
                                                                  p.TG <= endSTT)
                                                      .FirstOrDefault();
                                 var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
-                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                                tongphien += phiencho + phienxuly;
+                                if (goi != null && rut != null)
+                                {
+                                    phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                    phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                    tongphien += phiencho + phienxuly;
+                                    BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                    {
+                                        MaBP = (int)mabp,
+                                        TenBP = tenbp,
+                                        MaCB = macb,
+                                        HoTen = hoten,
+                                        PhienCho = phiencho,
+                                        PhienXuLy = phienxuly,
+                                        TongPhien = tongphien
+                                    };
+                                    listMD.Add(md);
+                                }
                             }
-                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                            {
-                                MaBP = (int)mabp,
-                                TenBP = tenbp,
-                                MaCB = macb,
-                                HoTen = hoten,
-                                PhienCho = phiencho,
-                                PhienXuLy = phienxuly,
-                                TongPhien = tongphien
-                            };
-                            listMD.Add(md);
                         }
                     }
                 }
@@ -847,7 +853,7 @@ namespace WebServerAPI.Controllers
                     if (_Start == null && _End == null)
                     {
                         // Lấy thời gian xử lý thủ tục của toàn bộ cán bộ theo bộ phận trong tất cả thời gian
-                        var listCB = db.CANBOes.Where(p=>p.MABP == _MaBP).OrderBy(p => p.MABP).ToList();
+                        var listCB = db.CANBOes.Where(p => p.MABP == _MaBP).OrderBy(p => p.MABP).ToList();
                         foreach (var itemCB in listCB)
                         {
                             var mabp = itemCB.MABP;
@@ -872,21 +878,24 @@ namespace WebServerAPI.Controllers
                                                                  p.TG <= end)
                                                      .FirstOrDefault();
                                 var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
-                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                                tongphien += phiencho + phienxuly;
+                                if (goi != null && rut != null)
+                                {
+                                    phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                    phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                    tongphien += phiencho + phienxuly;
+                                    BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                    {
+                                        MaBP = (int)mabp,
+                                        TenBP = tenbp,
+                                        MaCB = macb,
+                                        HoTen = hoten,
+                                        PhienCho = phiencho,
+                                        PhienXuLy = phienxuly,
+                                        TongPhien = tongphien
+                                    };
+                                    listMD.Add(md);
+                                }
                             }
-                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                            {
-                                MaBP = (int)mabp,
-                                TenBP = tenbp,
-                                MaCB = macb,
-                                HoTen = hoten,
-                                PhienCho = phiencho,
-                                PhienXuLy = phienxuly,
-                                TongPhien = tongphien
-                            };
-                            listMD.Add(md);
                         }
                     }
                     else if (_Start != null && _End != null)
@@ -960,21 +969,24 @@ namespace WebServerAPI.Controllers
                                                                  p.TG <= endSTT)
                                                      .FirstOrDefault();
                                 var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
-                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                                tongphien += phiencho + phienxuly;
+                                if (goi != null && rut != null)
+                                {
+                                    phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                    phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                    tongphien += phiencho + phienxuly;
+                                    BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                    {
+                                        MaBP = (int)mabp,
+                                        TenBP = tenbp,
+                                        MaCB = macb,
+                                        HoTen = hoten,
+                                        PhienCho = phiencho,
+                                        PhienXuLy = phienxuly,
+                                        TongPhien = tongphien
+                                    };
+                                    listMD.Add(md);
+                                }
                             }
-                            BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                            {
-                                MaBP = (int)mabp,
-                                TenBP = tenbp,
-                                MaCB = macb,
-                                HoTen = hoten,
-                                PhienCho = phiencho,
-                                PhienXuLy = phienxuly,
-                                TongPhien = tongphien
-                            };
-                            listMD.Add(md);
                         }
                     }
                 }
@@ -984,7 +996,7 @@ namespace WebServerAPI.Controllers
                 if (_Start == null && _End == null)
                 {
                     // Lấy thời gian xử lý thủ tục của cán bộ trong tất cả thời gian
-                    var listCB = db.CANBOes.Where(p=>p.MACB == _MaCB).ToList();
+                    var listCB = db.CANBOes.Where(p => p.MACB == _MaCB).ToList();
                     foreach (var itemCB in listCB)
                     {
                         var mabp = itemCB.MABP;
@@ -1009,21 +1021,24 @@ namespace WebServerAPI.Controllers
                                                              p.TG <= end)
                                                  .FirstOrDefault();
                             var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
-                            phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                            phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                            tongphien += phiencho + phienxuly;
+                            if (goi != null && rut != null)
+                            {
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                                BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                {
+                                    MaBP = (int)mabp,
+                                    TenBP = tenbp,
+                                    MaCB = macb,
+                                    HoTen = hoten,
+                                    PhienCho = phiencho,
+                                    PhienXuLy = phienxuly,
+                                    TongPhien = tongphien
+                                };
+                                listMD.Add(md);
+                            }
                         }
-                        BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                        {
-                            MaBP = (int)mabp,
-                            TenBP = tenbp,
-                            MaCB = macb,
-                            HoTen = hoten,
-                            PhienCho = phiencho,
-                            PhienXuLy = phienxuly,
-                            TongPhien = tongphien
-                        };
-                        listMD.Add(md);
                     }
                 }
                 else if (_Start != null && _End != null)
@@ -1098,21 +1113,24 @@ namespace WebServerAPI.Controllers
                                                              p.TG <= endSTT)
                                                  .FirstOrDefault();
                             var goi = db.SOTHUTUs.Where(p => p.MASTT == mastt & p.BD != null & p.KT != null).FirstOrDefault();
-                            phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
-                            phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
-                            tongphien += phiencho + phienxuly;
+                            if (goi != null && rut != null)
+                            {
+                                phiencho += Math.Round(Math.Abs(((TimeSpan)(goi.BD - rut.TG)).TotalMinutes), 0);
+                                phienxuly += Math.Round(Math.Abs(((TimeSpan)(goi.KT - goi.BD)).TotalMinutes), 0);
+                                tongphien += phiencho + phienxuly;
+                                BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
+                                {
+                                    MaBP = (int)mabp,
+                                    TenBP = tenbp,
+                                    MaCB = macb,
+                                    HoTen = hoten,
+                                    PhienCho = phiencho,
+                                    PhienXuLy = phienxuly,
+                                    TongPhien = tongphien
+                                };
+                                listMD.Add(md);
+                            }
                         }
-                        BangThuTuc_BaoCao_ md = new BangThuTuc_BaoCao_()
-                        {
-                            MaBP = (int)mabp,
-                            TenBP = tenbp,
-                            MaCB = macb,
-                            HoTen = hoten,
-                            PhienCho = phiencho,
-                            PhienXuLy = phienxuly,
-                            TongPhien = tongphien
-                        };
-                        listMD.Add(md);
                     }
 
                 }

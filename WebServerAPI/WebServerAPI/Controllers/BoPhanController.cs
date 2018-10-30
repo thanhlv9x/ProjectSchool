@@ -32,7 +32,8 @@ namespace WebServerAPI.Controllers
                 BoPhan md = new BoPhan()
                 {
                     MaBP = item.MABP,
-                    TenBP = item.TENBP
+                    TenBP = item.TENBP,
+                    VietTat = item.VIETTAT
                 };
                 listMD.Add(md);
             }
@@ -54,8 +55,8 @@ namespace WebServerAPI.Controllers
                 {
                     BOPHAN md = new BOPHAN()
                     {
-                        //MABP = model.MaBP,
-                        TENBP = item.TenBP
+                        TENBP = item.TenBP,
+                        VIETTAT = item.VietTat
                     };
                     db.BOPHANs.Add(md);
                     db.SaveChanges();
@@ -81,6 +82,7 @@ namespace WebServerAPI.Controllers
                     var mabp = item.MaBP;
                     var md = db.BOPHANs.Where(p => p.MABP == mabp).FirstOrDefault();
                     md.TENBP = item.TenBP;
+                    md.VIETTAT = item.VietTat;
                     db.SaveChanges();
                     success = true;
                 }
