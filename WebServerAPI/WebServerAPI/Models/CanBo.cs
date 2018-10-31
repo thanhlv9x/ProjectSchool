@@ -15,5 +15,6 @@ namespace WebServerAPI.Models
         public string Pw { get; set; }
         public string TenBP { get; set; }
         public string MaCBSD { get; set; }
+        public string VietTat { get; set; }
     }
 }

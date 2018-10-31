@@ -432,24 +432,31 @@ namespace WebServerAPI.Controllers
                                                 p.BD <= end)
                                     .OrderByDescending(p => p.MASTT)
                                     .FirstOrDefault();
-            var mastt = listEF.MASTT;
-            var stt = listEF.STT;
-            var macb = listEF.MACB;
-            var mamay = db.TRANGTHAIDANGNHAPs.Where(p => p.MACB == macb &&
-                                                       p.BD != null &&
-                                                       p.KT == null &&
-                                                       p.BD >= start &&
-                                                       p.BD <= end)
-                                             .OrderByDescending(p => p.BD)
-                                             .FirstOrDefault();
-            var soquay = mamay.MAMAY;
-            InfoNumber md = new InfoNumber()
+            if (listEF != null)
             {
-                MaSTT = mastt,
-                SoQuay = (int)soquay,
-                STT = (int)stt
-            };
-            return Request.CreateResponse<InfoNumber>(HttpStatusCode.OK, md);
+                var mastt = listEF.MASTT;
+                var stt = listEF.STT;
+                var macb = listEF.MACB;
+                var mamay = db.TRANGTHAIDANGNHAPs.Where(p => p.MACB == macb &&
+                                                           p.BD != null &&
+                                                           p.KT == null &&
+                                                           p.BD >= start &&
+                                                           p.BD <= end)
+                                                 .OrderByDescending(p => p.BD)
+                                                 .FirstOrDefault();
+                var soquay = mamay.MAMAY;
+                InfoNumber md = new InfoNumber()
+                {
+                    MaSTT = mastt,
+                    SoQuay = (int)soquay,
+                    STT = (int)stt
+                };
+                return Request.CreateResponse<InfoNumber>(HttpStatusCode.OK, md);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
         /// <summary>
         /// Dịch vụ đăng nhập User

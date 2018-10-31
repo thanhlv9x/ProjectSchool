@@ -161,7 +161,9 @@ namespace WebServerAPI.Controllers
                 HoTen = lstEF.HOTEN,
                 MaBP = lstEF.MABP,
                 TenBP = lstEF.BOPHAN.TENBP,
-                HinhAnh = img
+                HinhAnh = img,
+                MaCBSD = lstEF.MACBSD,
+                VietTat = lstEF.BOPHAN.VIETTAT
             };
             return md;
         }

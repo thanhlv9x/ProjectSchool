@@ -11,5 +11,6 @@ namespace WebServerAPI.Models
         public Nullable<int> STT { get; set; }
         public Nullable<int> MaCB { get; set; }
         public Nullable<System.DateTime> TG { get; set; }
+        public int SoQuay { get; set; }
     }
 }

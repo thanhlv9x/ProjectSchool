@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -156,6 +158,14 @@ namespace CallNumberWebsite.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var result = response.Content.ReadAsStringAsync().Result;
+                        //var soquay = Convert.ToInt32(Session[CommonConstants.USER_MAMAY]);
+                        //string numberStr = result.Substring(0, result.IndexOf("MaCB") - 2).Substring(result.LastIndexOf("STT") + 5);
+                        ////Thread thread = new Thread(() =>
+                        ////{
+                        //    playSound(soquay.ToString(), numberStr);
+                        ////});
+                        ////thread.IsBackground = true;
+                        ////thread.Start();
                         if (result != null)
                         {
                             return Json(result, JsonRequestBehavior.AllowGet);
@@ -171,7 +181,7 @@ namespace CallNumberWebsite.Controllers
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -251,6 +261,61 @@ namespace CallNumberWebsite.Controllers
                 str += b.ToString("X2");
             }
             return str;
+        }
+        /// <summary>
+        /// Phương thức phát mp3
+        /// </summary>
+        /// <param name="fileName">Tên file</param>
+        /// <param name="numberStr">Số thứ tự</param>
+        public void playSound(string soQuay, string numberStr)
+        {
+            //PlaySound ps = new PlaySound();
+            //ps.OpenMediaFile(fileName);
+            //ps.PlayMediaFile(false);//hết bài dừng không lặp lại, true lặp lại
+            //ps.ClosePlayer();
+            string path = AppDomain.CurrentDomain.BaseDirectory + @"\sounds\";
+            using (var soundPlayer = new SoundPlayer(path + @"xin-moi-so.wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                Thread.Sleep(SoundInfo.GetSoundLength(path + @"xin-moi-so.wav"));
+            }
+
+            foreach (var item in numberStr)
+            {
+                using (var soundPlayer = new SoundPlayer(path + item + ".wav"))
+                {
+                    soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                    Thread.Sleep(SoundInfo.GetSoundLength(path + item + ".wav"));
+                }
+            }
+            using (var soundPlayer = new SoundPlayer(path + @"toi-quay-so.wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                Thread.Sleep(SoundInfo.GetSoundLength(path + @"toi-quay-so.wav"));
+            }
+            using (var soundPlayer = new SoundPlayer(path + soQuay + ".wav"))
+            {
+                soundPlayer.Play(); // can also use soundPlayer.PlaySync()
+                Thread.Sleep(SoundInfo.GetSoundLength(path + soQuay + ".wav"));
+            }
+        }
+        /// <summary>
+        /// Lấy thời lượng của audio
+        /// </summary>
+        /// <param name="soQuay">Số quầy</param>
+        /// <param name="numberStr">Số thứ tự</param>
+        /// <returns></returns>
+        public int getTime(string soQuay, string numberStr)
+        {
+            int time = 0;
+            //time += SoundInfo.GetSoundLength(path + @"xin-moi-so.wav");
+            //foreach (var item in numberStr)
+            //{
+            //    time += SoundInfo.GetSoundLength(path + item + ".wav");
+            //}
+            //time += SoundInfo.GetSoundLength(path + @"toi-quay-so.wav");
+            //time += SoundInfo.GetSoundLength(path + soQuay + ".wav");
+            return time;
         }
     }
 }

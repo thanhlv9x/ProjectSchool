@@ -22,7 +22,7 @@
             <div id="left-title"><div>THÔNG TIN CÁN BỘ</div></div>
             <div id="right-title"><div></div></div>
             <div id="info">
-                <div id="image"><input type="image" src="~/user.png" alt="Hình ảnh cán bộ" /></div>
+                <div id="image"><input type="image" src="" alt="Hình ảnh cán bộ" /></div>
                 <div>
                     <div id="id-group">
                         <div>Mã số: </div>
@@ -114,6 +114,15 @@
     var viettat = "";
     $("#area-gop-y").hide();
     $("#footer-title input").change(function () {
+        $("#footer-title input").prop("checked", !$("#footer-title input").prop("checked"));
+        if ($("#footer-title input").prop("checked")) {
+            $("#area-gop-y").show();
+        } else {
+            $("#area-gop-y").hide();
+        }
+    })
+    $("#footer-title").click(function () {
+        $("#footer-title input").prop("checked", !$("#footer-title input").prop("checked"));
         if ($("#footer-title input").prop("checked")) {
             $("#area-gop-y").show();
         } else {
@@ -327,7 +336,7 @@
         }
 
         var dataSource = {
-            "MaCB": $("#id").text(),
+            "MaCB": macb,
             "MucDo": muc_do,
             "GopY": gop_y,
             "MaSTT": ma_stt
@@ -380,4 +389,4 @@
         /* height: 100%; */
     }
 </style>
-<link href="~/Content/style1.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />

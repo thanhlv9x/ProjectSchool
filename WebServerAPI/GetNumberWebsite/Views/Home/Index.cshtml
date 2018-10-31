@@ -47,7 +47,6 @@
             type: "GET",
             dataType: "json",
             async: false,
-            data: { "url": url },
             success: function (result) {
                 console.log(window.d = result);
                 if (result == false) {
@@ -84,7 +83,7 @@
             url: window.location.origin + "/Home/GetSTT",
             type: "GET",
             dataType: "json",
-            data: { "_MaBP": mabp, "url": url },
+            data: { "_MaBP": mabp },
             async: false,
             success: function (result) {
                 if (result == false) {
@@ -110,24 +109,6 @@
     // Nút refresh thông tin
     function refresh() {
         createGroupBP();
-    }
-    // Nút setting địa chỉ IP
-    function custom() {
-        var ip = prompt("Địa chỉ IP: ");
-        var id = prompt("Mã xác nhận: ");
-        $.ajax({
-            url: window.location.origin + "/Home/SettingIP",
-            type: "GET",
-            dataType: "json",
-            data: { "ip": ip, "id": id },
-            success: function (result) {
-                if (result == true) alert("Thay đổi thành công");
-                else alert("Thay đổi không thành công. Vui lòng kiểm tra lại thông tin");
-            },
-            error: function (xhr) {
-                console.log(xhr.responseText);
-            }
-        })
     }
     $(document).ready(function () {
         createGroupBP();

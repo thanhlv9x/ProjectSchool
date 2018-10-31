@@ -72,6 +72,7 @@
 </html>
 
 <script>
+    $("audio").play;
     var url = window.location.origin;
     var today = new Date();
     var macb = 0;
@@ -239,6 +240,17 @@
             }
         })
     }
+    // Khởi tạo thẻ audio gọi số thứ tự
+    function createAudio(stt, soquay) {
+        var str1 = '<audio controls="controls" hidden="hidden" id="xms"><source src="/sound/xin-moi-so.wav"  /></audio>';
+        var str2 = stt.toString();
+        for (var i = 0; i < str2.length; i++) {
+            str1 += '<audio controls="controls" hidden="hidden" id=stt' + str2[i] + '><source src="/sound/' + str2[i] + '.wav"  /></audio>';
+        }
+        str1 += '<audio controls="controls" hidden="hidden" id="tqs"><source src="/sound/toi-quay-so.wav"  /></audio>';
+        str1 += '<audio controls="controls" hidden="hidden" id="quay' + soquay + '"><source src="/sound/' + soquay + '.wav"  /></audio>';
+        $("body").append(str1);
+    }
 
     // Tạo cửa sổ đổi mật khẩu
     $("#window").kendoWindow({ title: "ĐỔI MẬT KHẨU" });
@@ -255,6 +267,7 @@
                     dataType: "json",
                     data: { "_MaCB": macb, "_MaBP": mabp },
                     success: function (result) {
+                        $("audio").remove();
                         var js = JSON.parse(result);
                         if (result == false) {
                             alert("Hết số thứ tự để gọi");
@@ -262,6 +275,25 @@
                             mastt = js["MaSTT"];
                             $("#number").text(js["STT"]);
                             $("#title-number span").prop("id", js["MaSTT"]);
+                            createAudio(js["STT"], mamay);
+
+                            var active = false;
+
+                            $("audio").on("ended", function () {
+                                var audio = $(this).next("audio");
+                                if (audio.length) {
+                                    audio.get(0).play();
+                                } else {
+                                    active = false;
+                                }
+                            });
+
+                            //$('#open').on('click', function () {
+                                if (!active) {
+                                    $("audio")[0].play();
+                                    active = true;
+                                }
+                            //});
                         }
                         //saveNumber(js["MaSTT"]);
                     },
@@ -273,7 +305,7 @@
             click_next = true;
             setTimeout(function () {
                 click_next = false;
-            }, 5000);
+            }, 15000);
         }
     })
     // Tạo sự kiện nút gọi lại =================================================
@@ -312,7 +344,6 @@
     })
     // Tạo sự kiện nút đăng xuất
     $("a[href$='/Login/Logout']").kendoButton()
-
     // Tạo sự kiện nút mở rộng bảng thống kê
     $("#open").click(function () {
         $('#grid').data('kendoGrid').dataSource.read();
@@ -323,7 +354,6 @@
         console.log("click");
         $("#black")[0].classList.remove("move-right")
     })
-
     $(document).ready(function () {
         getInfo();
     })
