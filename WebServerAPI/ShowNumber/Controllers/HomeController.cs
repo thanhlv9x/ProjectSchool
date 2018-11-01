@@ -14,7 +14,10 @@ namespace ShowNumber.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// Phương thức lấy số thứ tự và số quầy để hiển thị lên màn hình lớn gọi số
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetInfoCallNumber()
         {
             try

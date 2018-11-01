@@ -27,13 +27,13 @@ namespace GetNumberWebsite.Controllers
         public JsonResult GetBP()
         {
             // "http://localhost:61443"
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(GetUriServer.GetUri());
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                try
+                using (var client = new HttpClient())
                 {
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response = client.GetAsync("api/GetNumberAPI/").Result;
 
                     if (response.IsSuccessStatusCode)
@@ -45,10 +45,10 @@ namespace GetNumberWebsite.Controllers
                         return Json(false, JsonRequestBehavior.AllowGet);
                     }
                 }
-                catch
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -58,13 +58,13 @@ namespace GetNumberWebsite.Controllers
         /// <returns></returns>
         public JsonResult GetSTT(int _MaBP)
         {
-            using (var client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri(GetUriServer.GetUri());
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                try
+                using (var client = new HttpClient())
                 {
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage response = client.GetAsync("api/GetNumberAPI/?_MaBP=" + _MaBP).Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -75,10 +75,10 @@ namespace GetNumberWebsite.Controllers
                         return Json(false, JsonRequestBehavior.AllowGet);
                     }
                 }
-                catch
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
     }

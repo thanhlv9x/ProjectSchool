@@ -28,12 +28,13 @@ namespace WebServerAPI.Controllers
                 {
                     int mabp = Convert.ToInt32(item.MABP);
                     DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                    DateTime dtEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                     Number NumberMD = new Number()
                     {
                         MaBP = mabp,
                         TenBP = item.TENBP
                     };
-                    var number = db.SOTOIDAs.Where(p => p.MABP == mabp && p.TG >= dt)
+                    var number = db.SOTOIDAs.Where(p => p.MABP == mabp && p.TG >= dt && p.TG <= dtEnd)
                                             .OrderByDescending(p => p.STTTD)
                                             .FirstOrDefault();
                     if(number != null)
@@ -124,7 +125,7 @@ namespace WebServerAPI.Controllers
                     var listEF = db.KETQUADANHGIAs.Where(p => p.SOTHUTU.MACB == macb &&
                                                               p.TG >= start &&
                                                               p.TG <= end)
-                                                  .OrderBy(p => p.MASTT)
+                                                  .OrderByDescending(p => p.MASTT)
                                                   .ToList();
                     foreach (var item in listEF)
                     {

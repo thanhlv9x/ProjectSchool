@@ -26,33 +26,36 @@ namespace ReviewWebsite.Controllers
         /// <returns></returns>
         public JsonResult GetPort()
         {
-            using(var client = new HttpClient())
+            try
             {
-                try
+                using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(GetUriServer.GetUri());
-                }
-                catch { }
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_Port=1").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    if (result != null)
+                    HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_Port=1").Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        return Json(result, JsonRequestBehavior.AllowGet);
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(false, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
                         return Json(false, JsonRequestBehavior.AllowGet);
                     }
                 }
-                else
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -62,29 +65,29 @@ namespace ReviewWebsite.Controllers
         /// <returns></returns>
         public JsonResult GetInfo(int _MaMay)
         {
-            using(var client = new HttpClient())
+            try
             {
-                try
+                using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(GetUriServer.GetUri());
-                }
-                catch
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_MaMay=" + _MaMay).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    if (result != null)
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_MaMay=" + _MaMay).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        return Json(result, JsonRequestBehavior.AllowGet);
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
         /// <summary>
         /// Phương thức gọi số tự động

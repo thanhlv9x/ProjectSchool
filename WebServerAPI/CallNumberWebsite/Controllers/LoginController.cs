@@ -74,19 +74,16 @@ namespace CallNumberWebsite.Controllers
                 try
                 {
                     client.BaseAddress = new Uri(GetUriServer.GetUri());
-                } catch {}
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response;
-                // Serialize our concrete class into a JSON String
-                var stringPayload = JsonConvert.SerializeObject(user);
-                // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
-                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-                try
-                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage response;
+                    // Serialize our concrete class into a JSON String
+                    var stringPayload = JsonConvert.SerializeObject(user);
+                    // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+                    var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
                     response = client.PostAsync("api/ClientAPI/?_Logout=1", httpContent).Result;
                 }
-                catch {}
+                catch { }
             }
             Session[CommonConstants.USER_SESSION] = null;
             Session[CommonConstants.USER_RESULT] = null;
@@ -113,49 +110,42 @@ namespace CallNumberWebsite.Controllers
                 Pw = pw,
                 Mac = mac
             };
-            using (var client = new HttpClient())
+            try
             {
-                try
+                using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(GetUriServer.GetUri());
-                }
-                catch
-                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage response;
+                    // Serialize our concrete class into a JSON String
+                    var stringPayload = JsonConvert.SerializeObject(user);
 
-                }
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response;
-                // Serialize our concrete class into a JSON String
-                var stringPayload = JsonConvert.SerializeObject(user);
-
-                // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
-                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-                try
-                {
+                    // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+                    var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
                     response = client.PostAsync("api/ClientAPI", httpContent).Result;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
 
-                if (response.IsSuccessStatusCode)
-                {
-                    result = response.Content.ReadAsStringAsync().Result;
-                    if (result != null)
+                    if (response.IsSuccessStatusCode)
                     {
-                        return true;
+                        result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                     else
                     {
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
         /// <summary>

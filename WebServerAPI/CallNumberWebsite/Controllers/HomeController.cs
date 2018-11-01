@@ -203,46 +203,49 @@ namespace CallNumberWebsite.Controllers
                 OldPw = _MKCu,
                 NewPw = _MKMoi
             };
-            using (var client = new HttpClient())
+            try
             {
-                try
+                using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(GetUriServer.GetUri());
-                }
-                catch { }
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response;
-                // Serialize our concrete class into a JSON String
-                var stringPayload = JsonConvert.SerializeObject(md);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage response;
+                    // Serialize our concrete class into a JSON String
+                    var stringPayload = JsonConvert.SerializeObject(md);
 
-                // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
-                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-                try
-                {
-                    response = client.PutAsync("api/ClientAPI/?_MaCB=" + md.MaCB, httpContent).Result;
-                }
-                catch (Exception ex)
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = response.Content.ReadAsStringAsync().Result;
-                    if (result != null)
+                    // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+                    var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+                    try
                     {
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        response = client.PutAsync("api/ClientAPI/?_MaCB=" + md.MaCB, httpContent).Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        return Json(false, JsonRequestBehavior.AllowGet);
+                    }
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(true, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(false, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     else
                     {
                         return Json(false, JsonRequestBehavior.AllowGet);
                     }
                 }
-                else
-                {
-                    return Json(false, JsonRequestBehavior.AllowGet);
-                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>

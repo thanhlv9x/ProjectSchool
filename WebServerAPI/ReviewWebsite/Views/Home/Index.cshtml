@@ -100,12 +100,13 @@
 </html>
 
 <script>
-    $("#container").show();
-    $("#thanks").hide();
+    //$("#container").show();
+    //$("#thanks").hide();
     var url = window.location.origin;
     var muc_do = 0;
     var gop_y = "";
     var ma_stt = 0;
+    var ma_stt_active = 0;
     var macb = 0;
     var mabp = 0;
     var mabn = 0;
@@ -180,23 +181,22 @@
                             $("#name").text(js["HoTen"]);
                             $("#bo-phan").text(js["TenBP"]);
                             $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
-                            $("#container").show();
-                            $("#thanks").hide();
+                            //$("#container").show();
+                            //$("#thanks").hide();
 
                             $(".body, .footer").show();
                         }
                         goiSo();
                     },
                     error: function (xhr) {
-                        console.log(xhr.responseText);
+                        //console.log(xhr.responseText);
                     }
                 })
             } else { }
-        }, 500)
+        }, 1000)
     };
     // Phương thức gọi số thứ tự tự động
     function goiSo() {
-        //setInterval(function () {
         $.ajax({
             url: url + "/Home/GetNumber",
             type: "GET",
@@ -205,7 +205,11 @@
             success: function (result) {
                 var js = JSON.parse(result);
                 if (!js) {
-                } else if (parseInt(js["STT"]) > parseInt($("#show-number").text())) {
+                    $("#container").hide();
+                    $("#thanks").show();}
+                if (ma_stt_active != js['MaSTT'] && js != false) {
+                    $("#container").show();
+                    $("#thanks").hide();
                     $("#show-number").text(js["STT"]);
                     $("#number span").prop("id", js["MaSTT"]);
                     chonMucDo();
@@ -214,16 +218,13 @@
                     muc_do = 0;
                     gop_y = "";
                     ma_stt = parseInt(js["MaSTT"]);
-
-                    $("#container").show();
-                    $("#thanks").hide();
+                    ma_stt_active = parseInt(js["MaSTT"]);
                 }
             },
             error: function (xhr) {
-                console.log(xhr.responseText);
+                //console.log(xhr.responseText);
             }
         })
-        //}, 1000)
     }
     // Phương thức hiệu ứng chọn mức độ
     function chonMucDo() {
@@ -332,6 +333,10 @@
         }
         if (muc_do == 4 && gop_y == "") {
             alert("Vui lòng nhập góp ý");
+            return;
+        }
+        if (macb == undefined) {
+            alert("Chưa có thông tin cán bộ");
             return;
         }
 

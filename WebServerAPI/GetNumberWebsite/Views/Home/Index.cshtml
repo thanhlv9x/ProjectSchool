@@ -34,6 +34,20 @@
             <tbody></tbody>
         </table>
     </div>
+    <div id="ticket-printer" hidden="hidden">
+        <div style="text-align:center;width: 45%;margin: 0px 30%;line-height: 2em;border: 1px solid;padding: 1% 0;">
+            <div style="text-align: center"><img src="~/images/quoc-huy.jpg" style="width: 50px; height: 50px" /></div>
+            <hr style="width: 80%" />
+            <div style="text-align:center; font-size: 1.2em">UBND TP HỒ CHÍ MINH</div>
+            <div style="text-align:center">SỐ THỨ TỰ</div>
+            <div style="text-align:center;font-size: 3em;padding: 5% 0;" id="number-ticket"></div>
+            <div style="text-align:center;display: inline;">BỘ PHẬN: </div>
+            <div style="text-align:center;display: inline;" id="bo-phan-ticket"></div>
+            <div style="text-align:center;width: 80%;padding: 5% 10% 0 10%;">QUÝ KHÁCH VUI LÒNG CHỜ, SỐ PHIẾU CỦA QUÝ KHÁCH SẼ ĐƯỢC GỌI KHI ĐẾN LƯỢT</div>
+            <hr style="width: 80%" />
+            <div style="text-align:center" id="date-ticket"></div>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -48,7 +62,6 @@
             dataType: "json",
             async: false,
             success: function (result) {
-                console.log(window.d = result);
                 if (result == false) {
                     $("tbody").html("");
                     alert("Lỗi kết nối");
@@ -90,6 +103,23 @@
                     $("tbody").html("");
                     alert("Lỗi kết nối");
                 } else {
+                    var today = new Date();
+                    var HH = today.getHours();
+                    var MM = today.getMinutes();
+                    var SS = today.getSeconds();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; //January is 0!
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) { dd = '0' + dd }
+                    if (mm < 10) { mm = '0' + mm }
+                    if (HH < 10) { HH = '0' + HH }
+                    if (MM < 10) { MM = '0' + MM }
+                    if (SS < 10) { SS = '0' + SS }
+                    today = "Ngày: " + dd + '/' + mm + '/' + yyyy + " - " + HH + ":" + MM + ":" + SS;
+                    $("#number-ticket").text(result);
+                    $("#bo-phan-ticket").text($(e.event.target).text());
+                    $("#date-ticket").text(today);
+                    printDiv()
                     $("#" + id).text(result);
                 }
             },
@@ -106,15 +136,24 @@
             });
         });
     }
-    // Nút refresh thông tin
-    function refresh() {
-        createGroupBP();
+    // In phiếu số thứ tự
+    function printDiv() {
+
+        var divToPrint = document.getElementById('ticket-printer');
+
+        var newWin = window.open('', 'Print-Window');
+
+        newWin.document.open();
+
+        newWin.document.write('<html><body onload="window.print()" style="text-align:center">' + divToPrint.innerHTML + '</body></html>');
+
+        newWin.document.close();
+
+        setTimeout(function () { newWin.close(); }, 10);
+
     }
     $(document).ready(function () {
         createGroupBP();
-        setInterval(function () {
-            createGroupBP();
-        }, 1000)
     })
 </script>
 <link href="~/Content/style2.css" rel="stylesheet" />

@@ -71,10 +71,12 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetInfo(int _MaMay)
         {
             DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime dtEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
             var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == _MaMay &&
                                                          p.BD != null &&
                                                          p.KT == null &&
-                                                         p.BD >= dt)
+                                                         p.BD >= dt &&
+                                                         p.BD <= dtEnd)
                                              .OrderByDescending(p => p.MADN)
                                              .FirstOrDefault();
             if (lstEF != null)
@@ -421,6 +423,11 @@ namespace WebServerAPI.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
+        /// <summary>
+        /// Dịch vụ lấy số thứ tự và số quầy để hiển thị lên màn hình lớn
+        /// </summary>
+        /// <param name="_ShowNumber"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetInfoNumber(int _ShowNumber)
         {
@@ -444,14 +451,18 @@ namespace WebServerAPI.Controllers
                                                            p.BD <= end)
                                                  .OrderByDescending(p => p.BD)
                                                  .FirstOrDefault();
-                var soquay = mamay.MAMAY;
-                InfoNumber md = new InfoNumber()
+                if (mamay != null)
                 {
-                    MaSTT = mastt,
-                    SoQuay = (int)soquay,
-                    STT = (int)stt
-                };
-                return Request.CreateResponse<InfoNumber>(HttpStatusCode.OK, md);
+                    var soquay = mamay.MAMAY;
+                    InfoNumber md = new InfoNumber()
+                    {
+                        MaSTT = mastt,
+                        SoQuay = (int)soquay,
+                        STT = (int)stt
+                    };
+                    return Request.CreateResponse<InfoNumber>(HttpStatusCode.OK, md);
+                }
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
             else
             {

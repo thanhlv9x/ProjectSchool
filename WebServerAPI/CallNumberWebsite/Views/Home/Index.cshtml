@@ -283,8 +283,8 @@
                             $("#title-number span").prop("id", js["MaSTT"]);
                             createAudio(js["STT"], mamay);
 
+                            // Chạy audio tự động
                             var active = false;
-
                             $("audio").on("ended", function () {
                                 var audio = $(this).next("audio");
                                 if (audio.length) {
@@ -293,13 +293,17 @@
                                     active = false;
                                 }
                             });
-
                             //$('#open').on('click', function () {
                                 if (!active) {
                                     $("audio")[0].play();
                                     active = true;
                                 }
                             //});
+
+                            click_next = true;
+                            setTimeout(function () {
+                                click_next = false;
+                            }, 15000);
                         }
                         //saveNumber(js["MaSTT"]);
                     },
@@ -308,16 +312,29 @@
                     }
                 })
             }
-            click_next = true;
-            setTimeout(function () {
-                click_next = false;
-            }, 15000);
         }
+        $('#grid').data('kendoGrid').dataSource.read();
     })
     // Tạo sự kiện nút gọi lại =================================================
     $("#btn-again").kendoButton();
     $("#btn-again").click(function () {
         // Gọi lại
+        // Chạy audio tự động
+        var active = false;
+        $("audio").on("ended", function () {
+            var audio = $(this).next("audio");
+            if (audio.length) {
+                audio.get(0).play();
+            } else {
+                active = false;
+            }
+        });
+        //$('#open').on('click', function () {
+        if (!active) {
+            $("audio")[0].play();
+            active = true;
+        }
+                            //});
     })
     // Tạo sự kiện nút mở cửa sổ đổi mật khẩu
     $("#btn-change-pw").kendoButton();
