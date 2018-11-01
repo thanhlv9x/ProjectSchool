@@ -39,6 +39,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
                     // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
                     foreach (var item in lstSttEF)
                     {
@@ -73,6 +74,7 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
+                        so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -86,7 +88,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Tháng " + i
+                        ThoiGian = "Tháng " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }
@@ -108,6 +111,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
                     foreach (var item in lstSttEF)
                     {
                         DateTime tg = (DateTime)(item.TG);
@@ -140,6 +144,7 @@ namespace WebServerAPI.Controllers
                             //double tong_phien = phien_cho + phien_xu_ly;
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
+                            so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -153,7 +158,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Ngày " + i
+                        ThoiGian = "Ngày " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }
@@ -182,7 +188,7 @@ namespace WebServerAPI.Controllers
                 // Tìm các số thứ tự có trong khoảng thời gian trên
                 var lstSttEF = db.KETQUADANHGIAs.Where(p => p.TG >= start &&
                                                             p.TG <= end)
-                                                .OrderBy(p=>p.SOTHUTU.CANBO.MABP)
+                                                .OrderBy(p => p.SOTHUTU.CANBO.MABP)
                                                 .ToList();
                 // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
                 foreach (var item in lstSttEF)
@@ -326,7 +332,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
-
+                    int so_luong_giai_quyet = 0;
                     // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
                     foreach (var item in lstSttEF)
                     {
@@ -361,6 +367,7 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
+                        so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -374,7 +381,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Tháng " + i
+                        ThoiGian = "Tháng " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }
@@ -397,6 +405,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
                     foreach (var item in lstSttEF)
                     {
                         DateTime tg = (DateTime)(item.TG);
@@ -429,6 +438,7 @@ namespace WebServerAPI.Controllers
                             double tong_phien = phien_cho + phien_xu_ly;
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
+                        so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -442,7 +452,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Ngày " + i
+                        ThoiGian = "Ngày " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }
@@ -620,7 +631,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
-
+                    int so_luong_giai_quyet = 0;
                     // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
                     foreach (var item in lstSttEF)
                     {
@@ -655,6 +666,7 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
+                        so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -668,7 +680,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Tháng " + i
+                        ThoiGian = "Tháng " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }
@@ -691,6 +704,7 @@ namespace WebServerAPI.Controllers
                     double average_cho = 0;
                     double average_xuly = 0;
                     double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
                     foreach (var item in lstSttEF)
                     {
                         DateTime tg = (DateTime)(item.TG);
@@ -723,6 +737,7 @@ namespace WebServerAPI.Controllers
                             double tong_phien = phien_cho + phien_xu_ly;
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
+                        so_luong_giai_quyet++;
                         }
                     }
                     if (lstSttEF.Count > 0)
@@ -736,7 +751,8 @@ namespace WebServerAPI.Controllers
                         ThoiGianCho = average_cho,
                         ThoiGianGiaiQuyet = average_xuly,
                         TongThoiGian = average_tong,
-                        ThoiGian = "Ngày " + i
+                        ThoiGian = "Ngày " + i,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
                     };
                     lstMD.Add(md);
                 }

@@ -21,5 +21,6 @@ namespace WebServerAPI.Models
         public double TongThoiGian { get; set; }
         public string ThoiGian { get; set; }
         public DateTime Ngay { get; set; }
+        public int SoLuongGiaiQuyet { get; set; }
     }
 }

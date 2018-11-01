@@ -84,6 +84,13 @@ function createChartThuTucTH(urlStr, titleStr) {
         },
         series:
             [{
+                type: "line",
+                field: "SoLuongGiaiQuyet",
+                categoryField: "ThoiGian",
+                name: "Số lượng",
+                color: "#ff1c1c",
+                axis: "quantity"
+            }, {
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
                 name: "Phiên chờ",
@@ -105,40 +112,60 @@ function createChartThuTucTH(urlStr, titleStr) {
             },
             crosshair: {
                 visible: true
-            }
-        },
-        valueAxis: {
-            name: "value",
-            labels: {
-                format: "{0:n0}",
             },
+            axisCrossingValue: [0, 12],
         },
+        valueAxis: [{
+            name: "time",
+            labels: {
+                format: "{0:n0} phút",
+            },
+            title: {
+                text: "Thời gian giải quyết thủ tục (Phút)"
+            },
+            color: "#007eff"
+        }, {
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Số lượng thủ tục đã giải quyết (Lần)"
+            },
+            color: "#ff1c1c"
+        }],
         tooltip: {
             visible: true,
             shared: true,
             format: "N0"
         },
-        render: function (e) {
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
+        }
+        //render: function (e) {
             // Effective axis range is available in the render event
             //
             // See
             // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
             // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
             // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-            var range = e.sender.getAxis("value").range();
-            if (range > 20) var majorUnit = range.max / 4;
-            else if (range > 100) var majorUnit = range.max / 20;
-            else if (range > 500) var majorUnit = range.max / 100;
-            else if (range > 1000) var majorUnit = range.max / 200;
-            var axis = e.sender.options.valueAxis;
+        //    var range = e.sender.getAxis("value").range();
+        //    if (range > 20) var majorUnit = range.max / 4;
+        //    else if (range > 100) var majorUnit = range.max / 20;
+        //    else if (range > 500) var majorUnit = range.max / 100;
+        //    else if (range > 1000) var majorUnit = range.max / 200;
+        //    var axis = e.sender.options.valueAxis;
 
-            if (axis.majorUnit !== majorUnit) {
-                axis.majorUnit = majorUnit;
+        //    if (axis.majorUnit !== majorUnit) {
+        //        axis.majorUnit = majorUnit;
 
-                // We need to redraw the chart to apply the changes
-                e.sender.redraw();
-            }
-        }
+        //        // We need to redraw the chart to apply the changes
+        //        e.sender.redraw();
+        //    }
+        //}
     });
 }
 // Tạo dropdownlist chọn năm
@@ -347,7 +374,7 @@ function getCBNameThuTuc(urlStr) {
         success: function (data) {
             if (data.length > 0) {
                 $.each(data, function (key, val) {
-                    str += "<tr><td><div id='" + val.MaCB + "' class='btnCBThuTuc' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td></tr>";
+                    str += "<tr><td><div id='" + val.MaCB + "' class='btnCBThuTuc' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + "</div></td></tr>";
                 });
                 str += "</table>";
                 $("#cac-can-bo-thu-tuc").html(str);
@@ -381,7 +408,7 @@ function onClickBtnCBThuTuc(e) {
     $("#thu-tuc-cb").show("slow");
     //createInfoCB(macb);
     setTimeout(function () {
-        $("#header-thu-tuc-cb h1").text("Cán bộ: " + $(e.event.target).text().substring(0, $(e.event.target).text().indexOf('-')).trim() + " - Mã số: " + $(e.event.target)[0].id);
+        $("#header-thu-tuc-cb h1").text("Cán bộ: " + $(e.event.target).text());
         createMonthCircleThuTucCB();
         createYearColumnThuTucCB();
     }, 800);
@@ -417,6 +444,13 @@ function createChartThuTucBP(urlStr, titleStr) {
         },
         series:
             [{
+                type: "line",
+                field: "SoLuongGiaiQuyet",
+                categoryField: "ThoiGian",
+                name: "Số lượng",
+                color: "#ff1c1c",
+                axis: "quantity"
+            },{
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
                 name: "Phiên chờ",
@@ -438,40 +472,60 @@ function createChartThuTucBP(urlStr, titleStr) {
             },
             crosshair: {
                 visible: true
-            }
-        },
-        valueAxis: {
-            name: "value",
-            labels: {
-                format: "{0:n0}",
             },
+            axisCrossingValue: [0, 12],
         },
+        valueAxis: [{
+            name: "time",
+            labels: {
+                format: "{0:n0} phút",
+            },
+            title: {
+                text: "Thời gian giải quyết thủ tục (Phút)"
+            },
+            color: "#007eff"
+        }, {
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Số lượng thủ tục đã giải quyết (Lần)"
+            },
+            color: "#ff1c1c"
+        }],
         tooltip: {
             visible: true,
             shared: true,
             format: "N0"
         },
-        render: function (e) {
-            // Effective axis range is available in the render event
-            //
-            // See
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-            var range = e.sender.getAxis("value").range();
-            if (range > 20) var majorUnit = range.max / 4;
-            else if (range > 100) var majorUnit = range.max / 20;
-            else if (range > 500) var majorUnit = range.max / 100;
-            else if (range > 1000) var majorUnit = range.max / 200;
-            var axis = e.sender.options.valueAxis;
-
-            if (axis.majorUnit !== majorUnit) {
-                axis.majorUnit = majorUnit;
-
-                // We need to redraw the chart to apply the changes
-                e.sender.redraw();
-            }
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
         }
+        //render: function (e) {
+        //    // Effective axis range is available in the render event
+        //    //
+        //    // See
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+        //    var range = e.sender.getAxis("value").range();
+        //    if (range > 20) var majorUnit = range.max / 4;
+        //    else if (range > 100) var majorUnit = range.max / 20;
+        //    else if (range > 500) var majorUnit = range.max / 100;
+        //    else if (range > 1000) var majorUnit = range.max / 200;
+        //    var axis = e.sender.options.valueAxis;
+
+        //    if (axis.majorUnit !== majorUnit) {
+        //        axis.majorUnit = majorUnit;
+
+        //        // We need to redraw the chart to apply the changes
+        //        e.sender.redraw();
+        //    }
+        //}
     });
 }
 // Tạo dropdownlist chọn năm
@@ -708,61 +762,86 @@ function createChartThuTucCB(urlStr, titleStr) {
         },
         series:
             [{
-                field: "ThoiGianCho",
+                type: "line",
+                field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Phiên chờ",
-                color: "#FFFF00",
+                name: "Số lượng",
+                color: "#ff1c1c",
+                axis: "quantity"
             }, {
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Phiên giải quyết",
-                color: "#33FF00"
-            }, {
-                field: "TongThoiGian",
-                categoryField: "ThoiGian",
-                name: "Tổng phiên",
-                color: "#0066FF"
-            }],
+                color: "#007eff",
+                axis: "time"
+            },
+                //{
+                //field: "TongThoiGian",
+                //categoryField: "ThoiGian",
+                //name: "Tổng phiên",
+                //color: "#0066FF"
+                //}
+            ],
         categoryAxis: {
             labels: {
                 rotation: -90
             },
             crosshair: {
                 visible: true
-            }
-        },
-        valueAxis: {
-            name: "value",
-            labels: {
-                format: "{0:n0}",
             },
+            axisCrossingValue: [0, 12],
         },
+        valueAxis: [{
+            name: "time",
+            labels: {
+                format: "{0:n0} phút",
+            },
+            title: {
+                text: "Thời gian giải quyết thủ tục (Phút)"
+            },
+            color: "#007eff"
+        }, {
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Số lượng thủ tục đã giải quyết (Lần)"
+            },
+            color: "#ff1c1c"
+        }],
         tooltip: {
             visible: true,
             shared: true,
             format: "N0"
         },
-        render: function (e) {
-            // Effective axis range is available in the render event
-            //
-            // See
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-            var range = e.sender.getAxis("value").range();
-            if (range > 20) var majorUnit = range.max / 4;
-            else if (range > 100) var majorUnit = range.max / 20;
-            else if (range > 500) var majorUnit = range.max / 100;
-            else if (range > 1000) var majorUnit = range.max / 200;
-            var axis = e.sender.options.valueAxis;
-
-            if (axis.majorUnit !== majorUnit) {
-                axis.majorUnit = majorUnit;
-
-                // We need to redraw the chart to apply the changes
-                e.sender.redraw();
-            }
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
         }
+        //render: function (e) {
+        //    // Effective axis range is available in the render event
+        //    //
+        //    // See
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+        //    var range = e.sender.getAxis("value").range();
+        //    if (range > 20) var majorUnit = range.max / 4;
+        //    else if (range > 100) var majorUnit = range.max / 20;
+        //    else if (range > 500) var majorUnit = range.max / 100;
+        //    else if (range > 1000) var majorUnit = range.max / 200;
+        //    var axis = e.sender.options.valueAxis;
+
+        //    if (axis.majorUnit !== majorUnit) {
+        //        axis.majorUnit = majorUnit;
+
+        //        // We need to redraw the chart to apply the changes
+        //        e.sender.redraw();
+        //    }
+        //}
     });
 }
 // Tạo dropdownlist chọn năm

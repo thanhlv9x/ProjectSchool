@@ -972,7 +972,7 @@ function getCBName(urlStr) {
             if (data.length > 0) {
                 //var i = 0;
                 $.each(data, function (key, val) {
-                    str += "<tr><td><div id='" + val.MaCB + "' class='btnCB' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td></tr>";
+                    str += "<tr><td><div id='" + val.MaCB + "' class='btnCB' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + "</div></td></tr>";
                     //if (i == 3) {
                     //    str += "</tr><tr><td><div id='" + val.MaCB + "' class='btnCB' style='width: 100%; margin: 2px'><span class=' k-icon k-i-user'></span>" + val.HoTen + " - " + val.MaCB + "</div></td>";
                     //    i = 0;
@@ -1010,7 +1010,7 @@ function onClickBtnCB(e) {
     macb = $(e.event.target).attr("id");
     createInfoCB(macb);
     setTimeout(function () {
-        $("#can-bo div h1").text("Cán bộ: " + $(e.event.target).text().substring(0, $(e.event.target).text().indexOf('-')).trim() + " - Mã số: " + $(e.event.target)[0].id);
+        $("#can-bo div h1").text("Cán bộ: " + $(e.event.target).text());
         createYearColumnCB(macb);
         createChartCircleCB(url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createMonthCircleCB(macb);

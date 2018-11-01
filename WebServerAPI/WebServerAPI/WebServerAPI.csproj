@@ -333,7 +333,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DangNhap.js" />
-    <Content Include="Content\KetQua.js" />
+    <Content Include="Content\KetQuaJs.js" />
     <Content Include="Content\ServerStyle.css" />
     <Content Include="Content\ThongTin.js" />
     <Content Include="Content\ThuTuc.js" />
@@ -450,6 +450,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SlideImages\2-9-2017.jpg" />
     <Content Include="SlideImages\slide-1.jpg" />
     <Content Include="SlideImages\slide1.jpg" />
     <Content Include="SlideImages\slide2.jpg" />
