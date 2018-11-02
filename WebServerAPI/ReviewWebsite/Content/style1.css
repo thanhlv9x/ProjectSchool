@@ -6,6 +6,30 @@
     -webkit-box-sizing: border-box;
 }
 
+#banner {
+    height: 10%;
+    background-color: red
+}
+
+    #banner img {
+        height: 80%;
+        margin: 0.5em 0 0 0
+    }
+
+    #banner span {
+        position: absolute;
+        top: 0.5em;
+        color: yellow
+    }
+
+        #banner span:last-child {
+            position: absolute;
+            top: 1.8em;
+            color: yellow;
+            font-size: 1.1em;
+            left: 6.5em;
+        }
+
 #footer-title {
     cursor: pointer;
 }
@@ -118,7 +142,7 @@ div#RHL, div#HL, div#BT, div#KHL {
     height: 124%;
     width: 25%;
     float: left;
-    padding: 1em;
+    padding: 1.5em 0;
     border-radius: 1em;
 }
 
@@ -148,7 +172,7 @@ html, body {
 
 #thanks {
     width: 100%;
-    height: 100%;
+    height: 90%;
     position: relative;
 }
 
@@ -159,9 +183,9 @@ html, body {
 
 .header {
     height: 10%;
-    background-color: #8999FF;
+    background-color: #fffce0;
     position: relative;
-    color: white;
+    color: red;
 }
 
     .header div {
@@ -178,8 +202,8 @@ span#port-number {
     position: absolute;
     right: 0%;
     font-size: 1.2em;
-    color: white;
-    top: 7%
+    color: red;
+    top: 10%;
 }
 
 .body {
@@ -288,7 +312,7 @@ span#port-number {
 
 .footer {
     height: 10%;
-    background-color: #8999FF;
+    background-color: darkred;
     padding: 1.2em 0em;
 }
 
@@ -301,6 +325,30 @@ span#port-number {
 }
 
 @media screen and (min-width: 600px) {
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.5em;
+            color: yellow
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1.5em;
+                color: yellow;
+                font-size: 1.5em;
+                left: 8.5em;
+            }
+
     .header div {
         font-size: 2em;
     }
@@ -354,6 +402,7 @@ span#port-number {
     input[type="checkbox"] {
         height: 20px;
         width: 20px;
+        margin: 0 0.5em;
     }
 
     #feedback span {
@@ -373,14 +422,39 @@ span#port-number {
         position: absolute;
         right: 2%;
         font-size: 2.1em;
-        top: 2.6%;
+        top: 12%;
     }
 }
 
 @media screen and (min-width: 1024px) {
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.5em;
+            color: yellow;
+            font-size: 1.2em;
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1.2em;
+                color: yellow;
+                font-size: 1.8em;
+                left: 9.5em;
+            }
+
     .header div {
         font-size: 2.5em;
-        color: white;
+        /* color: red; */
     }
 
     #thanks div {
@@ -459,7 +533,7 @@ span#port-number {
     div#RHL, div#HL, div#BT, div#KHL {
         width: 15%;
         margin: 0 5%;
-        padding: 1em 0;
+        padding: 0.8em 0;
         border-radius: 1em;
     }
 
@@ -467,7 +541,7 @@ span#port-number {
         position: absolute;
         right: 1%;
         font-size: 2.5em;
-        color: white;
+        /* color: white; */
     }
 }
 
@@ -483,6 +557,30 @@ span#port-number {
         transform: translateX(-50%);
     }
 
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.3em;
+            color: yellow;
+            font-size: 1.5em;
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1em;
+                color: yellow;
+                font-size: 2em;
+                left: 14.5em;
+            }
 
     .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
         width: 12%;
@@ -495,13 +593,13 @@ span#port-number {
     div#RHL, div#HL, div#BT, div#KHL {
         width: 15%;
         margin: 0 5%;
-        padding: 1% 0;
+        padding: 0.6em 0;
     }
 
     span#port-number {
         position: absolute;
         right: 3%;
         font-size: 2.5em;
-        top: 2%;
+        top: 12%;
     }
 }

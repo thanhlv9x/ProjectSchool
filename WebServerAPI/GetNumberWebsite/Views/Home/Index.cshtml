@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Máy lấy số tự động</title>
-    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/quoc-huy.ico" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
@@ -17,7 +17,12 @@
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
 <body>
-    <div id="container">
+    <div id="banner">
+        <img src="~/favicon.png" />
+        <span>THÀNH PHỐ HỒ CHÍ MINH</span>
+        <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
+    </div>
+    <div id="container" style="height: 90%">
         <table>
             <thead>
                 <tr>
@@ -38,7 +43,8 @@
         <div style="text-align:center;width: 45%;margin: 0px 30%;line-height: 2em;border: 1px solid;padding: 1% 0;">
             <div style="text-align: center"><img src="~/images/quoc-huy.jpg" style="width: 50px; height: 50px" /></div>
             <hr style="width: 80%" />
-            <div style="text-align:center; font-size: 1.2em">UBND TP HỒ CHÍ MINH</div>
+            <div style="text-align:center; font-size: 1.2em">TP HỒ CHÍ MINH</div>
+            <div style="text-align:center; font-size: 1.2em">UBND QUẬN TÂN BÌNH</div>
             <div style="text-align:center">SỐ THỨ TỰ</div>
             <div style="text-align:center;font-size: 3em;padding: 5% 0;" id="number-ticket"></div>
             <div style="text-align:center;display: inline;">BỘ PHẬN: </div>
@@ -74,10 +80,11 @@
                             str += "<tr>";
                         }
                         str += "<td style='width: 32%; padding: 1%'><div id='" + val.MaBP + "' class='btn'>" + val.TenBP + "</div></td>";
-                        if (i == 2) {
-                            str += "</tr>";
-                        }
                         i++;
+                        if (i == 3) {
+                            str += "</tr>";
+                            i = 0;
+                        }
                     });
                     $("tbody").html(str);
                     createButtonBP();
@@ -156,4 +163,4 @@
         createGroupBP();
     })
 </script>
-<link href="~/Content/style2.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />

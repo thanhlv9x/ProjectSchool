@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Máy đánh giá</title>
-    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/quoc-huy.ico" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
@@ -16,7 +16,12 @@
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
 <body>
-    <div id="container">
+    <div id="banner">
+        <img src="~/favicon.png" />
+        <span>THÀNH PHỐ HỒ CHÍ MINH</span>
+        <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
+    </div>
+    <div id="container" style="height: 90%">
         <div class="header"><div>MÁY ĐÁNH GIÁ</div><div id="port"></div></div><span id="port-number"></span>
         <div class="body">
             <div id="left-title"><div>THÔNG TIN CÁN BỘ</div></div>
@@ -206,7 +211,8 @@
                 var js = JSON.parse(result);
                 if (!js) {
                     $("#container").hide();
-                    $("#thanks").show();}
+                    $("#thanks").show();
+                }
                 if (ma_stt_active != js['MaSTT'] && js != false) {
                     $("#container").show();
                     $("#thanks").hide();
@@ -394,4 +400,4 @@
         /* height: 100%; */
     }
 </style>
-<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style1.css" rel="stylesheet" />

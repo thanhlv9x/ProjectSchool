@@ -166,7 +166,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\css\main.css" />
+    <Content Include="Assets\css\main1.css" />
     <Content Include="Assets\css\util.css" />
     <Content Include="Assets\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Assets\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -176,6 +176,7 @@
     <Content Include="Assets\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
     <Content Include="Assets\images\bg-01.jpg" />
     <Content Include="Assets\images\bg-02.jpg" />
+    <Content Include="Assets\images\bg-03.png" />
     <Content Include="Assets\images\icons\favicon.ico" />
     <Content Include="Assets\images\icons\map-marker.png" />
     <Content Include="Assets\js\main.js" />
@@ -210,12 +211,14 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
+    <Content Include="banner.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\style1.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\style.css" />
+    <Content Include="favicon.png" />
+    <Content Include="quoc-huy.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

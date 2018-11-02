@@ -1,4 +1,4 @@
-﻿@import url('style1.css');
+﻿
 
 * {
     margin: 0;
@@ -8,6 +8,31 @@
     -moz-box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+
+#banner {
+    height: 10%;
+    background-color: red
+}
+
+    #banner img {
+        height: 80%;
+        margin: 0.5em 0 0 0
+    }
+
+    #banner span {
+        position: absolute;
+        top: 0.5em;
+        color: yellow
+    }
+
+        #banner span:last-child {
+            position: absolute;
+            top: 1.8em;
+            color: yellow;
+            font-size: 1.1em;
+            left: 6.5em;
+        }
 
 .move-right {
     transform: translateX(100%);
@@ -97,7 +122,7 @@ div#title {
 }
 
 div#footer {
-    background-color: #8999FF;
+    background-color: darkred;
     height: 10%;
     position: relative;
     padding: 0.6em 0;
@@ -144,13 +169,13 @@ div#header div {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5em;
-    color: white;
+    color: red;
 }
 
 div#header {
     width: 100%;
     height: 10%;
-    background-color: #8999FF;
+    background-color: #fffce0;
     position: relative;
 }
 
@@ -158,7 +183,7 @@ html, body {
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
 }
 
 html {
@@ -175,6 +200,30 @@ div#container {
     #info {
         display: none;
     }
+
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.5em;
+            color: yellow
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1.8em;
+                color: yellow;
+                font-size: 1.1em;
+                left: 6.5em;
+            }
 
     div#body {
         height: 70%;
@@ -198,6 +247,30 @@ div#container {
 }
 
 @media screen and (min-width: 600px) {
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.5em;
+            color: yellow
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1.5em;
+                color: yellow;
+                font-size: 1.5em;
+                left: 8.5em;
+            }
+
     div#grid {
         font-size: 0.8em;
         height: 100%;
@@ -248,6 +321,31 @@ div#container {
 }
 
 @media screen and (min-width: 1024px) {
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.5em;
+            color: yellow;
+            font-size: 1.2em;
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1.2em;
+                color: yellow;
+                font-size: 1.8em;
+                left: 9.5em;
+            }
+
     div#grid {
         font-size: 0.8em;
         height: 100%;
@@ -294,6 +392,31 @@ div#container {
 }
 
 @media screen and (min-width: 1025px) {
+    #banner {
+        height: 10%;
+        background-color: red
+    }
+
+        #banner img {
+            height: 80%;
+            margin: 0.5em 0 0 0
+        }
+
+        #banner span {
+            position: absolute;
+            top: 0.3em;
+            color: yellow;
+            font-size: 1.5em;
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                top: 1em;
+                color: yellow;
+                font-size: 2em;
+                left: 14.5em;
+            }
+
     body {
         max-width: 19200px;
         position: absolute;

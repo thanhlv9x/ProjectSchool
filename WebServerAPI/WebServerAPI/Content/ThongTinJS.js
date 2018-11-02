@@ -138,6 +138,9 @@ function createTableTk(urlGet) {
                     },
                     parameterMap: function (options, operation) {
                         if (operation !== "read" && options.models) {
+                            console.log(options.models);
+                            console.log(operation);
+
                             return { models: kendo.stringify(options.models) };
                         }
                     }
@@ -150,11 +153,11 @@ function createTableTk(urlGet) {
                         fields: {
                             MaCB: { type: "number", editable: false, validation: { required: true } },
                             HoTen: { type: "string", validation: { required: true } },
-                            HinhAnh: { type: "string", validation: { required: true } },
+                            HinhAnh: { type: "image"/*, validation: { required: true }*/ },
                             MaBP: { field: "MaBP", type: "number", validation: { required: true }, defaultValue: mabp_tk },
                             Id: { type: "string", validation: { required: true } },
                             Pw: { type: "string", validation: { required: true } },
-                            MaCBSD: { type: "string", validation: {required: true}}
+                            MaCBSD: { type: "string", validation: { required: true } }
                         }
                     }
                 },
@@ -173,16 +176,83 @@ function createTableTk(urlGet) {
                     { name: "custom", text: "Nhập excel", iconClass: "k-icon k-i-file-add" },
                     { name: "custom1", text: "Làm mới", iconClass: "k-icon k-i-refresh" }],
                 columns: [
+                    { field: "HinhAnh", title: "Hình ảnh", width: 100, editor: categoryImageEditor, template: '<img src="resources/#= HinhAnh #" alt="image" style="width: 54px; height: 72px"/>' },
                     { field: "MaCBSD", title: "Mã cán bộ", width: 80 },
                     { field: "HoTen", title: "Họ tên", width: 100, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
                     { field: "MaBP", title: "Tên bộ phận", width: 100, values: arr },
-                    { field: "HinhAnh", title: "Hình ảnh", width: 100 },
                     { field: "Id", title: "Tài khoản", width: 100 },
                     { field: "Pw", title: "Mật khẩu", width: 100 },
                     { command: [{ name: "edit", title: "Cập nhật" }, { name: "destroy", title: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
                 ],
                 editable: "popup"
             }).data("kendoGrid");
+
+            var template = kendo.template($("#template").html());
+            var initialFiles = [];
+
+            $("#products").html(kendo.render(template, initialFiles));
+            function categoryImageEditor(container, options) {
+                //$("<div required name = " + options.field +"></div>")
+                $('<form id="form1" runat="server"><input id="imgInp" type="file"/><img id="blah" src="#" alt="your image"/></form><input required name = '+options.field+' id="strImg"/>')
+                //$('<input required name = ' + options.field + ' type="file"/>')
+                .appendTo(container)
+                    //.kendoUpload({
+                    //    async: {
+                    //        saveUrl: "Upload/save",
+                    //        removeUrl: "Upload/remove",
+                    //        batch: true
+                    //    },
+                    //    validation: {
+                    //        allowedExtensions: [".gif", ".jpg", ".png"]
+                    //    }
+                    //});
+                    //.kendoUpload({
+                    //    async: {
+                    //        saveUrl: "Upload/save",
+                    //        removeUrl: "Upload/remove",
+                    //        autoUpload: true
+                    //    },
+                    //    validation: {
+                    //        allowedExtensions: [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
+                    //    },
+                    //    success: onSuccess,
+                    //    showFileList: false,
+                    //    dropZone: ".dropZoneElement"
+                    //});
+                function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("img[alt='image']").val()
+                            $("#strImg").val(e.target.result);
+                            $("#strImg").prop("class", "k-valid");
+                            $('#blah').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                $("#imgInp").change(function () {
+                    readURL(this);
+                });
+
+                //function onSuccess(e) {
+                //    if (e.operation == "upload") {
+                //        for (var i = 0; i < e.files.length; i++) {
+                //            var file = e.files[i].rawFile;
+
+                //            if (file) {
+                //                var reader = new FileReader();
+
+                //                reader.onloadend = function () {
+                //                    $("<div class='product'><img src=" + this.result + " /></div>").appendTo($("#products"));
+                //                };
+
+                //                reader.readAsDataURL(file);
+                //            }
+                //        }
+                //    }
+                //}
+            }
 
             // Nhập file excel
             var myWindow = $("#windowPopup");
@@ -221,7 +291,6 @@ function createTableTk(urlGet) {
             // Tạo nút nhập excel
             var importBtn = $(".k-button.k-button-icontext.k-grid-custom");
             importBtn.click(function () {
-                console.log("ok");
                 var myWindow = $("#windowPopup");
                 myWindow.kendoWindow({
                     width: "600px",
@@ -250,7 +319,7 @@ function createTableTk(urlGet) {
         }
     })
     //$("#grid-tai-khoan-can-bo").html("");
-    
+
 }
 // Nhập file excel
 var myWindow = $("#windowPopup");

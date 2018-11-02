@@ -32,7 +32,6 @@
                 </ul> @*#tabstrip-left*@
 
                 <div id="slide-gioi-thieu" style="height:100%">
-                    <link href="~/Scripts/ChuyenSlide.css" rel="stylesheet" />
                     <div class="slidewrapper" style="height:100%">
                         <div class="slides" style="height:100%">
                             <ul>
@@ -631,6 +630,16 @@
             <button type="submit" id="btn-import" class="k-button k-primary">Nhập</button>
         }
     </div>
+    <script>
+        
+        $('#image_upload').change(function () {
+            var fileList = this.files;
+            var file = fileList[0];
+            var r = new FileReader();
+            r.onload = function () { console.log(r.result); };
+            r.readAsBinaryString(file);
+        });
+    </script>
 </body>
 </html>
 
@@ -688,7 +697,11 @@
         </div>
     </div>
 </script>
-
+<script type="text/x-kendo-template" id="template">
+    <div class="product">
+        <img src="../content/web/foods/#= name #" alt="#: name # image" />
+    </div>
+</script>
 <script>
     var url = window.location.origin;
     // Tạo tabstrip
@@ -769,7 +782,8 @@
 </script>
 <script src="~/Content/KetQuaJs.js"></script>
 <script src="~/Content/ThuTuc.js"></script>
+<script src="~/Content/BaoCaoJs.js"></script>
 <script src="~/Content/DangNhap.js"></script>
-<script src="~/Content/BaoCao.js"></script>
-<script src="~/Content/ThongTin.js"></script>
-<link href="~/Content/ServerStyle.css" rel="stylesheet" />
+<script src="~/Content/ThongTinJS.js"></script>
+<link href="~/Content/ServerStyle1.css" rel="stylesheet" />
+<link href="~/Scripts/ChuyenSlide1.css" rel="stylesheet" />

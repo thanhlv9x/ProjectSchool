@@ -323,6 +323,7 @@ function createGridThuTucReport(urlStr) {
                 id: "MaCB",
                 fields: {
                     MaCB: { type: "number" },
+                    MaCBSD: { type: "string", validation: { required: true } },
                     MaBP: { type: "number", validation: { required: true } },
                     TenBP: { type: "string", validation: { required: true } },
                     HoTen: { type: "string", validation: { required: true } },
@@ -382,7 +383,7 @@ function createGridThuTucReport(urlStr) {
         navigatable: true,
         pageable: true,
         columns: [
-            { field: "MaCB", title: "Mã số", width: 80 },
+            { field: "MaCBSD", title: "Mã số", width: 80 },
             { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
             { field: "TenBP", title: "Bộ phận", width: 1 },
             { field: "PhienCho", title: "Phiên chờ", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
@@ -424,6 +425,7 @@ function createGridReport(urlStr) {
                 id: "MaCB",
                 fields: {
                     MaCB: { type: "number" },
+                    MaCBSD: { type: "string", validation: { required: true } },
                     MaBP: { type: "number", validation: { required: true } },
                     TenBP: { type: "string", validation: { required: true } },
                     HoTen: { type: "string", validation: { required: true } },
@@ -545,7 +547,7 @@ function createGridReport(urlStr) {
         navigatable: true,
         pageable: true,
         columns: [
-            { field: "MaCB", title: "Mã số", width: 50 },
+            { field: "MaCBSD", title: "Mã số", width: 50 },
             { field: "HoTen", title: "Họ tên", width: 90, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
             { field: "Diem", title: "Số điểm", width: 80, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
             { field: "TenBP", title: "Bộ phận", width: 1, },
@@ -621,6 +623,7 @@ function createGridFeedBack(urlStr) {
                 id: "MaCB",
                 fields: {
                     MaCB: { type: "number" },
+                    MaCBSD: { type: "string", validation: { required: true } },
                     MaBP: { type: "number", validation: { required: true } },
                     TenBP: { type: "string", validation: { required: true } },
                     HoTen: { type: "string", validation: { required: true } },
@@ -664,7 +667,7 @@ function createGridFeedBack(urlStr) {
         navigatable: true,
         pageable: true,
         columns: [
-            { field: "MaCB", title: "Mã số", width: 80 },
+            { field: "MaCBSD", title: "Mã số", width: 80 },
             { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
             { field: "TenBP", title: "Bộ phận", width: 1 },
             { field: "MucDoDanhGia", title: "Mức độ đánh giá", width: 150 },

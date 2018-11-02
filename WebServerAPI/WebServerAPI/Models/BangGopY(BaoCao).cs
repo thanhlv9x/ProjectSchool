@@ -14,5 +14,6 @@ namespace WebServerAPI.Models
         public string MucDoDanhGia { get; set; }
         public string GopY { get; set; }
         public int SoLan { get; set; }
+        public string MaCBSD { get; set; }
     }
 }

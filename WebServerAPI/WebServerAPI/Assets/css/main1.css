@@ -213,7 +213,7 @@ iframe {
 }
 
 .login100-form-title-1 {
-  font-family: Poppins-Bold;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
   color: #fff;
   text-transform: uppercase;
@@ -260,7 +260,7 @@ iframe {
 }
 
 .label-input100 {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #808080;
   line-height: 1.2;
@@ -275,7 +275,7 @@ iframe {
 
 /*---------------------------------------------*/
 .input100 {
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
   color: #555555;
   line-height: 1.2;
@@ -405,7 +405,7 @@ input.input100 {
   background-color: #57b846;
   border-radius: 25px;
 
-  font-family: Poppins-Regular;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   color: #fff;
   line-height: 1.2;

@@ -206,6 +206,7 @@
     <Compile Include="Controllers\TaiKhoanAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThuTucAPIController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\ValuesAPIController.cs" />
     <Compile Include="EF\BOPHAN.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
@@ -283,7 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Assets\css\main.css" />
+    <Content Include="Assets\css\main1.css" />
     <Content Include="Assets\css\util.css" />
     <Content Include="Assets\fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Assets\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
@@ -327,15 +328,15 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
-    <Content Include="Content\BaoCao.js" />
+    <Content Include="Content\BaoCaoJs.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DangNhap.js" />
     <Content Include="Content\KetQuaJs.js" />
-    <Content Include="Content\ServerStyle.css" />
-    <Content Include="Content\ThongTin.js" />
+    <Content Include="Content\ServerStyle1.css" />
+    <Content Include="Content\ThongTinJS.js" />
     <Content Include="Content\ThuTuc.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -348,6 +349,7 @@
       <LastGenOutput>HeThongDanhGia.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
+    <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -443,7 +445,7 @@
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\ChuyenSlide.css" />
+    <Content Include="Scripts\ChuyenSlide1.css" />
     <Content Include="Scripts\ChuyenSlideJs.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -481,6 +483,7 @@
     <Folder Include="Views\GetDiemSo\" />
     <Folder Include="Views\SoQuay\" />
     <Folder Include="Views\TaiKhoan\" />
+    <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

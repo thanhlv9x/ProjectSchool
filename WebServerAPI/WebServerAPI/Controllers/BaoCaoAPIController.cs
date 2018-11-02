@@ -75,7 +75,8 @@ namespace WebServerAPI.Controllers
                             BT_TyLe = tyle_BT,
                             KHL_TyLe = tyle_KHL,
                             TongCong_TyLe = tyle,
-                            Diem = diem
+                            Diem = diem,
+                            MaCBSD = item.MACBSD
                         };
                         listMD.Add(md);
                     }
@@ -155,7 +156,8 @@ namespace WebServerAPI.Controllers
                             BT_TyLe = tyle_BT,
                             KHL_TyLe = tyle_KHL,
                             TongCong_TyLe = tyle,
-                            Diem = diem
+                            Diem = diem,
+                            MaCBSD = item.MACBSD
                         };
                         listMD.Add(md);
                     }
@@ -166,7 +168,7 @@ namespace WebServerAPI.Controllers
             {
                 string tenbp = db.BOPHANs.Where(p => p.MABP == _MaBP).Select(p => p.TENBP).SingleOrDefault();
                 string hoten = db.CANBOes.Where(p => p.MACB == _MaCB).Select(p => p.HOTEN).SingleOrDefault();
-
+                string macbsd = db.CANBOes.Where(p => p.MACB == _MaCB).Select(p => p.MACBSD).SingleOrDefault();
                 if (_Start == null && _End == null)
                 {
                     int total = db.KETQUADANHGIAs.Count(p => p.SOTHUTU.CANBO.MACB == _MaCB);
@@ -195,7 +197,8 @@ namespace WebServerAPI.Controllers
                         BT_TyLe = tyle_BT,
                         KHL_TyLe = tyle_KHL,
                         TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
-                        Diem = diem
+                        Diem = diem,
+                        MaCBSD = macbsd
                     };
                     listMD.Add(md);
                 }
@@ -268,7 +271,8 @@ namespace WebServerAPI.Controllers
                         BT_TyLe = tyle_BT,
                         KHL_TyLe = tyle_KHL,
                         TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
-                        Diem = diem
+                        Diem = diem,
+                        MaCBSD = macbsd
                     };
                     listMD.Add(md);
                 }
@@ -327,7 +331,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     MucDoDanhGia = mucdo_danhgia,
                                     GopY = gopy,
-                                    SoLan = count
+                                    SoLan = count,
+                                    MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }
@@ -413,7 +418,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     MucDoDanhGia = mucdo_danhgia,
                                     GopY = gopy,
-                                    SoLan = count
+                                    SoLan = count,
+                                    MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }
@@ -458,7 +464,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     MucDoDanhGia = mucdo_danhgia,
                                     GopY = gopy,
-                                    SoLan = count
+                                    SoLan = count,
+                                    MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }
@@ -545,7 +552,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     MucDoDanhGia = mucdo_danhgia,
                                     GopY = gopy,
-                                    SoLan = count
+                                    SoLan = count,
+                                    MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }
@@ -591,7 +599,8 @@ namespace WebServerAPI.Controllers
                                 HoTen = hoten,
                                 MucDoDanhGia = mucdo_danhgia,
                                 GopY = gopy,
-                                SoLan = count
+                                SoLan = count,
+                                MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                             };
                             listMD.Add(md);
                         }
@@ -679,7 +688,8 @@ namespace WebServerAPI.Controllers
                                 HoTen = hoten,
                                 MucDoDanhGia = mucdo_danhgia,
                                 GopY = gopy,
-                                SoLan = count
+                                SoLan = count,
+                                MaCBSD = item.KETQUADANHGIA.SOTHUTU.CANBO.MACBSD
                             };
                             listMD.Add(md);
                         }
@@ -748,7 +758,8 @@ namespace WebServerAPI.Controllers
                                         HoTen = hoten,
                                         PhienCho = phiencho,
                                         PhienXuLy = phienxuly,
-                                        TongPhien = tongphien
+                                        TongPhien = tongphien,
+                                        MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                     };
                                     listMD.Add(md);
                                 }
@@ -840,7 +851,8 @@ namespace WebServerAPI.Controllers
                                         HoTen = hoten,
                                         PhienCho = phiencho,
                                         PhienXuLy = phienxuly,
-                                        TongPhien = tongphien
+                                        TongPhien = tongphien,
+                                        MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                     };
                                     listMD.Add(md);
                                 }
@@ -891,7 +903,8 @@ namespace WebServerAPI.Controllers
                                         HoTen = hoten,
                                         PhienCho = phiencho,
                                         PhienXuLy = phienxuly,
-                                        TongPhien = tongphien
+                                        TongPhien = tongphien,
+                                        MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                     };
                                     listMD.Add(md);
                                 }
@@ -982,7 +995,8 @@ namespace WebServerAPI.Controllers
                                         HoTen = hoten,
                                         PhienCho = phiencho,
                                         PhienXuLy = phienxuly,
-                                        TongPhien = tongphien
+                                        TongPhien = tongphien,
+                                        MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                     };
                                     listMD.Add(md);
                                 }
@@ -1034,7 +1048,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     PhienCho = phiencho,
                                     PhienXuLy = phienxuly,
-                                    TongPhien = tongphien
+                                    TongPhien = tongphien,
+                                    MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }
@@ -1126,7 +1141,8 @@ namespace WebServerAPI.Controllers
                                     HoTen = hoten,
                                     PhienCho = phiencho,
                                     PhienXuLy = phienxuly,
-                                    TongPhien = tongphien
+                                    TongPhien = tongphien,
+                                    MaCBSD = item.SOTHUTU.CANBO.MACBSD
                                 };
                                 listMD.Add(md);
                             }

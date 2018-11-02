@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Máy gọi số</title>
-    <link rel="shortcut icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" href="~/quoc-huy.ico" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
@@ -17,7 +17,12 @@
     <script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
 </head>
 <body>
-    <div id="container">
+    <div id="banner">
+        <img src="~/favicon.png" />
+        <span>THÀNH PHỐ HỒ CHÍ MINH</span>
+        <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
+    </div>
+    <div id="container" style="height: 90%">
         <div id="header"><div>MÁY GỌI SỐ</div></div>
         <div id="body">
             <div id="info">
@@ -294,10 +299,10 @@
                                 }
                             });
                             //$('#open').on('click', function () {
-                                if (!active) {
-                                    $("audio")[0].play();
-                                    active = true;
-                                }
+                            if (!active) {
+                                $("audio")[0].play();
+                                active = true;
+                            }
                             //});
 
                             click_next = true;
@@ -334,7 +339,7 @@
             $("audio")[0].play();
             active = true;
         }
-                            //});
+        //});
     })
     // Tạo sự kiện nút mở cửa sổ đổi mật khẩu
     $("#btn-change-pw").kendoButton();
@@ -393,4 +398,4 @@
         font-size: 1.2em;
     }
 </style>
-<link href="~/Content/style1.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
