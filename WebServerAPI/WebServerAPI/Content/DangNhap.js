@@ -22,7 +22,6 @@
         }
     })
 }
-createBPDangNhap()
 $("#bo-phan-dang-nhap").change(function () {
     createCBDangNhap($("#bo-phan-dang-nhap").val())
 })
@@ -221,4 +220,8 @@ $("#cbx-nam-dang-nhap").change(function () {
         $("#cbx-thang-dang-nhap").removeAttr("checked");
         $("#cbx-nam-dang-nhap").prop("checked", "checked");
     }
+})
+
+$("#menu-xem-dang-nhap").click(function () {
+    createBPDangNhap()
 })

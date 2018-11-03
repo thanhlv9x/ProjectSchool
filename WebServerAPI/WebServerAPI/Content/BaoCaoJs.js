@@ -680,7 +680,6 @@ function createGridFeedBack(urlStr) {
 }
 // Phương thức click nút xuất báo cáo
 $('#btn-report').on('click', function () {
-    debugger;
     try {
         if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length > 0) {
             var grid1 = $('#grid-report-1').data('kendoGrid');
@@ -882,6 +881,8 @@ $('#btn-report').on('click', function () {
         alert("Yêu cầu phải xem trước")
     }
 })
-createButtonReport();
-createBPbaocao();
-createTGbaocao();
+$("#menu-thong-ke-bao-cao").click(function () {
+    createButtonReport();
+    createBPbaocao();
+    createTGbaocao();
+})

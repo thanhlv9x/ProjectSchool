@@ -16,7 +16,7 @@ namespace CallNumberWebsite.Controllers
             Uri myuri = (new Uri(System.Web.HttpContext.Current.Request.Url.AbsoluteUri));
             string pathQuery = myuri.PathAndQuery;
             string hostName = myuri.ToString().Replace(pathQuery, "") + "/";
-            hostName = "http://localhost:49930/";
+            //hostName = "http://localhost:49930/";
             //string urlServer = hostName.Substring(0, hostName.IndexOf(myuri.Port.ToString()) - 1);
             return hostName;
         }

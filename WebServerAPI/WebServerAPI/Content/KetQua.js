@@ -6,7 +6,11 @@ var clickTH = false;
 
 // ============ Tổng hợp =============
 // Nút tên bộ phận: sự kiện click vào menu xem kết quả
-$("#menu-xem-ket-qua").click(function () {
+$("#menu-xem-ket-qua-danh-gia").click(function () {
+    // Tổng hợp
+    createYearColumnTH();
+    createMonthCircleTH();
+    createChartTableTHAll();
     $("#footer-th").hide();
     $("#div-month-circle-th").hide();
     getBPName();
@@ -58,6 +62,10 @@ function createChartColumnTH(urlStr, titleStr) {
         seriesDefaults: {
             type: "column",
             stack: { type: "100%" }
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
         },
         series:
             [{
@@ -204,6 +212,10 @@ function createChartCircleTH(urlStr, titleStr) {
             },
             type: "pie"
         },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
         series: [
             {
                 field: "value",
@@ -227,7 +239,7 @@ function createMonthCircleTH() {
         success: function (data) {
             if (data.length > 0) {
                 $("#body-th").show();
-                $("#footer-th").show();
+                //$("#footer-th").show();
                 $("#month-circle-th").kendoDatePicker({
                     start: "year",
                     depth: "year",
@@ -453,10 +465,6 @@ $("#click-details-th").click(function () {
         clickTH = false;
     }
 })
-// Tổng hợp
-createYearColumnTH();
-createMonthCircleTH();
-createChartTableTHAll();
 
 // ============ Bộ phận ==============
 // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
@@ -563,6 +571,10 @@ function createChartCircleBP(urlStr, titleStr) {
                 background: "transparent"
             },
             type: "pie"
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
         },
         series: [
             {
@@ -772,6 +784,10 @@ function createChartColumnBP(urlStr, titleStr) {
         seriesDefaults: {
             type: "column",
             stack: { type: "100%" }
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
         },
         series:
             [{
@@ -1066,6 +1082,10 @@ function createChartColumnCB(urlStr, titleStr) {
             type: "column",
             stack: { type: "100%" }
         },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
         series:
             [{
                 field: "RHL",
@@ -1163,6 +1183,10 @@ function createChartCircleCB(urlStr, titleStr) {
                 background: "transparent"
             },
             type: "pie"
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
         },
         series: [
             {

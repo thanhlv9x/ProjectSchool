@@ -52,7 +52,6 @@ function createButtonBPThuc() {
         });
     });
 }
-getBPNameThuTuc();
 // Tạo sự kiện nút quay lại
 function backBPThuTuc() {
     $("#thu-tuc-th").show("slow");
@@ -82,8 +81,13 @@ function createChartThuTucTH(urlStr, titleStr) {
         seriesDefaults: {
             type: "area"
         },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
         series:
             [{
+                opacity: 1,
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
@@ -91,20 +95,23 @@ function createChartThuTucTH(urlStr, titleStr) {
                 color: "#ff1c1c",
                 axis: "quantity"
             }, {
-                field: "ThoiGianCho",
-                categoryField: "ThoiGian",
-                name: "Phiên chờ",
-                color: "#FFFF00",
-            }, {
-                field: "ThoiGianGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Phiên giải quyết",
-                color: "#33FF00"
-            }, {
+                opacity: 1,
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
-                name: "Tổng phiên",
+                name: "Tổng thời gian",
                 color: "#0066FF"
+            }, {
+                opacity: 1,
+                field: "ThoiGianCho",
+                categoryField: "ThoiGian",
+                name: "Thời gian chờ",
+                color: "#FFFF00",
+            }, {
+                opacity: 1,
+                field: "ThoiGianGiaiQuyet",
+                categoryField: "ThoiGian",
+                name: "Thời gian giải quyết",
+                color: "#33FF00"
             }],
         categoryAxis: {
             labels: {
@@ -146,12 +153,12 @@ function createChartThuTucTH(urlStr, titleStr) {
             chart.redraw();
         }
         //render: function (e) {
-            // Effective axis range is available in the render event
-            //
-            // See
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+        // Effective axis range is available in the render event
+        //
+        // See
+        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
         //    var range = e.sender.getAxis("value").range();
         //    if (range > 20) var majorUnit = range.max / 4;
         //    else if (range > 100) var majorUnit = range.max / 20;
@@ -442,29 +449,37 @@ function createChartThuTucBP(urlStr, titleStr) {
         seriesDefaults: {
             type: "area"
         },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
         series:
             [{
+                opacity: 1,
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Số lượng",
                 color: "#ff1c1c",
                 axis: "quantity"
-            },{
-                field: "ThoiGianCho",
-                categoryField: "ThoiGian",
-                name: "Phiên chờ",
-                color: "#FFFF00",
             }, {
-                field: "ThoiGianGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Phiên giải quyết",
-                color: "#33FF00"
-            }, {
+                opacity: 1,
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
-                name: "Tổng phiên",
+                name: "Tổng thời gian",
                 color: "#0066FF"
+            }, {
+                opacity: 1,
+                field: "ThoiGianCho",
+                categoryField: "ThoiGian",
+                name: "Thời gian chờ",
+                color: "#FFFF00",
+            }, {
+                opacity: 1,
+                field: "ThoiGianGiaiQuyet",
+                categoryField: "ThoiGian",
+                name: "Thời gian giải quyết",
+                color: "#33FF00"
             }],
         categoryAxis: {
             labels: {
@@ -760,8 +775,13 @@ function createChartThuTucCB(urlStr, titleStr) {
         seriesDefaults: {
             type: "area"
         },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
         series:
             [{
+                opacity: 1,
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
@@ -769,6 +789,7 @@ function createChartThuTucCB(urlStr, titleStr) {
                 color: "#ff1c1c",
                 axis: "quantity"
             }, {
+                opacity: 1,
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Phiên giải quyết",

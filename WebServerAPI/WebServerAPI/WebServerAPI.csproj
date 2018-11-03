@@ -203,10 +203,8 @@
     <Compile Include="Controllers\KetQuaDanhGiaAPIController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SoQuayController.cs" />
-    <Compile Include="Controllers\TaiKhoanAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThuTucAPIController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\ValuesAPIController.cs" />
     <Compile Include="EF\BOPHAN.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
@@ -334,10 +332,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DangNhap.js" />
-    <Content Include="Content\KetQuaJs.js" />
+    <Content Include="Content\KetQua.js" />
     <Content Include="Content\ServerStyle1.css" />
     <Content Include="Content\ThongTinJS.js" />
-    <Content Include="Content\ThuTuc.js" />
+    <Content Include="Content\ThuTucJs.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
@@ -445,21 +443,11 @@
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\ChuyenSlide1.css" />
-    <Content Include="Scripts\ChuyenSlideJs.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="SlideImages\2-9-2017.jpg" />
-    <Content Include="SlideImages\slide-1.jpg" />
-    <Content Include="SlideImages\slide1.jpg" />
-    <Content Include="SlideImages\slide2.jpg" />
-    <Content Include="SlideImages\slide3.jpg" />
-    <Content Include="SlideImages\slide3_cover1.jpg" />
-    <Content Include="SlideImages\slide3_cover2.jpg" />
-    <Content Include="SlideImages\slide4.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

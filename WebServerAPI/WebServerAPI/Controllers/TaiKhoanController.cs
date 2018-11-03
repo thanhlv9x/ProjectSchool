@@ -124,6 +124,7 @@ namespace WebServerAPI.Controllers
                         if (item.HinhAnh != md.HINHANH)
                         {
                             string image = UpdateImg(item.HinhAnh, macbsd, md.HINHANH);
+                            if (image == "") return Json(success, JsonRequestBehavior.AllowGet);
                             md.HINHANH = image;
                         }
                         md.MABP = mabp;
@@ -142,7 +143,7 @@ namespace WebServerAPI.Controllers
                         success = true;
                     };
                 }
-                catch (Exception ex){ }
+                catch (Exception ex) { }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }
@@ -385,8 +386,13 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public string UpdateImg(string _Path, string _MaCBSD, string _OldNameFile)
         {
-            DeleteImg(_OldNameFile);
-            return SaveImg(_Path, _MaCBSD);
+            string strImg = "";
+            if (System.IO.File.Exists(_Path))
+            {
+                DeleteImg(_OldNameFile);
+                strImg = SaveImg(_Path, _MaCBSD);
+            }
+            return strImg;
         }
     }
 }
