@@ -169,7 +169,7 @@ namespace CallNumberWebsite.Controllers
         /// Phương thức lấy địa chỉ MAC của máy tính
         /// </summary>
         /// <returns></returns>
-        private string GetMacAddress()
+        public string GetMacAddress()
         {
             string str = "";
             IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();

@@ -303,3 +303,4 @@ D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CopyComplete
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.pdb
+D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csprojAssemblyReference.cache
