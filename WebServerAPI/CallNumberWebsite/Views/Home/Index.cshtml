@@ -22,7 +22,7 @@
         <span>THÀNH PHỐ HỒ CHÍ MINH</span>
         <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
     </div>
-    <div id="container" style="height: 90%">
+    <div id="container">
         <div id="header"><div>MÁY GỌI SỐ</div></div>
         <div id="body">
             <div id="info">
@@ -78,7 +78,7 @@
 
 <script>
     $("audio").play;
-    var url = window.location.origin;
+    var url = window.location.origin + "/MayGoiSo";
     var today = new Date();
     var macb = 0;
     var mabp = 0;
@@ -253,13 +253,13 @@
     }
     // Khởi tạo thẻ audio gọi số thứ tự
     function createAudio(stt, soquay) {
-        var str1 = '<audio controls="controls" hidden="hidden" id="xms"><source src="/sound/xin-moi-so.wav"  /></audio>';
+        var str1 = '<audio controls="controls" hidden="hidden" id="xms"><source src="' + url + '/sound/xin-moi-so.wav"  /></audio>';
         var str2 = stt.toString();
         for (var i = 0; i < str2.length; i++) {
-            str1 += '<audio controls="controls" hidden="hidden" id=stt' + str2[i] + '><source src="/sound/' + str2[i] + '.wav"  /></audio>';
+            str1 += '<audio controls="controls" hidden="hidden" id=stt' + str2[i] + '><source src="' + url + '/sound/' + str2[i] + '.wav"  /></audio>';
         }
-        str1 += '<audio controls="controls" hidden="hidden" id="tqs"><source src="/sound/toi-quay-so.wav"  /></audio>';
-        str1 += '<audio controls="controls" hidden="hidden" id="quay' + soquay + '"><source src="/sound/' + soquay + '.wav"  /></audio>';
+        str1 += '<audio controls="controls" hidden="hidden" id="tqs"><source src="' + url + '/sound/toi-quay-so.wav"  /></audio>';
+        str1 += '<audio controls="controls" hidden="hidden" id="quay' + soquay + '"><source src="' + url + '/sound/' + soquay + '.wav"  /></audio>';
         $("body").append(str1);
     }
 
@@ -398,4 +398,4 @@
         font-size: 1.2em;
     }
 </style>
-<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style2.css" rel="stylesheet" />

@@ -39,7 +39,7 @@ namespace CallNumberWebsite.Controllers
             {
                 Session[CommonConstants.USER_SESSION] = null;
                 Session[CommonConstants.USER_RESULT] = null;
-                return Redirect("/Login");
+                return Redirect("/MayGoiSo/Login");
             }
         }
         /// <summary>

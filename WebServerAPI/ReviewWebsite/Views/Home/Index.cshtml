@@ -107,7 +107,7 @@
 <script>
     //$("#container").show();
     //$("#thanks").hide();
-    var url = window.location.origin;
+    var url = window.location.origin + "/MayDanhGia";
     var muc_do = 0;
     var gop_y = "";
     var ma_stt = 0;
@@ -240,7 +240,7 @@
         $("#KHL").removeAttr("style");
     }
     $("#send").kendoButton();
-    $("#txtArea").kendoAutoComplete();
+    $("#txtArea").kendoMaskedTextBox();
     $("#RHL").click(function () {
         chonMucDo();
         $("#RHL").prop("style", "background-color:#8999FF");
@@ -399,5 +399,8 @@
         transform: translateY(-50%);
         /* height: 100%; */
     }
+    .k-maskedtextbox {
+        width: 100%;
+    }
 </style>
-<link href="~/Content/style1.css" rel="stylesheet" />
+<link href="~/Content/style2.css" rel="stylesheet" />

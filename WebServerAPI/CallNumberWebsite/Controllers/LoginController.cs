@@ -24,7 +24,7 @@ namespace CallNumberWebsite.Controllers
             InfoUser.URL = url;
             if (Session[CommonConstants.USER_SESSION] != null)
             {
-                return Redirect("/Home");
+                return Redirect("/MayGoiSo/Home");
             }
             else
             {
@@ -92,7 +92,7 @@ namespace CallNumberWebsite.Controllers
             Session[CommonConstants.USER_MAMAY] = null;
             Session[CommonConstants.USER_MASTT] = null;
             Session[CommonConstants.USER_MADN] = null;
-            return Redirect("/Home");
+            return Redirect("/MayGoiSo/Home");
         }
         /// <summary>
         /// Kiểm tra tài khoản và mật khẩu

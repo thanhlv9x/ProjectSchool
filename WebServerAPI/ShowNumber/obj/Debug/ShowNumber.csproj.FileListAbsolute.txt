@@ -88,3 +88,4 @@ D:\GitHub\ProjectSchool\WebServerAPI\ShowNumber\obj\Debug\ShowNumber.csproj.Core
 D:\GitHub\ProjectSchool\WebServerAPI\ShowNumber\obj\Debug\ShowNumber.csproj.CopyComplete
 D:\GitHub\ProjectSchool\WebServerAPI\ShowNumber\obj\Debug\ShowNumber.dll
 D:\GitHub\ProjectSchool\WebServerAPI\ShowNumber\obj\Debug\ShowNumber.pdb
+D:\GitHub\ProjectSchool\WebServerAPI\ShowNumber\obj\Debug\ShowNumber.csprojAssemblyReference.cache

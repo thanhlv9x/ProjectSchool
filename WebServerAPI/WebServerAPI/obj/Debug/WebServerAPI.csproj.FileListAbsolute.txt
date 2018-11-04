@@ -298,7 +298,6 @@ D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\Microsoft.AI.DependencyCol
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\Microsoft.AI.WindowsServer.xml
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\Microsoft.AI.Web.xml
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csprojAssemblyReference.cache
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.ResolveComReference.cache
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CoreCompileInputs.cache
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CopyComplete

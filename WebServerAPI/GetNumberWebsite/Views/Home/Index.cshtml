@@ -59,7 +59,7 @@
 
 <script>
     // Lấy địa chỉ IP
-    var url = window.location.origin;
+    var url = window.location.origin + "/MayLaySo";
     // Tạo danh sách các nút bộ phận và số thứ tự
     function createGroupBP() {
         $.ajax({
@@ -100,7 +100,7 @@
         var mabp = $(e.event.target).attr("id");
         var id = 'number' + mabp;
         $.ajax({
-            url: window.location.origin + "/Home/GetSTT",
+            url: url + "/Home/GetSTT",
             type: "GET",
             dataType: "json",
             data: { "_MaBP": mabp },
@@ -163,4 +163,4 @@
         createGroupBP();
     })
 </script>
-<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style1.css" rel="stylesheet" />
