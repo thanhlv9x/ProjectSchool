@@ -8,7 +8,7 @@
 
 #banner {
     height: 10%;
-    background-color: red
+    background-color: #CC0000
 }
 
     #banner img {
@@ -44,7 +44,7 @@ html, body {
 
 thead {
     background-color: #fffce0;
-    color: red;
+    color: #CC0000;
 }
 
 table thead tr th {
@@ -85,7 +85,6 @@ table thead tr th {
 @media screen and (min-width: 600px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -131,7 +130,6 @@ table thead tr th {
 @media screen and (min-width: 1024px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -158,7 +156,6 @@ table thead tr th {
 @media screen and (min-width: 1280px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -185,7 +182,6 @@ table thead tr th {
 @media screen and (min-width: 1366px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -212,7 +208,6 @@ table thead tr th {
 @media screen and (min-width: 1440px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -255,7 +250,6 @@ table thead tr th {
 @media screen and (min-width: 1920px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {

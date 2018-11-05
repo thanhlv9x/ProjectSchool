@@ -12,7 +12,7 @@
 
 #banner {
     height: 10%;
-    background-color: red
+    background-color: #CC0000
 }
 
     #banner img {
@@ -169,7 +169,7 @@ div#header div {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.5em;
-    color: red;
+    color: #CC0000;
 }
 
 div#header {
@@ -203,7 +203,6 @@ div#container {
 
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -258,7 +257,6 @@ div#container {
 @media screen and (min-width: 600px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -332,7 +330,6 @@ div#container {
 @media screen and (min-width: 1024px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -403,7 +400,6 @@ div#container {
 @media screen and (min-width: 1025px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -465,7 +461,6 @@ div#container {
 @media screen and (min-width: 1280px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -491,7 +486,6 @@ div#container {
 @media screen and (min-width: 1366px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -518,7 +512,6 @@ div#container {
 @media screen and (min-width: 1440px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
@@ -545,7 +538,6 @@ div#container {
 @media screen and (min-width: 1920px) {
     #banner {
         height: 10%;
-        background-color: red
     }
 
         #banner img {
