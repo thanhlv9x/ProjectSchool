@@ -334,7 +334,7 @@
     <Content Include="Content\DangNhapJs.js" />
     <Content Include="Content\KetQua.js" />
     <Content Include="Content\ServerStyle1.css" />
-    <Content Include="Content\ThongTin.js" />
+    <Content Include="Content\ThongTinJs.js" />
     <Content Include="Content\ThuTucJs.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

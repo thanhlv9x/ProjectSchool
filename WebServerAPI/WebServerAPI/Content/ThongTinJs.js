@@ -1,4 +1,5 @@
-﻿// ============ Thông tin tài khoản cán bộ ==============
+﻿/*
+// ============ Thông tin tài khoản cán bộ ==============
 //// Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
 //function getTKName() {
 //    var str = "";
@@ -38,6 +39,34 @@
 //}
 //// Nút tên bộ phận: sự kiện click vào menu xem kết quả
 //$("#menu-thong-tin-can-bo-tk").click(getTKName)
+*/
+// Phương thức hiển thị hình upload
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#chan-dung')
+                .attr('src', e.target.result)
+                .width(54)
+                .height(72);
+            $("#chan-dung").val(e.target.result);
+            $("#chan-dung")
+                .attr('class', 'k-valid')
+            var id = $("div[data-uid]").attr("data-uid")
+            var a = e.target.result;
+            var grid = $('#grid-tai-khoan-can-bo').data().kendoGrid.dataSource.data();
+            for (var i = 0; i < grid.length; i++) {
+                if (grid[i].uid == id) {
+                    var firstItem = grid[i];
+                    firstItem.set('HinhAnh', a.substring(a.lastIndexOf(',') + 1));
+                }
+            }
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 // ================ Thông tin tài khoản cán bộ =================
 // Tạo sự kiện nút quay lại bộ phận
@@ -140,9 +169,6 @@ function createTableTk(urlGet) {
                     },
                     parameterMap: function (options, operation) {
                         if (operation !== "read" && options.models) {
-                            console.log(options.models);
-                            console.log(operation);
-
                             return { models: kendo.stringify(options.models) };
                         }
                     }
@@ -155,7 +181,7 @@ function createTableTk(urlGet) {
                         fields: {
                             MaCB: { type: "number", editable: false, validation: { required: true } },
                             HoTen: { type: "string", validation: { required: true } },
-                            HinhAnh: { type: "string"/*, validation: { required: true }*/ },
+                            HinhAnh: { type: "string", validation: { required: true } },
                             MaBP: { field: "MaBP", type: "number", validation: { required: true }, defaultValue: mabp_tk },
                             Id: { type: "string", validation: { required: true } },
                             Pw: { type: "string", validation: { required: true } },
@@ -178,7 +204,7 @@ function createTableTk(urlGet) {
                     { name: "custom", text: "Nhập excel", iconClass: "k-icon k-i-file-add" },
                     { name: "custom1", text: "Làm mới", iconClass: "k-icon k-i-refresh" }],
                 columns: [
-                    { field: "HinhAnh", title: "Hình ảnh", width: 100, template: '<input type="image" src="resources/#= HinhAnh #" alt="image" style="width: 54px; height: 72px"/>' },
+                    { field: "HinhAnh", title: "Hình ảnh", width: 100, editor: categoryDropDownEditor, template: '<img src="resources/#= HinhAnh #" alt="image" style="width: 54px; height: 72px"/>' },
                     { field: "MaCBSD", title: "Mã cán bộ", width: 80 },
                     { field: "HoTen", title: "Họ tên", width: 100, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
                     { field: "MaBP", title: "Tên bộ phận", width: 100, values: arr },
@@ -220,7 +246,11 @@ function createTableTk(urlGet) {
                 grid.dataSource.read();
                 return false;
             });
-
+            function categoryDropDownEditor(container, options) {
+                $('<img required="required" name="' + options.field + '" id="chan-dung" /><input type="file" onchange="readURL(this)" id="open-img"/>')
+                    .appendTo(container)
+                $("#open-img").kendoUpload(); 
+            }
 
             // Tạo nút nhập excel
             var importBtn = $(".k-button.k-button-icontext.k-grid-custom");

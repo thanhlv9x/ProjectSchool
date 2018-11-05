@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -14,6 +16,7 @@ namespace WebServerAPI.Controllers
 {
     public class TaiKhoanController : Controller
     {
+        Hashtable myHashtable;
         HETHONGDANHGIAsaEntities db = new HETHONGDANHGIAsaEntities();
         // GET: TaiKhoan
         public ActionResult Index()
@@ -79,7 +82,7 @@ namespace WebServerAPI.Controllers
                     var bp = db.BOPHANs.Where(p => p.MABP == mabp).FirstOrDefault();
                     tenbp = bp.VIETTAT;
                     string id = item.Id + "-" + item.MaCBSD + "-" + tenbp;
-                    string image = SaveImg(item.HinhAnh, item.MaCBSD);
+                    string image = SaveImg(item.HinhAnh, item.MaCBSD, item.HinhAnh);
                     CANBO md = new CANBO()
                     {
                         HOTEN = item.HoTen,
@@ -123,7 +126,7 @@ namespace WebServerAPI.Controllers
                         md.HOTEN = hoten;
                         if (item.HinhAnh != md.HINHANH)
                         {
-                            string image = UpdateImg(item.HinhAnh, macbsd, md.HINHANH);
+                            string image = UpdateImg(item.HinhAnh, macbsd, md.HINHANH, item.HinhAnh);
                             if (image == "") return Json(success, JsonRequestBehavior.AllowGet);
                             md.HINHANH = image;
                         }
@@ -180,6 +183,7 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public ActionResult Upload(HttpPostedFileBase excelfile)
         {
+            CheckExcelProcesses();
             if (excelfile == null)
             {
                 ViewBag.Error = "Vui lòng chọn file excel !";
@@ -230,7 +234,6 @@ namespace WebServerAPI.Controllers
                                 CANBO cb = new CANBO();
                                 cb.MACBSD = range.Cells[i, 1].Value.ToString();
                                 cb.HOTEN = range.Cells[i, 2].Value.ToString();
-                                cb.HINHANH = SaveImg(range.Cells[i, 3].Value.ToString(), range.Cells[i, 1].Value.ToString());
                                 string tenbp = range.Cells[i, 4].Value.ToString();
                                 string tenbp_new = tenbp.Substring(0, 1).ToUpper() + tenbp.Substring(1).ToLower();
                                 int mabp = db.BOPHANs.Where(p => p.TENBP == tenbp_new).Select(p => p.MABP).FirstOrDefault();
@@ -241,7 +244,7 @@ namespace WebServerAPI.Controllers
                                 string id = "";
                                 for (int j = 0; j < hoten.Length; j++)
                                 {
-                                    id += getCharacter(hoten[j].ToLower()[0]) + "-" + cb.MACBSD + "-" + tenbp_id;
+                                    id += getCharacter(hoten[j].ToLower()[0]);
                                 }
                                 id += "-" + cb.MACBSD + "-" + tenbp_id;
                                 string pw = GetMD5("123");
@@ -249,23 +252,27 @@ namespace WebServerAPI.Controllers
                                 cb.ID = id;
                                 db.CANBOes.Add(cb);
                                 db.SaveChanges();
+                                cb.HINHANH = SaveImg(range.Cells[i, 3].Value.ToString(), range.Cells[i, 1].Value.ToString());
+                                db.SaveChanges();
                             }
                             catch (Exception ex) { }
                         }
                         wb.Close(0);
                         app.Quit();
-
+                        KillExcel();
                         return Json("Dữ liệu được nhập thành công !", JsonRequestBehavior.AllowGet);
                     }
                     catch
                     {
                         wb.Close(0);
                         app.Quit();
+                        KillExcel();
                         return Json("Dữ liệu không chính xác, vui lòng kiểm tra lại thông tin !", JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
                 {
+                    KillExcel();
                     return Json("Vui lòng chọn file excel !", JsonRequestBehavior.AllowGet);
                 }
             }
@@ -347,8 +354,9 @@ namespace WebServerAPI.Controllers
         /// </summary>
         /// <param name="_Path">Đường dẫn ảnh</param>
         /// <param name="_MaCBSD">Mã cán bộ</param>
+        /// <param name="_BinaryStr">Chuỗi nhị phân</param>
         /// <returns></returns>
-        public string SaveImg(string _Path, string _MaCBSD)
+        public string SaveImg(string _Path, string _MaCBSD, string _BinaryStr)
         {
             string thuMucGoc = AppDomain.CurrentDomain.BaseDirectory;
             string thuMucHinh = thuMucGoc + @"\resources\";
@@ -357,10 +365,18 @@ namespace WebServerAPI.Controllers
                 Directory.CreateDirectory(thuMucHinh);
             }
             // Thay đổi kích thước và lưu ảnh vào thư mục resource của project
-            Image img = Image.FromFile(_Path);
-            img = ResizeByWidth(img);
-            string imgName = _MaCBSD + ".png";
-            img.Save(thuMucHinh + imgName);
+            //Image img = Image.FromFile(_Path);
+
+            string imgName = "";
+            try
+            {
+                // Chuyển chuỗi Binary thành ảnh
+                Image img = Image.FromStream(new MemoryStream(Convert.FromBase64String(_BinaryStr)));
+                img = ResizeByWidth(img);
+                imgName = _MaCBSD + ".png";
+                img.Save(thuMucHinh + imgName);
+            }
+            catch { }
             return imgName;
         }
         /// <summary>
@@ -383,16 +399,76 @@ namespace WebServerAPI.Controllers
         /// <param name="_Path">Đường dẫn ảnh mới</param>
         /// <param name="_MaCBSD">Mã cán bộ</param>
         /// <param name="_OldNameFile">Tên ảnh cũ</param>
+        /// <param name="_BinaryStr">Chuỗi nhị phân</param>
         /// <returns></returns>
-        public string UpdateImg(string _Path, string _MaCBSD, string _OldNameFile)
+        public string UpdateImg(string _Path, string _MaCBSD, string _OldNameFile, string _BinaryStr)
         {
             string strImg = "";
-            if (System.IO.File.Exists(_Path))
+            try
             {
+                Image img = Image.FromStream(new MemoryStream(Convert.FromBase64String(_BinaryStr)));
                 DeleteImg(_OldNameFile);
-                strImg = SaveImg(_Path, _MaCBSD);
+                strImg = SaveImg(_Path, _MaCBSD, _BinaryStr);
             }
+            catch { }
             return strImg;
+        }
+        /// <summary>
+        /// Hàm lưu ảnh và trả về tên ảnh (Import Excel)
+        /// </summary>
+        /// <param name="_Path">Đường dẫn ảnh</param>
+        /// <param name="_MaCBSD">Mã cán bộ</param>
+        /// <returns></returns>
+        public string SaveImg(string _Path, string _MaCBSD)
+        {
+            string thuMucGoc = AppDomain.CurrentDomain.BaseDirectory;
+            string thuMucHinh = thuMucGoc + @"\resources\";
+            if (!Directory.Exists(thuMucHinh))
+            {
+                Directory.CreateDirectory(thuMucHinh);
+            }
+            // Thay đổi kích thước và lưu ảnh vào thư mục resource của project
+            string imgName = "";
+            try
+            {
+                Image img = Image.FromFile(_Path);
+                img = ResizeByWidth(img);
+                imgName = _MaCBSD + ".png";
+                img.Save(thuMucHinh + imgName);
+            }
+            catch { }
+            return imgName;
+        }
+        /// <summary>
+        /// Phương thức kiểm tra tiến trình excel
+        /// </summary>
+        private void CheckExcelProcesses()
+        {
+            Process[] AllProcesses = Process.GetProcessesByName("excel");
+            myHashtable = new Hashtable();
+            int iCount = 0;
+
+            foreach (Process ExcelProcess in AllProcesses)
+            {
+                myHashtable.Add(ExcelProcess.Id, iCount);
+                iCount = iCount + 1;
+            }
+        }
+        /// <summary>
+        /// Phương thức tắt tiến trình Excel chạy ngầm
+        /// </summary>
+        private void KillExcel()
+        {
+            Process[] AllProcesses = Process.GetProcessesByName("excel");
+
+            // check to kill the right process
+            foreach (Process ExcelProcess in AllProcesses)
+            {
+                if (myHashtable.ContainsKey(ExcelProcess.Id) == false)
+                    ExcelProcess.Kill();
+            }
+
+            AllProcesses = null;
         }
     }
 }
