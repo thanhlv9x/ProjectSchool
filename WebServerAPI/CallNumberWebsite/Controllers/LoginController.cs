@@ -34,6 +34,44 @@ namespace CallNumberWebsite.Controllers
             }
         }
         /// <summary>
+        /// Phương thức lấy số quầy từ server
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetPort()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_isSoQuay=1").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(false, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        return Json(false, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+        /// <summary>
         /// Phương thức login vào hệ thống
         /// </summary>
         /// <param name="model">Tài khoản và mật khẩu</param>
@@ -42,8 +80,8 @@ namespace CallNumberWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var check = CheckLogin(model.Id, model.Pw);
-                if (check)
+                var check = CheckLogin(model.Id, model.Pw, model.Port);
+                if (check == 1)
                 {
                     var UserID = model.Id;
 
@@ -51,6 +89,10 @@ namespace CallNumberWebsite.Controllers
                     Session.Add(CommonConstants.USER_RESULT, result);
 
                     return RedirectToAction("Index", "Login");
+                }
+                if (check == 2)
+                {
+                    ModelState.AddModelError("", "Số quầy đã được sử dụng. Vui lòng kiểm tra lại !");
                 }
                 else
                 {
@@ -100,10 +142,10 @@ namespace CallNumberWebsite.Controllers
         /// <param name="id">Tài khoản</param>
         /// <param name="pw">Mật khẩu</param>
         /// <returns></returns>
-        public bool CheckLogin(string id, string pw)
+        public int CheckLogin(string id, string pw, string port)
         {
             pw = GetMD5(pw);
-            string mac = GetMacAddress();
+            string mac = port;
             TaiKhoanUser user = new TaiKhoanUser()
             {
                 Id = id,
@@ -128,24 +170,28 @@ namespace CallNumberWebsite.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         result = response.Content.ReadAsStringAsync().Result;
+                        if (result == "false")
+                        {
+                            return 2;
+                        }
                         if (result != null)
                         {
-                            return true;
+                            return 1;
                         }
                         else
                         {
-                            return false;
+                            return 3;
                         }
                     }
                     else
                     {
-                        return false;
+                        return 3;
                     }
                 }
             }
             catch (Exception ex)
             {
-                return false;
+                return 3;
             }
         }
         /// <summary>

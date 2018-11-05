@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HETHONGDANHGIAsaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HETHONGDANHGIAsaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BOPHAN">
           <Key>
             <PropertyRef Name="MABP" />
@@ -91,6 +91,7 @@
           <Property Name="MAMAY" Type="int" />
           <Property Name="BD" Type="datetime" />
           <Property Name="KT" Type="datetime" />
+          <Property Name="ISLOGIN" Type="datetime" />
         </EntityType>
         <Association Name="FK_CANBO_BOPHAN">
           <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
@@ -232,8 +233,7 @@
             <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAP" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HETHONGDANHGIAsaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -260,7 +260,7 @@
           <Property Name="MACBSD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="BOPHAN" Relationship="Self.FK_CANBO_BOPHAN" FromRole="CANBO" ToRole="BOPHAN" />
           <NavigationProperty Name="SOTHUTUs" Relationship="Self.FK_SOTHUTU_CANBO" FromRole="CANBO" ToRole="SOTHUTU" />
-          <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="Self.FK_TRANGTHAIDANGNHAP_CANBO" FromRole="CANBO" ToRole="TRANGTHAIDANGNHAP" />
+          <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_CANBO" FromRole="CANBO" ToRole="TRANGTHAIDANGNHAP" />
         </EntityType>
         <EntityType Name="GOPY">
           <Key>
@@ -289,7 +289,7 @@
           </Key>
           <Property Name="MAMAY" Type="Int32" Nullable="false" />
           <Property Name="MAC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="Self.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
+          <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
         </EntityType>
         <EntityType Name="MUCDODANHGIA">
           <Key>
@@ -328,18 +328,6 @@
           <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PW" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="TRANGTHAIDANGNHAP">
-          <Key>
-            <PropertyRef Name="MADN" />
-          </Key>
-          <Property Name="MADN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MACB" Type="Int32" />
-          <Property Name="MAMAY" Type="Int32" />
-          <Property Name="BD" Type="DateTime" Precision="3" />
-          <Property Name="KT" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CANBO" Relationship="Self.FK_TRANGTHAIDANGNHAP_CANBO" FromRole="TRANGTHAIDANGNHAP" ToRole="CANBO" />
-          <NavigationProperty Name="MAYDANHGIA" Relationship="Self.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="TRANGTHAIDANGNHAP" ToRole="MAYDANHGIA" />
-        </EntityType>
         <Association Name="FK_CANBO_BOPHAN">
           <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
           <End Role="CANBO" Type="Self.CANBO" Multiplicity="*" />
@@ -372,18 +360,6 @@
               <PropertyRef Name="MACB" />
             </Principal>
             <Dependent Role="SOTHUTU">
-              <PropertyRef Name="MACB" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TRANGTHAIDANGNHAP_CANBO">
-          <End Role="CANBO" Type="Self.CANBO" Multiplicity="0..1" />
-          <End Role="TRANGTHAIDANGNHAP" Type="Self.TRANGTHAIDANGNHAP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CANBO">
-              <PropertyRef Name="MACB" />
-            </Principal>
-            <Dependent Role="TRANGTHAIDANGNHAP">
               <PropertyRef Name="MACB" />
             </Dependent>
           </ReferentialConstraint>
@@ -424,18 +400,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
-          <End Role="MAYDANHGIA" Type="Self.MAYDANHGIA" Multiplicity="0..1" />
-          <End Role="TRANGTHAIDANGNHAP" Type="Self.TRANGTHAIDANGNHAP" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MAYDANHGIA">
-              <PropertyRef Name="MAMAY" />
-            </Principal>
-            <Dependent Role="TRANGTHAIDANGNHAP">
-              <PropertyRef Name="MAMAY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HETHONGDANHGIAsaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BOPHANs" EntityType="Self.BOPHAN" />
           <EntitySet Name="CANBOes" EntityType="Self.CANBO" />
@@ -446,7 +410,6 @@
           <EntitySet Name="SOTHUTUs" EntityType="Self.SOTHUTU" />
           <EntitySet Name="SOTOIDAs" EntityType="Self.SOTOIDA" />
           <EntitySet Name="TAIKHOANADMINs" EntityType="Self.TAIKHOANADMIN" />
-          <EntitySet Name="TRANGTHAIDANGNHAPs" EntityType="Self.TRANGTHAIDANGNHAP" />
           <AssociationSet Name="FK_CANBO_BOPHAN" Association="Self.FK_CANBO_BOPHAN">
             <End Role="BOPHAN" EntitySet="BOPHANs" />
             <End Role="CANBO" EntitySet="CANBOes" />
@@ -458,10 +421,6 @@
           <AssociationSet Name="FK_SOTHUTU_CANBO" Association="Self.FK_SOTHUTU_CANBO">
             <End Role="CANBO" EntitySet="CANBOes" />
             <End Role="SOTHUTU" EntitySet="SOTHUTUs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TRANGTHAIDANGNHAP_CANBO" Association="Self.FK_TRANGTHAIDANGNHAP_CANBO">
-            <End Role="CANBO" EntitySet="CANBOes" />
-            <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
           </AssociationSet>
           <AssociationSet Name="FK_GOPY_KETQUADANHGIA" Association="Self.FK_GOPY_KETQUADANHGIA">
             <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIAs" />
@@ -475,11 +434,53 @@
             <End Role="SOTHUTU" EntitySet="SOTHUTUs" />
             <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIAs" />
           </AssociationSet>
-          <AssociationSet Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA" Association="Self.FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
+          <EntitySet Name="TRANGTHAIDANGNHAPs" EntityType="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" />
+          <AssociationSet Name="FK_TRANGTHAIDANGNHAP_CANBO" Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_CANBO">
+            <End Role="CANBO" EntitySet="CANBOes" />
+            <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA" Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
             <End Role="MAYDANHGIA" EntitySet="MAYDANHGIAs" />
             <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TRANGTHAIDANGNHAP">
+          <Key>
+            <PropertyRef Name="MADN" />
+          </Key>
+          <Property Name="MADN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MACB" Type="Int32" />
+          <Property Name="MAMAY" Type="Int32" />
+          <Property Name="BD" Type="DateTime" Precision="3" />
+          <Property Name="KT" Type="DateTime" Precision="3" />
+          <Property Name="ISLOGIN" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CANBO" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_CANBO" FromRole="TRANGTHAIDANGNHAP" ToRole="CANBO" />
+          <NavigationProperty Name="MAYDANHGIA" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="TRANGTHAIDANGNHAP" ToRole="MAYDANHGIA" />
+        </EntityType>
+        <Association Name="FK_TRANGTHAIDANGNHAP_CANBO">
+          <End Type="HETHONGDANHGIAsaModel.CANBO" Role="CANBO" Multiplicity="0..1" />
+          <End Type="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Role="TRANGTHAIDANGNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CANBO">
+              <PropertyRef Name="MACB" />
+            </Principal>
+            <Dependent Role="TRANGTHAIDANGNHAP">
+              <PropertyRef Name="MACB" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
+          <End Type="HETHONGDANHGIAsaModel.MAYDANHGIA" Role="MAYDANHGIA" Multiplicity="0..1" />
+          <End Type="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Role="TRANGTHAIDANGNHAP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MAYDANHGIA">
+              <PropertyRef Name="MAMAY" />
+            </Principal>
+            <Dependent Role="TRANGTHAIDANGNHAP">
+              <PropertyRef Name="MAMAY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -575,11 +576,12 @@
           <EntitySetMapping Name="TRANGTHAIDANGNHAPs">
             <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP">
               <MappingFragment StoreEntitySet="TRANGTHAIDANGNHAP">
-                <ScalarProperty Name="MADN" ColumnName="MADN" />
-                <ScalarProperty Name="MACB" ColumnName="MACB" />
-                <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="ISLOGIN" ColumnName="ISLOGIN" />
                 <ScalarProperty Name="KT" ColumnName="KT" />
+                <ScalarProperty Name="BD" ColumnName="BD" />
+                <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
+                <ScalarProperty Name="MACB" ColumnName="MACB" />
+                <ScalarProperty Name="MADN" ColumnName="MADN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

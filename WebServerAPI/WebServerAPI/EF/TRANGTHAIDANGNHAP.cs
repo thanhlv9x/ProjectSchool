@@ -19,6 +19,7 @@ namespace WebServerAPI.EF
         public Nullable<int> MAMAY { get; set; }
         public Nullable<System.DateTime> BD { get; set; }
         public Nullable<System.DateTime> KT { get; set; }
+        public Nullable<System.DateTime> ISLOGIN { get; set; }
     
         public virtual CANBO CANBO { get; set; }
         public virtual MAYDANHGIA MAYDANHGIA { get; set; }

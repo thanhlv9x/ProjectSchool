@@ -471,6 +471,62 @@ namespace WebServerAPI.Controllers
             }
         }
         /// <summary>
+        /// Dịch vụ lấy số quầy chưa hoạt động
+        /// </summary>
+        /// <param name="_isSoQuay">Tham số xác nhận gọi hàm</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetSoQuay(int _isSoQuay)
+        {
+            List<int> listMD = new List<int>();
+            listMD = db.MAYDANHGIAs.Select(p => p.MAMAY).ToList(); // Lấy tất cả số quầy
+            DateTime now = DateTime.Now;
+            DateTime start = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            DateTime end = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
+            // Tìm tất cả trạng thái đăng nhập còn đang hoạt động
+            var listEF = db.TRANGTHAIDANGNHAPs.Where(p => p.BD >= start &&
+                                                          p.BD <= end &&
+                                                          p.KT == null)
+                                              .ToList();
+            List<int> listAction = new List<int>();
+            foreach (var item in listEF)
+            {
+                double timeSpan = 2;
+                if (item.ISLOGIN != null) timeSpan = Math.Abs(((TimeSpan)(now - item.ISLOGIN)).TotalMinutes);
+                if (timeSpan < 2)
+                {
+                    // Tìm tất cả trạng thái đăng nhập có thời gian xác thực trong ít hơn 2 phút
+                    // Thêm vào danh sách các quầy đang hoạt động
+                    listAction.Add((int)item.MAMAY);
+                }
+            }
+
+            foreach (var item in listAction)
+            {
+                // Xóa các quầy đang hoạt động ra khỏi danh sách các quầy được chọn
+                var md = listMD.Where(p => p == item).FirstOrDefault();
+                listMD.Remove(md);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, listMD);
+        }
+        /// <summary>
+        /// Dịch vụ xác thực quầy đang sử dụng
+        /// </summary>
+        /// <param name="_MaDN">Mã đăng nhập</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage AccessPort(int _MaDN)
+        {
+            var ef = db.TRANGTHAIDANGNHAPs.Where(p => p.MADN == _MaDN).FirstOrDefault();
+            if (ef != null)
+            {
+                ef.ISLOGIN = DateTime.Now;
+                db.SaveChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+        /// <summary>
         /// Dịch vụ đăng nhập User
         /// </summary>
         /// <param name="_User">Thông tin tài khoản user</param>
@@ -482,21 +538,44 @@ namespace WebServerAPI.Controllers
             {
                 string id = _User.Id;
                 string pw = _User.Pw;
-                string mac = _User.Mac;
+                int mac = Convert.ToInt32(_User.Mac);
                 var userEF = db.CANBOes.Where(p => p.ID == id && p.PW == pw).FirstOrDefault();
 
                 if (userEF != null)
                 {
                     DateTime dtNow = DateTime.Now;
+                    DateTime start = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
+                    DateTime end = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 23, 59, 59);
                     int macb = userEF.MACB;
-                    int mamay = db.MAYDANHGIAs.Where(p => p.MAC == mac).Select(p => p.MAMAY).FirstOrDefault();
-                    if (mamay != null)
+                    int mamay = db.MAYDANHGIAs.Where(p => p.MAMAY == mac).Count(); // Kiểm tra số quầy có tồn tại
+                    var isLogin = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == mac && // Kiểm tra quầy có đang hoạt động không
+                                                                   p.BD >= start &&
+                                                                   p.BD <= end &&
+                                                                   p.KT == null &&
+                                                                   p.ISLOGIN >= start &&
+                                                                   p.ISLOGIN <= end)
+                                                       .ToList();
+                    foreach (var item in isLogin)
+                    {
+                        double timeSpan = 2;
+                        if (item.ISLOGIN != null) timeSpan = Math.Abs(((TimeSpan)(dtNow - item.ISLOGIN)).TotalMinutes);
+                        if (timeSpan < 2)
+                        {
+                            // Nếu quầy đang hoạt động (cách thời gian đăng nhập 2 phút vẫn chưa thoát)
+                            var httpResponse = Request.CreateResponse(HttpStatusCode.Created, false);
+                            string uri = Url.Link("DefaultApi", new { id = 0 });
+                            httpResponse.Headers.Location = new Uri(uri);
+                            return httpResponse;
+                        }
+                    }
+                    if (mamay > 0) // Nếu số quầy tồn tại
                     {
                         TRANGTHAIDANGNHAP login = new TRANGTHAIDANGNHAP()
                         {
                             MACB = macb,
-                            MAMAY = mamay,
+                            MAMAY = mac,
                             BD = dtNow,
+                            ISLOGIN = dtNow
                         };
                         db.TRANGTHAIDANGNHAPs.Add(login);
                         db.SaveChanges();
@@ -508,7 +587,7 @@ namespace WebServerAPI.Controllers
                             HoTen = userEF.HOTEN,
                             HinhAnh = hinh_anh,
                             TenBP = userEF.BOPHAN.TENBP,
-                            MaMay = mamay,
+                            MaMay = mac,
                             MaDN = login.MADN,
                             BD = (DateTime)login.BD,
                             MaCBSD = userEF.MACBSD,

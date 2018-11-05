@@ -384,6 +384,15 @@
     })
     $(document).ready(function () {
         getInfo();
+        setInterval(function () {
+            $.ajax({
+                url: url + "/Home/AccessPort",
+                type: "GET",
+                dataType: "json",
+                success: function (result) { },
+                error: function (xhr) { console.log(xhr.responseText); }
+            })
+        }, 60000)
     })
 </script>
 

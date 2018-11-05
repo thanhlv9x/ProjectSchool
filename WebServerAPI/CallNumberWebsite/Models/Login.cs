@@ -12,6 +12,7 @@ namespace CallNumberWebsite.Models
         public string Id { get; set; }
         [Required(ErrorMessage = "Mời nhập mật khẩu")]
         public string Pw { get; set; }
-        public string Url { get; set; }
+        [Required(ErrorMessage = "Mời chọn số quầy")]
+        public string Port { get; set; }
     }
 }

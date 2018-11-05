@@ -86,6 +86,7 @@
     <Property Name="MAMAY" Type="int" />
     <Property Name="BD" Type="datetime" />
     <Property Name="KT" Type="datetime" />
+    <Property Name="ISLOGIN" Type="datetime" />
   </EntityType>
   <Association Name="FK_CANBO_BOPHAN">
     <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />

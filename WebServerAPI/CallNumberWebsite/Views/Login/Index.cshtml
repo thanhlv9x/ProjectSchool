@@ -42,22 +42,30 @@
                     <span class="login100-form-title-1">
                         ĐĂNG NHẬP
                     </span>
+                    <div id="port"></div>
                 </div>
 
                 @*<form class="login100-form validate-form">*@
                 @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "login100-form validate-form" }))
                 {
-                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Tài khoản không được để trống">
                         <span class="label-input100">Tài khoản</span>
                         @Html.TextBoxFor(model => model.Id, new { @class = "input100", @placeholder = "Nhập tài khoản" })
                         @*<input class="input100" type="text" name="username" placeholder="Enter username">*@
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Mật khẩu không được để trống">
                         <span class="label-input100">Mật khẩu</span>
                         @Html.PasswordFor(model => model.Pw, new { @class = "input100", @placeholder = "Nhập mật khẩu" })
                         @*<input class="input100" type="password" name="pass" placeholder="Enter password">*@
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Số quầy không được để trống">
+                        <span class="label-input100">Số quầy</span>
+                        @Html.TextBoxFor(model => model.Port, new { @class = "input100", @readonly = "readonly", @placeholder = "Chọn số quầy", @id= "number-port" })
+                        @*<input class="input100" type="text" name="username" placeholder="Enter username">*@
                         <span class="focus-input100"></span>
                     </div>
 
@@ -68,27 +76,6 @@
                     </div>
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 }
-                @*<div class="flex-sb-m w-full p-b-30">
-            <div class="contact100-form-checkbox">
-                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                <label class="label-checkbox100" for="ckb1">
-                    Remember me
-                </label>
-            </div>
-
-            <div>
-                <a href="#" class="txt1">
-                    Forgot Password?
-                </a>
-            </div>
-        </div>*@
-
-                @*<div class="container-login100-form-btn">
-            <button class="login100-form-btn" type="submit">
-                Đăng nhập
-            </button>
-        </div>*@
-                @*</form>*@
             </div>
         </div>
     </div>
@@ -112,3 +99,48 @@
 
 </body>
 </html>
+
+
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.common-material.min.css" />
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.min.css" />
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.3.911/styles/kendo.material.mobile.min.css" />
+<script src="https://kendo.cdn.telerik.com/2018.3.911/js/jquery.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2018.3.911/js/kendo.all.min.js"></script>
+<script>
+    url = window.location.origin + "/MayGoiSo";
+    function getPort() {
+        var arr = new Array();
+        $.ajax({
+            url: url + "/Login/GetPort",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                var js = JSON.parse(result);
+                $.each(js, function (key, val) {
+                    var a = { "text": "QUẦY SỐ " + val, "value": val }
+                    arr.push(a)
+                })
+                $(".body, .footer").hide();
+                $("#port").kendoDropDownList({
+                    dataTextField: "text",
+                    dataValueField: "value",
+                    dataSource: arr,
+                    select: onSelect
+                })
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+            }
+        })
+    }
+    // Tạo sự kiện cho hành động chọn của DropDownList
+    function onSelect(e) {
+        if (e.dataItem) {
+            var dataItem = e.dataItem;
+            mamay = dataItem.value;
+            $("#number-port").val(mamay);
+        }
+    };
+    getPort()
+</script>

@@ -119,7 +119,7 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
             { field: "BD", title: "Thời điểm đăng nhập", width: 100, format: "{0: HH:mm:ss}" },
             { field: "KT", title: "Thời điểm đăng xuất", width: 100, format: "{0: HH:mm:ss}" },
             {
-                field: "ThoiGian", title: "Thời gian truy xuất (Phút)", width: 100,
+                field: "ThoiGian", title: "Tổng thời gian (Phút)", width: 100,
                 groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
                 footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
             },

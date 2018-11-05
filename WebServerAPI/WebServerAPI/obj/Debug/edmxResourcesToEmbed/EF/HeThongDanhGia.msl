@@ -90,11 +90,12 @@
     <EntitySetMapping Name="TRANGTHAIDANGNHAPs">
       <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP">
         <MappingFragment StoreEntitySet="TRANGTHAIDANGNHAP">
-          <ScalarProperty Name="MADN" ColumnName="MADN" />
-          <ScalarProperty Name="MACB" ColumnName="MACB" />
-          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-          <ScalarProperty Name="BD" ColumnName="BD" />
+          <ScalarProperty Name="ISLOGIN" ColumnName="ISLOGIN" />
           <ScalarProperty Name="KT" ColumnName="KT" />
+          <ScalarProperty Name="BD" ColumnName="BD" />
+          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
+          <ScalarProperty Name="MACB" ColumnName="MACB" />
+          <ScalarProperty Name="MADN" ColumnName="MADN" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

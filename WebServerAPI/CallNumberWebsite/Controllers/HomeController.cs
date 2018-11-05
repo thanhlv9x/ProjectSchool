@@ -39,8 +39,48 @@ namespace CallNumberWebsite.Controllers
             {
                 Session[CommonConstants.USER_SESSION] = null;
                 Session[CommonConstants.USER_RESULT] = null;
-                return Redirect("/MayGoiSo/Login");
+                return Redirect("/MayGoiSo" +
+                    "/Login");
             }
+        }
+        /// <summary>
+        /// Phương thức xác thực quầy đang sử dụng
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult AccessPort()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(GetUriServer.GetUri());
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = client.GetAsync("api/ClientAPI/?_MaDN=" + Session[CommonConstants.USER_MADN]).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (result != null)
+                        {
+                            return Json(result, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(false, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        return Json(false, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }            
         }
         /// <summary>
         /// Phương thức lấy thông tin cá nhân của Cán bộ
