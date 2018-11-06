@@ -17,7 +17,7 @@ namespace GetNumberWebsite.Controllers
             string pathQuery = myuri.PathAndQuery;
             string hostName = myuri.ToString().Replace(pathQuery, "") + "/";
             //hostName = "http://localhost:49930/";
-            //hostName = "http://192.168.1.6:8888/";
+            //hostName = "http://192.168.1.40:8888/";
             //string urlServer = hostName.Substring(0, hostName.IndexOf(myuri.Port.ToString()) - 1);
             return hostName;
         }

@@ -271,3 +271,10 @@ D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.dll
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.pdb
 D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\obj\Debug\GetNumberWebsite.csprojAssemblyReference.cache
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\RawPrint.dll
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\PdfSharp.Charting.dll
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\PdfSharp.dll
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\PdfSharp.xml
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\PdfSharp.Charting.xml
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\de\PdfSharp.resources.dll
+D:\GitHub\ProjectSchool\WebServerAPI\GetNumberWebsite\bin\de\PdfSharp.Charting.resources.dll
