@@ -83,13 +83,13 @@ namespace GetNumberWebsite.Controllers
                     }
                     else
                     {
-                        return Json(client.BaseAddress, JsonRequestBehavior.AllowGet);
+                        return Json(false, JsonRequestBehavior.AllowGet);
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                return Json(ex.ToString(), JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
         /// <summary>
@@ -126,7 +126,7 @@ namespace GetNumberWebsite.Controllers
             // Print the file
             printer.PrintRawFile(PrinterName, Filepath, Filename);
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if(System.IO.File.Exists(path + @"\phieu-thu-tu-print.pdf"))
+            if (System.IO.File.Exists(path + @"\phieu-thu-tu-print.pdf"))
             {
                 System.IO.File.Delete(path + @"\phieu-thu-tu-print.pdf");
             }
