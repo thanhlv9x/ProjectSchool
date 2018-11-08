@@ -9,7 +9,6 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
 #banner {
     height: 15%;
     background-color: #CC0000;
@@ -104,34 +103,38 @@ div#black {
 }
 
 div#btn-group {
-    height: 40%;
+    height: 35%;
     /* position: relative; */
     text-align: center;
 }
 
 div#number {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3.5em;
+    /* position: absolute; */
+    /* top: 60%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    font-size: 6em;
+    padding: 1% 0 0 0;
 }
 
 div#title-number {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* position: absolute; */
+    /* top: 30%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
     font-size: 1.4em;
+    /* text-align: center; */
+    padding: 1% 0 0 0;
 }
 
 div#number-group {
-    height: 60%;
+    height: 50%;
 }
 
 div#title {
-    height: 60%;
-    position: relative;
+    height: 65%;
+    /* position: relative; */
+    text-align: center;
 }
 
 div#footer {
@@ -165,9 +168,9 @@ div#time, div#quay {
 
 div#info {
     padding: 1em;
-    font-size: 1em;
-    height: 40%;
-    line-height: 165%;
+    font-size: 1.1em;
+    height: 55%;
+    line-height: 205%;
 }
 
 div#body {
@@ -280,6 +283,14 @@ div#container {
     #footer {
         display: none;
     }
+
+    div#title {
+        height: 90%;
+    }
+
+    div#btn-group {
+        height: 10%;
+    }
 }
 
 @media screen and (min-width: 600px) {
@@ -322,6 +333,7 @@ div#container {
     div#black {
         width: 25%;
         left: -25%;
+        height: 0%;
     }
 
         div#black div#list-view {
@@ -386,224 +398,302 @@ div#container {
                 left: 24%;
                 transform: translate(-6%, -50%);
             }
+}
 
-    @media screen and (min-width: 1024px) {
-        #banner {
-            /* height: 10%; */
+@media screen and (min-width: 1024px) {
+    #banner {
+        /* height: 10%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0 */
         }
 
-            #banner img {
-                /* height: 80%; */
-                /* margin: 0.5em 0 0 0 */
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.5em; */
+            /* color: yellow; */
+            font-size: 1.5em;
+            transform: translate(-130%, -195%);
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                /* top: 1.2em; */
+                color: yellow;
+                font-size: 2.5em;
+                /* left: 9.5em; */
+                /* transform: translate(8%, -50%); */
             }
 
-            #banner span {
+    div#grid {
+        font-size: 0.8em;
+        height: 100%;
+    }
+
+    div#open {
+        left: 100%;
+    }
+
+    div#black {
+        width: 25%;
+        left: -25%;
+    }
+
+        div#black div#list-view {
+            width: 200%;
+            left: -100%;
+        }
+
+    div#header div {
+        font-size: 2em;
+    }
+
+    div#info {
+        padding: 1em 15em;
+        line-height: 180%;
+        font-size: 1.3em;
+    }
+
+    div#info-right {
+        float: right;
+        width: 70%;
+    }
+
+    div#info-left {
+        float: left;
+        width: 30%;
+        font-weight: bold;
+    }
+
+    .move-right {
+        transform: translateX(200%);
+    }
+}
+
+@media screen and (min-width: 1025px) {
+
+    body {
+        max-width: 19200px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    div#header div {
+        font-size: 2.2em;
+    }
+
+    div#info {
+        padding: 1em 18em;
+        font-size: 1.2em;
+        line-height: 170%;
+    }
+
+    div#info-right {
+        float: right;
+        width: 65%;
+    }
+
+    div#info-left {
+        float: left;
+        width: 35%;
+        font-weight: bold;
+    }
+
+    .k-grid-content.k-auto-scrollable.km-widget.km-native-scroller {
+        height: 78%;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #banner {
+        /* height: 15%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            /* font-size: 1.3em; */
+            transform: translate(-170%, -180%);
+        }
+
+            #banner span:last-child {
                 /* position: absolute; */
-                /* top: 0.5em; */
+                /* top: 1em; */
                 /* color: yellow; */
-                font-size: 1.5em;
-                transform: translate(-130%, -195%);
+                font-size: 2.7em;
+                /* left: 11em; */
+                /* transform: translate(-35%, -50%); */
             }
 
-                #banner span:last-child {
-                    position: absolute;
-                    /* top: 1.2em; */
-                    color: yellow;
-                    font-size: 2.5em;
-                    /* left: 9.5em; */
-                    /* transform: translate(8%, -50%); */
-                }
+    div#info {
+        padding: 1em 18em;
+        font-size: 1.3em;
+        line-height: 170%;
+    }
 
-        div#grid {
-            font-size: 0.8em;
-            height: 100%;
+    div#info-right {
+        float: right;
+        width: 65%;
+    }
+
+    div#info-left {
+        float: left;
+        width: 35%;
+        font-weight: bold;
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    #banner {
+        /* height: 15%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
         }
 
-        div#open {
-            left: 100%;
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            /* font-size: 1.3em; */
+            transform: translate(-185%, -180%);
         }
 
-        div#black {
-            width: 25%;
-            left: -25%;
-        }
-
-            div#black div#list-view {
-                width: 200%;
-                left: -100%;
+            #banner span:last-child {
+                /* position: absolute; */
+                /* top: 1em; */
+                /* color: yellow; */
+                /* font-size: 2em; */
+                /* left: 12.5em; */
             }
 
-        div#header div {
+    div#info {
+        padding: 1em 18em;
+        font-size: 1.4em;
+        line-height: 170%;
+    }
+
+    div#info-right {
+        float: right;
+        width: 65%;
+    }
+
+    div#info-left {
+        float: left;
+        width: 35%;
+        font-weight: bold;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    #banner {
+        /* height: 15%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+            /* float: left; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            font-size: 1.6em;
+            /* left: 50%; */
+            transform: translate(-185%, -175%);
+        }
+
+            #banner span:last-child {
+                /* position: absolute; */
+                /* top: 1em; */
+                /* color: yellow; */
+                font-size: 3em;
+                /* left: 12em; */
+            }
+
+    div#info {
+        padding: 1em 18em;
+        font-size: 1.6em;
+        line-height: 170%;
+    }
+
+    div#title-number {
+        font-size: 1.6em;
+    }
+
+    div#info-right {
+        float: right;
+        width: 65%;
+    }
+
+    div#info-left {
+        float: left;
+        width: 35%;
+        font-weight: bold;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    #banner {
+        /* height: 10%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
             font-size: 2em;
+            transform: translate(-195%, -195%);
         }
 
-        div#info {
-            padding: 1em 15em;
-            line-height: 180%;
-            font-size: 1.1em;
-        }
-
-        div#info-right {
-            float: right;
-            width: 70%;
-        }
-
-        div#info-left {
-            float: left;
-            width: 30%;
-            font-weight: bold;
-        }
-
-        .move-right {
-            transform: translateX(200%);
-        }
-    }
-
-    @media screen and (min-width: 1025px) {
-
-        body {
-            max-width: 19200px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        div#header div {
-            font-size: 2.2em;
-        }
-
-        div#info {
-            padding: 1em 18em;
-            font-size: 1.2em;
-            line-height: 170%;
-        }
-
-        div#info-right {
-            float: right;
-            width: 65%;
-        }
-
-        div#info-left {
-            float: left;
-            width: 35%;
-            font-weight: bold;
-        }
-
-        div#info {
-        }
-
-        .k-grid-content.k-auto-scrollable.km-widget.km-native-scroller {
-            height: 78%;
-        }
-    }
-
-    @media screen and (min-width: 1280px) {
-        #banner {
-            /* height: 15%; */
-        }
-
-            #banner img {
-                /* height: 80%; */
-                /* margin: 0.5em 0 0 0; */
-            }
-
-            #banner span {
+            #banner span:last-child {
                 /* position: absolute; */
-                /* top: 0.3em; */
+                /* top: 0.8em; */
                 /* color: yellow; */
-                /* font-size: 1.3em; */
-                transform: translate(-170%, -180%);
+                font-size: 4em;
+                /* left: 15em; */
             }
 
-                #banner span:last-child {
-                    /* position: absolute; */
-                    /* top: 1em; */
-                    /* color: yellow; */
-                    font-size: 2.7em;
-                    /* left: 11em; */
-                    /* transform: translate(-35%, -50%); */
-                }
+    div#info {
+        padding: 1em 18em;
+        font-size: 1.8em;
+        line-height: 170%;
     }
 
-    @media screen and (min-width: 1366px) {
-        #banner {
-            /* height: 15%; */
-        }
-
-            #banner img {
-                /* height: 80%; */
-                /* margin: 0.5em 0 0 0; */
-            }
-
-            #banner span {
-                /* position: absolute; */
-                /* top: 0.3em; */
-                /* color: yellow; */
-                /* font-size: 1.3em; */
-                transform: translate(-185%, -180%);
-            }
-
-                #banner span:last-child {
-                    /* position: absolute; */
-                    /* top: 1em; */
-                    /* color: yellow; */
-                    /* font-size: 2em; */
-                    /* left: 12.5em; */
-                }
+    .k-button {
+        font-size: 2em;
     }
 
-    @media screen and (min-width: 1440px) {
-        #banner {
-            /* height: 15%; */
-        }
-
-            #banner img {
-                /* height: 80%; */
-                /* margin: 0.5em 0 0 0; */
-                /* float: left; */
-            }
-
-            #banner span {
-                /* position: absolute; */
-                /* top: 0.3em; */
-                /* color: yellow; */
-                font-size: 1.6em;
-                /* left: 50%; */
-                transform: translate(-185%, -175%);
-            }
-
-                #banner span:last-child {
-                    /* position: absolute; */
-                    /* top: 1em; */
-                    /* color: yellow; */
-                    font-size: 3em;
-                    /* left: 12em; */
-                }
+    div#title-number {
+        font-size: 1.8em;
     }
 
-    @media screen and (min-width: 1920px) {
-        #banner {
-            /* height: 10%; */
-        }
-
-            #banner img {
-                /* height: 80%; */
-                /* margin: 0.5em 0 0 0; */
-            }
-
-            #banner span {
-                /* position: absolute; */
-                /* top: 0.3em; */
-                /* color: yellow; */
-                font-size: 2em;
-                transform: translate(-195%, -195%);
-            }
-
-                #banner span:last-child {
-                    /* position: absolute; */
-                    /* top: 0.8em; */
-                    /* color: yellow; */
-                    font-size: 4em;
-                    /* left: 15em; */
-                }
+    div#info-right {
+        float: right;
+        width: 65%;
     }
+
+    div#info-left {
+        float: left;
+        width: 35%;
+        font-weight: bold;
+    }
+}

@@ -44,7 +44,7 @@ namespace WebServerAPI.Controllers
             }
         }
         /// <summary>
-        /// Dịch vụ lấy tất cả mã máy
+        /// Dịch vụ lấy tất cả mã máy (số quầy)
         /// </summary>
         /// <param name="_Port">Tham số xác nhận gọi hàm</param>
         /// <returns></returns>
@@ -52,7 +52,7 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetPort(int _Port)
         {
             List<int> lstMD = new List<int>();
-            var lstEF = db.MAYDANHGIAs.ToList();
+            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAMAY).ToList();
             if (lstEF != null)
             {
                 foreach (var item in lstEF)

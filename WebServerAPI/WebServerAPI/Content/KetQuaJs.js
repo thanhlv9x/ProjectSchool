@@ -276,6 +276,24 @@ function createTableTH(urlStr, titleStr) {
                     url: urlStr,
                     dataType: 'json',
                     success: function (result) {
+                        var solan = 0;
+                        var diem = 0;
+                        $.each(result, function (key, value) {
+                            solan += parseInt(value["SoLan"]);
+                            diem += parseInt(value["Diem"]);
+                        })
+                        var trungbinh = 0;
+                        if (diem != 0 && solan != 0) {
+                            trungbinh = diem / solan;
+                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                        };
+                        var xeploai = "";
+                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        $("#diem-tong").val(trungbinh);
+                        $("#xep-loai-tong").val(xeploai);
                         options.success(result);
                     },
                     error: function (result) {
@@ -465,6 +483,7 @@ $("#click-details-th").click(function () {
         clickTH = false;
     }
 })
+$("#diem-tong, #xep-loai-tong, #diem-bp, #xep-loai-bp, #diem-cb, #xep-loai-cb").kendoMaskedTextBox();
 
 // ============ Bộ phận ==============
 // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
@@ -602,6 +621,24 @@ function createTableBP(urlStr, titleStr) {
                     url: urlStr,
                     dataType: 'json',
                     success: function (result) {
+                        var solan = 0;
+                        var diem = 0;
+                        $.each(result, function (key, value) {
+                            solan += parseInt(value["SoLan"]);
+                            diem += parseInt(value["Diem"]);
+                        })
+                        var trungbinh = 0;
+                        if (diem != 0 && solan != 0) {
+                            trungbinh = diem / solan;
+                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                        };
+                        var xeploai = "";
+                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        $("#diem-bp").val(trungbinh);
+                        $("#xep-loai-bp").val(xeploai);
                         options.success(result);
                     },
                     error: function (result) {
@@ -1213,6 +1250,24 @@ function createTableCB(urlStr, titleStr) {
                     url: urlStr,
                     dataType: 'json',
                     success: function (result) {
+                        var solan = 0;
+                        var diem = 0;
+                        $.each(result, function (key, value) {
+                            solan += parseInt(value["SoLan"]);
+                            diem += parseInt(value["Diem"]);
+                        })
+                        var trungbinh = 0;
+                        if (diem != 0 && solan != 0) {
+                            trungbinh = diem / solan;
+                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                        };
+                        var xeploai = "";
+                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        $("#diem-cb").val(trungbinh);
+                        $("#xep-loai-cb").val(xeploai);
                         options.success(result);
                     },
                     error: function (result) {

@@ -38,10 +38,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
@@ -93,10 +93,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
@@ -139,10 +139,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
@@ -197,10 +197,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
@@ -244,10 +244,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (_MucDo)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
@@ -304,10 +304,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (_MucDo)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
@@ -355,10 +355,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (_MucDo)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
@@ -417,10 +417,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (_MucDo)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
@@ -464,10 +464,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
@@ -522,10 +522,10 @@ namespace WebServerAPI.Controllers
                 int diem = 0;
                 switch (ma_muc_do)
                 {
-                    case 1: diem = 3; break;
-                    case 2: diem = 2; break;
-                    case 3: diem = 1; break;
-                    case 4: diem = 0; break;
+                    case 1: diem = 4; break;
+                    case 2: diem = 3; break;
+                    case 3: diem = 2; break;
+                    case 4: diem = 1; break;
                 }
                 diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()

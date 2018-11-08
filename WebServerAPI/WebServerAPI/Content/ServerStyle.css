@@ -116,6 +116,32 @@ hr {
     clear: both;
 }
 
+.div-diem-xeploai {
+    font-size: 1.3em;
+    padding: 1em 5%;
+    box-sizing: border-box;
+}
+
+.diem-xeploai {
+    margin: 3% 0 0 0;
+}
+
+.scroll-bp-cb {
+    display: block;
+    max-height: 14em;
+    overflow: auto;
+}
+
+.scroll-bp-cb-tt {
+    display: block;
+    max-height: 26em;
+    overflow: auto;
+}
+
+.k-widget.k-maskedtextbox.k-state-disabled {
+    width: 100%;
+}
+
 #body-thu-tuc-left {
     width: 70%;
     float: left;

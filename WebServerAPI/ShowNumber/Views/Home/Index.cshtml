@@ -51,6 +51,27 @@
 <script>
     var url = window.location.origin + "/MayHienThiSo";
     var mastt = 0;
+    $.ajax({
+        url: url + "/Home/GetInfoSoQuay",
+        type: "GET",
+        dataType: "json",
+        success: function (result) {
+            var js = JSON.parse(result);
+            console.log(js)
+            var i = 0;
+            $.each(js, function (key, value) {
+                if (i < 7) {
+                    $(".info-left .quay").append("<div>" + value + "</div><hr />");
+                    $(".info-left .stt").append("<div id=" + value + ">" + 0 + "</div><hr />");
+                } else {
+                    $(".info-right .quay").append("<div>" + value + "</div><hr />");
+                    $(".info-right .stt").append("<div id=" + value + ">" + 0 + "</div><hr />");
+                }
+                i++;
+            })
+        },
+        error: function (xhr) { }
+    })
     setInterval(function () {
         var today = new Date();
         var dd = today.getDate();
@@ -68,28 +89,18 @@
         $("div.time").text(today);
     }, 1000);
     setInterval(function () {
-        var count = $(".quay div").length;
-        if (count > 9) {
-            $(".quay div")[0].remove();
-            $(".quay hr")[0].remove();
-        }
-        var count = $(".stt div").length;
-        if (count > 9) {
-            $(".stt div")[0].remove();
-            $(".stt hr")[0].remove();
-        }
         $.ajax({
             url: url + "/Home/GetInfoCallNumber",
             type: "GET",
             dataType: "json",
             success: function (result) {
                 var js = JSON.parse(result);
-                var str = "";
-                if (js["MaSTT"] > mastt) {
-                    mastt = js["MaSTT"];
-                    $(".quay").append("<div>" + js["SoQuay"] + "</div><hr />");
-                    $(".stt").append("<div>" + js["STT"] + "</div><hr />");
-                }
+                //if (js["MaSTT"] > mastt) {
+                //    mastt = js["MaSTT"];
+                //    $(".quay").append("<div>" + js["SoQuay"] + "</div><hr />");
+                //    $(".stt").append("<div>" + js["STT"] + "</div><hr />");
+                //}
+                $("#" + js["SoQuay"] + "").text(js["STT"]);
             },
             error: function (xhr) {
                 console.log(xhr.responseText);

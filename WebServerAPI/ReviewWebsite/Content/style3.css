@@ -11,27 +11,40 @@ body {
 }
 
 #banner {
-    height: 10%;
-    background-color: #CC0000
+    height: 15%;
+    background-color: #CC0000;
+    position: relative;
 }
 
     #banner img {
         height: 80%;
-        margin: 0.5em 0 0 0
+        /* margin: 0.8% 0 0 0; */
+        /* float: left; */
+        position: absolute;
+        top: 50%;
+        transform: translate(0,-50%);
     }
 
     #banner span {
         position: absolute;
-        top: 0.5em;
-        color: yellow
+        top: 50%;
+        color: yellow;
+        /* float: left; */
+        /* margin: 0.5% 0 0 0; */
+        font-size: 1.5em;
+        left: 50%;
+        transform: translate(-130%, -180%);
     }
 
         #banner span:last-child {
-            position: absolute;
-            top: 1.8em;
-            color: yellow;
-            font-size: 1.1em;
-            left: 6.5em;
+            /* position: absolute; */
+            top: 55%;
+            left: 44%;
+            font-size: 2em;
+            /* left: 6.5em; */
+            /* margin: 3% 0 0 0; */
+            font-weight: bold;
+            transform: translate(-37%, -50%);
         }
 
 #footer-title {
@@ -196,7 +209,7 @@ html, body {
 }
 
 #container {
-    height: 100%;
+    height: 85%;
     width: 100%;
 }
 
@@ -232,7 +245,7 @@ span#port-number {
 
     .body #left-title {
         height: 10%;
-        width: 65%;
+        width: 80%;
         float: left;
         position: relative;
     }
@@ -247,20 +260,22 @@ span#port-number {
         }
 
     .body #right-title {
-        width: 35%;
+        width: 20%;
         height: 10%;
         float: right;
-        position: relative;
+        /* position: relative; */
+        padding: 1% 0 0 0;
     }
 
         .body #right-title div {
             text-align: center;
             font-size: 1.5em;
             /* font-weight: bold; */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* position: absolute; */
+            /* top: 50%; */
+            /* left: 50%; */
+            /* transform: translate(10%, -50%); */
+            text-align: center;
         }
 
     .body #info {
@@ -291,7 +306,7 @@ span#port-number {
         }
 
             .body #info div div#id-group, .body #info div div#name-group, .body #info div div#bo-phan-group {
-                height: 33.33%;
+                height: 40%;
                 width: 100%;
                 font-size: 0.8em;
             }
@@ -306,14 +321,14 @@ span#port-number {
                         float: right;
                         height: 100%;
                         width: 70%;
-                        padding: 0 3%;
                     }
 
     .body #number {
         float: right;
         width: 20%;
         height: 30%;
-        position: relative
+        /* position: relative; */
+        text-align: center;
     }
 
         .body #number #number-title {
@@ -323,10 +338,10 @@ span#port-number {
 
         .body #number #show-number {
             font-size: 1.8em;
-            position: absolute;
-            top: 70%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            /* position: absolute; */
+            /* top: 50%; */
+            /* left: 50%; */
+            /* transform: translate(-50%, -50%); */
         }
 
 .footer {
@@ -347,26 +362,30 @@ span#port-number {
 
 @media screen and (min-width: 600px) {
     #banner {
-        height: 10%;
+        /* height: 10%; */
     }
 
         #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0 */
         }
 
         #banner span {
-            position: absolute;
-            top: 0.5em;
-            color: yellow
+            /* position: absolute; */
+            /* top: 0.5em; */
+            /* color: yellow; */
+            transform: translate(-80%, -240%);
+            font-size: 1.2em;
         }
 
             #banner span:last-child {
                 position: absolute;
-                top: 1.5em;
+                /* top: 1.5em; */
                 color: yellow;
-                font-size: 1.5em;
-                left: 8.5em;
+                font-size: 1.6em;
+                /* left: 8.5em; */
+                left: 24%;
+                transform: translate(-6%, -50%);
             }
 
     .header div {
@@ -444,33 +463,64 @@ span#port-number {
         position: absolute;
         right: 2%;
         font-size: 2.1em;
-        top: 12%;
+        top: 15%;
     }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
     #banner {
-        height: 10%;
+        /* height: 10%; */
     }
 
         #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0 */
         }
 
         #banner span {
-            position: absolute;
-            top: 0.5em;
-            color: yellow;
-            font-size: 1.1em;
+            /* position: absolute; */
+            /* top: 0.5em; */
+            /* color: yellow; */
+            transform: translate(-100%, -215%);
+            font-size: 1.3em;
         }
 
             #banner span:last-child {
                 position: absolute;
-                top: 1.3em;
+                /* top: 1.5em; */
                 color: yellow;
-                font-size: 1.6em;
-                left: 11em;
+                font-size: 2em;
+                /* left: 8.5em; */
+                left: 24%;
+                transform: translate(-6%, -50%);
+            }
+}
+
+@media screen and (min-width: 1024px) {
+    #banner {
+        /* height: 10%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0 */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.5em; */
+            /* color: yellow; */
+            font-size: 1.5em;
+            transform: translate(-130%, -195%);
+        }
+
+            #banner span:last-child {
+                position: absolute;
+                /* top: 1.2em; */
+                color: yellow;
+                font-size: 2.5em;
+                /* left: 9.5em; */
+                /* transform: translate(8%, -50%); */
             }
 
     .header div {
@@ -490,7 +540,7 @@ span#port-number {
     }
 
     .body #number #show-number {
-        font-size: 4em;
+        font-size: 6em;
     }
 
     .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
@@ -573,6 +623,83 @@ span#port-number {
     }
 }
 
+@media screen and (min-width: 1280px) {
+    #banner {
+        /* height: 15%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            /* font-size: 1.3em; */
+            transform: translate(-170%, -180%);
+        }
+
+            #banner span:last-child {
+                /* position: absolute; */
+                /* top: 1em; */
+                /* color: yellow; */
+                font-size: 2.7em;
+                /* left: 11em; */
+                /* transform: translate(-35%, -50%); */
+            }
+
+    span#port-number {
+        position: absolute;
+        right: 3%;
+        font-size: 2.5em;
+        top: 20%;
+    }
+
+    .header div {
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    #banner {
+        /* height: 15%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            /* font-size: 1.3em; */
+            transform: translate(-185%, -180%);
+        }
+
+            #banner span:last-child {
+                /* position: absolute; */
+                /* top: 1em; */
+                /* color: yellow; */
+                /* font-size: 2em; */
+                /* left: 12.5em; */
+            }
+
+    span#port-number {
+        position: absolute;
+        right: 3%;
+        font-size: 2.5em;
+        top: 20%;
+    }
+
+    .header div {
+        font-size: 2.5em;
+    }
+}
+
 @media screen and (min-width: 1440px) {
     html {
         position: relative;
@@ -586,27 +713,30 @@ span#port-number {
     }
 
     #banner {
-        height: 10%;
+        /* height: 15%; */
     }
 
         #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+            /* float: left; */
         }
 
         #banner span {
-            position: absolute;
-            top: 0.3em;
-            color: yellow;
-            font-size: 1.5em;
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            font-size: 1.6em;
+            /* left: 50%; */
+            transform: translate(-185%, -175%);
         }
 
             #banner span:last-child {
-                position: absolute;
-                top: 1em;
-                color: yellow;
-                font-size: 2em;
-                left: 14.5em;
+                /* position: absolute; */
+                /* top: 1em; */
+                /* color: yellow; */
+                font-size: 3em;
+                /* left: 12em; */
             }
 
     .body #info div div#id-group div, .body #info div div#name-group div, .body #info div div#bo-phan-group div {
@@ -627,7 +757,49 @@ span#port-number {
         position: absolute;
         right: 3%;
         font-size: 2.5em;
-        top: 12%;
+        top: 20%;
+    }
+
+    .header div {
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    #banner {
+        /* height: 10%; */
+    }
+
+        #banner img {
+            /* height: 80%; */
+            /* margin: 0.5em 0 0 0; */
+        }
+
+        #banner span {
+            /* position: absolute; */
+            /* top: 0.3em; */
+            /* color: yellow; */
+            font-size: 2em;
+            transform: translate(-195%, -195%);
+        }
+
+            #banner span:last-child {
+                /* position: absolute; */
+                /* top: 0.8em; */
+                /* color: yellow; */
+                font-size: 4em;
+                /* left: 15em; */
+            }
+
+    span#port-number {
+        position: absolute;
+        right: 3%;
+        font-size: 3.5em;
+        top: 15%;
+    }
+
+    .header div {
+        font-size: 3.5em;
     }
 }
 
@@ -648,108 +820,4 @@ span#port-number {
     .footer #btn-send {
         top: 0.7em;
     }
-}
-
-@media screen and (min-width: 1280px) {
-    #banner {
-        height: 10%;
-    }
-
-        #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
-        }
-
-        #banner span {
-            position: absolute;
-            top: 0.3em;
-            color: yellow;
-            font-size: 1.3em;
-        }
-
-            #banner span:last-child {
-                position: absolute;
-                top: 1em;
-                color: yellow;
-                font-size: 2em;
-                left: 11em;
-            }
-}
-
-@media screen and (min-width: 1366px) {
-    #banner {
-        height: 10%;
-    }
-
-        #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
-        }
-
-        #banner span {
-            position: absolute;
-            top: 0.3em;
-            color: yellow;
-            font-size: 1.3em;
-        }
-
-            #banner span:last-child {
-                position: absolute;
-                top: 1em;
-                color: yellow;
-                font-size: 2em;
-                left: 12.5em;
-            }
-}
-
-@media screen and (min-width: 1440px) {
-    #banner {
-        height: 10%;
-    }
-
-        #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
-        }
-
-        #banner span {
-            position: absolute;
-            top: 0.3em;
-            color: yellow;
-            font-size: 1.3em;
-        }
-
-            #banner span:last-child {
-                position: absolute;
-                top: 1.1em;
-                color: yellow;
-                font-size: 1.8em;
-                left: 16em;
-            }
-}
-
-@media screen and (min-width: 1920px) {
-    #banner {
-        height: 10%;
-    }
-
-        #banner img {
-            height: 80%;
-            margin: 0.5em 0 0 0
-        }
-
-        #banner span {
-            position: absolute;
-            top: 0.3em;
-            color: yellow;
-            font-size: 1.8em;
-        }
-
-            #banner span:last-child {
-                position: absolute;
-                top: 0.8em;
-                color: yellow;
-                font-size: 2.5em;
-                left: 15em;
-            }
 }

@@ -91,27 +91,43 @@ function createChartThuTucTH(urlStr, titleStr) {
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Số lượng",
+                name: "Tổng số lượng",
                 color: "#ff1c1c",
-                axis: "quantity"
+                axis: "quantity",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # lần"
+                }
             }, {
                 opacity: 1,
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
-                name: "Tổng thời gian",
-                color: "#0066FF"
+                name: "Tổng thời gian trung bình",
+                color: "#0066FF",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }, {
                 opacity: 1,
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
-                name: "Thời gian chờ",
+                name: "Thời gian chờ trung bình",
                 color: "#FFFF00",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }, {
                 opacity: 1,
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Thời gian giải quyết",
-                color: "#33FF00"
+                name: "Thời gian giải quyết trung bình",
+                color: "#33FF00",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }],
         categoryAxis: {
             labels: {
@@ -275,6 +291,7 @@ $("#cbx-year-thu-tuc-th").change(function () {
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucTH(urlStr, titleStr) {
+    $("#grid-thu-tuc-th").html("");
     dataSource = new kendo.data.DataSource({
         transport: {
             serverFiltering: true,
@@ -353,17 +370,33 @@ function createGridThuTucTH(urlStr, titleStr) {
     var grid = $("#grid-thu-tuc-th").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5
+        },
         columns: [
+            { hidden: true, field: "TenBP", title: "Tên bộ phận", width: 100 },
             { field: "SoThuTu", title: "Số thứ tự", width: 70, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng cộng: #=count#" },
             { field: "Ngay", title: "Ngày", width: 70, format: "{0:dd MM yyyy}" },
             { field: "ThoiGianRut", title: "Thời điểm lấy số", width: 120, format: "{0:HH:mm:ss}" },
             { field: "ThoiGianGoi", title: "Thời điểm gọi số", width: 120, format: "{0:HH:mm:ss}" },
             { field: "ThoiGianHoanTat", title: "Thời điểm hoàn tất", width: 80, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "ThoiGianGiaiQuyet", title: "Phiên giải quyết (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "TongThoiGian", title: "Tổng phiên (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { hidden: true, field: "TenBP", title: "Tên bộ phận", width: 1 },
+            {
+                field: "ThoiGianCho", title: "Thời gian chờ (Phút)", width: 100,
+                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
+            {
+                field: "ThoiGianGiaiQuyet", title: "Thời gian giải quyết (Phút)", width: 100,
+                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
+            {
+                field: "TongThoiGian", title: "Tổng thời gian (Phút)", width: 100,
+                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
         ],
     }).data("kendoGrid");
     $("#title-grid-thu-tuc-th").text(titleStr);
@@ -459,27 +492,43 @@ function createChartThuTucBP(urlStr, titleStr) {
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Số lượng",
+                name: "Tổng số lượng",
                 color: "#ff1c1c",
-                axis: "quantity"
+                axis: "quantity",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # lần"
+                }
             }, {
                 opacity: 1,
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
-                name: "Tổng thời gian",
-                color: "#0066FF"
+                name: "Tổng thời gian trung bình",
+                color: "#0066FF",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }, {
                 opacity: 1,
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
-                name: "Thời gian chờ",
+                name: "Thời gian chờ trung bình",
                 color: "#FFFF00",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }, {
                 opacity: 1,
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Thời gian giải quyết",
-                color: "#33FF00"
+                name: "Thời gian giải quyết trung bình",
+                color: "#33FF00",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             }],
         categoryAxis: {
             labels: {
@@ -643,6 +692,7 @@ $("#cbx-year-thu-tuc-bp").change(function () {
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucBP(urlStr, titleStr) {
+    $("#grid-thu-tuc-bp").html("");
     $("#title-grid-thu-tuc-bp").text(titleStr);
     dataSource = new kendo.data.DataSource({
         transport: {
@@ -785,16 +835,24 @@ function createChartThuTucCB(urlStr, titleStr) {
                 type: "line",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Số lượng",
+                name: "Tổng số lượng",
                 color: "#ff1c1c",
-                axis: "quantity"
+                axis: "quantity",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # lần"
+                }
             }, {
                 opacity: 1,
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
-                name: "Phiên giải quyết",
-                color: "#007eff",
-                axis: "time"
+                name: "Thời gian giải quyết trung bình",
+                color: "#33FF00",
+                axis: "time",
+                tooltip: {
+                    visible: true,
+                    template: "#: value # phút"
+                }
             },
                 //{
                 //field: "TongThoiGian",
@@ -965,6 +1023,7 @@ $("#cbx-year-thu-tuc-cb").change(function () {
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucCB(urlStr, titleStr) {
+    $("#grid-thu-tuc-cb").html("");
     $("#title-grid-thu-tuc-cb").text(titleStr);
     dataSource = new kendo.data.DataSource({
         transport: {

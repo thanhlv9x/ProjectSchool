@@ -54,9 +54,18 @@
                                     <div style="float: right; width: 30%">
                                         <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
                                             <div style="width: 100%; background-color: #88aff5">
+                                                <center><h2 style="display: inline">ĐIỂM SỐ - XẾP LOẠI</h2></center>
+                                            </div>
+                                            <div class="div-diem-xeploai">
+                                                <div>ĐIỂM SỐ : <input id="diem-tong" disabled /></div>
+                                                <div class="diem-xeploai">XẾP LOẠI: <input id="xep-loai-tong" disabled /></div>
+                                            </div>
+                                        </div>
+                                        <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
+                                            <div style="width: 100%; background-color: #88aff5">
                                                 <center><h2 style="display: inline">BỘ PHẬN</h2></center>
                                             </div>
-                                            <div id="cac-bo-phan"></div>
+                                            <div id="cac-bo-phan" class="scroll-bp-cb"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +131,16 @@
                                 <div id="content-ten-can-bo" style="width: 30%; float: right">
                                     <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
                                         <div style="width: 100%; background-color: #88aff5">
-                                            <center><h2 style="display: inline">CÁN BỘ</h2></center>
+                                            <center><h2 style="display: inline">ĐIỂM SỐ - XẾP LOẠI</h2></center>
+                                        </div>
+                                        <div class="div-diem-xeploai">
+                                            <div>ĐIỂM SỐ : <input id="diem-bp" disabled /></div>
+                                            <div class="diem-xeploai">XẾP LOẠI: <input id="xep-loai-bp" disabled /></div>
+                                        </div>
+                                    </div>
+                                    <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
+                                        <div style="width: 100%; background-color: #88aff5">
+                                            <center><h2 style="display: inline" class="scroll-bp-cb">CÁN BỘ</h2></center>
                                         </div>
                                         <div id="div-button-canbo"></div>@*#div-button-canbo*@
                                     </div>
@@ -200,11 +218,15 @@
                                         <div id="id-bp"><span></span></div>
                                         <div id="name-bp"><span></span></div>
                                     </div>
+                                    <div class="div-diem-xeploai">
+                                        <div class="diem-xeploai">ĐIỂM SỐ : <input id="diem-cb" disabled /></div>
+                                        <div class="diem-xeploai">XẾP LOẠI: <input id="xep-loai-cb" disabled /></div>
+                                    </div>
                                 </div>
                                 <div id="content-can-bo">
                                     <div id="div-chart-column-cb" style="margin: 1em 5em 0 5em; width: 55%; float: left; text-align:center">
                                         <div id="chart-column-cb">@*Biểu đồ cột*@</div>
-                                        <div id="div-year-column-cb" style="width: 20%; margin: 1em 40%">
+                                        <div id="div-year-column-cb" style="width: 20%; margin: 1em 40%; text-align: left">
                                             <label>Chọn năm:</label>
                                             <input id="year-column-cb" title="Chọn thời gian" style="width: 100%" />
                                         </div>
@@ -270,7 +292,7 @@
                                         <div style="width: 100%; background-color: #88aff5">
                                             <center><h2 style="display: inline">BỘ PHẬN</h2></center>
                                         </div>
-                                        <div id="cac-bo-phan-thu-tuc"></div>
+                                        <div id="cac-bo-phan-thu-tuc" class="scroll-bp-cb-tt"></div>
                                     </div>
                                 </div>
                             </div>
@@ -308,7 +330,7 @@
                                         <div style="width: 100%; background-color: #88aff5">
                                             <center><h2 style="display: inline">CÁN BỘ</h2></center>
                                         </div>
-                                        <div id="cac-can-bo-thu-tuc"></div>
+                                        <div id="cac-can-bo-thu-tuc" class="scroll-bp-cb-tt"></div>
                                     </div>
                                 </div>
                             </div>
@@ -685,9 +707,9 @@
         $("#thu-tuc-cb").hide();
     })
 </script>
-<script src="~/Content/KetQua.js"></script>
-<script src="~/Content/ThuTucJs.js"></script>
+<script src="~/Content/KetQuaJs.js"></script>
+<script src="~/Content/ThuTuc.js"></script>
 <script src="~/Content/BaoCaoJs.js"></script>
 <script src="~/Content/DangNhapJs.js"></script>
 <script src="~/Content/ThongTinJs.js"></script>
-<link href="~/Content/ServerStyle1.css" rel="stylesheet" />
+<link href="~/Content/ServerStyle.css" rel="stylesheet" />

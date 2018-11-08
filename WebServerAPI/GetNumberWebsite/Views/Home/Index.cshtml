@@ -22,20 +22,20 @@
         <span>THÀNH PHỐ HỒ CHÍ MINH</span>
         <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
     </div>
-    <div id="container" style="height: 90%">
+    <div id="container">
         <table>
             <thead>
                 <tr>
                     <th colspan="3">
                         <div id="title">
                             MÁY LẤY SỐ TỰ ĐỘNG
+                            <span class="k-icon k-i-printer" id="printer-name" style="float: right"></span>
                         </div>
                     </th>
                 </tr>
                 <tr>
                     <th colspan="3">
                         <div id="list-printer-name"></div>
-                        <div id="printer-name"></div>
                     </th>
                 </tr>
                 <tr>
@@ -83,7 +83,7 @@
             var dataItem = e.dataItem;
             printer_name = dataItem.value;
             $("span.k-widget.k-dropdown.k-header").fadeOut();
-            $("#printer-name").text(dataItem.text);
+            $("#printer-name").prop("title",dataItem.text);
         } else { }
     };
     // Tạo danh sách các nút bộ phận và số thứ tự
@@ -178,4 +178,4 @@
         getPrinterName();
     })
 </script>
-<link href="~/Content/style1.css" rel="stylesheet" />
+<link href="~/Content/style2.css" rel="stylesheet" />
