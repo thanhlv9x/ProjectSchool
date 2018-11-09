@@ -326,7 +326,7 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
-    <Content Include="Content\BaoCaoJs.js" />
+    <Content Include="Content\BaoCao.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

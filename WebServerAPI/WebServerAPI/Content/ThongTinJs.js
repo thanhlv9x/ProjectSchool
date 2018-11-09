@@ -215,11 +215,19 @@ function createTableTk(urlGet) {
                     { field: "MaBP", title: "Tên bộ phận", width: 100, values: arr },
                     { field: "Id", title: "Tài khoản", width: 100 },
                     { field: "Pw", title: "Mật khẩu", width: 100 },
-                    { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+                    { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
                 ],
                 editable: {
                     confirmation: false,
                     mode: "popup"
+                },
+                dataBound: function () {
+                    $(".k-grid-myDelete span").addClass("k-icon k-delete");
+                },
+                cancel: function () {
+                    setTimeout(function () {
+                        $(".k-grid-myDelete span").addClass("k-icon k-delete");
+                    });
                 },
                 edit: function (e) {
                     $("input[type='file']").siblings("span").text("Chọn file...")
@@ -248,8 +256,8 @@ function createTableTk(urlGet) {
                 var cell = command.closest("td");
 
                 command.remove();
-                cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
-                cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
+                cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-i-check"></span>XÁC NHÂN</a>');
+                cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-i-close"></span>HỦY BỎ</a>');
             });
 
             $("#grid-tai-khoan-can-bo").on("click", ".k-grid-myConfirm", function (e) {
@@ -457,11 +465,19 @@ function createTableTTBP(urlGet) {
         columns: [
             { field: "VietTat", title: "Mã bộ phận", width: 80 },
             { field: "TenBP", title: "Tên bộ phận", width: 100 },
-            { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
         ],
         editable: {
             confirmation: false,
             mode: "popup"
+        },
+        dataBound: function () {
+            $(".k-grid-myDelete span").addClass("k-icon k-delete");
+        },
+        cancel: function () {
+            setTimeout(function () {
+                $(".k-grid-myDelete span").addClass("k-icon k-delete");
+            });
         },
         edit: function (e) {
             $("input[type='file']").siblings("span").text("Chọn file...")
@@ -490,8 +506,8 @@ function createTableTTBP(urlGet) {
         var cell = command.closest("td");
 
         command.remove();
-        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
-        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-i-check"></span>XÁC NHẬN</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-i-close"></span>HỦY BỎ</a>');
     });
 
     $("#grid-thong-tin-bo-phan").on("click", ".k-grid-myConfirm", function (e) {
@@ -620,7 +636,7 @@ function createTableTTQ(urlGet) {
         columns: [
             { field: "MaMay", title: "Số quầy", width: 80 },
             { field: "Mac", title: "Mã máy", width: 100 },
-            { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
         ],
         editable: {
             confirmation: false,
@@ -661,8 +677,8 @@ function createTableTTQ(urlGet) {
         var cell = command.closest("td");
 
         command.remove();
-        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
-        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-i-check"></span>XÁC NHẬN</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-i-close"></span>HỦY BỎ</a>');
     });
 
     $("#grid-thong-tin-quay").on("click", ".k-grid-myConfirm", function (e) {

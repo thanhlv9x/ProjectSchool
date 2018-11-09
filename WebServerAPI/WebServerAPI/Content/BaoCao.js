@@ -288,12 +288,130 @@ function onClickBtnReport() {
         $("#title-bao-cao-2").html(title2);
     }
     if ($("#cb-tt").prop("checked")) {
-        createGridThuTucReport(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
+        if (mabp_report == 0) {
+            createGridThuTucReportTH(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
+        } else if (macb_report == 0) {
+            createGridThuTucReportBP(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
+        } else if (macb_report > 0) {
+            createGridThuTucReportCB(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
+        }
         $("#title-bao-cao-3").html(title3);
     }
 }
 // Phương thức tạo bảng thời gian giải quyết thủ tục
-function createGridThuTucReport(urlStr) {
+function createGridThuTucReportTH(urlStr) {
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: urlStr,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "MaBP",
+                fields: {
+                    MaBP: { type: "number" },
+                    VietTat: { type: "string", validation: { required: true } },
+                    TenBP: { type: "string", validation: { required: true } },
+                    PhienCho: { type: "number", validation: { required: true } },
+                    PhienXuLy: { type: "number", validation: { required: true } },
+                    SoLuong: { type: "number", validation: { required: true } },
+                    TongPhien: { type: "number", validation: { required: true } }
+                }
+            }
+        },
+        //group: {
+        //    field: "TenBP", aggregates: [
+        //        { field: "HoTen", aggregate: "count" },
+        //        { field: "PhienCho", aggregate: "average" },
+        //        { field: "PhienCho", aggregate: "sum" },
+        //        { field: "PhienCho", aggregate: "min" },
+        //        { field: "PhienCho", aggregate: "max" },
+        //        { field: "PhienXuLy", aggregate: "average" },
+        //        { field: "PhienXuLy", aggregate: "sum" },
+        //        { field: "PhienXuLy", aggregate: "min" },
+        //        { field: "PhienXuLy", aggregate: "max" },
+        //        { field: "TongPhien", aggregate: "average" },
+        //        { field: "TongPhien", aggregate: "sum" },
+        //        { field: "TongPhien", aggregate: "min" },
+        //        { field: "TongPhien", aggregate: "max" }
+        //    ]
+        //},
+
+        aggregate: [
+            { field: "TenBP", aggregate: "count" },
+            { field: "PhienCho", aggregate: "average" },
+            { field: "PhienCho", aggregate: "sum" },
+            { field: "PhienCho", aggregate: "min" },
+            { field: "PhienCho", aggregate: "max" },
+            { field: "PhienXuLy", aggregate: "average" },
+            { field: "PhienXuLy", aggregate: "sum" },
+            { field: "PhienXuLy", aggregate: "min" },
+            { field: "PhienXuLy", aggregate: "max" },
+            { field: "TongPhien", aggregate: "average" },
+            { field: "TongPhien", aggregate: "sum" },
+            { field: "TongPhien", aggregate: "min" },
+            { field: "TongPhien", aggregate: "max" },
+            { field: "SoLuong", aggregate: "average" },
+            { field: "SoLuong", aggregate: "sum" },
+            { field: "SoLuong", aggregate: "min" },
+            { field: "SoLuong", aggregate: "max" }
+        ]
+    });
+
+    var grid = $("#grid-report-3").kendoGrid({
+        pdf: {
+            allPages: true,
+            avoidLinks: true,
+            paperSize: "A4",
+            margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
+            landscape: true,
+            repeatHeaders: true,
+            template: $("#page-template-thutuc").html(),
+            scale: 0.8
+        },
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        columns: [
+            { field: "VietTat", title: "Mã bộ phận", width: 100 },
+            { field: "TenBP", title: "Tên bộ phận", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
+            //{ hidden: true, field: "TenBP", title: "Bộ phận", width: 1 },
+            { field: "PhienCho", title: "Thời gian chờ trung bình (Phút)", width: 200, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
+            { field: "PhienXuLy", title: "Thời gian xử lý trung bình (Phút)", width: 200, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
+            { field: "TongPhien", title: "Tổng thời gian trung bình (Phút)", width: 200, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
+            { field: "SoLuong", title: "Tổng số lượng (Lần)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"  },
+        ],
+    }).data("kendoGrid");
+    //grid.hideColumn("TenBP");
+    //$("#span-title-table-cb-1").text(titleStr);
+}
+// Phương thức tạo bảng thời gian giải quyết thủ tục
+function createGridThuTucReportBP(urlStr) {
     dataSource = new kendo.data.DataSource({
         transport: {
             serverFiltering: true,
@@ -324,47 +442,41 @@ function createGridThuTucReport(urlStr) {
                 fields: {
                     MaCB: { type: "number" },
                     MaCBSD: { type: "string", validation: { required: true } },
-                    MaBP: { type: "number", validation: { required: true } },
                     TenBP: { type: "string", validation: { required: true } },
                     HoTen: { type: "string", validation: { required: true } },
-                    PhienCho: { type: "number", validation: { required: true } },
                     PhienXuLy: { type: "number", validation: { required: true } },
-                    TongPhien: { type: "number", validation: { required: true } }
+                    SoLuong: { type: "number", validation: { required: true } },
                 }
             }
         },
-        group: {
-            field: "TenBP", aggregates: [
-                { field: "HoTen", aggregate: "count" },
-                { field: "PhienCho", aggregate: "average" },
-                { field: "PhienCho", aggregate: "sum" },
-                { field: "PhienCho", aggregate: "min" },
-                { field: "PhienCho", aggregate: "max" },
-                { field: "PhienXuLy", aggregate: "average" },
-                { field: "PhienXuLy", aggregate: "sum" },
-                { field: "PhienXuLy", aggregate: "min" },
-                { field: "PhienXuLy", aggregate: "max" },
-                { field: "TongPhien", aggregate: "average" },
-                { field: "TongPhien", aggregate: "sum" },
-                { field: "TongPhien", aggregate: "min" },
-                { field: "TongPhien", aggregate: "max" }
-            ]
-        },
+        group: { field: "TenBP" },
+        //    field: "TenBP", aggregates: [
+        //        { field: "HoTen", aggregate: "count" },
+        //        { field: "PhienCho", aggregate: "average" },
+        //        { field: "PhienCho", aggregate: "sum" },
+        //        { field: "PhienCho", aggregate: "min" },
+        //        { field: "PhienCho", aggregate: "max" },
+        //        { field: "PhienXuLy", aggregate: "average" },
+        //        { field: "PhienXuLy", aggregate: "sum" },
+        //        { field: "PhienXuLy", aggregate: "min" },
+        //        { field: "PhienXuLy", aggregate: "max" },
+        //        { field: "TongPhien", aggregate: "average" },
+        //        { field: "TongPhien", aggregate: "sum" },
+        //        { field: "TongPhien", aggregate: "min" },
+        //        { field: "TongPhien", aggregate: "max" }
+        //    ]
+        //},
 
         aggregate: [
             { field: "HoTen", aggregate: "count" },
-            { field: "PhienCho", aggregate: "average" },
-            { field: "PhienCho", aggregate: "sum" },
-            { field: "PhienCho", aggregate: "min" },
-            { field: "PhienCho", aggregate: "max" },
             { field: "PhienXuLy", aggregate: "average" },
             { field: "PhienXuLy", aggregate: "sum" },
             { field: "PhienXuLy", aggregate: "min" },
             { field: "PhienXuLy", aggregate: "max" },
-            { field: "TongPhien", aggregate: "average" },
-            { field: "TongPhien", aggregate: "sum" },
-            { field: "TongPhien", aggregate: "min" },
-            { field: "TongPhien", aggregate: "max" }
+            { field: "SoLuong", aggregate: "average" },
+            { field: "SoLuong", aggregate: "sum" },
+            { field: "SoLuong", aggregate: "min" },
+            { field: "SoLuong", aggregate: "max" }
         ]
     });
 
@@ -381,19 +493,131 @@ function createGridThuTucReport(urlStr) {
         },
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
-            { field: "MaCBSD", title: "Mã số", width: 80 },
-            { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
-            { field: "TenBP", title: "Bộ phận", width: 1 },
-            { field: "PhienCho", title: "Phiên chờ", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
-            { field: "PhienXuLy", title: "Phiên xử lý", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
-            { field: "TongPhien", title: "Tổng phiên", width: 150, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+            { hidden: true, field: "TenBP", title: "Bộ phận", width: 200 },
+            { field: "MaCBSD", title: "Mã số", width: 100 },
+            { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#" },
+            {
+                field: "PhienXuLy", title: "Thời gian xử lý trung bình (Phút)", width: 200,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+            },
+            {
+                field: "SoLuong", title: "Tổng số lượng (Lần)", width: 100,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+            },
         ],
     }).data("kendoGrid");
-    grid.hideColumn("TenBP");
+    //grid.hideColumn("TenBP");
     //$("#span-title-table-cb-1").text(titleStr);
 }
+// Phương thức tạo bảng thời gian giải quyết thủ tục
+function createGridThuTucReportCB(urlStr) {
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: urlStr,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "MaCB",
+                fields: {
+                    MaCB: { type: "number" },
+                    MaCBSD: { type: "string", validation: { required: true } },
+                    TenBP: { type: "string", validation: { required: true } },
+                    HoTen: { type: "string", validation: { required: true } },
+                    STT: { type: "number", validation: { required: true } },
+                    PhienXuLy: { type: "number", validation: { required: true } },
+                }
+            }
+        },
+        group: { field: "HoTen" },
+        //    field: "TenBP", aggregates: [
+        //        { field: "HoTen", aggregate: "count" },
+        //        { field: "PhienCho", aggregate: "average" },
+        //        { field: "PhienCho", aggregate: "sum" },
+        //        { field: "PhienCho", aggregate: "min" },
+        //        { field: "PhienCho", aggregate: "max" },
+        //        { field: "PhienXuLy", aggregate: "average" },
+        //        { field: "PhienXuLy", aggregate: "sum" },
+        //        { field: "PhienXuLy", aggregate: "min" },
+        //        { field: "PhienXuLy", aggregate: "max" },
+        //        { field: "TongPhien", aggregate: "average" },
+        //        { field: "TongPhien", aggregate: "sum" },
+        //        { field: "TongPhien", aggregate: "min" },
+        //        { field: "TongPhien", aggregate: "max" }
+        //    ]
+        //},
+
+        aggregate: [
+            { field: "STT", aggregate: "count" },
+            { field: "PhienXuLy", aggregate: "average" },
+            { field: "PhienXuLy", aggregate: "sum" },
+            { field: "PhienXuLy", aggregate: "min" },
+            { field: "PhienXuLy", aggregate: "max" },
+        ]
+    });
+
+    var grid = $("#grid-report-3").kendoGrid({
+        pdf: {
+            allPages: true,
+            avoidLinks: true,
+            paperSize: "A4",
+            margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
+            landscape: true,
+            repeatHeaders: true,
+            template: $("#page-template-thutuc").html(),
+            scale: 0.8
+        },
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        columns: [
+            //{ field: "TenBP", title: "Bộ phận", width: 200 },
+            //{ field: "MaCBSD", title: "Mã số", width: 100 },
+            { field: "STT", title: "Số thứ tự", width: 100, footerTemplate: "Tổng cộng: #=count#" },
+            { hidden: true, field: "HoTen", title: "Họ tên", width: 200 },
+            {
+                field: "PhienXuLy", title: "Thời gian xử lý trung bình (Phút)", width: 200,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+            },
+        ],
+    }).data("kendoGrid");
+    //grid.hideColumn("TenBP");
+    //$("#span-title-table-cb-1").text(titleStr);
+}
+
 // Phương thức tạo bảng kết quả báo cáo
 function createGridReport(urlStr) {
     dataSource = new kendo.data.DataSource({
@@ -545,12 +769,18 @@ function createGridReport(urlStr) {
         },
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "MaCBSD", title: "Mã số", width: 50 },
             { field: "HoTen", title: "Họ tên", width: 90, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
             { field: "Diem", title: "Số điểm", width: 80, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" },
-            { field: "TenBP", title: "Bộ phận", width: 1, },
+            { hidden: true, field: "TenBP", title: "Bộ phận", width: 1, },
             {
                 title: "Rất hài lòng",
                 columns: [
@@ -588,7 +818,7 @@ function createGridReport(urlStr) {
             },
         ],
     }).data("kendoGrid");
-    grid.hideColumn("TenBP");
+    //grid.hideColumn("TenBP");
     //$("#span-title-table-cb-1").text(titleStr);
 }
 // Phương thức tạo bảng góp ý
@@ -665,17 +895,23 @@ function createGridFeedBack(urlStr) {
         },
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "MaCBSD", title: "Mã số", width: 80 },
             { field: "HoTen", title: "Họ tên", width: 200, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng: #=count#" },
-            { field: "TenBP", title: "Bộ phận", width: 1 },
+            { hidden: true, field: "TenBP", title: "Bộ phận", width: 1 },
             { field: "MucDoDanhGia", title: "Mức độ đánh giá", width: 150 },
             { field: "GopY", title: "Góp ý", width: 0 },
             { field: "SoLan", title: "Số lần", width: 120, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
         ],
     }).data("kendoGrid");
-    grid.hideColumn("TenBP");
+    //grid.hideColumn("TenBP");
     //$("#span-title-table-cb-1").text(titleStr);
 }
 // Phương thức click nút xuất báo cáo

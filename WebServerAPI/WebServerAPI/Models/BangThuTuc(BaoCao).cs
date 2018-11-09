@@ -15,5 +15,8 @@ namespace WebServerAPI.Models
         public double PhienXuLy { get; set; }
         public double TongPhien { get; set; }
         public string MaCBSD { get; set; }
+        public string VietTat { get; set; }
+        public int STT { get; set; }
+        public int SoLuong { get; set; }
     }
 }
