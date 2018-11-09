@@ -1,4 +1,5 @@
-﻿function createBPDangNhap() {
+﻿// Tạo dropdownlist bộ phận
+function createBPDangNhap() {
     $.ajax({
         type: "GET",
         url: url + "/api/BoPhanAPI",
@@ -22,9 +23,11 @@
         }
     })
 }
+// Tạo sự kiện chọn dropdownlist bộ phận
 $("#bo-phan-dang-nhap").change(function () {
     createCBDangNhap($("#bo-phan-dang-nhap").val())
 })
+// Tạo dropdownlist cán bộ
 function createCBDangNhap(MaBP) {
     $.ajax({
         type: "GET",
@@ -50,11 +53,14 @@ function createCBDangNhap(MaBP) {
         }
     })
 }
+// Tạo sự kiện chọn dropdownlist cán bộ
 $("#can-bo-dang-nhap").change(function () {
     createYearDangNhap($("#can-bo-dang-nhap").val());
     createMonthDangNhap($("#can-bo-dang-nhap").val());
 })
-function createGridDangNhap(MaCB, Loai, ThoiGian) {
+// Tạo grid đăng nhập theo tháng
+function createGridDangNhapThang(MaCB, Loai, ThoiGian) {
+    $("#grid-dang-nhap").html("");
     dataSource = new kendo.data.DataSource({
         transport: {
             serverFiltering: true,
@@ -81,10 +87,8 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
         pageSize: 20,
         schema: {
             model: {
-                id: "MaCB",
+                id: "Ngay",
                 fields: {
-                    MaCB: { type: "number" },
-                    HoTen: { type: "string", validation: { required: true } },
                     MaMay: { type: "number", validation: { required: true } },
                     Ngay: { type: "date", validation: { required: true } },
                     BD: { type: "date", validation: { required: true } },
@@ -95,6 +99,7 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
         },
         group: {
             field: "Ngay", aggregates: [
+                { field: "MaMay", aggregate: "count" },
                 { field: "ThoiGian", aggregate: "average" },
                 { field: "ThoiGian", aggregate: "sum" },
                 { field: "ThoiGian", aggregate: "min" },
@@ -103,6 +108,7 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
         },
 
         aggregate: [
+            { field: "MaMay", aggregate: "count" },
             { field: "ThoiGian", aggregate: "average" },
             { field: "ThoiGian", aggregate: "sum" },
             { field: "ThoiGian", aggregate: "min" },
@@ -113,9 +119,15 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
     var grid = $("#grid-dang-nhap").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
-            { field: "MaMay", title: "Số quầy", width: 100 },
+            { field: "MaMay", title: "Số quầy", width: 100, groupFooterTemplate: "<div>Tổng cộng: #=count#</div>", footerTemplate: "<div>Tổng cộng: #=count#</div>" },
             { field: "BD", title: "Thời điểm đăng nhập", width: 100, format: "{0: HH:mm:ss}" },
             { field: "KT", title: "Thời điểm đăng xuất", width: 100, format: "{0: HH:mm:ss}" },
             {
@@ -129,7 +141,100 @@ function createGridDangNhap(MaCB, Loai, ThoiGian) {
     //grid.hideColumn("Ngay");
     $("#div-grid-dang-nhap h3").text("Thời gian đăng nhập của " + $("#can-bo-dang-nhap").data("kendoDropDownList").text() + "(" + ThoiGian + ")");
 }
+// Tạo grid đăng nhập theo nam
+function createGridDangNhapNam(MaCB, Loai, ThoiGian) {
+    $("#grid-dang-nhap").html("");
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: url + "/api/DangNhapAPI/?_MaCB=" + MaCB + "&_Loai=" + Loai + "&_ThoiGian=" + ThoiGian,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "Thang",
+                fields: {
+                    Thang: { type: "date", validation: { required: true } },
+                    Ngay: { type: "date", validation: { required: true } },
+                    ThoiGian: { type: "number", validation: { required: true } },
+                    MaMay: { type: "number", validation: { required: true } },
+                    BD: { type: "date", validation: { required: true } },
+                    KT: { type: "date", validation: { required: true } },
+                }
+            }
+        },
+        group: [{
+            field: "Thang", aggregates: [
+                { field: "MaMay", aggregate: "count" },
+                { field: "ThoiGian", aggregate: "average" },
+                { field: "ThoiGian", aggregate: "sum" },
+                { field: "ThoiGian", aggregate: "min" },
+                { field: "ThoiGian", aggregate: "max" }
+            ],
+        }, {
+            field: "Ngay", aggregates: [
+                { field: "MaMay", aggregate: "count" },
+                { field: "ThoiGian", aggregate: "average" },
+                { field: "ThoiGian", aggregate: "sum" },
+                { field: "ThoiGian", aggregate: "min" },
+                { field: "ThoiGian", aggregate: "max" }
+            ]
+        }],
 
+        aggregate: [
+            { field: "MaMay", aggregate: "count" },
+            { field: "ThoiGian", aggregate: "average" },
+            { field: "ThoiGian", aggregate: "sum" },
+            { field: "ThoiGian", aggregate: "min" },
+            { field: "ThoiGian", aggregate: "max" }
+        ]
+    });
+
+    var grid = $("#grid-dang-nhap").kendoGrid({
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        columns: [
+            { field: "MaMay", title: "Số quầy", width: 100, groupFooterTemplate: "<div>Tổng cộng: #=count#</div>", footerTemplate: "<div>Tổng cộng: #=count#</div>" },
+            { hidden: true, field: "Ngay", title: "Ngày", width: 100, format: "{0: dd MM yyyy}" },
+            { field: "BD", title: "Thời điểm đăng nhập", width: 100, format: "{0: HH:mm:ss}" },
+            { field: "KT", title: "Thời điểm đăng xuất", width: 100, format: "{0: HH:mm:ss}" },
+            {
+                field: "ThoiGian", title: "Tổng thời gian (Phút)", width: 100,
+                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
+            { hidden: true, field: "Thang", title: "Tháng", width: 100, format: "{0: MM yyyy}" },
+        ],
+    }).data("kendoGrid");
+    //grid.hideColumn("Ngay");
+    $("#div-grid-dang-nhap h3").text("Thời gian đăng nhập của " + $("#can-bo-dang-nhap").data("kendoDropDownList").text() + "(" + ThoiGian + ")");
+}
+// Tạo dropdownlist tháng
 function createMonthDangNhap(MaCB) {
     $.ajax({
         type: "GET",
@@ -157,7 +262,7 @@ function createMonthDangNhap(MaCB) {
         }
     })
 }
-
+// Tạo dropdownlist năm
 function createYearDangNhap(MaCB) {
     $.ajax({
         type: "GET",
@@ -186,20 +291,20 @@ function createYearDangNhap(MaCB) {
         }
     })
 }
-
+// Tạo sự kiện nút xem
 function onClick(e) {
     if ($("#cbx-thang-dang-nhap").prop("checked")) {
-        createGridDangNhap($("#can-bo-dang-nhap").val(), "thang", $("#thang-dang-nhap").val())
+        createGridDangNhapThang($("#can-bo-dang-nhap").val(), "thang", $("#thang-dang-nhap").val())
     }
     if ($("#cbx-nam-dang-nhap").prop("checked")) {
-        createGridDangNhap($("#can-bo-dang-nhap").val(), "nam", $("#nam-dang-nhap").val())
+        createGridDangNhapNam($("#can-bo-dang-nhap").val(), "nam", $("#nam-dang-nhap").val())
     }
 }
-
+// Tạo form nút xem
 $("#btn-dang-nhap").kendoButton({
     click: onClick
 });
-
+// Tạo sự kiện checkbox tháng đăng nhập
 $("#cbx-thang-dang-nhap").change(function () {
     if (!$("#cbx-thang-dang-nhap").prop("checked")) {
         $("#cbx-thang-dang-nhap").removeAttr("checked");
@@ -210,7 +315,7 @@ $("#cbx-thang-dang-nhap").change(function () {
         $("#cbx-thang-dang-nhap").prop("checked", "checked");
     }
 })
-
+// Tạo sự kiện checkbox năm đăng nhập
 $("#cbx-nam-dang-nhap").change(function () {
     if (!$("#cbx-nam-dang-nhap").prop("checked")) {
         $("#cbx-nam-dang-nhap").removeAttr("checked");
@@ -221,7 +326,7 @@ $("#cbx-nam-dang-nhap").change(function () {
         $("#cbx-nam-dang-nhap").prop("checked", "checked");
     }
 })
-
+// Tạo sự kiện click của tabstrip xem thông tin đăng nhập
 $("#menu-xem-dang-nhap").click(function () {
     createBPDangNhap()
 })

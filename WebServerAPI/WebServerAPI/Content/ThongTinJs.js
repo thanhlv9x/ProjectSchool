@@ -198,11 +198,16 @@ function createTableTk(urlGet) {
             var grid = $("#grid-tai-khoan-can-bo").kendoGrid({
                 dataSource: dataSource,
                 navigatable: true,
-                pageable: true,
+                pageable: {
+                    refresh: true,
+                    messages: {
+                        display: "{0}-{1}/{2}",
+                        empty: "Dữ liệu không tồn tại",
+                    }
+                },
                 toolbar: [
                     { name: "create", text: "Thêm mới" },
-                    { name: "custom", text: "Nhập excel", iconClass: "k-icon k-i-file-add" },
-                    { name: "custom1", text: "Làm mới", iconClass: "k-icon k-i-refresh" }],
+                    { name: "custom", text: "Nhập excel", iconClass: "k-icon k-i-file-add" }],
                 columns: [
                     { field: "HinhAnh", title: "Hình ảnh", width: 100, editor: categoryDropDownEditor, template: '<img src="resources/#= HinhAnh #" alt="image" style="width: 54px; height: 72px"/>' },
                     { field: "MaCBSD", title: "Mã cán bộ", width: 80 },
@@ -210,10 +215,53 @@ function createTableTk(urlGet) {
                     { field: "MaBP", title: "Tên bộ phận", width: 100, values: arr },
                     { field: "Id", title: "Tài khoản", width: 100 },
                     { field: "Pw", title: "Mật khẩu", width: 100 },
-                    { command: [{ name: "edit", title: "Cập nhật" }, { name: "destroy", title: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+                    { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
                 ],
-                editable: "popup"
+                editable: {
+                    confirmation: false,
+                    mode: "popup"
+                },
+                edit: function (e) {
+                    $("input[type='file']").siblings("span").text("Chọn file...")
+                    var nameField = e.container.find("input[name=HoTen]");
+                    var name = nameField.val();
+                    if (name.length > 0) {
+                        e.container.data("kendoWindow").title("Cập nhật cán bộ " + name); // Title
+                        var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                        updateBtn.text("Cập nhật");
+                        var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                        cancelBtn.text("Hủy bỏ");
+                    } else {
+                        e.container.data("kendoWindow").title("Thêm mới cán bộ"); // Title
+                        var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                        updateBtn.text("Thêm mới");
+                        var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                        cancelBtn.text("Hủy bỏ");
+                    }
+                }
             }).data("kendoGrid");
+
+            $("#grid-tai-khoan-can-bo").on("click", ".k-grid-myDelete", function (e) {
+                e.preventDefault();
+
+                var command = $(this);
+                var cell = command.closest("td");
+
+                command.remove();
+                cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
+                cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
+            });
+
+            $("#grid-tai-khoan-can-bo").on("click", ".k-grid-myConfirm", function (e) {
+                e.preventDefault();
+                grid.removeRow($(this).closest("tr"))
+            });
+
+            $("#grid-tai-khoan-can-bo").on("click", ".k-grid-myCancel", function (e) {
+                e.preventDefault();
+                grid.refresh();
+            })
+
             // Nhập file excel
             var myWindow = $("#windowPopup");
             myWindow.kendoWindow({
@@ -249,12 +297,13 @@ function createTableTk(urlGet) {
             function categoryDropDownEditor(container, options) {
                 $('<img required="required" name="' + options.field + '" id="chan-dung" /><input type="file" onchange="readURL(this)" id="open-img"/>')
                     .appendTo(container)
-                $("#open-img").kendoUpload(); 
+                $("#open-img").kendoUpload();
             }
 
             // Tạo nút nhập excel
             var importBtn = $(".k-button.k-button-icontext.k-grid-custom");
             importBtn.click(function () {
+                $("input[type='file']").siblings("span").text("Chọn file...")
                 var myWindow = $("#windowPopup");
                 myWindow.kendoWindow({
                     width: "600px",
@@ -270,13 +319,6 @@ function createTableTk(urlGet) {
                 }
                 myWindow.data("kendoWindow").open();
                 importBtn.fadeOut();
-            });
-
-            var refreshBtn = $(".k-button.k-button-icontext.k-grid-custom1");
-            refreshBtn.click(function () {
-                grid.dataSource.read();
-                //$("#grid-tai-khoan-can-bo").html("");
-                //createTableTk(url + "/TaiKhoan/Read");
             });
         },
         error: function (xhr) {
@@ -404,20 +446,63 @@ function createTableTTBP(urlGet) {
     var grid = $("#grid-thong-tin-bo-phan").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
-        toolbar: [{ name: "create", text: "Thêm mới" }, { name: "custom2", text: "Làm mới", iconClass: "k-icon k-i-refresh" }],
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        toolbar: [{ name: "create", text: "Thêm mới" }],
         columns: [
             { field: "VietTat", title: "Mã bộ phận", width: 80 },
             { field: "TenBP", title: "Tên bộ phận", width: 100 },
-            { command: [{ name: "edit", title: "Cập nhật" }, { name: "destroy", title: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
         ],
-        editable: "popup"
+        editable: {
+            confirmation: false,
+            mode: "popup"
+        },
+        edit: function (e) {
+            $("input[type='file']").siblings("span").text("Chọn file...")
+            var nameField = e.container.find("input[name=TenBP]");
+            var name = nameField.val();
+            if (name.length > 0) {
+                e.container.data("kendoWindow").title("Cập nhật bộ phận " + name); // Title
+                var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                updateBtn.text("Cập nhật");
+                var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                cancelBtn.text("Hủy bỏ");
+            } else {
+                e.container.data("kendoWindow").title("Thêm mới bộ phận"); // Title
+                var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                updateBtn.text("Thêm mới");
+                var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                cancelBtn.text("Hủy bỏ");
+            }
+        }
     }).data("kendoGrid");
 
-    var refreshBtn = $(".k-button.k-button-icontext.k-grid-custom2");
-    refreshBtn.click(function () {
-        grid.dataSource.read();
+    $("#grid-thong-tin-bo-phan").on("click", ".k-grid-myDelete", function (e) {
+        e.preventDefault();
+
+        var command = $(this);
+        var cell = command.closest("td");
+
+        command.remove();
+        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
     });
+
+    $("#grid-thong-tin-bo-phan").on("click", ".k-grid-myConfirm", function (e) {
+        e.preventDefault();
+        grid.removeRow($(this).closest("tr"))
+    });
+
+    $("#grid-thong-tin-bo-phan").on("click", ".k-grid-myCancel", function (e) {
+        e.preventDefault();
+        grid.refresh();
+    })
 }
 // ================ Thông tin quầy ====================
 // Tạo bảng thông tin quầy
@@ -524,32 +609,92 @@ function createTableTTQ(urlGet) {
     var grid = $("#grid-thong-tin-quay").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
-        toolbar: [{ name: "create", text: "Thêm mới" }, { name: "custom3", text: "Làm mới", iconClass: "k-icon k-i-refresh" }],
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        toolbar: [{ name: "create", text: "Thêm mới" }],
         columns: [
             { field: "MaMay", title: "Số quầy", width: 80 },
             { field: "Mac", title: "Mã máy", width: 100 },
-            { command: [{ name: "edit", title: "Cập nhật" }, { name: "destroy", title: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "destroy", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
         ],
-        editable: "popup"
+        editable: {
+            confirmation: false,
+            mode: "popup"
+        },
+        dataBound: function () {
+            $(".k-grid-myDelete span").addClass("k-icon k-delete");
+        },
+        cancel: function () {
+            setTimeout(function () {
+                $(".k-grid-myDelete span").addClass("k-icon k-delete");
+            });
+        },
+        edit: function (e) {
+            $("input[type='file']").siblings("span").text("Chọn file...")
+            var nameField = e.container.find("input[name=MaMay]");
+            var name = nameField.val();
+            if (name > 0) {
+                e.container.data("kendoWindow").title("Cập nhật số quầy " + name); // Title
+                var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                updateBtn.text("Cập nhật");
+                var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                cancelBtn.text("Hủy bỏ");
+            } else {
+                e.container.data("kendoWindow").title("Thêm mới số quầy"); // Title
+                var updateBtn = e.container.find(".k-button.k-grid-update"); //update button
+                updateBtn.text("Thêm mới");
+                var cancelBtn = e.container.find(".k-button.k-grid-cancel"); //cancel button
+                cancelBtn.text("Hủy bỏ");
+            }
+        }
     }).data("kendoGrid");
 
-    var refreshBtn = $(".k-button.k-button-icontext.k-grid-custom3");
-    refreshBtn.click(function () {
-        grid.dataSource.read();
+    $("#grid-thong-tin-quay").on("click", ".k-grid-myDelete", function (e) {
+        e.preventDefault();
+
+        var command = $(this);
+        var cell = command.closest("td");
+
+        command.remove();
+        cell.append('<a class="k-button k-button-icontext k-grid-myConfirm" href="#"><span class="k-icon k-update"></span>Confirm</a>');
+        cell.append('<a class="k-button k-button-icontext k-grid-myCancel" href="#"><span class="k-icon k-cancel"></span>Cancel</a>');
     });
+
+    $("#grid-thong-tin-quay").on("click", ".k-grid-myConfirm", function (e) {
+        e.preventDefault();
+        grid.removeRow($(this).closest("tr"))
+    });
+
+    $("#grid-thong-tin-quay").on("click", ".k-grid-myCancel", function (e) {
+        e.preventDefault();
+        grid.refresh();
+    })
 }
 
 // Tạo sự kiện chọn các sub-tabstrip trong tab Thông tin
 $("#menu-thong-tin-can-bo-tk").click(function () {
+    clearGrid();
     // Tạo bảng tài khoản cán bộ
     createTableTk(url + "/TaiKhoan/Read");
 })
 $("#menu-thong-tin-can-bo-bp").click(function () {
+    clearGrid();
     // Tạo bảng thông tin bộ phận
     createTableTTBP(url + "/BoPhan/Read");
 })
 $("#menu-thong-tin-can-bo-sq").click(function () {
+    clearGrid();
     // Tạo bảng thông tin quầy
     createTableTTQ(url + "/SoQuay/Read");
 })
+// Xóa toàn bộ grid
+function clearGrid() {
+    $("#grid-tai-khoan-can-bo").html("");
+    $("#grid-thong-tin-bo-phan").html("");
+    $("#grid-thong-tin-quay").html("");
+}

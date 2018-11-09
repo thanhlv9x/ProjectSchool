@@ -215,7 +215,7 @@ function createYearColumnThuTucTH() {
                     dataSource: arr
                 });
                 createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
-                createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val() + "&_Tong=1", "Bảng thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
+                createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
             } else {
                 $("#year-column-thu-tuc-th").val(0);
                 $("#body-thu-tuc-th>div:first-child").hide();
@@ -231,7 +231,7 @@ function createYearColumnThuTucTH() {
 $("#year-column-thu-tuc-th").change(function () {
     if ($("#cbx-year-thu-tuc-th").prop("checked")) {
         createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp năm " + $("#year-column-thu-tuc-th").val());
-        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val() + "&_Tong=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-th").val());
+        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-th").val());
     }
 })
 // Tạo thanh chọn thời gian cho biểu đồ tròn
@@ -253,7 +253,7 @@ function createMonthCircleThuTucTH() {
                     //disableDates: ["sa", "su"]
                 });
                 createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
-                createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_Tong=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
+                createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
             } else {
                 $("#month-column-thu-tuc-th").val("09 2018");
             }
@@ -267,7 +267,7 @@ function createMonthCircleThuTucTH() {
 $("#month-column-thu-tuc-th").change(function () {
     if ($("#cbx-month-thu-tuc-th").prop("checked")) {
         createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
-        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_Tong=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
+        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
@@ -318,40 +318,24 @@ function createGridThuTucTH(urlStr, titleStr) {
         pageSize: 20,
         schema: {
             model: {
-                id: "MaSTT",
+                id: "MaBP",
                 fields: {
-                    MaSTT: { type: "number" },
-                    SoThuTu: { type: "number", validation: { required: true } },
+                    MaBP: { type: "number" },
                     TenBP: { type: "string", validation: { required: true } },
-                    Ngay: { type: "date", validation: { required: true } },
-                    ThoiGianRut: { type: "date", validation: { required: true } },
-                    ThoiGianGoi: { type: "date", validation: { required: true } },
-                    ThoiGianHoanTat: { type: "date", validation: { required: true } },
+                    VietTat: { type: "string", validation: { required: true } },
                     ThoiGianCho: { type: "number", validation: { required: true } },
                     ThoiGianGiaiQuyet: { type: "number", validation: { required: true } },
-                    TongThoiGian: { type: "number", validation: { required: true } }
+                    TongThoiGian: { type: "number", validation: { required: true } },
+                    SoLuongGiaiQuyet: { type: "number", validation: { required: true } },
                 }
             }
         },
-        group: {
-            field: "TenBP", aggregates: [
-                { field: "SoThuTu", aggregate: "count" },
-                { field: "ThoiGianCho", aggregate: "average" },
-                { field: "ThoiGianCho", aggregate: "sum" },
-                { field: "ThoiGianCho", aggregate: "max" },
-                { field: "ThoiGianCho", aggregate: "min" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "average" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "min" },
-                { field: "TongThoiGian", aggregate: "average" },
-                { field: "TongThoiGian", aggregate: "sum" },
-                { field: "TongThoiGian", aggregate: "max" },
-                { field: "TongThoiGian", aggregate: "min" },
-            ]
-        },
         aggregate: [
-            { field: "SoThuTu", aggregate: "count" },
+            { field: "VietTat", aggregate: "count" },
+            { field: "SoLuongGiaiQuyet", aggregate: "average" },
+            { field: "SoLuongGiaiQuyet", aggregate: "sum" },
+            { field: "SoLuongGiaiQuyet", aggregate: "min" },
+            { field: "SoLuongGiaiQuyet", aggregate: "max" },
             { field: "ThoiGianCho", aggregate: "average" },
             { field: "ThoiGianCho", aggregate: "sum" },
             { field: "ThoiGianCho", aggregate: "max" },
@@ -372,31 +356,30 @@ function createGridThuTucTH(urlStr, titleStr) {
         navigatable: true,
         pageable: {
             refresh: true,
-            pageSizes: true,
-            buttonCount: 5
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
         },
         columns: [
-            { hidden: true, field: "TenBP", title: "Tên bộ phận", width: 100 },
-            { field: "SoThuTu", title: "Số thứ tự", width: 70, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng cộng: #=count#" },
-            { field: "Ngay", title: "Ngày", width: 70, format: "{0:dd MM yyyy}" },
-            { field: "ThoiGianRut", title: "Thời điểm lấy số", width: 120, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianGoi", title: "Thời điểm gọi số", width: 120, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianHoanTat", title: "Thời điểm hoàn tất", width: 80, format: "{0:HH:mm:ss}" },
+            { field: "VietTat", title: "Mã bộ phận", width: 1, footerTemplate: "Tổng cộng: #=count#" },
+            { field: "TenBP", title: "Tên bộ phận", width: 2 },
             {
-                field: "ThoiGianCho", title: "Thời gian chờ (Phút)", width: 100,
-                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                field: "ThoiGianCho", title: "Thời gian chờ trung bình (Phút)", width: 2,
                 footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
             },
             {
-                field: "ThoiGianGiaiQuyet", title: "Thời gian giải quyết (Phút)", width: 100,
-                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                field: "ThoiGianGiaiQuyet", title: "Thời gian giải quyết trung bình (Phút)", width: 2,
                 footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
             },
             {
-                field: "TongThoiGian", title: "Tổng thời gian (Phút)", width: 100,
-                groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>",
+                field: "TongThoiGian", title: "Tổng thời gian trung bình (Phút)", width: 2,
                 footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
             },
+            {
+                field: "SoLuongGiaiQuyet", title: "Tổng số lượng (Lần)", width: 2,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            }
         ],
     }).data("kendoGrid");
     $("#title-grid-thu-tuc-th").text(titleStr);
@@ -616,7 +599,7 @@ function createYearColumnThuTucBP() {
                     dataSource: arr
                 });
                 createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
-                createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
+                createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
             } else {
                 $("#year-column-thu-tuc-bp").val(0);
                 $("#body-thu-tuc-bp>div:first-child").hide();
@@ -632,7 +615,7 @@ function createYearColumnThuTucBP() {
 $("#year-column-thu-tuc-bp").change(function () {
     if ($("#cbx-year-thu-tuc-bp").prop("checked")) {
         createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
-        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
+        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
     }
 })
 // Tạo thanh chọn thời gian cho biểu đồ tròn
@@ -654,7 +637,7 @@ function createMonthCircleThuTucBP() {
                     //disableDates: ["sa", "su"]
                 });
                 createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
-                createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
+                createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
             } else {
                 $("#month-column-thu-tuc-bp").val("09 2018");
             }
@@ -668,7 +651,7 @@ function createMonthCircleThuTucBP() {
 $("#month-column-thu-tuc-bp").change(function () {
     if ($("#cbx-month-thu-tuc-bp").prop("checked")) {
         createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
-        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
+        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
@@ -711,53 +694,29 @@ function createGridThuTucBP(urlStr, titleStr) {
         pageSize: 20,
         schema: {
             model: {
-                id: "MaSTT",
+                id: "MaCB",
                 fields: {
-                    MaSTT: { type: "number" },
-                    SoThuTu: { type: "number", validation: { required: true } },
+                    MaCB: { type: "number" },
                     HoTen: { type: "string", validation: { required: true } },
-                    Ngay: { type: "date", validation: { required: true }, },
-                    ThoiGianRut: { type: "date", validation: { required: true } },
-                    ThoiGianGoi: { type: "date", validation: { required: true } },
-                    ThoiGianHoanTat: { type: "date", validation: { required: true } },
+                    MaCBSD: { type: "string", validation: { required: true } },
                     ThoiGianCho: { type: "number", validation: { required: true } },
                     ThoiGianGiaiQuyet: { type: "number", validation: { required: true } },
-                    TongThoiGian: { type: "number", validation: { required: true } }
+                    TongThoiGian: { type: "number", validation: { required: true } },
+                    SoLuongGiaiQuyet: { type: "number", validation: { required: true } }
                 }
             }
         },
-        group: {
-            field: "HoTen", aggregates: [
-                { field: "SoThuTu", aggregate: "count" },
-                { field: "ThoiGianCho", aggregate: "average" },
-                { field: "ThoiGianCho", aggregate: "sum" },
-                { field: "ThoiGianCho", aggregate: "min" },
-                { field: "ThoiGianCho", aggregate: "max" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "average" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "min" },
-                { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-                { field: "TongThoiGian", aggregate: "average" },
-                { field: "TongThoiGian", aggregate: "sum" },
-                { field: "TongThoiGian", aggregate: "min" },
-                { field: "TongThoiGian", aggregate: "max" },
-            ]
-        },
 
         aggregate: [
-            { field: "SoThuTu", aggregate: "count" },
-            { field: "ThoiGianCho", aggregate: "average" },
-            { field: "ThoiGianCho", aggregate: "sum" },
-            { field: "ThoiGianCho", aggregate: "min" },
-            { field: "ThoiGianCho", aggregate: "max" },
+            { field: "MaCBSD", aggregate: "count" },
+            { field: "SoLuongGiaiQuyet", aggregate: "average" },
+            { field: "SoLuongGiaiQuyet", aggregate: "sum" },
+            { field: "SoLuongGiaiQuyet", aggregate: "min" },
+            { field: "SoLuongGiaiQuyet", aggregate: "max" },
             { field: "ThoiGianGiaiQuyet", aggregate: "average" },
             { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
             { field: "ThoiGianGiaiQuyet", aggregate: "min" },
-            { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-            { field: "TongThoiGian", aggregate: "average" },
-            { field: "TongThoiGian", aggregate: "sum" },
-            { field: "TongThoiGian", aggregate: "min" },
-            { field: "TongThoiGian", aggregate: "max" },
+            { field: "ThoiGianGiaiQuyet", aggregate: "max" }
         ]
 
     });
@@ -765,17 +724,24 @@ function createGridThuTucBP(urlStr, titleStr) {
     var grid = $("#grid-thu-tuc-bp").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
-            { field: "SoThuTu", title: "Số thứ tự", width: 60, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng cộng: #=count#" },
-            { field: "Ngay", title: "Ngày", width: 50, format: "{0:dd MM yyyy}" },
-            { field: "ThoiGianRut", title: "Thời điểm lấy số", width: 80, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianGoi", title: "Thời điểm gọi số", width: 80, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianHoanTat", title: "Thời điểm hoàn tất", width: 80, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "ThoiGianGiaiQuyet", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "TongThoiGian", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { hidden: true, field: "HoTen", title: "Họ tên", width: 1 },
+            { field: "MaCBSD", title: "Mã cán bộ", width: 1, footerTemplate: "Tổng cộng: #=count#" },
+            { field: "HoTen", title: "Họ tên", width: 2 },
+            {
+                field: "ThoiGianGiaiQuyet", title: "Thời gian giải quyết trung bình (Phút)", width: 2,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            },
+            {
+                field: "SoLuongGiaiQuyet", title: "Tổng số lượng (Lần)", width: 2,
+                footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>"
+            }
         ],
     }).data("kendoGrid");
     //grid.hideColumn("HoTen");
@@ -1046,49 +1012,29 @@ function createGridThuTucCB(urlStr, titleStr) {
                 fields: {
                     MaSTT: { type: "number" },
                     SoThuTu: { type: "number", validation: { required: true } },
-                    HoTen: { type: "string", validation: { required: true } },
                     Ngay: { type: "date", validation: { required: true }, },
-                    ThoiGianRut: { type: "date", validation: { required: true } },
                     ThoiGianGoi: { type: "date", validation: { required: true } },
                     ThoiGianHoanTat: { type: "date", validation: { required: true } },
-                    ThoiGianCho: { type: "number", validation: { required: true } },
                     ThoiGianGiaiQuyet: { type: "number", validation: { required: true } },
-                    TongThoiGian: { type: "number", validation: { required: true } }
                 }
             }
         },
         group: {
             field: "Ngay", aggregates: [
                 { field: "SoThuTu", aggregate: "count" },
-                { field: "ThoiGianCho", aggregate: "average" },
-                { field: "ThoiGianCho", aggregate: "sum" },
-                { field: "ThoiGianCho", aggregate: "min" },
-                { field: "ThoiGianCho", aggregate: "max" },
                 { field: "ThoiGianGiaiQuyet", aggregate: "average" },
                 { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
                 { field: "ThoiGianGiaiQuyet", aggregate: "min" },
                 { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-                { field: "TongThoiGian", aggregate: "average" },
-                { field: "TongThoiGian", aggregate: "sum" },
-                { field: "TongThoiGian", aggregate: "min" },
-                { field: "TongThoiGian", aggregate: "max" },
             ]
         },
 
         aggregate: [
             { field: "SoThuTu", aggregate: "count" },
-            { field: "ThoiGianCho", aggregate: "average" },
-            { field: "ThoiGianCho", aggregate: "sum" },
-            { field: "ThoiGianCho", aggregate: "min" },
-            { field: "ThoiGianCho", aggregate: "max" },
             { field: "ThoiGianGiaiQuyet", aggregate: "average" },
             { field: "ThoiGianGiaiQuyet", aggregate: "sum" },
             { field: "ThoiGianGiaiQuyet", aggregate: "min" },
             { field: "ThoiGianGiaiQuyet", aggregate: "max" },
-            { field: "TongThoiGian", aggregate: "average" },
-            { field: "TongThoiGian", aggregate: "sum" },
-            { field: "TongThoiGian", aggregate: "min" },
-            { field: "TongThoiGian", aggregate: "max" },
         ]
 
     });
@@ -1096,16 +1042,18 @@ function createGridThuTucCB(urlStr, titleStr) {
     var grid = $("#grid-thu-tuc-cb").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
-            //{ field: "HoTen", title: "Họ tên", width: 100 },
             { field: "SoThuTu", title: "Số thứ tự", width: 60, footerTemplate: "Tổng cộng: #=count#", groupFooterTemplate: "Tổng cộng: #=count#" },
-            { field: "ThoiGianRut", title: "Thời điểm lấy số", width: 80, format: "{0:HH:mm:ss}" },
             { field: "ThoiGianGoi", title: "Thời điểm gọi số", width: 80, format: "{0:HH:mm:ss}" },
             { field: "ThoiGianHoanTat", title: "Thời điểm hoàn tất", width: 80, format: "{0:HH:mm:ss}" },
-            { field: "ThoiGianCho", title: "Phiên chờ (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "ThoiGianGiaiQuyet", title: "Phiên giải quyết (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
-            { field: "TongThoiGian", title: "Tổng phiên (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
+            { field: "ThoiGianGiaiQuyet", title: "Thời gian giải quyết (Phút)", width: 100, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #if(average==null){#<span>#=0#</span>#}else{#<span>#=Math.round(average*100)/100#</span>#}#</div><div>Lớn nhất: #=max#</div><div>Nhỏ nhất: #=min#</div>" },
             { hidden: true, field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
         ],
     }).data("kendoGrid");

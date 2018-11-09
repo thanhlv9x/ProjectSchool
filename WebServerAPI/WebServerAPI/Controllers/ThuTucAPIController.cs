@@ -74,13 +74,13 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
-                        so_luong_giai_quyet++;
+                            so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(average_cho / lstSttEF.Count, 0);
-                        average_xuly = Math.Round(average_xuly / lstSttEF.Count, 0);
+                        average_cho = Math.Round(average_cho / so_luong_giai_quyet, 0);
+                        average_xuly = Math.Round(average_xuly / so_luong_giai_quyet, 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()
@@ -147,10 +147,10 @@ namespace WebServerAPI.Controllers
                             so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(Math.Abs(average_cho / lstSttEF.Count), 0);
-                        average_xuly = Math.Round(Math.Abs(average_xuly / lstSttEF.Count), 0);
+                        average_cho = Math.Round(Math.Abs(average_cho / so_luong_giai_quyet), 0);
+                        average_xuly = Math.Round(Math.Abs(average_xuly / so_luong_giai_quyet), 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()
@@ -304,6 +304,340 @@ namespace WebServerAPI.Controllers
             return lstMD;
         }
         /// <summary>
+        /// Lấy thời gian giải quyết thủ tục trung bình theo thời gian của tất cả bộ phận
+        /// </summary>
+        /// <param name="_Loai">Loại thời gian (Tháng hoặc năm)</param>
+        /// <param name="_GiaTri">Giá trị thời gian theo loại thời gian</param>
+        /// <param name="_BP">Tham số xác thực phương thức</param>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<ThuTucChart> GetTongHopBoPhan(string _Loai, string _GiaTri, string _BP)
+        {
+            IList<ThuTucChart> lstMD = new List<ThuTucChart>();
+            DateTime start = new DateTime();
+            DateTime end = new DateTime();
+            var listBP = db.BOPHANs.OrderBy(p => p.MABP).ToList();
+            if (_Loai == "nam") // Nếu thống kê theo năm thì sẽ tạo ra khoảng thời gian trong 1 năm
+            {
+                foreach (var itemBP in listBP)
+                {
+                    var viettat = itemBP.VIETTAT;
+                    var mabp = itemBP.MABP;
+                    var tenbp = itemBP.TENBP;
+                    int Nam = Convert.ToInt32(_GiaTri);
+                    start = new DateTime(Nam, 1, 1, 0, 0, 0);
+                    end = new DateTime(Nam, 12, DateTime.DaysInMonth(Nam, 12), 23, 59, 59);// Tìm các số thứ tự từ đầu đến cuối năm
+                    var lstSttEF = db.KETQUADANHGIAs.Where(p => p.TG >= start &&
+                                                                p.TG <= end &&
+                                                                p.SOTHUTU.CANBO.MABP == mabp)
+                                                    .ToList();
+                    double average_cho = 0;
+                    double average_xuly = 0;
+                    double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
+                    // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
+                    foreach (var item in lstSttEF)
+                    {
+                        DateTime tg = (DateTime)(item.TG);
+                        DateTime now = new DateTime(tg.Year, tg.Month, tg.Day, 0, 0, 0);
+                        DateTime endNow = new DateTime(tg.Year, tg.Month, tg.Day, 23, 59, 59);
+                        //int mabp = (int)item.SOTHUTU.CANBO.MABP;
+                        int macb = (int)item.SOTHUTU.MACB;
+                        int stt = (int)item.SOTHUTU.STT;
+                        int mastt = (int)item.MASTT;
+
+                        var rutso = db.SOTOIDAs.Where(p => p.STTTD == stt &&
+                                                           p.MABP == mabp &&
+                                                           p.TG >= now &&
+                                                           p.TG <= endNow)
+                                                    .Select(p => p.TG)
+                                                    .FirstOrDefault();
+                        var goiso = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                               .Select(p => p.BD)
+                                               .FirstOrDefault();
+                        var hoantat = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                                 .Select(p => p.KT)
+                                                 .FirstOrDefault();
+                        if (rutso != null && goiso != null && hoantat != null)
+                        {
+                            DateTime tg_rut = (DateTime)rutso;
+                            DateTime tg_goi = (DateTime)goiso;
+                            DateTime tg_hoan_tat = (DateTime)hoantat;
+                            double phien_cho = Math.Abs(((TimeSpan)(tg_rut - tg_goi)).TotalMinutes);
+                            double phien_xu_ly = Math.Abs(((TimeSpan)(tg_goi - tg_hoan_tat)).TotalMinutes);
+                            //double phien_tong = phien_cho + phien_xu_ly;
+                            average_cho += phien_cho;
+                            average_xuly += phien_xu_ly;
+                            //average_tong += tong_phien;
+                            so_luong_giai_quyet++;
+                        }
+                    }
+                    if (so_luong_giai_quyet > 0)
+                    {
+                        average_cho = Math.Round(average_cho / so_luong_giai_quyet, 0);
+                        average_xuly = Math.Round(average_xuly / so_luong_giai_quyet, 0);
+                        average_tong = average_cho + average_xuly;
+                    }
+                    ThuTucChart md = new ThuTucChart()
+                    {
+                        MaBP = mabp,
+                        TenBP = tenbp,
+                        VietTat = viettat,
+                        ThoiGianCho = average_cho,
+                        ThoiGianGiaiQuyet = average_xuly,
+                        TongThoiGian = average_tong,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
+                    };
+                    lstMD.Add(md);
+                }
+            }
+            else if (_Loai == "thang") // Nếu thống kê theo tháng thì sẽ tạo ra khoảng thời gian trong 1 tháng
+            {
+                string[] arr = _GiaTri.Split(' ');
+                int Nam = Convert.ToInt32(arr[1]);
+                int Thang = Convert.ToInt32(arr[0]);
+                start = new DateTime(Nam, Thang, 1, 0, 0, 0);
+                end = new DateTime(Nam, Thang, DateTime.DaysInMonth(Nam, Thang), 23, 59, 59);
+                foreach (var itemBP in listBP)
+                {
+                    var viettat = itemBP.VIETTAT;
+                    var mabp = itemBP.MABP;
+                    var tenbp = itemBP.TENBP;
+                    // Tìm các số thứ tự từ đầu đến cuối tháng
+                    var lstSttEF = db.KETQUADANHGIAs.Where(p => p.TG >= start &&
+                                                                p.TG <= end &&
+                                                                p.SOTHUTU.CANBO.MABP == mabp)
+                                                    .ToList();
+                    // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
+                    double average_cho = 0;
+                    double average_xuly = 0;
+                    double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
+                    foreach (var item in lstSttEF)
+                    {
+                        DateTime tg = (DateTime)(item.TG);
+                        DateTime now = new DateTime(tg.Year, tg.Month, tg.Day, 0, 0, 0);
+                        DateTime endNow = new DateTime(tg.Year, tg.Month, tg.Day, 23, 59, 59);
+                        //int mabp = (int)item.SOTHUTU.CANBO.MABP;
+                        int macb = (int)item.SOTHUTU.MACB;
+                        int stt = (int)item.SOTHUTU.STT;
+                        int mastt = (int)item.MASTT;
+
+                        var rutso = db.SOTOIDAs.Where(p => p.STTTD == stt &&
+                                                           p.MABP == mabp &&
+                                                           p.TG >= now &&
+                                                           p.TG <= endNow)
+                                                    .Select(p => p.TG)
+                                                    .FirstOrDefault();
+                        var goiso = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                               .Select(p => p.BD)
+                                               .FirstOrDefault();
+                        var hoantat = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                                 .Select(p => p.KT)
+                                                 .FirstOrDefault();
+                        if (rutso != null && goiso != null && hoantat != null)
+                        {
+                            DateTime tg_rut = (DateTime)rutso;
+                            DateTime tg_goi = (DateTime)goiso;
+                            DateTime tg_hoan_tat = (DateTime)hoantat;
+                            double phien_cho = Math.Abs(((TimeSpan)(tg_rut - tg_goi)).TotalMinutes);
+                            double phien_xu_ly = Math.Abs(((TimeSpan)(tg_goi - tg_hoan_tat)).TotalMinutes);
+                            double tong_phien = phien_cho + phien_xu_ly;
+                            average_cho += phien_cho;
+                            average_xuly += phien_xu_ly;
+                            so_luong_giai_quyet++;
+                        }
+                    }
+                    if (so_luong_giai_quyet > 0)
+                    {
+                        average_cho = Math.Round(Math.Abs(average_cho / so_luong_giai_quyet), 0);
+                        average_xuly = Math.Round(Math.Abs(average_xuly / so_luong_giai_quyet), 0);
+                        average_tong = average_cho + average_xuly;
+                    }
+                    ThuTucChart md = new ThuTucChart()
+                    {
+                        MaBP = mabp,
+                        TenBP = tenbp,
+                        VietTat = viettat,
+                        ThoiGianCho = average_cho,
+                        ThoiGianGiaiQuyet = average_xuly,
+                        TongThoiGian = average_tong,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
+                    };
+                    lstMD.Add(md);
+                }
+            }
+            return lstMD;
+        }
+        /// <summary>
+        /// Lấy thời gian giải quyết thủ tục trung bình theo thời gian của tất cả bộ phận
+        /// </summary>
+        /// <param name="_Loai">Loại thời gian (Tháng hoặc năm)</param>
+        /// <param name="_GiaTri">Giá trị thời gian theo loại thời gian</param>
+        /// <param name="_MaBP">Mã bộ phận</param>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<ThuTucChart> GetTongHopCanBo(string _Loai, string _GiaTri, int _MaBP, string _CB)
+        {
+            IList<ThuTucChart> lstMD = new List<ThuTucChart>();
+            DateTime start = new DateTime();
+            DateTime end = new DateTime();
+            var listCB = db.CANBOes.Where(p=>p.MABP == _MaBP)
+                                   .OrderBy(p => p.MACB)
+                                   .ToList();
+            if (_Loai == "nam") // Nếu thống kê theo năm thì sẽ tạo ra khoảng thời gian trong 1 năm
+            {
+                foreach (var itemCB in listCB)
+                {
+                    var macbsd = itemCB.MACBSD;
+                    var macb = itemCB.MACB;
+                    var hoten = itemCB.HOTEN;
+                    int Nam = Convert.ToInt32(_GiaTri);
+                    start = new DateTime(Nam, 1, 1, 0, 0, 0);
+                    end = new DateTime(Nam, 12, DateTime.DaysInMonth(Nam, 12), 23, 59, 59);// Tìm các số thứ tự từ đầu đến cuối năm
+                    var lstSttEF = db.KETQUADANHGIAs.Where(p => p.TG >= start &&
+                                                                p.TG <= end &&
+                                                                p.SOTHUTU.MACB == macb)
+                                                    .ToList();
+                    double average_cho = 0;
+                    double average_xuly = 0;
+                    double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
+                    // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
+                    foreach (var item in lstSttEF)
+                    {
+                        DateTime tg = (DateTime)(item.TG);
+                        DateTime now = new DateTime(tg.Year, tg.Month, tg.Day, 0, 0, 0);
+                        DateTime endNow = new DateTime(tg.Year, tg.Month, tg.Day, 23, 59, 59);
+                        //int mabp = (int)item.SOTHUTU.CANBO.MABP;
+                        //int macb = (int)item.SOTHUTU.MACB;
+                        int stt = (int)item.SOTHUTU.STT;
+                        int mastt = (int)item.MASTT;
+
+                        var rutso = db.SOTOIDAs.Where(p => p.STTTD == stt &&
+                                                           p.MABP == _MaBP &&
+                                                           p.TG >= now &&
+                                                           p.TG <= endNow)
+                                                    .Select(p => p.TG)
+                                                    .FirstOrDefault();
+                        var goiso = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                               .Select(p => p.BD)
+                                               .FirstOrDefault();
+                        var hoantat = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                                 .Select(p => p.KT)
+                                                 .FirstOrDefault();
+                        if (rutso != null && goiso != null && hoantat != null)
+                        {
+                            DateTime tg_rut = (DateTime)rutso;
+                            DateTime tg_goi = (DateTime)goiso;
+                            DateTime tg_hoan_tat = (DateTime)hoantat;
+                            double phien_cho = Math.Abs(((TimeSpan)(tg_rut - tg_goi)).TotalMinutes);
+                            double phien_xu_ly = Math.Abs(((TimeSpan)(tg_goi - tg_hoan_tat)).TotalMinutes);
+                            //double phien_tong = phien_cho + phien_xu_ly;
+                            average_cho += phien_cho;
+                            average_xuly += phien_xu_ly;
+                            //average_tong += tong_phien;
+                            so_luong_giai_quyet++;
+                        }
+                    }
+                    if (so_luong_giai_quyet > 0)
+                    {
+                        average_cho = Math.Round(average_cho / so_luong_giai_quyet, 0);
+                        average_xuly = Math.Round(average_xuly / so_luong_giai_quyet, 0);
+                        average_tong = average_cho + average_xuly;
+                    }
+                    ThuTucChart md = new ThuTucChart()
+                    {
+                        MaCB = macb,
+                        HoTen = hoten,
+                        MaCBSD = macbsd,
+                        ThoiGianCho = average_cho,
+                        ThoiGianGiaiQuyet = average_xuly,
+                        TongThoiGian = average_tong,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
+                    };
+                    lstMD.Add(md);
+                }
+            }
+            else if (_Loai == "thang") // Nếu thống kê theo tháng thì sẽ tạo ra khoảng thời gian trong 1 tháng
+            {
+                string[] arr = _GiaTri.Split(' ');
+                int Nam = Convert.ToInt32(arr[1]);
+                int Thang = Convert.ToInt32(arr[0]);
+                start = new DateTime(Nam, Thang, 1, 0, 0, 0);
+                end = new DateTime(Nam, Thang, DateTime.DaysInMonth(Nam, Thang), 23, 59, 59);
+                foreach (var itemCB in listCB)
+                {
+                    var macbsd = itemCB.MACBSD;
+                    var macb = itemCB.MACB;
+                    var hoten = itemCB.HOTEN;
+                    // Tìm các số thứ tự từ đầu đến cuối tháng
+                    var lstSttEF = db.KETQUADANHGIAs.Where(p => p.TG >= start &&
+                                                                p.TG <= end &&
+                                                                p.SOTHUTU.MACB == macb)
+                                                    .ToList();
+                    // Tìm thời gian rút số, gọi số, hoàn tất với mỗi số thứ tự
+                    double average_cho = 0;
+                    double average_xuly = 0;
+                    double average_tong = 0;
+                    int so_luong_giai_quyet = 0;
+                    foreach (var item in lstSttEF)
+                    {
+                        DateTime tg = (DateTime)(item.TG);
+                        DateTime now = new DateTime(tg.Year, tg.Month, tg.Day, 0, 0, 0);
+                        DateTime endNow = new DateTime(tg.Year, tg.Month, tg.Day, 23, 59, 59);
+                        //int mabp = (int)item.SOTHUTU.CANBO.MABP;
+                        //int macb = (int)item.SOTHUTU.MACB;
+                        int stt = (int)item.SOTHUTU.STT;
+                        int mastt = (int)item.MASTT;
+
+                        var rutso = db.SOTOIDAs.Where(p => p.STTTD == stt &&
+                                                           p.MABP == _MaBP &&
+                                                           p.TG >= now &&
+                                                           p.TG <= endNow)
+                                                    .Select(p => p.TG)
+                                                    .FirstOrDefault();
+                        var goiso = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                               .Select(p => p.BD)
+                                               .FirstOrDefault();
+                        var hoantat = db.SOTHUTUs.Where(p => p.MASTT == mastt)
+                                                 .Select(p => p.KT)
+                                                 .FirstOrDefault();
+                        if (rutso != null && goiso != null && hoantat != null)
+                        {
+                            DateTime tg_rut = (DateTime)rutso;
+                            DateTime tg_goi = (DateTime)goiso;
+                            DateTime tg_hoan_tat = (DateTime)hoantat;
+                            double phien_cho = Math.Abs(((TimeSpan)(tg_rut - tg_goi)).TotalMinutes);
+                            double phien_xu_ly = Math.Abs(((TimeSpan)(tg_goi - tg_hoan_tat)).TotalMinutes);
+                            double tong_phien = phien_cho + phien_xu_ly;
+                            average_cho += phien_cho;
+                            average_xuly += phien_xu_ly;
+                            so_luong_giai_quyet++;
+                        }
+                    }
+                    if (so_luong_giai_quyet > 0)
+                    {
+                        average_cho = Math.Round(Math.Abs(average_cho / so_luong_giai_quyet), 0);
+                        average_xuly = Math.Round(Math.Abs(average_xuly / so_luong_giai_quyet), 0);
+                        average_tong = average_cho + average_xuly;
+                    }
+                    ThuTucChart md = new ThuTucChart()
+                    {
+                        MaCB = macb,
+                        HoTen = hoten,
+                        MaCBSD = macbsd,
+                        ThoiGianCho = average_cho,
+                        ThoiGianGiaiQuyet = average_xuly,
+                        TongThoiGian = average_tong,
+                        SoLuongGiaiQuyet = so_luong_giai_quyet
+                    };
+                    lstMD.Add(md);
+                }
+            }
+            return lstMD;
+        }
+        /// <summary>
         /// Lấy thời gian giải quyết thủ tục theo bộ phận
         /// (thời gian chờ, thời gian giải quyết, tổng thời gian)
         /// </summary>
@@ -367,13 +701,13 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
-                        so_luong_giai_quyet++;
+                            so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(average_cho / lstSttEF.Count, 0);
-                        average_xuly = Math.Round(average_xuly / lstSttEF.Count, 0);
+                        average_cho = Math.Round(average_cho / so_luong_giai_quyet, 0);
+                        average_xuly = Math.Round(average_xuly / so_luong_giai_quyet, 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()
@@ -438,13 +772,13 @@ namespace WebServerAPI.Controllers
                             double tong_phien = phien_cho + phien_xu_ly;
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
-                        so_luong_giai_quyet++;
+                            so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(Math.Abs(average_cho / lstSttEF.Count), 0);
-                        average_xuly = Math.Round(Math.Abs(average_xuly / lstSttEF.Count), 0);
+                        average_cho = Math.Round(Math.Abs(average_cho / so_luong_giai_quyet), 0);
+                        average_xuly = Math.Round(Math.Abs(average_xuly / so_luong_giai_quyet), 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()
@@ -666,13 +1000,13 @@ namespace WebServerAPI.Controllers
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
                             //average_tong += tong_phien;
-                        so_luong_giai_quyet++;
+                            so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(average_cho / lstSttEF.Count, 0);
-                        average_xuly = Math.Round(average_xuly / lstSttEF.Count, 0);
+                        average_cho = Math.Round(average_cho / so_luong_giai_quyet, 0);
+                        average_xuly = Math.Round(average_xuly / so_luong_giai_quyet, 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()
@@ -737,13 +1071,13 @@ namespace WebServerAPI.Controllers
                             double tong_phien = phien_cho + phien_xu_ly;
                             average_cho += phien_cho;
                             average_xuly += phien_xu_ly;
-                        so_luong_giai_quyet++;
+                            so_luong_giai_quyet++;
                         }
                     }
-                    if (lstSttEF.Count > 0)
+                    if (so_luong_giai_quyet > 0)
                     {
-                        average_cho = Math.Round(Math.Abs(average_cho / lstSttEF.Count), 0);
-                        average_xuly = Math.Round(Math.Abs(average_xuly / lstSttEF.Count), 0);
+                        average_cho = Math.Round(Math.Abs(average_cho / so_luong_giai_quyet), 0);
+                        average_xuly = Math.Round(Math.Abs(average_xuly / so_luong_giai_quyet), 0);
                         average_tong = average_cho + average_xuly;
                     }
                     ThuTucChart md = new ThuTucChart()

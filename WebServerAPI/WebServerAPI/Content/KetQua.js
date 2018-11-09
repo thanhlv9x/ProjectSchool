@@ -285,13 +285,13 @@ function createTableTH(urlStr, titleStr) {
                         var trungbinh = 0;
                         if (diem != 0 && solan != 0) {
                             trungbinh = diem / solan;
-                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                            trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
                         var xeploai = "";
-                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-tong").val(trungbinh);
                         $("#xep-loai-tong").val(xeploai);
                         options.success(result);
@@ -337,7 +337,13 @@ function createTableTH(urlStr, titleStr) {
     var grid = $("#grid-all-th").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "Loai", title: "Mức độ đánh giá", width: 1 },
             { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
@@ -411,7 +417,13 @@ function createTableTH_MucDo(urlStr, titleStr, idGrid, idSpan) {
     var grid = $(idGrid).kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "HoTen", title: "Bộ phận", width: 5 },
             { field: "TyLe", title: "Tỷ lệ (%)", width: 2 },
@@ -477,10 +489,12 @@ $("#click-details-th").click(function () {
         $("#footer-th").show("slow");
         $("#click-details-th").text("Thu gọn");
         clickTH = true;
+        return;
     } else {
         $("#footer-th").hide("slow");
         $("#click-details-th").text("Xem chi tiết");
         clickTH = false;
+        return;
     }
 })
 $("#diem-tong, #xep-loai-tong, #diem-bp, #xep-loai-bp, #diem-cb, #xep-loai-cb").kendoMaskedTextBox();
@@ -630,13 +644,13 @@ function createTableBP(urlStr, titleStr) {
                         var trungbinh = 0;
                         if (diem != 0 && solan != 0) {
                             trungbinh = diem / solan;
-                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                            trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
                         var xeploai = "";
-                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-bp").val(trungbinh);
                         $("#xep-loai-bp").val(xeploai);
                         options.success(result);
@@ -682,7 +696,13 @@ function createTableBP(urlStr, titleStr) {
     var grid = $("#grid-ty-le").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "Loai", title: "Mức độ đánh giá", width: 1 },
             { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
@@ -756,7 +776,13 @@ function createTableBP_MucDo(urlStr, titleStr, idGrid, idSpan) {
     var grid = $(idGrid).kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "HoTen", title: "Họ tên cán bộ", width: 5 },
             { field: "TyLe", title: "Tỷ lệ (%)", width: 2 },
@@ -964,10 +990,12 @@ $("#click-details-bp").click(function () {
         $("#table-details-bp").show("slow");
         $("#click-details-bp").text("Thu gọn");
         clickBP = true;
+        return;
     } else {
         $("#table-details-bp").hide("slow");
         $("#click-details-bp").text("Xem chi tiết");
         clickBP = false;
+        return;
     }
 })
 // Tạo dropdownlist chọn năm
@@ -1259,13 +1287,13 @@ function createTableCB(urlStr, titleStr) {
                         var trungbinh = 0;
                         if (diem != 0 && solan != 0) {
                             trungbinh = diem / solan;
-                            trungbinh = (Math.round(trungbinh * 100)) / 100;
+                            trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
                         var xeploai = "";
-                        if (trungbinh >= 3.6) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 2.8) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 2) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 2) xeploai = "Không hoàn thành nhiệm vụ";
+                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-cb").val(trungbinh);
                         $("#xep-loai-cb").val(xeploai);
                         options.success(result);
@@ -1312,7 +1340,13 @@ function createTableCB(urlStr, titleStr) {
     var grid = $("#grid-ty-le-cb").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "Loai", title: "Mức độ đánh giá", width: 1 },
             { field: "TyLe", title: "Tỷ lệ (%)", width: 1 },
@@ -1386,7 +1420,13 @@ function createTableGopY(urlStr, titleStr) {
     var grid = $("#grid-gop-y").kendoGrid({
         dataSource: dataSource,
         navigatable: true,
-        pageable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
         columns: [
             { field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
             //{ field: "ThoiGian", title: "Thời gian", width: 1, format: "{0:hh mm ss}" },
@@ -1467,10 +1507,12 @@ $("#click-details-cb").click(function () {
         $("#table-details-cb").show("slow");
         $("#click-details-cb").text("Thu gọn");
         clickCB = true;
+        return;
     } else {
         $("#table-details-cb").hide("slow");
         $("#click-details-cb").text("Xem chi tiết");
         clickCB = false;
+        return;
     }
 })
 // Tạo dropdownlist chọn năm
