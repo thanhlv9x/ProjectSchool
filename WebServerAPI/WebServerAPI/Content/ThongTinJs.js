@@ -1,70 +1,33 @@
-﻿/*
-// ============ Thông tin tài khoản cán bộ ==============
-//// Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
-//function getTKName() {
-//    var str = "";
-//    $.ajax({
-//        type: "GET",
-//        url: url + "/api/BoPhanAPI",
-//        dataType: "json",
-//        success: function (data) {
-//            $.each(data, function (key, val) {
-//                str += "<div id='tk" + val.MaBP + "' class='btnTK'>" + val.TenBP + "</div>";
-//            });
-//            $("#tai-khoan-ten-bo-phan").html(str);
-//            createButtonTK();
-//        },
-//        error: function (xhr) {
-//            console.log(xhr.responseText);
-//        }
-//    });
-//}
-//// Nút tên bộ phận: tạo phương thức click
-//function onClickBtnTK(e) {
-//    $("#tai-khoan-ten-bo-phan").hide("slow");
-//    $("#div-tai-khoan-can-bo").show("slow");
-//    setTimeout(function () {
-//        mabp = $(e.event.target).attr("id").substring(2);
-//        $("#div-tai-khoan-can-bo h1").text($(e.event.target).text());
-//        createTableTk(url + "/api/TaiKhoanAPI/?_MaBP=" + mabp);
-//    }, 500);
-//}
-//// Nút tên bộ phận: tạo form nút
-//function createButtonTK() {
-//    $(".btnTK").each(function (index) {
-//        $(this).kendoButton({
-//            click: onClickBtnTK
-//        });
-//    });
-//}
-//// Nút tên bộ phận: sự kiện click vào menu xem kết quả
-//$("#menu-thong-tin-can-bo-tk").click(getTKName)
-*/
-// Phương thức hiển thị hình upload
+﻿// Phương thức hiển thị hình upload
 function readURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        var extend = input.files[0].name.split('.').pop();
+        if (extend == "jpg" || extend == "jpeg" || extend == "png" || extend == "bmp" || extend == "gif") {
+            var reader = new FileReader();
 
-        reader.onload = function (e) {
-            $('#chan-dung')
-                .attr('src', e.target.result)
-                .width(54)
-                .height(72);
-            $("#chan-dung").val(e.target.result);
-            $("#chan-dung")
-                .attr('class', 'k-valid')
-            var id = $("div[data-uid]").attr("data-uid")
-            var a = e.target.result;
-            var grid = $('#grid-tai-khoan-can-bo').data().kendoGrid.dataSource.data();
-            for (var i = 0; i < grid.length; i++) {
-                if (grid[i].uid == id) {
-                    var firstItem = grid[i];
-                    firstItem.set('HinhAnh', a.substring(a.lastIndexOf(',') + 1));
+            reader.onload = function (e) {
+                $('#chan-dung')
+                    .attr('src', e.target.result)
+                    .width(54)
+                    .height(72);
+                $("#chan-dung").val(e.target.result);
+                $("#chan-dung")
+                    .attr('class', 'k-valid')
+                var id = $("div[data-uid]").attr("data-uid")
+                var a = e.target.result;
+                var grid = $('#grid-tai-khoan-can-bo').data().kendoGrid.dataSource.data();
+                for (var i = 0; i < grid.length; i++) {
+                    if (grid[i].uid == id) {
+                        var firstItem = grid[i];
+                        firstItem.set('HinhAnh', a.substring(a.lastIndexOf(',') + 1));
+                    }
                 }
-            }
-        };
+            };
 
-        reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            alert("Vui lòng chọn file ảnh !");
+        }
     }
 }
 
@@ -111,11 +74,14 @@ function createTableTk(urlGet) {
                             data: { model: options.data.models },
                             dataType: 'json',
                             success: function (result) {
-                                if (result) {
-                                    alert("Thêm mới thành công")
+                                if (result == "macbsd") {
+                                    alert("Thêm mới không thành công. Mã cán bộ đã tồn tại !");
+                                }
+                                else if (result == "error") {
+                                    alert("Thêm mới không thành công. Thông tin nhập không chính xác, vui lòng kiểm tra lại !");
                                 }
                                 else {
-                                    alert("Thêm mới không thành công")
+                                    alert("Thêm mới thành công")
                                 }
                                 var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
                                 grid.dataSource.read();
@@ -132,11 +98,21 @@ function createTableTk(urlGet) {
                             data: { model: options.data.models },
                             dataType: 'json',
                             success: function (result) {
-                                if (result) {
-                                    alert("Cập nhật thành công")
+                                console.log(result)
+                                if (result == "macbsd") {
+                                    alert("Cập nhật không thành công. Mã cán bộ đã tồn tại !");
+                                }
+                                else if (result == "image") {
+                                    alert("Cập nhật không thành công. Lỗi hình ảnh !");
+                                }
+                                else if (result == "null") {
+                                    alert("Cập nhật không thành công. Cán bộ không tồn tại !");
+                                }
+                                else if (result == "error") {
+                                    alert("Cập nhật không thành công. Thông tin nhập không chính xác, vui lòng kiểm tra lại !");
                                 }
                                 else {
-                                    alert("Cập nhật không thành công")
+                                    alert("Cập nhật thành công");
                                 }
                                 var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
                                 grid.dataSource.read();
@@ -154,10 +130,10 @@ function createTableTk(urlGet) {
                             dataType: 'json',
                             success: function (result) {
                                 if (result) {
-                                    alert("Xóa thành công")
+                                    alert("Xóa thành công");
                                 }
                                 else {
-                                    alert("Xóa không thành công")
+                                    alert("Xóa không thành công. Cán bộ không tồn tại !");
                                 }
                                 var grid = $("#grid-tai-khoan-can-bo").data("kendoGrid");
                                 grid.dataSource.read();
@@ -281,7 +257,14 @@ function createTableTk(urlGet) {
                     "Close"
                 ],
             }).data("kendoWindow").center();
-            $("#files").kendoUpload({ text: "Chọn file cần nhập" });
+            $("#files").kendoUpload({
+                //validation: {
+                //    allowedExtensions: [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
+                //},
+                //showFileList: false,
+                text: "Chọn file cần nhập",
+                multiple: false
+            });
 
             $("form#formUpload").submit(function (e) {
                 e.preventDefault();
@@ -305,7 +288,13 @@ function createTableTk(urlGet) {
             function categoryDropDownEditor(container, options) {
                 $('<img required="required" name="' + options.field + '" id="chan-dung" /><input type="file" onchange="readURL(this)" id="open-img"/>')
                     .appendTo(container)
-                $("#open-img").kendoUpload();
+                $("#open-img").kendoUpload({
+                    validation: {
+                        allowedExtensions: [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
+                    },
+                    showFileList: false,
+                    text: "Chọn file cần nhập"
+                });
             }
 
             // Tạo nút nhập excel
@@ -336,18 +325,6 @@ function createTableTk(urlGet) {
     //$("#grid-tai-khoan-can-bo").html("");
 
 }
-// Nhập file excel
-var myWindow = $("#windowPopup");
-myWindow.kendoWindow({
-    width: "600px",
-    height: "250px",
-    title: "Nhập excel",
-    visible: false,
-    actions: [
-        "Close"
-    ],
-}).data("kendoWindow").center();
-$("#files").kendoUpload({ text: "Chọn file cần nhập" });
 // ================ Thông tin bộ phận ====================
 // Tạo bảng thông tin bộ phận
 function createTableTTBP(urlGet) {
@@ -379,7 +356,7 @@ function createTableTTBP(urlGet) {
                             alert("Thêm thành công")
                         }
                         else {
-                            alert("Thêm không thành công")
+                            alert("Thêm không thành công. Mã bộ phận hoặc tên bộ phận đã tồn tại !")
                         }
                         var grid = $("#grid-thong-tin-bo-phan").data("kendoGrid");
                         grid.dataSource.read();
@@ -400,7 +377,7 @@ function createTableTTBP(urlGet) {
                             alert("Cập nhật thành công")
                         }
                         else {
-                            alert("Cập nhật không thành công")
+                            alert("Cập nhật không thành công. Mã bộ phận hoặc tên bộ phận đã tồn tại !")
                         }
                         var grid = $("#grid-thong-tin-bo-phan").data("kendoGrid");
                         grid.dataSource.read();
@@ -421,7 +398,7 @@ function createTableTTBP(urlGet) {
                             alert("Xóa thành công")
                         }
                         else {
-                            alert("Xóa không thành công")
+                            alert("Xóa không thành công. Vui lòng kiểm tra lại thông tin !")
                         }
                         var grid = $("#grid-thong-tin-bo-phan").data("kendoGrid");
                         grid.dataSource.read();
@@ -551,7 +528,7 @@ function createTableTTQ(urlGet) {
                             alert("Thêm thành công")
                         }
                         else {
-                            alert("Thêm không thành công")
+                            alert("Thêm không thành công. Số quầy đã tồn tại !")
                         }
                         var grid = $("#grid-thong-tin-quay").data("kendoGrid");
                         grid.dataSource.read();
@@ -572,7 +549,7 @@ function createTableTTQ(urlGet) {
                             alert("Cập nhật thành công")
                         }
                         else {
-                            alert("Cập nhật không thành công")
+                            alert("Cập nhật không thành công. Số quầy đã tồn tại !")
                         }
                         var grid = $("#grid-thong-tin-quay").data("kendoGrid");
                         grid.dataSource.read();
@@ -593,7 +570,7 @@ function createTableTTQ(urlGet) {
                             alert("Xóa thành công")
                         }
                         else {
-                            alert("Xóa không thành công")
+                            alert("Xóa không thành công. Sai thông tin vui lòng kiểm tra lại !")
                         }
                         var grid = $("#grid-thong-tin-quay").data("kendoGrid");
                         grid.dataSource.read();
@@ -635,7 +612,7 @@ function createTableTTQ(urlGet) {
         toolbar: [{ name: "create", text: "Thêm mới" }],
         columns: [
             { field: "MaMay", title: "Số quầy", width: 80 },
-            { field: "Mac", title: "Mã máy", width: 100 },
+            //{ field: "Mac", title: "Mã máy", width: 100 },
             { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
         ],
         editable: {

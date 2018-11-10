@@ -8,6 +8,6 @@ namespace WebServerAPI.Models
     public class SoQuay
     {
         public int MaMay { get; set; }
-        public string Mac { get; set; }
+        public int Mac { get; set; }
     }
 }

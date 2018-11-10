@@ -24,7 +24,7 @@
         <div id="main-menu" style="height:100%">
             <div id="tabstrip-left" style="height:100%">
                 <ul>
-                    <li id="menu-xem-ket-qua" onclick="showSubTabstrip();">Thống kê</li>
+                    <li id="menu-xem-ket-qua" onclick="showSubTabstrip();" class="k-state-active">Thống kê</li>
                     <li id="menu-thong-tin-can-bo" onclick="showSubTabstrip();">Thông tin</li>
                     <li id="menu-thong-ke-bao-cao" onclick="showSubTabstrip();">Báo cáo</li>
                     <li>@Html.ActionLink("Đăng xuất", "Logout", "Login")</li>
@@ -32,7 +32,7 @@
 
                 <div id="sub-tabstrip-ket-qua">
                     <ul>
-                        <li id="menu-xem-ket-qua-danh-gia">Kết quả đánh giá</li>
+                        <li id="menu-xem-ket-qua-danh-gia" class="k-state-active">Kết quả đánh giá</li>
                         <li id="menu-xem-thu-tuc">Thời gian giải quyết thủ tục</li>
                         <li id="menu-xem-dang-nhap">Thời gian đăng nhập</li>
                     </ul>
@@ -563,7 +563,7 @@
         </div> @*#main-menu*@
 
     </div> @*#container*@
-    <div id="windowPopup">
+    <div id="windowPopup" hidden="hidden">
         @using (Html.BeginForm("Upload", "TaiKhoan", FormMethod.Post, new { id = "formUpload" }))
         {
             @*@Html.Raw(ViewBag.Error)*@
@@ -701,10 +701,17 @@
         $("#end-report-1").hide();
         $("#start-report-2").hide();
         $("#end-report-2").hide();
-
-
         $("#thu-tuc-bp").hide();
         $("#thu-tuc-cb").hide();
+
+        // Tổng hợp
+        $("#sub-tabstrip-ket-qua").show();
+        createYearColumnTH();
+        createMonthCircleTH();
+        createChartTableTHAll();
+        $("#footer-th").hide();
+        $("#div-month-circle-th").hide();
+        getBPName();
     })
 </script>
 <script src="~/Content/KetQua.js"></script>

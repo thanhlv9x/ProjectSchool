@@ -1,15 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="HETHONGDANHGIAsaModelStoreContainer" CdmEntityContainer="HETHONGDANHGIAsaEntities">
-    <EntitySetMapping Name="BOPHANs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.BOPHAN">
-        <MappingFragment StoreEntitySet="BOPHAN">
-          <ScalarProperty Name="MABP" ColumnName="MABP" />
-          <ScalarProperty Name="TENBP" ColumnName="TENBP" />
-          <ScalarProperty Name="VIETTAT" ColumnName="VIETTAT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CANBOes">
       <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.CANBO">
         <MappingFragment StoreEntitySet="CANBO">
@@ -39,14 +30,6 @@
           <ScalarProperty Name="MUCDO" ColumnName="MUCDO" />
           <ScalarProperty Name="TG" ColumnName="TG" />
           <ScalarProperty Name="MASTT" ColumnName="MASTT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="MAYDANHGIAs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MAYDANHGIA">
-        <MappingFragment StoreEntitySet="MAYDANHGIA">
-          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-          <ScalarProperty Name="MAC" ColumnName="MAC" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -96,6 +79,23 @@
           <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
           <ScalarProperty Name="MACB" ColumnName="MACB" />
           <ScalarProperty Name="MADN" ColumnName="MADN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MAYDANHGIAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MAYDANHGIA">
+        <MappingFragment StoreEntitySet="MAYDANHGIA">
+          <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOPHANs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.BOPHAN">
+        <MappingFragment StoreEntitySet="BOPHAN">
+          <ScalarProperty Name="VIETTAT" ColumnName="VIETTAT" />
+          <ScalarProperty Name="TENBP" ColumnName="TENBP" />
+          <ScalarProperty Name="MABP" ColumnName="MABP" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

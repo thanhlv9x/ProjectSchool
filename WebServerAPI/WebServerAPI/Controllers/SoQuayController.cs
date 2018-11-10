@@ -50,8 +50,7 @@ namespace WebServerAPI.Controllers
                 {
                     MAYDANHGIA md = new MAYDANHGIA()
                     {
-                        MAMAY = item.MaMay,
-                        MAC = item.Mac
+                        MAMAY = item.MaMay
                     };
                     db.MAYDANHGIAs.Add(md);
                     db.SaveChanges();
@@ -74,9 +73,9 @@ namespace WebServerAPI.Controllers
             {
                 try
                 {
-                    var mamay = item.MaMay;
-                    var md = db.MAYDANHGIAs.Where(p => p.MAMAY == mamay).FirstOrDefault();
-                    md.MAC = item.Mac;
+                    var mac = item.Mac;
+                    var md = db.MAYDANHGIAs.Where(p => p.MAC == mac).FirstOrDefault();
+                    md.MAMAY = item.MaMay;
                     db.SaveChanges();
                     success = true;
                 }
@@ -97,8 +96,8 @@ namespace WebServerAPI.Controllers
             {
                 try
                 {
-                    var mamay = item.MaMay;
-                    var md = db.MAYDANHGIAs.Where(p => p.MAMAY == mamay).FirstOrDefault();
+                    var mac = item.Mac;
+                    var md = db.MAYDANHGIAs.Where(p => p.MAC == mac).FirstOrDefault();
                     db.MAYDANHGIAs.Remove(md);
                     db.SaveChanges();
                     success = true;

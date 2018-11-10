@@ -25,15 +25,15 @@ namespace WebServerAPI.EF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BOPHAN> BOPHANs { get; set; }
         public virtual DbSet<CANBO> CANBOes { get; set; }
         public virtual DbSet<GOPY> GOPies { get; set; }
         public virtual DbSet<KETQUADANHGIA> KETQUADANHGIAs { get; set; }
-        public virtual DbSet<MAYDANHGIA> MAYDANHGIAs { get; set; }
         public virtual DbSet<MUCDODANHGIA> MUCDODANHGIAs { get; set; }
         public virtual DbSet<SOTHUTU> SOTHUTUs { get; set; }
         public virtual DbSet<SOTOIDA> SOTOIDAs { get; set; }
         public virtual DbSet<TAIKHOANADMIN> TAIKHOANADMINs { get; set; }
         public virtual DbSet<TRANGTHAIDANGNHAP> TRANGTHAIDANGNHAPs { get; set; }
+        public virtual DbSet<MAYDANHGIA> MAYDANHGIAs { get; set; }
+        public virtual DbSet<BOPHAN> BOPHANs { get; set; }
     }
 }

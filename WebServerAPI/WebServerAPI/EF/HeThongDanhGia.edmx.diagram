@@ -5,24 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b77a39f5827f4fd9a19cfa5b0c2f1368" Name="Diagram1">
-        <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.BOPHAN" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.CANBO" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.GOPY" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.KETQUADANHGIA" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.MAYDANHGIA" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.MUCDODANHGIA" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.SOTHUTU" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.SOTOIDA" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.TAIKHOANADMIN" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
-        <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" ManuallyRouted="false" />
-        <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN" ManuallyRouted="false" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_SOTHUTU_CANBO" ManuallyRouted="false" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_GOPY_KETQUADANHGIA" ManuallyRouted="false" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_MUCDODANHGIA" ManuallyRouted="false" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_KETQUADANHGIA_SOTHUTU" ManuallyRouted="false" />
         <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Width="1.5" PointX="5.25" PointY="11.375" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_CANBO" />
+        <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.MAYDANHGIA" Width="1.5" PointX="8" PointY="11.25" />
         <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" />
+        <EntityTypeShape EntityType="HETHONGDANHGIAsaModel.BOPHAN" Width="1.5" PointX="0.75" PointY="6.375" />
+        <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" />
+        <AssociationConnector Association="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

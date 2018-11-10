@@ -30,32 +30,27 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public JsonResult Read()
         {
-            var listEF = db.CANBOes.Select(p => new
-            {
-                ID = p.ID,
-                PW = p.PW,
-                MACB = p.MACB,
-                HOTEN = p.HOTEN,
-                HINHANH = p.HINHANH,
-                MABP = p.BOPHAN.MABP,
-                TENBP = p.BOPHAN.TENBP,
-                MACBSD = p.MACBSD
-            })
-                                   .OrderBy(p => p.MACB)
+            var listEF = db.CANBOes.OrderBy(p => p.MACB)
                                    .ToList();
 
             IList<CanBo> listMD = new List<CanBo>();
             foreach (var item in listEF)
             {
+                var hoten = (item.HOTEN != null) ? item.HOTEN : "";
+                var hinhanh = (item.HINHANH != null) ? item.HINHANH : "";
+                var mabp = (item.MABP != null) ? item.MABP : null;
+                var tenbp = (item.MABP != null) ? item.BOPHAN.TENBP : "";
+                var id = (item.ID != null) ? item.ID : "";
+                var pw = (item.PW != null) ? item.PW : "";
                 CanBo md = new CanBo()
                 {
                     MaCB = (int)item.MACB,
-                    HoTen = item.HOTEN,
-                    HinhAnh = item.HINHANH,
-                    MaBP = item.MABP,
-                    Id = item.ID,
-                    Pw = item.PW,
-                    TenBP = item.TENBP,
+                    HoTen = hoten,
+                    HinhAnh = hinhanh,
+                    MaBP = mabp,
+                    Id = id,
+                    Pw = pw,
+                    TenBP = tenbp,
                     MaCBSD = item.MACBSD
                 };
                 listMD.Add(md);
@@ -71,11 +66,22 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public JsonResult Create(List<CanBo> model)
         {
-            bool success = false;
             foreach (var item in model)
             {
+                CANBO md = new CANBO();
                 try
                 {
+                    try
+                    {
+                        md.MACBSD = item.MaCBSD;
+                        db.CANBOes.Add(md);
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        return Json("macbsd", JsonRequestBehavior.AllowGet);
+                    }
+
                     string pw = GetMD5(item.Pw);
                     string tenbp = "";
                     var mabp = item.MaBP;
@@ -83,22 +89,21 @@ namespace WebServerAPI.Controllers
                     tenbp = bp.VIETTAT;
                     string id = item.Id + "-" + item.MaCBSD + "-" + tenbp;
                     string image = SaveImg(item.HinhAnh, item.MaCBSD, item.HinhAnh);
-                    CANBO md = new CANBO()
-                    {
-                        HOTEN = item.HoTen,
-                        HINHANH = image,
-                        MABP = item.MaBP,
-                        ID = id,
-                        PW = pw,
-                        MACBSD = item.MaCBSD
-                    };
-                    db.CANBOes.Add(md);
+                    md.HOTEN = item.HoTen;
+                    md.HINHANH = image;
+                    md.MABP = item.MaBP;
+                    md.ID = id;
+                    md.PW = pw;
                     db.SaveChanges();
-                    success = true;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    db.CANBOes.Remove(md);
+                    db.SaveChanges();
+                    return Json("error", JsonRequestBehavior.AllowGet);
+                }
             }
-            return Json(success, JsonRequestBehavior.AllowGet);
+            return Json("success", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -108,7 +113,6 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public JsonResult Update(List<CanBo> model)
         {
-            bool success = false;
             foreach (var item in model)
             {
                 try
@@ -123,11 +127,20 @@ namespace WebServerAPI.Controllers
                     var md = db.CANBOes.Where(p => p.MACB == macb).FirstOrDefault();
                     if (md != null)
                     {
+                        try
+                        {
+                            md.MACBSD = macbsd;
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            return Json("macbsd", JsonRequestBehavior.AllowGet);
+                        }
                         md.HOTEN = hoten;
                         if (item.HinhAnh != md.HINHANH)
                         {
                             string image = UpdateImg(item.HinhAnh, macbsd, md.HINHANH, item.HinhAnh);
-                            if (image == "") return Json(success, JsonRequestBehavior.AllowGet);
+                            if (image == "") return Json("image", JsonRequestBehavior.AllowGet);
                             md.HINHANH = image;
                         }
                         md.MABP = mabp;
@@ -141,14 +154,19 @@ namespace WebServerAPI.Controllers
                             string pw = GetMD5(item.Pw);
                             md.PW = pw;
                         }
-                        md.MACBSD = macbsd;
                         db.SaveChanges();
-                        success = true;
-                    };
+                    }
+                    else
+                    {
+                        return Json("null", JsonRequestBehavior.AllowGet);
+                    }
                 }
-                catch (Exception ex) { }
+                catch
+                {
+                    return Json("error", JsonRequestBehavior.AllowGet);
+                }
             }
-            return Json(success, JsonRequestBehavior.AllowGet);
+            return Json("success", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -201,13 +219,19 @@ namespace WebServerAPI.Controllers
                         {
                             System.IO.File.Delete(path);
                         }
-                        catch (Exception ex) { }
+                        catch 
+                        {
+                            return Json("Gặp sự cố trong quá trình nhập. Vui lòng nhập lại !", JsonRequestBehavior.AllowGet);
+                        }
                     }
                     try
                     {
                         excelfile.SaveAs(path);
                     }
-                    catch (Exception ex) { }
+                    catch 
+                    {
+                        return Json("Gặp sự cố trong quá trình nhập. Vui lòng nhập lại !", JsonRequestBehavior.AllowGet);
+                    }
 
                     // Tạo đối tượng Excel
                     Excel.Application app = new Excel.Application();
@@ -232,8 +256,8 @@ namespace WebServerAPI.Controllers
                             try
                             {
                                 CANBO cb = new CANBO();
-                                cb.MACBSD = range.Cells[i, 1].Value.ToString();
-                                cb.HOTEN = range.Cells[i, 2].Value.ToString();
+                                cb.MACBSD = range.Cells[i, 2].Value.ToString();
+                                cb.HOTEN = range.Cells[i, 3].Value.ToString();
                                 string tenbp = range.Cells[i, 4].Value.ToString();
                                 string tenbp_new = tenbp.Substring(0, 1).ToUpper() + tenbp.Substring(1).ToLower();
                                 int mabp = db.BOPHANs.Where(p => p.TENBP == tenbp_new).Select(p => p.MABP).FirstOrDefault();
@@ -252,10 +276,10 @@ namespace WebServerAPI.Controllers
                                 cb.ID = id;
                                 db.CANBOes.Add(cb);
                                 db.SaveChanges();
-                                cb.HINHANH = SaveImg(range.Cells[i, 3].Value.ToString(), range.Cells[i, 1].Value.ToString());
+                                cb.HINHANH = SaveImg(range.Cells[i, 1].Value.ToString(), range.Cells[i, 2].Value.ToString());
                                 db.SaveChanges();
                             }
-                            catch (Exception ex) { }
+                            catch { }
                         }
                         wb.Close(0);
                         app.Quit();
@@ -295,7 +319,6 @@ namespace WebServerAPI.Controllers
             }
             return str;
         }
-
         /// <summary>
         /// Thay đổi kích thước ảnh
         /// </summary>
@@ -331,7 +354,6 @@ namespace WebServerAPI.Controllers
             // trả về anh sau khi đã resize
             return (Image)bmp;
         }
-
         /// <summary>
         /// Phương thức bỏ dấu chữ cái
         /// </summary>

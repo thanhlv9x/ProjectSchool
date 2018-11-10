@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HETHONGDANHGIAsaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="BOPHAN">
-    <Key>
-      <PropertyRef Name="MABP" />
-    </Key>
-    <Property Name="MABP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TENBP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="VIETTAT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="CANBOes" Relationship="Self.FK_CANBO_BOPHAN" FromRole="BOPHAN" ToRole="CANBO" />
-    <NavigationProperty Name="SOTOIDAs" Relationship="Self.FK_SOTOIDA_BOPHAN" FromRole="BOPHAN" ToRole="SOTOIDA" />
-  </EntityType>
   <EntityType Name="CANBO">
     <Key>
       <PropertyRef Name="MACB" />
@@ -21,9 +11,9 @@
     <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="PW" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
     <Property Name="MACBSD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="BOPHAN" Relationship="Self.FK_CANBO_BOPHAN" FromRole="CANBO" ToRole="BOPHAN" />
     <NavigationProperty Name="SOTHUTUs" Relationship="Self.FK_SOTHUTU_CANBO" FromRole="CANBO" ToRole="SOTHUTU" />
     <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_CANBO" FromRole="CANBO" ToRole="TRANGTHAIDANGNHAP" />
+    <NavigationProperty Name="BOPHAN" Relationship="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" FromRole="CANBO" ToRole="BOPHAN" />
   </EntityType>
   <EntityType Name="GOPY">
     <Key>
@@ -45,14 +35,6 @@
     <NavigationProperty Name="GOPies" Relationship="Self.FK_GOPY_KETQUADANHGIA" FromRole="KETQUADANHGIA" ToRole="GOPY" />
     <NavigationProperty Name="MUCDODANHGIA" Relationship="Self.FK_KETQUADANHGIA_MUCDODANHGIA" FromRole="KETQUADANHGIA" ToRole="MUCDODANHGIA" />
     <NavigationProperty Name="SOTHUTU" Relationship="Self.FK_KETQUADANHGIA_SOTHUTU" FromRole="KETQUADANHGIA" ToRole="SOTHUTU" />
-  </EntityType>
-  <EntityType Name="MAYDANHGIA">
-    <Key>
-      <PropertyRef Name="MAMAY" />
-    </Key>
-    <Property Name="MAMAY" Type="Int32" Nullable="false" />
-    <Property Name="MAC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
   </EntityType>
   <EntityType Name="MUCDODANHGIA">
     <Key>
@@ -82,7 +64,7 @@
     <Property Name="STTTD" Type="Int32" />
     <Property Name="MABP" Type="Int32" />
     <Property Name="TG" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="BOPHAN" Relationship="Self.FK_SOTOIDA_BOPHAN" FromRole="SOTOIDA" ToRole="BOPHAN" />
+    <NavigationProperty Name="BOPHAN" Relationship="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN" FromRole="SOTOIDA" ToRole="BOPHAN" />
   </EntityType>
   <EntityType Name="TAIKHOANADMIN">
     <Key>
@@ -91,30 +73,6 @@
     <Property Name="ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="PW" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
   </EntityType>
-  <Association Name="FK_CANBO_BOPHAN">
-    <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
-    <End Role="CANBO" Type="Self.CANBO" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="BOPHAN">
-        <PropertyRef Name="MABP" />
-      </Principal>
-      <Dependent Role="CANBO">
-        <PropertyRef Name="MABP" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SOTOIDA_BOPHAN">
-    <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
-    <End Role="SOTOIDA" Type="Self.SOTOIDA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="BOPHAN">
-        <PropertyRef Name="MABP" />
-      </Principal>
-      <Dependent Role="SOTOIDA">
-        <PropertyRef Name="MABP" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SOTHUTU_CANBO">
     <End Role="CANBO" Type="Self.CANBO" Multiplicity="0..1" />
     <End Role="SOTHUTU" Type="Self.SOTHUTU" Multiplicity="*" />
@@ -164,23 +122,13 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="HETHONGDANHGIAsaEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="BOPHANs" EntityType="Self.BOPHAN" />
     <EntitySet Name="CANBOes" EntityType="Self.CANBO" />
     <EntitySet Name="GOPies" EntityType="Self.GOPY" />
     <EntitySet Name="KETQUADANHGIAs" EntityType="Self.KETQUADANHGIA" />
-    <EntitySet Name="MAYDANHGIAs" EntityType="Self.MAYDANHGIA" />
     <EntitySet Name="MUCDODANHGIAs" EntityType="Self.MUCDODANHGIA" />
     <EntitySet Name="SOTHUTUs" EntityType="Self.SOTHUTU" />
     <EntitySet Name="SOTOIDAs" EntityType="Self.SOTOIDA" />
     <EntitySet Name="TAIKHOANADMINs" EntityType="Self.TAIKHOANADMIN" />
-    <AssociationSet Name="FK_CANBO_BOPHAN" Association="Self.FK_CANBO_BOPHAN">
-      <End Role="BOPHAN" EntitySet="BOPHANs" />
-      <End Role="CANBO" EntitySet="CANBOes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SOTOIDA_BOPHAN" Association="Self.FK_SOTOIDA_BOPHAN">
-      <End Role="BOPHAN" EntitySet="BOPHANs" />
-      <End Role="SOTOIDA" EntitySet="SOTOIDAs" />
-    </AssociationSet>
     <AssociationSet Name="FK_SOTHUTU_CANBO" Association="Self.FK_SOTHUTU_CANBO">
       <End Role="CANBO" EntitySet="CANBOes" />
       <End Role="SOTHUTU" EntitySet="SOTHUTUs" />
@@ -202,9 +150,19 @@
       <End Role="CANBO" EntitySet="CANBOes" />
       <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
     </AssociationSet>
+    <EntitySet Name="MAYDANHGIAs" EntityType="HETHONGDANHGIAsaModel.MAYDANHGIA" />
     <AssociationSet Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA" Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
       <End Role="MAYDANHGIA" EntitySet="MAYDANHGIAs" />
       <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
+    </AssociationSet>
+    <EntitySet Name="BOPHANs" EntityType="HETHONGDANHGIAsaModel.BOPHAN" />
+    <AssociationSet Name="FK_CANBO_BOPHAN" Association="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN">
+      <End Role="BOPHAN" EntitySet="BOPHANs" />
+      <End Role="CANBO" EntitySet="CANBOes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOTOIDA_BOPHAN" Association="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN">
+      <End Role="BOPHAN" EntitySet="BOPHANs" />
+      <End Role="SOTOIDA" EntitySet="SOTOIDAs" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="TRANGTHAIDANGNHAP">
@@ -232,6 +190,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="MAYDANHGIA">
+    <Key>
+      <PropertyRef Name="MAMAY" />
+    </Key>
+    <Property Name="MAMAY" Type="Int32" Nullable="false" />
+    <Property Name="MAC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
+  </EntityType>
   <Association Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
     <End Type="HETHONGDANHGIAsaModel.MAYDANHGIA" Role="MAYDANHGIA" Multiplicity="0..1" />
     <End Type="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Role="TRANGTHAIDANGNHAP" Multiplicity="*" />
@@ -241,6 +207,40 @@
       </Principal>
       <Dependent Role="TRANGTHAIDANGNHAP">
         <PropertyRef Name="MAMAY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="BOPHAN">
+    <Key>
+      <PropertyRef Name="MABP" />
+    </Key>
+    <Property Name="MABP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TENBP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="VIETTAT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CANBOes" Relationship="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN" FromRole="BOPHAN" ToRole="CANBO" />
+    <NavigationProperty Name="SOTOIDAs" Relationship="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN" FromRole="BOPHAN" ToRole="SOTOIDA" />
+  </EntityType>
+  <Association Name="FK_CANBO_BOPHAN">
+    <End Type="HETHONGDANHGIAsaModel.BOPHAN" Role="BOPHAN" Multiplicity="0..1" />
+    <End Type="HETHONGDANHGIAsaModel.CANBO" Role="CANBO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOPHAN">
+        <PropertyRef Name="MABP" />
+      </Principal>
+      <Dependent Role="CANBO">
+        <PropertyRef Name="MABP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOTOIDA_BOPHAN">
+    <End Type="HETHONGDANHGIAsaModel.BOPHAN" Role="BOPHAN" Multiplicity="0..1" />
+    <End Type="HETHONGDANHGIAsaModel.SOTOIDA" Role="SOTOIDA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOPHAN">
+        <PropertyRef Name="MABP" />
+      </Principal>
+      <Dependent Role="SOTOIDA">
+        <PropertyRef Name="MABP" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

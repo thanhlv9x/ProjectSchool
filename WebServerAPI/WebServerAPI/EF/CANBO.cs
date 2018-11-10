@@ -29,10 +29,10 @@ namespace WebServerAPI.EF
         public string PW { get; set; }
         public string MACBSD { get; set; }
     
-        public virtual BOPHAN BOPHAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTHUTU> SOTHUTUs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANGTHAIDANGNHAP> TRANGTHAIDANGNHAPs { get; set; }
+        public virtual BOPHAN BOPHAN { get; set; }
     }
 }

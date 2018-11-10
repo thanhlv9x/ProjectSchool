@@ -42,7 +42,7 @@
       <PropertyRef Name="MAMAY" />
     </Key>
     <Property Name="MAMAY" Type="int" Nullable="false" />
-    <Property Name="MAC" Type="varchar" MaxLength="50" />
+    <Property Name="MAC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="MUCDODANHGIA">
     <Key>
