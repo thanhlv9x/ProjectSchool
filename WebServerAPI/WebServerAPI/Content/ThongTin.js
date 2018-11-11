@@ -30,7 +30,9 @@ function readURL(input) {
         }
     }
 }
-
+$("#menu-thong-tin-can-bo").click(function () {
+    createTableTk(url + "/TaiKhoan/Read");
+})
 // ================ Thông tin tài khoản cán bộ =================
 // Tạo sự kiện nút quay lại bộ phận
 function backTK() {

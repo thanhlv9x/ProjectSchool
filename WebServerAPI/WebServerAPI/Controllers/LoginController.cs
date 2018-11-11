@@ -16,7 +16,7 @@ namespace WebServerAPI.Controllers
         public ActionResult Index()
         {
             if (Session[CommonConstants.ADMIN_SESSION] != null)
-            {                
+            {
                 return Redirect("/Home");
             }
             else
@@ -70,7 +70,7 @@ namespace WebServerAPI.Controllers
         /// <returns></returns>
         public bool CheckLogin(string id, string pw)
         {
-            //pw = GetMD5(pw);
+            pw = GetMD5(pw);
             int result = db.TAIKHOANADMINs.Count(p => p.ID == id && p.PW == pw);
             if (result > 0)
             {
@@ -79,6 +79,40 @@ namespace WebServerAPI.Controllers
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Phương thức thay đổi mật khẩu của admin
+        /// </summary>
+        /// <param name="_Pw">Mật khẩu</param>
+        /// <returns></returns>
+        public JsonResult ChangePw(string _OldPw, string _Pw)
+        {
+            if (Session[CommonConstants.ADMIN_SESSION] != null)
+            {
+                try
+                {
+                    string id = Session[CommonConstants.ADMIN_SESSION].ToString();
+                    _OldPw = GetMD5(_OldPw);
+                    var account = db.TAIKHOANADMINs.Where(p => p.ID == id && p.PW == _OldPw).FirstOrDefault();
+                    if (account != null)
+                    {
+                        _Pw = GetMD5(_Pw);
+                        account.PW = _Pw;
+                        db.SaveChanges();
+                        return Json("success", JsonRequestBehavior.AllowGet);
+                    }
+                    return Json("fail", JsonRequestBehavior.AllowGet);
+                }
+                catch
+                {
+                    return Json("error", JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json("null", JsonRequestBehavior.AllowGet);
             }
         }
 

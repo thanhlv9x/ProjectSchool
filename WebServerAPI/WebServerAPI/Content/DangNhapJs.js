@@ -305,6 +305,17 @@ $("#btn-dang-nhap").kendoButton({
     click: onClick
 });
 // Tạo sự kiện checkbox tháng đăng nhập
+$("#div-loai-dang-nhap div:first-child div:first-child label").click(function () {
+    $("#cbx-thang-dang-nhap").prop("checked", !$("#cbx-thang-dang-nhap").prop("checked"));
+    if (!$("#cbx-thang-dang-nhap").prop("checked")) {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+    }
+    else {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+    }
+})
 $("#cbx-thang-dang-nhap").change(function () {
     if (!$("#cbx-thang-dang-nhap").prop("checked")) {
         $("#cbx-thang-dang-nhap").removeAttr("checked");
@@ -316,6 +327,17 @@ $("#cbx-thang-dang-nhap").change(function () {
     }
 })
 // Tạo sự kiện checkbox năm đăng nhập
+$("#div-loai-dang-nhap div:last-child div:first-child label").click(function () {
+    $("#cbx-nam-dang-nhap").prop("checked", !$("#cbx-nam-dang-nhap").prop("checked"));
+    if (!$("#cbx-nam-dang-nhap").prop("checked")) {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+    }
+    else {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+    }
+})
 $("#cbx-nam-dang-nhap").change(function () {
     if (!$("#cbx-nam-dang-nhap").prop("checked")) {
         $("#cbx-nam-dang-nhap").removeAttr("checked");

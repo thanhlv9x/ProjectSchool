@@ -257,6 +257,69 @@ kendo-pdf-document .customer-photo {
     width: 50%
 }
 
+.title-report {
+    margin: 1em 0 1em 0;
+    padding: 0.8em;
+    text-align: center;
+}
+
+.title-report-export {
+    width: 47%
+}
+
+.title-pw {
+    padding: 0.5em 1em 0.5em 1em;
+    font-size: 1.5em;
+    background-color: #3f51b5;
+    color: white;
+}
+
+.input-pw {
+    width: 100%
+}
+
+.input-lb-pw {
+    padding: 1em 0 0 0;
+}
+
+.div-pw {
+    margin: 5% 30% 0 30%;
+    width: 40%;
+    border: 1px solid #3f51b5;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.sub-div-pw {
+    padding: 1em;
+}
+
+span.k-widget.k-maskedtextbox {
+    width: 100%
+}
+
+.div-btn-change {
+    margin: 1em 0 0 0;
+    text-align: center;
+}
+
+#cb-all-cb, #div-month-circle-cb > div:first-child > span,
+#cb-all, #div-month-circle > div:first-child > span,
+#cb-all-th, #month-group-th > div:first-child > span {
+    cursor: pointer;
+}
+
+#cbx-month-thu-tuc-th, #year-group-thu-tuc-th div:first-child label,
+#cbx-year-thu-tuc-th, #year-group-thu-tuc-th div:last-child label,
+#cbx-month-thu-tuc-bp, #year-group-thu-tuc-bp div:first-child label,
+#cbx-year-thu-tuc-bp, #year-group-thu-tuc-bp div:last-child label,
+#cbx-month-thu-tuc-cb, #year-group-thu-tuc-cb div:first-child label,
+#cbx-year-thu-tuc-cb, #year-group-thu-tuc-cb div:last-child label,
+#cbx-thang-dang-nhap, #div-loai-dang-nhap div:first-child div:first-child label,
+#cbx-nam-dang-nhap, #div-loai-dang-nhap div:last-child div:first-child label {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 1024px) {
     #banner {
         height: 10%;

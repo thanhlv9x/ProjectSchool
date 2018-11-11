@@ -58,7 +58,16 @@ namespace WebServerAPI.Controllers
                         int total = total_RHL + total_HL + total_BT + total_KHL;
                         int count = count_RHL + count_HL + count_BT + count_KHL;
                         double tyle = Math.Round(((double)count / (double)total) * 100.00, 2);
-                        int diem = count_RHL * 3 + count_HL * 2 + count_BT;
+                        double diem = 0;
+                        if (count > 0)
+                        {
+                            diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                        }
+                        string xeploai = "";
+                        if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                        else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                        else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                        else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -76,6 +85,7 @@ namespace WebServerAPI.Controllers
                             KHL_TyLe = tyle_KHL,
                             TongCong_TyLe = tyle,
                             Diem = diem,
+                            XepLoai = xeploai,
                             MaCBSD = item.MACBSD
                         };
                         listMD.Add(md);
@@ -139,7 +149,16 @@ namespace WebServerAPI.Controllers
                         int total = total_RHL + total_HL + total_BT + total_KHL;
                         int count = count_RHL + count_HL + count_BT + count_KHL;
                         double tyle = Math.Round(((double)count / (double)total) * 100.00, 2);
-                        int diem = count_RHL * 3 + count_HL * 2 + count_BT;
+                        double diem = 0;
+                        if (count > 0)
+                        {
+                            diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                        }
+                        string xeploai = "";
+                        if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                        else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                        else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                        else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -157,6 +176,7 @@ namespace WebServerAPI.Controllers
                             KHL_TyLe = tyle_KHL,
                             TongCong_TyLe = tyle,
                             Diem = diem,
+                            XepLoai = xeploai,
                             MaCBSD = item.MACBSD
                         };
                         listMD.Add(md);
@@ -180,7 +200,17 @@ namespace WebServerAPI.Controllers
                     double tyle_BT = Math.Round(((double)count_BT / (double)total) * 100.00, 2);
                     int count_KHL = db.KETQUADANHGIAs.Count(p => p.MUCDO == 4 && p.SOTHUTU.MACB == _MaCB);
                     double tyle_KHL = Math.Round(((double)count_KHL / (double)total) * 100.00, 2);
-                    int diem = count_RHL * 3 + count_HL * 2 + count_BT;
+                    int count = count_RHL + count_HL + count_BT + count_KHL;
+                    double diem = 0;
+                    if (count > 0)
+                    {
+                        diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                    }
+                    string xeploai = "";
+                    if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                    else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                    else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                    else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -198,6 +228,7 @@ namespace WebServerAPI.Controllers
                         KHL_TyLe = tyle_KHL,
                         TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
                         Diem = diem,
+                        XepLoai = xeploai,
                         MaCBSD = macbsd
                     };
                     listMD.Add(md);
@@ -254,7 +285,17 @@ namespace WebServerAPI.Controllers
                     double tyle_BT = Math.Round(((double)count_BT / (double)total) * 100.00, 2);
                     int count_KHL = db.KETQUADANHGIAs.Count(p => p.MUCDO == 4 && p.SOTHUTU.MACB == _MaCB && p.TG >= start && p.TG <= end);
                     double tyle_KHL = Math.Round(((double)count_KHL / (double)total) * 100.00, 2);
-                    int diem = count_RHL * 3 + count_HL * 2 + count_BT;
+                    int count = count_RHL + count_HL + count_BT + count_KHL;
+                    double diem = 0;
+                    if (count > 0)
+                    {
+                        diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                    }
+                    string xeploai = "";
+                    if(diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                    else if(diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                    else if(diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                    else if(diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -272,6 +313,7 @@ namespace WebServerAPI.Controllers
                         KHL_TyLe = tyle_KHL,
                         TongCong_TyLe = tyle_RHL + tyle_HL + tyle_BT + tyle_KHL,
                         Diem = diem,
+                        XepLoai = xeploai,
                         MaCBSD = macbsd
                     };
                     listMD.Add(md);

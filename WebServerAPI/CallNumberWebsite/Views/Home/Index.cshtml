@@ -79,6 +79,7 @@
 </html>
 
 <script>
+    $("#mk-cu input, #mk-moi1 input, #mk-moi2 input").kendoMaskedTextBox();
     $("audio").play;
     var url = window.location.origin + "/MayGoiSo";
     var today = new Date();
@@ -366,7 +367,7 @@
                 data: { "_MKCu": mkcu, "_MKMoi": mkmoi1 },
                 success: function (result) {
                     if (result == true) { alert("Thay đổi thành công"); }
-                    else { alert("Thay đổi không thành công"); }
+                    else { alert("Thay đổi không thành công. Sai mật khẩu !"); }
                 },
                 error: function (xhr) { console.log(xhr.responseText); }
             })
@@ -406,6 +407,10 @@
 
     #mk-cu input, #mk-moi1 input, #mk-moi2 input {
         float: right;
+        font-size: 1.2em;
+    }
+
+    #btn-change {
         font-size: 1.2em;
     }
 </style>

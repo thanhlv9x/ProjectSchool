@@ -4,6 +4,8 @@ $("#menu-xem-thu-tuc").click(function () {
     getBPNameThuTuc();
     createMonthCircleThuTucTH();
     createYearColumnThuTucTH();
+    $("#cbx-month-thu-tuc-th").prop("checked", false);
+    $("#cbx-year-thu-tuc-th").prop("checked", true);
 })
 // ============ Tổng hợp ================================
 var clickBPThuTuc = false;
@@ -87,8 +89,7 @@ function createChartThuTucTH(urlStr, titleStr) {
         },
         series:
             [{
-                opacity: 1,
-                type: "line",
+                opacity: 0.2,
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
@@ -100,6 +101,7 @@ function createChartThuTucTH(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
                 name: "Tổng thời gian trung bình",
@@ -110,6 +112,7 @@ function createChartThuTucTH(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
                 name: "Thời gian chờ trung bình",
@@ -120,6 +123,7 @@ function createChartThuTucTH(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Thời gian giải quyết trung bình",
@@ -271,6 +275,26 @@ $("#month-column-thu-tuc-th").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
+$("#year-group-thu-tuc-th div:first-child label").click(function () {
+    $("#cbx-month-thu-tuc-th").prop("checked", !$("#cbx-month-thu-tuc-th").prop("checked"));
+    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
+        createYearColumnThuTucTH();
+        $("#cbx-year-thu-tuc-th").prop("checked", "checked")
+    } else { // Đã check
+        createMonthCircleThuTucTH();
+        $("#cbx-year-thu-tuc-th").removeAttr("checked")
+    }
+})
+$("#year-group-thu-tuc-th div:last-child label").click(function () {
+    $("#cbx-month-thu-tuc-th").prop("checked", !$("#cbx-month-thu-tuc-th").prop("checked"))
+    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
+        createYearColumnThuTucTH();
+        $("#cbx-year-thu-tuc-th").prop("checked", "checked");
+    } else { // Đã check
+        createMonthCircleThuTucTH();
+        $("#cbx-year-thu-tuc-th").removeAttr("checked")
+    }
+})
 $("#cbx-month-thu-tuc-th").change(function () {
     if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
         createYearColumnThuTucTH();
@@ -471,8 +495,7 @@ function createChartThuTucBP(urlStr, titleStr) {
         },
         series:
             [{
-                opacity: 1,
-                type: "line",
+                opacity: 0.2,
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
@@ -484,6 +507,7 @@ function createChartThuTucBP(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "TongThoiGian",
                 categoryField: "ThoiGian",
                 name: "Tổng thời gian trung bình",
@@ -494,6 +518,7 @@ function createChartThuTucBP(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "ThoiGianCho",
                 categoryField: "ThoiGian",
                 name: "Thời gian chờ trung bình",
@@ -504,6 +529,7 @@ function createChartThuTucBP(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Thời gian giải quyết trung bình",
@@ -655,6 +681,26 @@ $("#month-column-thu-tuc-bp").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
+$("#year-group-thu-tuc-bp div:first-child label").click(function () {
+    $("#cbx-month-thu-tuc-bp").prop("checked", !$("#cbx-month-thu-tuc-bp").prop("checked"));
+    if (!$("#cbx-month-thu-tuc-bp").prop("checked")) { // Chưa check
+        createYearColumnThuTucBP();
+        $("#cbx-year-thu-tuc-bp").prop("checked", "checked")
+    } else { // Đã check
+        createMonthCircleThuTucBP();
+        $("#cbx-year-thu-tuc-bp").removeAttr("checked")
+    }
+})
+$("#year-group-thu-tuc-bp div:last-child label").click(function () {
+    $("#cbx-year-thu-tuc-bp").prop("checked", !$("#cbx-year-thu-tuc-bp").prop("checked"));
+    if (!$("#cbx-year-thu-tuc-bp").prop("checked")) { // Chưa check
+        createMonthCircleThuTucBP();
+        $("#cbx-month-thu-tuc-bp").prop("checked", "checked")
+    } else { // Đã check
+        createYearColumnThuTucBP();
+        $("#cbx-month-thu-tuc-bp").removeAttr("checked")
+    }
+})
 $("#cbx-month-thu-tuc-bp").change(function () {
     if (!$("#cbx-month-thu-tuc-bp").prop("checked")) { // Chưa check
         createYearColumnThuTucBP();
@@ -797,8 +843,7 @@ function createChartThuTucCB(urlStr, titleStr) {
         },
         series:
             [{
-                opacity: 1,
-                type: "line",
+                opacity: 0.2,
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
@@ -810,6 +855,7 @@ function createChartThuTucCB(urlStr, titleStr) {
                 }
             }, {
                 opacity: 1,
+                type: "line",
                 field: "ThoiGianGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Thời gian giải quyết trung bình",
@@ -969,6 +1015,26 @@ $("#month-column-thu-tuc-cb").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
+$("#year-group-thu-tuc-cb div:first-child label").click(function () {
+    $("#cbx-month-thu-tuc-cb").prop("checked", !$("#cbx-month-thu-tuc-cb").prop("checked"));
+    if (!$("#cbx-month-thu-tuc-cb").prop("checked")) { // Chưa check
+        createYearColumnThuTucCB();
+        $("#cbx-year-thu-tuc-cb").prop("checked", "checked")
+    } else { // Đã check
+        createMonthCircleThuTucCB();
+        $("#cbx-year-thu-tuc-cb").removeAttr("checked")
+    }
+})
+$("#year-group-thu-tuc-cb div:last-child label").click(function () {
+    $("#cbx-year-thu-tuc-cb").prop("checked", !$("#cbx-year-thu-tuc-cb").prop("checked"));
+    if (!$("#cbx-year-thu-tuc-cb").prop("checked")) { // Chưa check
+        createMonthCircleThuTucCB();
+        $("#cbx-month-thu-tuc-cb").prop("checked", "checked")
+    } else { // Đã check
+        createYearColumnThuTucCB();
+        $("#cbx-month-thu-tuc-cb").removeAttr("checked")
+    }
+})
 $("#cbx-month-thu-tuc-cb").change(function () {
     if (!$("#cbx-month-thu-tuc-cb").prop("checked")) { // Chưa check
         createYearColumnThuTucCB();

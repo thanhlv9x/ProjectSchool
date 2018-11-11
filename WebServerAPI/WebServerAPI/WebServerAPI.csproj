@@ -326,16 +326,17 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
-    <Content Include="Content\BaoCao.js" />
+    <Content Include="Content\BaoCaoJS.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DangNhapJS.js" />
-    <Content Include="Content\KetQua.js" />
-    <Content Include="Content\ServerStyle.css" />
-    <Content Include="Content\ThongTinJS.js" />
-    <Content Include="Content\ThuTucJS.js" />
+    <Content Include="Content\DoiMatKhau.js" />
+    <Content Include="Content\KetQuaJS.js" />
+    <Content Include="Content\ServerStyle3.css" />
+    <Content Include="Content\ThongTin.js" />
+    <Content Include="Content\ThuTuc.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>

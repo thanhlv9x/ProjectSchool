@@ -151,6 +151,16 @@ $("#year-column-th").change(function () {
     createChartColumnTH(url + "/api/CotDanhGiaAPI/?_Year=" + $("#year-column-th").val(), "Kết quả tổng hợp năm " + $("#year-column-th").val());
 })
 // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
+$("#month-group-th>div:first-child>span").click(function () {
+    $("#cb-all-th").prop("checked", !$("#cb-all-th").prop("checked"))
+    if ($("#cb-all-th").prop("checked") == true) {
+        createChartTableTHAll();
+        $("#div-month-circle-th").hide("slow");
+    } else {
+        createChartTableTHTime();
+        $("#div-month-circle-th").show("slow");
+    }
+})
 $("#cb-all-th").change(function () {
     if ($("#cb-all-th").prop("checked") == true) {
         createChartTableTHAll();
@@ -460,6 +470,8 @@ function createChartTableTHAll() {
 
     var urlStr5 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 4;
     createTableTH_MucDo(urlStr5, "Mức độ - Không hài lòng (Tổng hợp)", "#grid-KHL-th", "#title-KHL-th")
+
+    $("#ds-xl-th").text("ĐIỂM SỐ - XẾP LOẠI (TỔNG HỢP)");
 }
 // Phương thức tạo đồ thị và bảng theo thời gian
 function createChartTableTHTime() {
@@ -482,6 +494,8 @@ function createChartTableTHTime() {
 
     var urlStr5 = url + "/api/BangDanhGiaAPI/?_MucDo=" + 4 + "&" + time;
     createTableTH_MucDo(urlStr5, "Mức độ - Không hài lòng (" + date + ")", "#grid-KHL-th", "#title-KHL-th")
+
+    $("#ds-xl-th").text("ĐIỂM SỐ - XẾP LOẠI (" + date + ")");
 }
 // Tạo sự kiện nút xem chi tiết
 $("#click-details-th").click(function () {
@@ -917,6 +931,8 @@ function createChartTableAll() {
 
     var urlStr5 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 4;
     createTableBP_MucDo(urlStr5, "Mức độ - Không hài lòng (Tổng hợp)", "#grid-khong-hai-long", "#span-title-table-5")
+
+    $("#ds-xl-bp").text("ĐIỂM SỐ - XẾP LOẠI (TỔNG HỢP)");
 }
 // Phương thức tạo đồ thị và bảng theo thời gian
 function createChartTableTime() {
@@ -939,8 +955,21 @@ function createChartTableTime() {
 
     var urlStr5 = url + "/api/BangDanhGiaAPI/?_MaBP=" + mabp + "&_MucDo=" + 4 + time;
     createTableBP_MucDo(urlStr5, "Mức độ - Không hài lòng (" + date + ")", "#grid-khong-hai-long", "#span-title-table-5")
+
+    $("#ds-xl-bp").text("ĐIỂM SỐ - XẾP LOẠI (" + date + ")");
 }
 // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
+$("#div-month-circle>div:first-child>span").click(function () {
+    $("#cb-all").prop("checked", !$("#cb-all").prop("checked"))
+    if ($("#cb-all").prop("checked") == true) {
+        createChartTableAll();
+        $("#div-month-circle-1").hide("slow");
+    } else {
+        createMonthCircle(mabp);
+        createChartTableTime();
+        $("#div-month-circle-1").show("slow");
+    }
+})
 $("#cb-all").change(function () {
     if ($("#cb-all").prop("checked") == true) {
         createChartTableAll();
@@ -1098,6 +1127,8 @@ function onClickBtnCB(e) {
         createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
         $("#cb-all-cb").prop("checked", true);
+        $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
+        $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
     }, 800);
 }
 // Tạo biểu đồ cột
@@ -1442,13 +1473,16 @@ function createTableGopY(urlStr, titleStr) {
     $("#span-title-table-gop-y").text(titleStr);
 }
 // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
-$("#cb-all-cb").change(function () {
+$("#div-month-circle-cb>div:first-child>span").click(function () {
+    $("#cb-all-cb").prop("checked", !$("#cb-all-cb").prop("checked"))
     var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb;
     if ($("#cb-all-cb").prop("checked") == true) {
         createChartCircleCB(urlStr, "Kết quả đánh giá (Tổng hợp)");
         createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
         $("#div-month-circle-cb-1").hide("slow");
+        $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
+        $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
     } else {
         var time = '&_ThoiGian=' + $("#month-circle-cb").val();
         var date = $("#month-circle-cb").val();
@@ -1459,6 +1493,31 @@ $("#cb-all-cb").change(function () {
         var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
         createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
         $("#div-month-circle-cb-1").show("slow");
+        $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
+        $("#xl-cb").text("XẾP LOẠI (" + date + ")");
+    }
+})
+$("#cb-all-cb").change(function () {
+    var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb;
+    if ($("#cb-all-cb").prop("checked") == true) {
+        createChartCircleCB(urlStr, "Kết quả đánh giá (Tổng hợp)");
+        createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
+        createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
+        $("#div-month-circle-cb-1").hide("slow");
+        $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
+        $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
+    } else {
+        var time = '&_ThoiGian=' + $("#month-circle-cb").val();
+        var date = $("#month-circle-cb").val();
+        var urlStr = url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb + time;
+        createChartCircleCB(urlStr, "Kết quả đánh giá (" + date + ")");
+        var urlStr1 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time;
+        createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
+        var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
+        createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
+        $("#div-month-circle-cb-1").show("slow");
+        $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
+        $("#xl-cb").text("XẾP LOẠI (" + date + ")");
     }
 });
 // Tạo thanh chọn thời gian cho biểu đồ tròn
@@ -1500,6 +1559,8 @@ $("#month-circle-cb").change(function () {
     createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
     var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
     createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
+    $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
+    $("#xl-cb").text("XẾP LOẠI (" + date + ")");
 })
 // Tạo nút xem chi tiết
 $("#click-details-cb").click(function () {
