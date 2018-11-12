@@ -79,23 +79,30 @@ namespace WebServerAPI.Controllers
                                                          p.BD >= dt &&
                                                          p.BD <= dtEnd)
                                              .OrderByDescending(p => p.MADN)
-                                             .FirstOrDefault();
-            if (lstEF != null)
+                                             .ToList();
+            foreach (var item in lstEF)
             {
-                string hinh_anh = getImage(lstEF.CANBO.HINHANH);
-                TaiKhoanUser md = new TaiKhoanUser()
+                if (item != null)
                 {
-                    MaCB = lstEF.MACB,
-                    HoTen = lstEF.CANBO.HOTEN,
-                    HinhAnh = hinh_anh,
-                    MaBP = lstEF.CANBO.MABP,
-                    TenBP = lstEF.CANBO.BOPHAN.TENBP,
-                    MaDN = lstEF.MADN,
-                    MaMay = lstEF.MAMAY,
-                    MaCBSD = lstEF.CANBO.MACBSD,
-                    VietTat = lstEF.CANBO.BOPHAN.VIETTAT
-                };
-                return Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.OK, md);
+                    var isLogin = Math.Abs(((TimeSpan)(DateTime.Now - item.ISLOGIN)).TotalMinutes);
+                    if (isLogin < 2)
+                    {
+                        string hinh_anh = getImage(item.CANBO.HINHANH);
+                        TaiKhoanUser md = new TaiKhoanUser()
+                        {
+                            MaCB = item.MACB,
+                            HoTen = item.CANBO.HOTEN,
+                            HinhAnh = hinh_anh,
+                            MaBP = item.CANBO.MABP,
+                            TenBP = item.CANBO.BOPHAN.TENBP,
+                            MaDN = item.MADN,
+                            MaMay = item.MAMAY,
+                            MaCBSD = item.CANBO.MACBSD,
+                            VietTat = item.CANBO.BOPHAN.VIETTAT
+                        };
+                        return Request.CreateResponse<TaiKhoanUser>(HttpStatusCode.OK, md);
+                    }
+                }
             }
             return Request.CreateResponse(HttpStatusCode.NotFound);
 

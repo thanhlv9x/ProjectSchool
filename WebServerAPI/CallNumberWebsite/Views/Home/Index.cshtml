@@ -167,17 +167,17 @@
                                 fields: {
                                     MaSTT: { type: "number" },
                                     STT: { type: "number" },
-                                    PhienCho: { type: "number" },
+                                    //PhienCho: { type: "number" },
                                     PhienXuLy: { type: "number" },
-                                    TongPhien: { type: "number" }
+                                    //TongPhien: { type: "number" }
                                 }
                             }
                         },
                         aggregate: [
-                            { field: "TongPhien", aggregate: "average" },
-                            { field: "TongPhien", aggregate: "sum" },
-                            { field: "TongPhien", aggregate: "min" },
-                            { field: "TongPhien", aggregate: "max" },
+                            { field: "PhienXuLy", aggregate: "average" },
+                            { field: "PhienXuLy", aggregate: "sum" },
+                            { field: "PhienXuLy", aggregate: "min" },
+                            { field: "PhienXuLy", aggregate: "max" },
                         ]
                     },
                     navigatable: true,
@@ -186,23 +186,25 @@
                         field: "STT", title: "STT",
                         width: 2
                     },
-                    {
-                        field: "PhienCho",
-                        title: "Chờ (Phút)",
-                        width: 3
-                    },
+                    //{
+                    //    field: "PhienCho",
+                    //    title: "Chờ (Phút)",
+                    //    width: 3
+                    //},
                     {
                         field: "PhienXuLy",
-                        title: "Xử lý (Phút)",
-                        width: 3
-                    },
-                    {
-                        field: "TongPhien",
-                        title: "Tổng",
-                        width: 2,
+                        title: "Thời gian xử lý (Phút)",
+                        width: 3,
                         groupHeaderColumnTemplate: "Sum: #=sum#",
                         groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
-                    }
+                    },
+                    //{
+                    //    field: "TongPhien",
+                    //    title: "Tổng",
+                    //    width: 2,
+                    //    groupHeaderColumnTemplate: "Sum: #=sum#",
+                    //    groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+                    //}
                     ]
                 });
             },
@@ -247,8 +249,7 @@
             type: "GET",
             dataType: "json",
             data: { "_MaSTT": mastt },
-            success: function (result) {
-            },
+            success: function (result) {},
             error: function (xhr) {
                 console.log(xhr.responseText);
             }
