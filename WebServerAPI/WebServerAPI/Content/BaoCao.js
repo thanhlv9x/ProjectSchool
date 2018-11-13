@@ -246,43 +246,43 @@ function createButtonReport() {
 // Tạo sự kiện nút xem báo cáo
 function onClickBtnReport() {
     var day = new Date();
-    $("#noi-dung-bao-cao").html('<div id="title-bao-cao-main" style="padding: 0.8em;"></div><div id="title-bao-cao-1" class="title-report"></div><div id = "grid-report-1" ></div ><div id="title-bao-cao-2" class="title-report"></div><div id="grid-report-2"></div><div id="title-bao-cao-3" class="title-report"></div><div id="grid-report-3"></div>');
+    $("#noi-dung-bao-cao").html('<div id = "grid-report-1" ></div ><div id="grid-report-2"></div><div id="grid-report-3"></div>');
     var start;
     var end;
-    var title_main = '<div>' +
+    var title_main = '<div id="title-bao-cao-main" style="padding: 0.8em; font-size: 1.8em"><div>' +
         '<div style="width: 30%; text-align:center; float: left">' +
-        '<h2>ỦY BAN NHÂN DÂN</h2>' +
-        '<h2>QUẬN TÂN BÌNH</h2>' +
-        '<div style="width: 30%; text-align: center; padding: 0 35% 0 35%;">' +
+        '<h4>ỦY BAN NHÂN DÂN</h4>' +
+        '<h4>QUẬN TÂN BÌNH</h4>' +
+        '<div style="width: 30%;text-align:center;padding: 0 0 0 35%;">' +
         '<hr />' +
         '</div>' +
-        '<h3 style="font-weight: 100; margin:0; padding: 0">Số: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BC-UBND </h3>' +
+        '<h5 style="font-weight: 100; margin:0; padding: 0">Số: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BC-UBND </h5>' +
         '</div>' +
-        '<div style="width: 70%; text-align:center; float: left">' +
-        '<h2>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h2>' +
-        '<h2>Độc lập - Tự do - Hạnh phúc</h2>' +
+        '<div style="width: 40%;text-align:center;float: left;padding: 0 0 0 30%;">' +
+        '<h4>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h4>' +
+        '<h4>Độc lập - Tự do - Hạnh phúc</h4>' +
         '<div style="width: 20%; text-align: center; padding: 0 40% 0 40%;">' +
         '<hr />' +
         '</div>' +
-        '<h3 style="font-weight: 100; margin:0; padding: 0">Quận Tân Bình, ngày &nbsp; ' + day.getDate() + ' &nbsp; tháng &nbsp;' + (day.getMonth() + 1) + '&nbsp; năm &nbsp;' + day.getFullYear() + '&nbsp; </h3>' +
+        '<h5 style="font-weight: 100; margin:0; padding: 0">Quận Tân Bình, ngày &nbsp; ' + day.getDate() + ' &nbsp; tháng &nbsp;' + (day.getMonth() + 1) + '&nbsp; năm &nbsp;' + day.getFullYear() + '&nbsp; </h5>' +
         '</div>' +
         '<div style="clear:both; text-align: center">' +
-        '<br /><h2>BÁO CÁO</h2>' +
-        '<h2 style="font-weight: 100"> Tổng kết tình hình đánh giá chất lượng phục vụ <br /> của nhân viên bộ phận tiếp dân</h2>' +
-        '</div >' +
-        '</div > ';
-    var title1 = "<h2>BẢNG KẾT QUẢ ĐÁNH GIÁ</h2>";
-    var title2 = "<h2>BẢNG GÓP Ý</h2> ";
-    var title3 = "<h2>BẢNG THỜI GIAN GIẢI QUYẾT THỦ TỤC</h2>";
+        '<br /><h4>BÁO CÁO</h4>' +
+        '<h4 style="font-weight: 100"> Tổng kết tình hình đánh giá chất lượng phục vụ <br /> của nhân viên bộ phận tiếp dân</h4>' +
+        '</div>' +
+        '</div></div> ';
+    var title1 = "<div id='title-bao-cao-1' class='title-report'><h4>BẢNG KẾT QUẢ ĐÁNH GIÁ</h4>";
+    var title2 = "<div id='title-bao-cao-2' class='title-report'><h4>BẢNG GÓP Ý</h4> ";
+    var title3 = "<div id='title-bao-cao-3' class='title-report'><h4>BẢNG THỜI GIAN GIẢI QUYẾT THỦ TỤC</h4>";
     mabp_report = $("#bo-phan-bao-cao").val();
     if (mabp_report == 0) {
         macb_report = 0;
     }
     else {
         macb_report = $("#can-bo-bao-cao").val();
-        title1 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
-        title2 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
-        title3 += "<h3 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h3>";
+        title1 += "<h5 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h5>";
+        title2 += "<h5 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h5>";
+        title3 += "<h5 style='margin-left: 0'>" + $("#bo-phan-bao-cao").data("kendoDropDownList").text() + "</h5>";
         if (macb_report != 0) {
             title1 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
             title2 += "<div><b>Cán bộ: " + $("#can-bo-bao-cao").data("kendoDropDownList").text() + "</b></div>";
@@ -302,6 +302,9 @@ function onClickBtnReport() {
         title2 += "<div>(" + start + " - " + end + ")</div>";
         title3 += "<div>(" + start + " - " + end + ")</div>";
     }
+    title1 += "</div>";
+    title2 += "</div>";
+    title3 += "</div>";
     if ($("#cb-kq").prop("checked")) {
         if (mabp_report == 0) {
             createGridReportTH(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
@@ -310,7 +313,8 @@ function onClickBtnReport() {
         } else if (macb_report > 0) {
             createGridReportCB(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end);
         }
-        $("#title-bao-cao-1").html(title1);
+        $("#grid-report-1 .k-grid-header").before(title1);
+        //$("#title-bao-cao-1").html(title1);
     }
     if ($("#cb-gy").prop("checked")) {
         if (mabp_report == 0) {
@@ -320,7 +324,8 @@ function onClickBtnReport() {
         } else if (macb_report > 0) {
             createGridFeedBackCB(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_GopY=GopY");
         }
-        $("#title-bao-cao-2").html(title2);
+        $("#grid-report-2 .k-grid-header").before(title2);
+        //$("#title-bao-cao-2").html(title2);
     }
     if ($("#cb-tt").prop("checked")) {
         if (mabp_report == 0) {
@@ -330,9 +335,17 @@ function onClickBtnReport() {
         } else if (macb_report > 0) {
             createGridThuTucReportCB(url + "/api/BaoCaoAPI/?_MaBP=" + mabp_report + "&_MaCB=" + macb_report + "&_Start=" + start + "&_End=" + end + "&_Phien=Phien");
         }
-        $("#title-bao-cao-3").html(title3);
+        $("#grid-report-3 .k-grid-header").before(title3);
+        //$("#title-bao-cao-3").html(title3);
     }
-    $("#title-bao-cao-main").html(title_main);
+    if ($("#cb-kq").prop("checked")) {
+        $("#grid-report-1 #title-bao-cao-1").before(title_main);
+    } else if ($("#cb-gy").prop("checked")) {
+        $("#grid-report-2 #title-bao-cao-2").before(title_main);
+    } else if ($("#cb-tt").prop("checked")) {
+        $("#grid-report-3 #title-bao-cao-3").before(title_main);
+    }
+    //$("#title-bao-cao-main").html(title_main);
 }
 // Phương thức tạo bảng thời gian giải quyết thủ tục tổng hợp
 function createGridThuTucReportTH(urlStr) {
@@ -422,7 +435,7 @@ function createGridThuTucReportTH(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-thutuc").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -525,7 +538,7 @@ function createGridThuTucReportBP(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-thutuc").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -628,7 +641,7 @@ function createGridThuTucReportCB(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-thutuc").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -802,7 +815,7 @@ function createGridReportTH(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-report").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1011,7 +1024,7 @@ function createGridReportBP(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-report").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1249,7 +1262,7 @@ function createGridReportCB(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-report").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1405,7 +1418,7 @@ function createGridFeedBackTH(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-feedback").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1501,7 +1514,7 @@ function createGridFeedBackBP(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-feedback").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1605,7 +1618,7 @@ function createGridFeedBackCB(urlStr) {
             landscape: true,
             repeatHeaders: true,
             template: $("#page-template-feedback").html(),
-            scale: 0.8
+            scale: 0.6
         },
         dataSource: dataSource,
         navigatable: true,
@@ -1634,7 +1647,7 @@ function createGridFeedBackCB(urlStr) {
 // Phương thức click nút xuất báo cáo
 $('#btn-report').on('click', function () {
     try {
-        $("#title-bao-cao-main, #title-bao-cao-1, #title-bao-cao-2, #title-bao-cao-3").addClass("title-report-export");
+        //$("#title-bao-cao-main, #title-bao-cao-1, #title-bao-cao-2, #title-bao-cao-3").addClass("title-report-export");
         if ($('#grid-report-1').html().length > 0 && $('#grid-report-2').html().length > 0 && $('#grid-report-3').html().length > 0) {
             var grid1 = $('#grid-report-1').data('kendoGrid');
             var grid2 = $('#grid-report-2').data('kendoGrid');
@@ -1655,10 +1668,10 @@ $('#btn-report').on('click', function () {
                                                         .done(function (footer) {
                                                             grid3._drawPDF(progress)
                                                                 .then(function (thirdGrid) {
-                                                                    firstGrid.children.unshift(header);
-                                                                    firstGrid.children.unshift(title);
-                                                                    secondGrid.children.unshift(body);
-                                                                    thirdGrid.children.unshift(footer);
+                                                                    //firstGrid.children.unshift(header);
+                                                                    //firstGrid.children.unshift(title);
+                                                                    //secondGrid.children.unshift(body);
+                                                                    //thirdGrid.children.unshift(footer);
                                                                     secondGrid.children.forEach(function (x) {
                                                                         firstGrid.children.push(x);
                                                                     })
@@ -1691,8 +1704,8 @@ $('#btn-report').on('click', function () {
                         .done(function (header) {
                             grid1._drawPDF(progress)
                                 .then(function (firstGrid) {
-                                    firstGrid.children.unshift(header);
-                                    firstGrid.children.unshift(title);
+                                    //firstGrid.children.unshift(header);
+                                    //firstGrid.children.unshift(title);
                                     return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
 
                                 }).done(function (dataURI) {
@@ -1715,8 +1728,8 @@ $('#btn-report').on('click', function () {
                         .done(function (header) {
                             grid2._drawPDF(progress)
                                 .then(function (firstGrid) {
-                                    firstGrid.children.unshift(header);
-                                    firstGrid.children.unshift(title);
+                                    //firstGrid.children.unshift(header);
+                                    //firstGrid.children.unshift(title);
                                     return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
 
                                 }).done(function (dataURI) {
@@ -1739,8 +1752,8 @@ $('#btn-report').on('click', function () {
                         .done(function (header) {
                             grid3._drawPDF(progress)
                                 .then(function (firstGrid) {
-                                    firstGrid.children.unshift(header);
-                                    firstGrid.children.unshift(title);
+                                    //firstGrid.children.unshift(header);
+                                    //firstGrid.children.unshift(title);
                                     return kendo.drawing.exportPDF(firstGrid, { multiPage: true });
 
                                 }).done(function (dataURI) {
@@ -1768,9 +1781,9 @@ $('#btn-report').on('click', function () {
                                         .done(function (body) {
                                             grid2._drawPDF(progress)
                                                 .then(function (secondGrid) {
-                                                    firstGrid.children.unshift(header);
-                                                    firstGrid.children.unshift(title);
-                                                    secondGrid.children.unshift(body);
+                                                    //firstGrid.children.unshift(header);
+                                                    //firstGrid.children.unshift(title);
+                                                    //secondGrid.children.unshift(body);
                                                     secondGrid.children.forEach(function (x) {
                                                         firstGrid.children.push(x);
                                                     })
@@ -1803,9 +1816,9 @@ $('#btn-report').on('click', function () {
                                         .done(function (body) {
                                             grid3._drawPDF(progress)
                                                 .then(function (secondGrid) {
-                                                    firstGrid.children.unshift(header);
-                                                    firstGrid.children.unshift(title);
-                                                    secondGrid.children.unshift(body);
+                                                    //firstGrid.children.unshift(header);
+                                                    //firstGrid.children.unshift(title);
+                                                    //secondGrid.children.unshift(body);
                                                     secondGrid.children.forEach(function (x) {
                                                         firstGrid.children.push(x);
                                                     })
@@ -1838,9 +1851,9 @@ $('#btn-report').on('click', function () {
                                         .done(function (body) {
                                             grid3._drawPDF(progress)
                                                 .then(function (secondGrid) {
-                                                    firstGrid.children.unshift(header);
-                                                    firstGrid.children.unshift(title);
-                                                    secondGrid.children.unshift(body);
+                                                    //firstGrid.children.unshift(header);
+                                                    //firstGrid.children.unshift(title);
+                                                    //secondGrid.children.unshift(body);
                                                     secondGrid.children.forEach(function (x) {
                                                         firstGrid.children.push(x);
                                                     })

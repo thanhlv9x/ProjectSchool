@@ -108,7 +108,7 @@ h3 {
     -webkit-box-shadow: none;
 }
 
-table {
+.table {
     padding: 0 1em 0 1em;
 }
 
@@ -261,10 +261,17 @@ kendo-pdf-document .customer-photo {
     margin: 1em 0 1em 0;
     padding: 0.8em;
     text-align: center;
+    font-size: 1.8em
 }
 
 .title-report-export {
-    width: 47%
+    /*width: 47%;*/
+    /*margin: 0 28%;*/
+    font-size: 1.8em
+}
+
+div#grid-report-1, div#grid-report-2, div#grid-report-3 {
+    border: 0
 }
 
 .title-pw {

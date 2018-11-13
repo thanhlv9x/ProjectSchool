@@ -90,6 +90,7 @@ function createChartThuTucTH(urlStr, titleStr) {
         series:
             [{
                 opacity: 0.2,
+                type: "column",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
@@ -496,6 +497,7 @@ function createChartThuTucBP(urlStr, titleStr) {
         series:
             [{
                 opacity: 0.2,
+                type: "column",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
@@ -844,6 +846,7 @@ function createChartThuTucCB(urlStr, titleStr) {
         series:
             [{
                 opacity: 0.2,
+                type: "column",
                 field: "SoLuongGiaiQuyet",
                 categoryField: "ThoiGian",
                 name: "Tổng số lượng",
