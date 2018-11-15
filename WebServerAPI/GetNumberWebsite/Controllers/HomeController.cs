@@ -79,6 +79,11 @@ namespace GetNumberWebsite.Controllers
                         createFile(value, _TenBP);
                         convertTextToPDF();
                         printPDF(_PrinterName);
+                        var files = Directory.EnumerateFiles(@"C:\Windows\System32\config\systemprofile\Documents", "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".pdf"));
+                        foreach (var item in files)
+                        {
+                            System.IO.File.Delete(item);
+                        }
                         return Json(value, JsonRequestBehavior.AllowGet);
                     }
                     else
@@ -113,7 +118,7 @@ namespace GetNumberWebsite.Controllers
             // Absolute path to your PDF to print (with filename)
             string Filepath = basePath + @"\phieu-thu-tu.pdf";
             // The name of the PDF that will be printed (just to be shown in the print queue)
-            string Filename = "phieu-thu-tu-print";
+            string Filename = "phieu-thu-tu";
             // The name of the printer that you want to use
             // Note: Check step 1 from the B alternative to see how to list
             // the names of all the available printers with C#
@@ -121,15 +126,10 @@ namespace GetNumberWebsite.Controllers
             string PrinterName = _PrinterName;
 
             // Create an instance of the Printer
-            IPrinter printer = new Printer();
-
+            //IPrinter printer = new Printer();
+            Printer.PrintFile(PrinterName, Filepath);
             // Print the file
-            printer.PrintRawFile(PrinterName, Filepath, Filename);
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (System.IO.File.Exists(path + @"\phieu-thu-tu-print.pdf"))
-            {
-                System.IO.File.Delete(path + @"\phieu-thu-tu-print.pdf");
-            }
+            //printer.PrintRawFile(PrinterName, Filepath, Filename);
         }
         /// <summary>
         /// Phương thức tạo và ghi file
