@@ -193,7 +193,7 @@ function createTableTk(urlGet) {
                     { field: "MaBP", title: "Tên bộ phận", width: 100, values: arr },
                     { field: "Id", title: "Tài khoản", width: 100 },
                     { field: "Pw", title: "Mật khẩu", width: 100 },
-                    { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+                    { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ", iconClass: "k-icon k-i-delete" }], title: "&nbsp;", width: "250px" }
                 ],
                 editable: {
                     confirmation: false,
@@ -444,7 +444,7 @@ function createTableTTBP(urlGet) {
         columns: [
             { field: "VietTat", title: "Mã bộ phận", width: 80 },
             { field: "TenBP", title: "Tên bộ phận", width: 100 },
-            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ", iconClass: "k-icon k-i-delete" } ], title: "&nbsp;", width: "250px" }
         ],
         editable: {
             confirmation: false,
@@ -615,7 +615,7 @@ function createTableTTQ(urlGet) {
         columns: [
             { field: "MaMay", title: "Số quầy", width: 80 },
             //{ field: "Mac", title: "Mã máy", width: 100 },
-            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ" }], title: "&nbsp;", width: "250px" }
+            { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ", iconClass: "k-icon k-i-delete" } ], title: "&nbsp;", width: "250px" }
         ],
         editable: {
             confirmation: false,

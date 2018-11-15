@@ -442,8 +442,8 @@ div#container {
     }
 
         div#black div#list-view {
-            width: 200%;
-            left: -100%;
+            width: 135%;
+            left: -35%;
         }
 
     div#header div {
@@ -468,7 +468,7 @@ div#container {
     }
 
     .move-right {
-        transform: translateX(200%);
+        transform: translateX(135%);
     }
 }
 

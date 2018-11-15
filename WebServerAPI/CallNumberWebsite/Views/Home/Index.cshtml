@@ -73,7 +73,7 @@
         <label>Mật khẩu cũ: </label><div id="mk-cu"><input type="password"></div>
         <label>Mật khẩu mới: </label><div id="mk-moi1"><input type="password"></div>
         <label>Nhập lại mật khẩu: </label><div id="mk-moi2"><input type="password"></div>
-        <div id="btn-change">THAY ĐỔI</div>
+        <div id="btn-change">XÁC NHẬN</div>
     </div>
 </body>
 </html>
@@ -198,13 +198,13 @@
                         groupHeaderColumnTemplate: "Sum: #=sum#",
                         groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
                     },
-                    //{
-                    //    field: "TongPhien",
-                    //    title: "Tổng",
-                    //    width: 2,
-                    //    groupHeaderColumnTemplate: "Sum: #=sum#",
-                    //    groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
-                    //}
+                        //{
+                        //    field: "TongPhien",
+                        //    title: "Tổng",
+                        //    width: 2,
+                        //    groupHeaderColumnTemplate: "Sum: #=sum#",
+                        //    groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Trung bình: #=Math.round(average*100)/100#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>"
+                        //}
                     ]
                 });
             },
@@ -249,7 +249,7 @@
             type: "GET",
             dataType: "json",
             data: { "_MaSTT": mastt },
-            success: function (result) {},
+            success: function (result) { },
             error: function (xhr) {
                 console.log(xhr.responseText);
             }
@@ -383,7 +383,6 @@
     })
     // Tạo sự kiện thu nhỏ bảng thống kê khi click vào mảng đen mờ
     $("#black-span").click(function () {
-        console.log("click");
         $("#black")[0].classList.remove("move-right")
     })
     $(document).ready(function () {
@@ -415,4 +414,4 @@
         font-size: 1.2em;
     }
 </style>
-<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/style1.css" rel="stylesheet" />
