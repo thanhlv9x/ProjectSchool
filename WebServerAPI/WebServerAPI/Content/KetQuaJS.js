@@ -1115,6 +1115,7 @@ function onClickBtnCB(e) {
     $("#can-bo").show("slow");
     $("#div-month-circle-cb-1").hide();
     $("#table-details-cb").hide();
+    $("#table-ket-qua-cb").hide();
     $("#click-details-cb").text("Xem chi tiết");
     clickCB = false;
     macb = $(e.event.target).attr("id");
@@ -1126,6 +1127,7 @@ function onClickBtnCB(e) {
         createMonthCircleCB(macb);
         createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
+        createTableKetQua(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + "&_KetQua=1", "Bảng kết quả đánh giá (Tổng hợp)")
         $("#cb-all-cb").prop("checked", true);
         $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
         $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
@@ -1460,7 +1462,7 @@ function createTableGopY(urlStr, titleStr) {
         },
         columns: [
             { field: "Ngay", title: "Ngày", width: 1, format: "{0:dd MM yyyy}" },
-            //{ field: "ThoiGian", title: "Thời gian", width: 1, format: "{0:hh mm ss}" },
+            { field: "ThoiGian", title: "Thời gian", width: 1, format: "{0:hh mm ss}" },
             { field: "MucDo", title: "Mức độ đánh giá", width: 1 },
             { field: "GopY", title: "Góp ý", width: 5 },
             {
@@ -1472,6 +1474,160 @@ function createTableGopY(urlStr, titleStr) {
     }).data("kendoGrid");
     $("#span-title-table-gop-y").text(titleStr);
 }
+// Tạo bảng góp ý
+function createTableKetQua(urlStr, titleStr) {
+    //$("#grid-gop-y").html("");
+    dataSource = new kendo.data.DataSource({
+        transport: {
+            serverFiltering: true,
+            read: function (options) {
+                $.ajax({
+                    type: "GET",
+                    url: urlStr,
+                    dataType: 'json',
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
+                    }
+                });
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        batch: true,
+        pageSize: 20,
+        schema: {
+            model: {
+                id: "Ngay",
+                fields: {
+                    Ngay: { type: "date", validation: { required: true } },
+                    RHL_SoLan: { type: "number", validation: { required: true } },
+                    HL_SoLan: { type: "number", validation: { required: true } },
+                    BT_SoLan: { type: "number", validation: { required: true } },
+                    KHL_SoLan: { type: "number", validation: { required: true } },
+                    RHL_TyLe: { type: "number", validation: { required: true } },
+                    HL_TyLe: { type: "number", validation: { required: true } },
+                    BT_TyLe: { type: "number", validation: { required: true } },
+                    KHL_TyLe: { type: "number", validation: { required: true } },
+                }
+            }
+        },
+        group: {
+            field: "Ngay", aggregates: [
+                { field: "Ngay", aggregate: "count" },
+                { field: "RHL_TyLe", aggregate: "average" },
+                { field: "RHL_SoLan", aggregate: "sum" },
+                { field: "HL_TyLe", aggregate: "average" },
+                { field: "HL_SoLan", aggregate: "sum" },
+                { field: "BT_TyLe", aggregate: "average" },
+                { field: "BT_SoLan", aggregate: "sum" },
+                { field: "KHL_TyLe", aggregate: "average" },
+                { field: "KHL_SoLan", aggregate: "sum" },
+                { field: "RHL_TyLe", aggregate: "min" },
+                { field: "RHL_SoLan", aggregate: "min" },
+                { field: "HL_TyLe", aggregate: "min" },
+                { field: "HL_SoLan", aggregate: "min" },
+                { field: "BT_TyLe", aggregate: "min" },
+                { field: "BT_SoLan", aggregate: "min" },
+                { field: "KHL_TyLe", aggregate: "min" },
+                { field: "KHL_SoLan", aggregate: "min" },
+                { field: "RHL_TyLe", aggregate: "max" },
+                { field: "RHL_SoLan", aggregate: "max" },
+                { field: "HL_TyLe", aggregate: "max" },
+                { field: "HL_SoLan", aggregate: "max" },
+                { field: "BT_TyLe", aggregate: "max" },
+                { field: "BT_SoLan", aggregate: "max" },
+                { field: "KHL_TyLe", aggregate: "max" },
+                { field: "KHL_SoLan", aggregate: "max" },
+            ]
+        },
+
+        aggregate: [
+            { field: "Ngay", aggregate: "count" },
+            { field: "RHL_TyLe", aggregate: "average" },
+            { field: "RHL_TyLe", aggregate: "sum" },
+            { field: "RHL_TyLe", aggregate: "count" },
+            { field: "RHL_SoLan", aggregate: "sum" },
+            { field: "HL_TyLe", aggregate: "average" },
+            { field: "HL_TyLe", aggregate: "sum" },
+            { field: "HL_TyLe", aggregate: "count" },
+            { field: "HL_SoLan", aggregate: "sum" },
+            { field: "BT_TyLe", aggregate: "average" },
+            { field: "BT_TyLe", aggregate: "sum" },
+            { field: "BT_TyLe", aggregate: "count" },
+            { field: "BT_SoLan", aggregate: "sum" },
+            { field: "KHL_TyLe", aggregate: "average" },
+            { field: "KHL_TyLe", aggregate: "sum" },
+            { field: "KHL_TyLe", aggregate: "count" },
+            { field: "KHL_SoLan", aggregate: "sum" },
+            { field: "RHL_TyLe", aggregate: "min" },
+            { field: "RHL_SoLan", aggregate: "min" },
+            { field: "HL_TyLe", aggregate: "min" },
+            { field: "HL_SoLan", aggregate: "min" },
+            { field: "BT_TyLe", aggregate: "min" },
+            { field: "BT_SoLan", aggregate: "min" },
+            { field: "KHL_TyLe", aggregate: "min" },
+            { field: "KHL_SoLan", aggregate: "min" },
+            { field: "RHL_TyLe", aggregate: "max" },
+            { field: "RHL_SoLan", aggregate: "max" },
+            { field: "HL_TyLe", aggregate: "max" },
+            { field: "HL_SoLan", aggregate: "max" },
+            { field: "BT_TyLe", aggregate: "max" },
+            { field: "BT_SoLan", aggregate: "max" },
+            { field: "KHL_TyLe", aggregate: "max" },
+            { field: "KHL_SoLan", aggregate: "max" },
+        ]
+    });
+
+    var grid = $("#grid-ket-qua").kendoGrid({
+        dataSource: dataSource,
+        navigatable: true,
+        pageable: {
+            refresh: true,
+            messages: {
+                display: "{0}-{1}/{2}",
+                empty: "Dữ liệu không tồn tại",
+            }
+        },
+        columns: [
+            { field: "Ngay", title: "Ngày", width: 70, format: "{0:dd MM yyyy}", hidden: true },
+            {
+                title: "Rất hài lòng",
+                columns: [
+                    { field: "RHL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
+                    { field: "RHL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+                ]
+            },
+            {
+                title: "Hài lòng",
+                columns: [
+                    { field: "HL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
+                    { field: "HL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+                ]
+            },
+            {
+                title: "Bình thường",
+                columns: [
+                    { field: "BT_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
+                    { field: "BT_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+                ]
+            },
+            {
+                title: "Không hài lòng",
+                columns: [
+                    { field: "KHL_TyLe", title: "Tỷ lệ(%)", width: 70, groupFooterTemplate: "Trung bình: #if(average==null){#<span>#=0#%</span>#}else{#<span>#=Math.round(average*100)/100#%</span>#}#", footerTemplate: "Trung bình: #=Math.round((sum/count)*100)/100#%" },
+                    { field: "KHL_SoLan", title: "Số lần", width: 70, groupFooterTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>", footerTemplate: "<div>Tổng: #=sum#</div><div>Thấp nhất: #= min #</div><div>Cao nhất: #= max #</div>" }
+                ]
+            },
+        ],
+    }).data("kendoGrid");
+    $("#span-title-table-ket-qua").text(titleStr);
+}
 // Tạo phương thức cho sự kiện checkbox xem tất cả để tạo biểu đồ tròn
 $("#div-month-circle-cb>div:first-child>span").click(function () {
     $("#cb-all-cb").prop("checked", !$("#cb-all-cb").prop("checked"))
@@ -1480,6 +1636,7 @@ $("#div-month-circle-cb>div:first-child>span").click(function () {
         createChartCircleCB(urlStr, "Kết quả đánh giá (Tổng hợp)");
         createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
+        createTableKetQua(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + "&_KetQua=1", "Bảng kết quả đánh giá (Tổng hợp)")
         $("#div-month-circle-cb-1").hide("slow");
         $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
         $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
@@ -1492,6 +1649,8 @@ $("#div-month-circle-cb>div:first-child>span").click(function () {
         createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
         var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
         createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
+        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time + "&_KetQua=1";
+        createTableKetQua(urlStr3, "Bảng kết quả đánh giá (" + date + ")")
         $("#div-month-circle-cb-1").show("slow");
         $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
         $("#xl-cb").text("XẾP LOẠI (" + date + ")");
@@ -1503,6 +1662,7 @@ $("#cb-all-cb").change(function () {
         createChartCircleCB(urlStr, "Kết quả đánh giá (Tổng hợp)");
         createTableCB(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
         createTableGopY(url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb, "Bảng góp ý (Tổng hợp)");
+        createTableKetQua(url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + "&_KetQua=1", "Bảng kết quả đánh giá (Tổng hợp)")
         $("#div-month-circle-cb-1").hide("slow");
         $("#ds-cb").text("ĐIỂM SỐ (TỔNG HỢP)");
         $("#xl-cb").text("XẾP LOẠI (TỔNG HỢP)");
@@ -1515,6 +1675,8 @@ $("#cb-all-cb").change(function () {
         createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
         var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
         createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
+        var urlStr3 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time + "&_KetQua=1";
+        createTableKetQua(urlStr3, "Bảng kết quả đánh giá (" + date + ")")
         $("#div-month-circle-cb-1").show("slow");
         $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
         $("#xl-cb").text("XẾP LOẠI (" + date + ")");
@@ -1559,6 +1721,8 @@ $("#month-circle-cb").change(function () {
     createTableCB(urlStr1, "Kết quả đánh giá (" + date + ")");
     var urlStr2 = url + "/api/BangDanhGiaAPI/?_MaCBGopY=" + macb + time;
     createTableGopY(urlStr2, "Bảng góp ý (" + date + ")");
+    var urlStr3 = url + "/api/BangDanhGiaAPI/?_MaCB=" + macb + time + "&_KetQua=1";
+    createTableKetQua(urlStr3, "Bảng kết quả đánh giá (" + date + ")")
     $("#ds-cb").text("ĐIỂM SỐ (" + date + ")");
     $("#xl-cb").text("XẾP LOẠI (" + date + ")");
 })
@@ -1566,11 +1730,13 @@ $("#month-circle-cb").change(function () {
 $("#click-details-cb").click(function () {
     if (!clickCB) {
         $("#table-details-cb").show("slow");
+        $("#table-ket-qua-cb").show("slow");
         $("#click-details-cb").text("Thu gọn");
         clickCB = true;
         return;
     } else {
         $("#table-details-cb").hide("slow");
+        $("#table-ket-qua-cb").hide("slow");
         $("#click-details-cb").text("Xem chi tiết");
         clickCB = false;
         return;

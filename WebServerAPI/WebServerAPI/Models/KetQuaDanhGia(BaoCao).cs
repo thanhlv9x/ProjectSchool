@@ -24,5 +24,6 @@ namespace WebServerAPI.Models
         public double Diem { get; set; }
         public string XepLoai { get; set; }
         public string MaCBSD { get; set; }
+        public DateTime Ngay { get; set; }
     }
 }

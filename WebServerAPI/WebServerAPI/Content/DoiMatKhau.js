@@ -7,29 +7,33 @@ $("#btn-change-pw").click(function () {
     var old = $("#old-pw").val();
     var news = $("#new-pw").val();
     var renew = $("#renew-pw").val();
-    if (news != renew) { alert("Nhập lại mật khẩu mới không chính xác !"); }
-    else {
-        $.ajax({
-            url: url + "/Login/ChangePw",
-            type: "POST",
-            dataType: "json",
-            data: { "_OldPw": old, "_Pw": news },
-            success: function (result) {
-                if (result == "success") {
-                    alert("Thay đổi thành công !");
-                }
-                else if (result == "fail") {
-                    alert("Sai mật khẩu !");
-                }
-                else if (result == "error") {
-                    alert("Gặp sự cố trong lúc thay đổi. Vui lòng đăng nhập lại !");
-                }
-                else if (result == "null") {
-                    alert("Gặp sự cố trong lúc thay đổi. Vui lòng đăng nhập lại !");
-                }
-            },
-            error: function (xhr) { }
-        })
+    if (news == "" || renew == "") {
+        if (news != renew) { alert("Nhập lại mật khẩu mới không chính xác !"); }
+        else {
+            $.ajax({
+                url: url + "/Login/ChangePw",
+                type: "POST",
+                dataType: "json",
+                data: { "_OldPw": old, "_Pw": news },
+                success: function (result) {
+                    if (result == "success") {
+                        alert("Thay đổi thành công !");
+                    }
+                    else if (result == "fail") {
+                        alert("Sai mật khẩu !");
+                    }
+                    else if (result == "error") {
+                        alert("Gặp sự cố trong lúc thay đổi. Vui lòng đăng nhập lại !");
+                    }
+                    else if (result == "null") {
+                        alert("Gặp sự cố trong lúc thay đổi. Vui lòng đăng nhập lại !");
+                    }
+                },
+                error: function (xhr) { }
+            })
+        }
+    } else {
+        alert("Mật khẩu mới không được để trống !");
     }
     $("#old-pw, #new-pw, #renew-pw").val("");
 })

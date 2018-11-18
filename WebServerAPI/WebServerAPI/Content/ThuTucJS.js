@@ -1,6 +1,6 @@
 ﻿// ============ Thời gian giải quyết thủ tục ============
 // Tạo sự kiện khi click vào tab xem thời gian giải quyết thủ tục
-$("#menu-xem-thu-tuc").click(function () {
+$("li#menu-xem-thu-tuc").click(function () {
     getBPNameThuTuc();
     createMonthCircleThuTucTH();
     createYearColumnThuTucTH();
@@ -262,6 +262,9 @@ function createMonthCircleThuTucTH() {
             } else {
                 $("#month-column-thu-tuc-th").val("09 2018");
             }
+            if (!$("#cbx-month-thu-tuc-th").prop("checked")) {
+                $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").hide();
+            }
         },
         error: function (xhr) {
             console.log(xhr.responseText);
@@ -276,43 +279,45 @@ $("#month-column-thu-tuc-th").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
+function hideShowMonth() {
+    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Nếu checkbox chọn tháng chưa check
+        createYearColumnThuTucTH(); // Tạo biểu đồ cột theo 12 tháng trong năm
+        $("#cbx-year-thu-tuc-th").prop("checked", "checked") // Check checkbox năm
+        $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").show(); // Hiện dropdownlist của chọn năm
+    } else { // Nếu checkbox đã check
+        createMonthCircleThuTucTH(); // Tạo biểu đò cột theo các ngày trong tháng
+        $("#cbx-year-thu-tuc-th").removeAttr("checked") // Bỏ check checkbox năm
+        $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
+    }
+}
+function hideShowYear() {
+    if (!$("#cbx-year-thu-tuc-th").prop("checked")) { // Nếu checbox chọn năm chưa check
+        createMonthCircleThuTucTH(); // Tạo biểu đồ cột theo các ngày trong tháng
+        $("#cbx-month-thu-tuc-th").prop("checked", "checked")  // Check checkbox chọn tháng
+        $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm
+    } else { // Nếu checbox chọn năm đã check
+        createYearColumnThuTucTH(); // Tạo biểu đồ cột theo 12 tháng trong năm
+        $("#cbx-month-thu-tuc-th").removeAttr("checked") // Bỏ check checkbox tháng
+        $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").show(); // Hiện Dropdownlist của chọn năm
+    }
+}
 $("#year-group-thu-tuc-th div:first-child label").click(function () {
     $("#cbx-month-thu-tuc-th").prop("checked", !$("#cbx-month-thu-tuc-th").prop("checked"));
-    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
-        createYearColumnThuTucTH();
-        $("#cbx-year-thu-tuc-th").prop("checked", "checked")
-    } else { // Đã check
-        createMonthCircleThuTucTH();
-        $("#cbx-year-thu-tuc-th").removeAttr("checked")
-    }
+    hideShowMonth();
 })
 $("#year-group-thu-tuc-th div:last-child label").click(function () {
-    $("#cbx-month-thu-tuc-th").prop("checked", !$("#cbx-month-thu-tuc-th").prop("checked"))
-    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
-        createYearColumnThuTucTH();
-        $("#cbx-year-thu-tuc-th").prop("checked", "checked");
-    } else { // Đã check
-        createMonthCircleThuTucTH();
-        $("#cbx-year-thu-tuc-th").removeAttr("checked")
-    }
+    $("#cbx-year-thu-tuc-th").prop("checked", !$("#cbx-year-thu-tuc-th").prop("checked"));
+    hideShowYear();
 })
 $("#cbx-month-thu-tuc-th").change(function () {
-    if (!$("#cbx-month-thu-tuc-th").prop("checked")) { // Chưa check
-        createYearColumnThuTucTH();
-        $("#cbx-year-thu-tuc-th").prop("checked", "checked")
-    } else { // Đã check
-        createMonthCircleThuTucTH();
-        $("#cbx-year-thu-tuc-th").removeAttr("checked")
-    }
+    hideShowMonth();
 })
 $("#cbx-year-thu-tuc-th").change(function () {
-    if (!$("#cbx-year-thu-tuc-th").prop("checked")) { // Chưa check
-        createMonthCircleThuTucTH();
-        $("#cbx-month-thu-tuc-th").prop("checked", "checked")
-    } else { // Đã check
-        createYearColumnThuTucTH();
-        $("#cbx-month-thu-tuc-th").removeAttr("checked")
-    }
+    hideShowYear();
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucTH(urlStr, titleStr) {
@@ -325,6 +330,7 @@ function createGridThuTucTH(urlStr, titleStr) {
                     type: "GET",
                     url: urlStr,
                     dataType: 'json',
+                    //async: false,
                     success: function (result) {
                         options.success(result);
                     },
@@ -669,6 +675,9 @@ function createMonthCircleThuTucBP() {
             } else {
                 $("#month-column-thu-tuc-bp").val("09 2018");
             }
+            if (!$("#cbx-month-thu-tuc-bp").prop("checked")) {
+                $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+            }
         },
         error: function (xhr) {
             console.log(xhr.responseText);
@@ -683,43 +692,45 @@ $("#month-column-thu-tuc-bp").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
-$("#year-group-thu-tuc-bp div:first-child label").click(function () {
-    $("#cbx-month-thu-tuc-bp").prop("checked", !$("#cbx-month-thu-tuc-bp").prop("checked"));
+function hideShowMonthBP() {
     if (!$("#cbx-month-thu-tuc-bp").prop("checked")) { // Chưa check
         createYearColumnThuTucBP();
         $("#cbx-year-thu-tuc-bp").prop("checked", "checked")
+        $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").show(); // Hiện dropdownlist của chọn năm
     } else { // Đã check
         createMonthCircleThuTucBP();
         $("#cbx-year-thu-tuc-bp").removeAttr("checked")
+        $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
     }
+}
+function hideShowYearBP() {
+    if (!$("#cbx-year-thu-tuc-bp").prop("checked")) { // Chưa check
+        createMonthCircleThuTucBP();
+        $("#cbx-month-thu-tuc-bp").prop("checked", "checked")
+        $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
+    } else { // Đã check
+        createYearColumnThuTucBP();
+        $("#cbx-month-thu-tuc-bp").removeAttr("checked")
+        $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").show(); // Hiện dropdownlist của chọn năm
+    }
+}
+$("#year-group-thu-tuc-bp div:first-child label").click(function () {
+    $("#cbx-month-thu-tuc-bp").prop("checked", !$("#cbx-month-thu-tuc-bp").prop("checked"));
+    hideShowMonthBP();
 })
 $("#year-group-thu-tuc-bp div:last-child label").click(function () {
     $("#cbx-year-thu-tuc-bp").prop("checked", !$("#cbx-year-thu-tuc-bp").prop("checked"));
-    if (!$("#cbx-year-thu-tuc-bp").prop("checked")) { // Chưa check
-        createMonthCircleThuTucBP();
-        $("#cbx-month-thu-tuc-bp").prop("checked", "checked")
-    } else { // Đã check
-        createYearColumnThuTucBP();
-        $("#cbx-month-thu-tuc-bp").removeAttr("checked")
-    }
+    hideShowYearBP();
 })
 $("#cbx-month-thu-tuc-bp").change(function () {
-    if (!$("#cbx-month-thu-tuc-bp").prop("checked")) { // Chưa check
-        createYearColumnThuTucBP();
-        $("#cbx-year-thu-tuc-bp").prop("checked", "checked")
-    } else { // Đã check
-        createMonthCircleThuTucBP();
-        $("#cbx-year-thu-tuc-bp").removeAttr("checked")
-    }
+    hideShowMonthBP();
 })
 $("#cbx-year-thu-tuc-bp").change(function () {
-    if (!$("#cbx-year-thu-tuc-bp").prop("checked")) { // Chưa check
-        createMonthCircleThuTucBP();
-        $("#cbx-month-thu-tuc-bp").prop("checked", "checked")
-    } else { // Đã check
-        createYearColumnThuTucBP();
-        $("#cbx-month-thu-tuc-bp").removeAttr("checked")
-    }
+    hideShowYearBP();
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucBP(urlStr, titleStr) {
@@ -1004,6 +1015,9 @@ function createMonthCircleThuTucCB() {
             } else {
                 $("#month-column-thu-tuc-cb").val("09 2018");
             }
+            if (!$("#cbx-month-thu-tuc-cb").prop("checked")) {
+                $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+            }
         },
         error: function (xhr) {
             console.log(xhr.responseText);
@@ -1018,43 +1032,47 @@ $("#month-column-thu-tuc-cb").change(function () {
     }
 })
 // Tạo sự kiện click checkbox chọn xem biểu đồ miền theo tháng hoặc năm
-$("#year-group-thu-tuc-cb div:first-child label").click(function () {
-    $("#cbx-month-thu-tuc-cb").prop("checked", !$("#cbx-month-thu-tuc-cb").prop("checked"));
+function hideShowMonthCB() {
     if (!$("#cbx-month-thu-tuc-cb").prop("checked")) { // Chưa check
         createYearColumnThuTucCB();
         $("#cbx-year-thu-tuc-cb").prop("checked", "checked")
+        $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").show(); // Hiện Dropdownlist của chọn năm
+
     } else { // Đã check
         createMonthCircleThuTucCB();
         $("#cbx-year-thu-tuc-cb").removeAttr("checked")
+        $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm
     }
+}
+function hideShowYearCB() {
+    if (!$("#cbx-year-thu-tuc-cb").prop("checked")) { // Chưa check
+        createMonthCircleThuTucCB();
+        $("#cbx-month-thu-tuc-cb").prop("checked", "checked")
+        $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
+        $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm
+
+    } else { // Đã check
+        createYearColumnThuTucCB();
+        $("#cbx-month-thu-tuc-cb").removeAttr("checked")
+        $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
+        $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").show(); // Hiện Dropdownlist của chọn năm
+    }
+}
+$("#year-group-thu-tuc-cb div:first-child label").click(function () {
+    $("#cbx-month-thu-tuc-cb").prop("checked", !$("#cbx-month-thu-tuc-cb").prop("checked"));
+    hideShowMonthCB();
 })
 $("#year-group-thu-tuc-cb div:last-child label").click(function () {
     $("#cbx-year-thu-tuc-cb").prop("checked", !$("#cbx-year-thu-tuc-cb").prop("checked"));
-    if (!$("#cbx-year-thu-tuc-cb").prop("checked")) { // Chưa check
-        createMonthCircleThuTucCB();
-        $("#cbx-month-thu-tuc-cb").prop("checked", "checked")
-    } else { // Đã check
-        createYearColumnThuTucCB();
-        $("#cbx-month-thu-tuc-cb").removeAttr("checked")
-    }
+    hideShowYearCB();
 })
 $("#cbx-month-thu-tuc-cb").change(function () {
-    if (!$("#cbx-month-thu-tuc-cb").prop("checked")) { // Chưa check
-        createYearColumnThuTucCB();
-        $("#cbx-year-thu-tuc-cb").prop("checked", "checked")
-    } else { // Đã check
-        createMonthCircleThuTucCB();
-        $("#cbx-year-thu-tuc-cb").removeAttr("checked")
-    }
+    hideShowMonthCB();
 })
 $("#cbx-year-thu-tuc-cb").change(function () {
-    if (!$("#cbx-year-thu-tuc-cb").prop("checked")) { // Chưa check
-        createMonthCircleThuTucCB();
-        $("#cbx-month-thu-tuc-cb").prop("checked", "checked")
-    } else { // Đã check
-        createYearColumnThuTucCB();
-        $("#cbx-month-thu-tuc-cb").removeAttr("checked")
-    }
+    hideShowYearCB();
 })
 // Phương thức tạo bảng kết quả báo cáo
 function createGridThuTucCB(urlStr, titleStr) {

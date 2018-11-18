@@ -180,21 +180,25 @@
                     data: { "_MaMay": mamay },
                     success: function (result) {
                         var js = JSON.parse(result);
-                        if (js["MaCB"] != macb) {
-                            macb = js["MaCB"];
-                            mabp = js["MaBP"];
-                            macbsd = js["MaCBSD"];
-                            viettat = js["VietTat"];
-                            $("#id").text(macbsd);
-                            $("#name").text(js["HoTen"]);
-                            $("#bo-phan").text(js["TenBP"]);
-                            $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
-                            //$("#container").show();
-                            //$("#thanks").hide();
+                        if (js != false) {
+                            if (js["MaCB"] != macb) {
+                                macb = js["MaCB"];
+                                mabp = js["MaBP"];
+                                macbsd = js["MaCBSD"];
+                                viettat = js["VietTat"];
+                                $("#id").text(macbsd);
+                                $("#name").text(js["HoTen"]);
+                                $("#bo-phan").text(js["TenBP"]);
+                                $("#image input").attr('src', `data:image/png;base64,${js["HinhAnh"]}`);
+                                //$("#container").show();
+                                //$("#thanks").hide();
 
-                            $(".body, .footer").show();
+                                $(".body, .footer").show();
+                            }
+                            goiSo();
+                        } else {
+                            $(".body, .footer").hide();
                         }
-                        goiSo();
                     },
                     error: function (xhr) {
                         //console.log(xhr.responseText);

@@ -304,49 +304,55 @@ function onClick(e) {
 $("#btn-dang-nhap").kendoButton({
     click: onClick
 });
+// Phương thức thêm thuộc tính readonly vào DatePicker
+function addReadonlyDatePicker() {
+    $("#thang-dang-nhap").attr("readonly", true);
+    $("#nam-dang-nhap").attr("readonly", false);
+}
+// Phương thức thêm thuộc tính readonly vào Dropdownlist
+function addReadonlyDropdownlist() {
+    $("#thang-dang-nhap").attr("readonly", false);
+    $("#nam-dang-nhap").attr("readonly", true);
+}
 // Tạo sự kiện checkbox tháng đăng nhập
+function readonlyDatePicker() {
+    if (!$("#cbx-thang-dang-nhap").prop("checked")) {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+        addReadonlyDatePicker();
+    }
+    else {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+        addReadonlyDropdownlist();
+    }
+}
 $("#div-loai-dang-nhap div:first-child div:first-child label").click(function () {
     $("#cbx-thang-dang-nhap").prop("checked", !$("#cbx-thang-dang-nhap").prop("checked"));
-    if (!$("#cbx-thang-dang-nhap").prop("checked")) {
-        $("#cbx-thang-dang-nhap").removeAttr("checked");
-        $("#cbx-nam-dang-nhap").prop("checked", "checked");
-    }
-    else {
-        $("#cbx-nam-dang-nhap").removeAttr("checked");
-        $("#cbx-thang-dang-nhap").prop("checked", "checked");
-    }
+    readonlyDatePicker();
 })
 $("#cbx-thang-dang-nhap").change(function () {
-    if (!$("#cbx-thang-dang-nhap").prop("checked")) {
-        $("#cbx-thang-dang-nhap").removeAttr("checked");
-        $("#cbx-nam-dang-nhap").prop("checked", "checked");
-    }
-    else {
-        $("#cbx-nam-dang-nhap").removeAttr("checked");
-        $("#cbx-thang-dang-nhap").prop("checked", "checked");
-    }
+    readonlyDatePicker();
 })
 // Tạo sự kiện checkbox năm đăng nhập
+function readonlyDropdownlist() {
+    if (!$("#cbx-nam-dang-nhap").prop("checked")) {
+        $("#cbx-nam-dang-nhap").removeAttr("checked");
+        $("#cbx-thang-dang-nhap").prop("checked", "checked");
+        addReadonlyDropdownlist();
+    }
+    else {
+        $("#cbx-thang-dang-nhap").removeAttr("checked");
+        $("#cbx-nam-dang-nhap").prop("checked", "checked");
+        addReadonlyDatePicker();
+    }
+}
 $("#div-loai-dang-nhap div:last-child div:first-child label").click(function () {
     $("#cbx-nam-dang-nhap").prop("checked", !$("#cbx-nam-dang-nhap").prop("checked"));
-    if (!$("#cbx-nam-dang-nhap").prop("checked")) {
-        $("#cbx-nam-dang-nhap").removeAttr("checked");
-        $("#cbx-thang-dang-nhap").prop("checked", "checked");
-    }
-    else {
-        $("#cbx-thang-dang-nhap").removeAttr("checked");
-        $("#cbx-nam-dang-nhap").prop("checked", "checked");
-    }
+    readonlyDropdownlist();
 })
 $("#cbx-nam-dang-nhap").change(function () {
-    if (!$("#cbx-nam-dang-nhap").prop("checked")) {
-        $("#cbx-nam-dang-nhap").removeAttr("checked");
-        $("#cbx-thang-dang-nhap").prop("checked", "checked");
-    }
-    else {
-        $("#cbx-thang-dang-nhap").removeAttr("checked");
-        $("#cbx-nam-dang-nhap").prop("checked", "checked");
-    }
+    readonlyDropdownlist();
 })
 // Tạo sự kiện click của tabstrip xem thông tin đăng nhập
 $("#menu-xem-dang-nhap").click(function () {

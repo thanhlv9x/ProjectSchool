@@ -256,6 +256,12 @@
                                         </div>@*Bảng kết quả đánh giá*@
                                     </div>
                                     <hr style="clear: both" />
+                                    <div id="table-ket-qua-cb" style="clear:both; width: 100%">
+                                        <div style="border-color: #cecece; background-color: #cecece" class="border-style">
+                                            <h3 id="span-title-table-ket-qua">Bảng kết quả đánh giá (Tổng hợp)</h3>
+                                            <div id="grid-ket-qua"></div>
+                                        </div>@*Bảng góp ý*@
+                                    </div>@*#table-details-cb*@
                                     <div id="table-details-cb" style="clear:both; width: 100%">
                                         <div style="border-color: #cecece; background-color: #cecece" class="border-style">
                                             <h3 id="span-title-table-gop-y">Bảng góp ý (Tổng hợp)</h3>
@@ -276,12 +282,12 @@
                                 <div style="float: left; width: 70%">
                                     <div id="chart-column-thu-tuc-th" style="margin: 1em 5em 0 5em;"></div>
                                     <div id="year-group-thu-tuc-th">
-                                        <div>
+                                        <div id="year-group-thu-tuc-th-month">
                                             <input type="checkbox" id="cbx-month-thu-tuc-th" />
                                             <label>Chọn tháng:</label>
                                             <input id="month-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
                                         </div>
-                                        <div>
+                                        <div id="year-group-thu-tuc-th-year">
                                             <input type="checkbox" id="cbx-year-thu-tuc-th" checked="checked" />
                                             <label>Chọn năm:</label>
                                             <input id="year-column-thu-tuc-th" title="Chọn thời gian" style="width: 100%" />
@@ -314,12 +320,12 @@
                                 <div style="float: left; width: 70%">
                                     <div id="chart-column-thu-tuc-bp" style="margin: 1em 5em 0 5em;"></div>
                                     <div id="year-group-thu-tuc-bp">
-                                        <div>
+                                        <div id="year-group-thu-tuc-bp-month">
                                             <input type="checkbox" id="cbx-month-thu-tuc-bp" />
                                             <label>Chọn tháng:</label>
                                             <input id="month-column-thu-tuc-bp" title="Chọn thời gian" style="width: 100%" />
                                         </div>
-                                        <div>
+                                        <div id="year-group-thu-tuc-bp-year">
                                             <input type="checkbox" id="cbx-year-thu-tuc-bp" checked="checked" />
                                             <label>Chọn năm:</label>
                                             <input id="year-column-thu-tuc-bp" title="Chọn thời gian" style="width: 100%" />
@@ -352,12 +358,12 @@
                                 <div style="float: left; width: 65%">
                                     <div id="chart-column-thu-tuc-cb" style="margin: 1em 5em 0 5em;"></div>
                                     <div id="year-group-thu-tuc-cb">
-                                        <div>
+                                        <div id="year-group-thu-tuc-cb-month">
                                             <input type="checkbox" id="cbx-month-thu-tuc-cb" />
                                             <label>Chọn tháng:</label>
                                             <input id="month-column-thu-tuc-cb" title="Chọn thời gian" style="width: 100%" />
                                         </div>
-                                        <div>
+                                        <div id="year-group-thu-tuc-cb-year">
                                             <input type="checkbox" id="cbx-year-thu-tuc-cb" checked="checked" />
                                             <label>Chọn năm:</label>
                                             <input id="year-column-thu-tuc-cb" title="Chọn thời gian" style="width: 100%" />
@@ -768,8 +774,8 @@
         getBPName();
     })
 </script>
-<script src="~/Content/KetQua.js"></script>
-<script src="/Content/ThuTuc.js"></script>
+<script src="~/Content/KetQuaJS.js"></script>
+<script src="~/Content/ThuTucJS.js"></script>
 <script src="~/Content/DangNhapJS.js"></script>
 <script src="~/Content/ThongTinJS.js"></script>
 <script src="~/Content/BaoCao.js"></script>
