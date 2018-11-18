@@ -332,7 +332,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DangNhapJS.js" />
-    <Content Include="Content\DoiMatKhau.js" />
+    <Content Include="Content\DoiMatKhauJS.js" />
     <Content Include="Content\KetQuaJS.js" />
     <Content Include="Content\ServerStyle1.css" />
     <Content Include="Content\ThongTinJS.js" />
