@@ -7,7 +7,7 @@ $("#btn-change-pw").click(function () {
     var old = $("#old-pw").val();
     var news = $("#new-pw").val();
     var renew = $("#renew-pw").val();
-    if (news == "" || renew == "") {
+    if (news != "" || renew != "") {
         if (news != renew) { alert("Nhập lại mật khẩu mới không chính xác !"); }
         else {
             $.ajax({
