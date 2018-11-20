@@ -157,13 +157,13 @@ function createTableTk(urlGet) {
                     model: {
                         id: "MaCB",
                         fields: {
-                            MaCB: { type: "number", editable: false, validation: { required: true } },
-                            HoTen: { type: "string", validation: { required: true } },
-                            HinhAnh: { type: "string", validation: { required: true } },
-                            MaBP: { field: "MaBP", type: "number", validation: { required: true }, defaultValue: mabp_tk },
-                            Id: { type: "string", validation: { required: true } },
-                            Pw: { type: "string", validation: { required: true } },
-                            MaCBSD: { type: "string", validation: { required: true } }
+                            MaCB: { type: "number", editable: false, validation: { required: { message: "Mã cán bộ không được để trống" } } },
+                            HoTen: { type: "string", validation: { required: { message: "Họ tên không được để trống" } } },
+                            HinhAnh: { type: "string", validation: { required: { message: "Hình ảnh không được để trống" } } },
+                            MaBP: { field: "MaBP", type: "number", validation: { required: { message: "Bộ phận không được để trống" } }, defaultValue: mabp_tk },
+                            Id: { type: "string", validation: { required: { message: "Tài khoản không được để trống" } } },
+                            Pw: { type: "string", validation: { required: { message: "Mật khẩu không được để trống" } } },
+                            MaCBSD: { type: "string", validation: { required: { message: "Mã cán bộ không được để trống" } } }
                         }
                     }
                 },
@@ -422,9 +422,9 @@ function createTableTTBP(urlGet) {
             model: {
                 id: "MaBP",
                 fields: {
-                    MaBP: { type: "number", editable: false, validation: { required: true } },
-                    TenBP: { type: "string", validation: { required: true } },
-                    VietTat: { type: "string", validation: { required: true } }
+                    MaBP: { type: "number", editable: false, validation: { required: { message: "Mã bộ phận không được để trống" } } },
+                    TenBP: { type: "string", validation: { required: { message: "Tên bộ phận không được để trống" } } },
+                    VietTat: { type: "string", validation: { required: { message: "Mã bộ phận không được để trống" } } }
                 }
             }
         }
@@ -594,8 +594,8 @@ function createTableTTQ(urlGet) {
             model: {
                 id: "MaMay",
                 fields: {
-                    MaMay: { type: "number", validation: { required: true } },
-                    Mac: { type: "string", validation: { required: true } }
+                    MaMay: { type: "number", validation: { required: { message: "Số quầy không được để trống" }, min: 1, default: 1 } },
+                    Mac: { type: "string", validation: { required: { message: "Mã máy không được để trống" } } }
                 }
             }
         }

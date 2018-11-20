@@ -1870,12 +1870,13 @@ $('#btn-report').on('click', function () {
                                 })
                         })
                 })
+        } else {
+            alert("Yêu cầu phải xem trước")
         }
         //setTimeout(function () {
         //    $("#title-bao-cao-main, #title-bao-cao-1, #title-bao-cao-2, #title-bao-cao-3").removeClass("title-report-export");
         //}, 10000);
     } catch (ex) {
-        console.log(ex);
         alert("Yêu cầu phải xem trước")
     }
 })

@@ -251,6 +251,7 @@ namespace WebServerAPI.Controllers
                         //{
                         //    // đọc dòng tiêu đề
                         //}
+                        int error = 0;
                         for (int i = 2; i <= rows; i++)
                         {
                             try
@@ -279,11 +280,15 @@ namespace WebServerAPI.Controllers
                                 cb.HINHANH = SaveImg(range.Cells[i, 1].Value.ToString(), range.Cells[i, 2].Value.ToString());
                                 db.SaveChanges();
                             }
-                            catch { }
+                            catch { error++; }
                         }
                         wb.Close(0);
                         app.Quit();
                         KillExcel();
+                        if(error == rows - 1)
+                        {
+                            return Json("Nhập không thành công. Vui lòng kiểm tra lại nội dung file Excel !", JsonRequestBehavior.AllowGet);
+                        }
                         return Json("Dữ liệu được nhập thành công !", JsonRequestBehavior.AllowGet);
                     }
                     catch
