@@ -239,8 +239,10 @@ $("#year-column-thu-tuc-th").change(function () {
         createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-th").val());
     }
 })
-// Tạo thanh chọn thời gian cho biểu đồ tròn
+// Tạo thanh chọn thời gian theo tháng
 function createMonthCircleThuTucTH() {
+    $("#month-column-thu-tuc-th").prop("readonly", false);
+    $("#month-column-thu-tuc-th").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI",
@@ -257,8 +259,7 @@ function createMonthCircleThuTucTH() {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
-                createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
-                createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
+                $("#month-column-thu-tuc-th").prop("readonly", true)
             } else {
                 $("#month-column-thu-tuc-th").val("09 2018");
             }
@@ -286,7 +287,9 @@ function hideShowMonth() {
         $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
         $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").show(); // Hiện dropdownlist của chọn năm
     } else { // Nếu checkbox đã check
-        createMonthCircleThuTucTH(); // Tạo biểu đò cột theo các ngày trong tháng
+        //createMonthCircleThuTucTH(); // Tạo biểu đò cột theo các ngày trong tháng
+        createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
+        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
         $("#cbx-year-thu-tuc-th").removeAttr("checked") // Bỏ check checkbox năm
         $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
@@ -294,7 +297,9 @@ function hideShowMonth() {
 }
 function hideShowYear() {
     if (!$("#cbx-year-thu-tuc-th").prop("checked")) { // Nếu checbox chọn năm chưa check
-        createMonthCircleThuTucTH(); // Tạo biểu đồ cột theo các ngày trong tháng
+        //createMonthCircleThuTucTH(); // Tạo biểu đồ cột theo các ngày trong tháng
+        createChartThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val(), "Thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
+        createGridThuTucTH(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-th").val() + "&_BP=1", "Bảng thời gian giải quyết thủ tục tổng hợp (" + $("#month-column-thu-tuc-th").val() + ")");
         $("#cbx-month-thu-tuc-th").prop("checked", "checked")  // Check checkbox chọn tháng
         $("#year-group-thu-tuc-th-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-th-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm
@@ -652,8 +657,10 @@ $("#year-column-thu-tuc-bp").change(function () {
         createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
     }
 })
-// Tạo thanh chọn thời gian cho biểu đồ tròn
+// Tạo thanh chọn thời gian theo tháng
 function createMonthCircleThuTucBP() {
+    $("#month-column-thu-tuc-bp").prop("readonly", false);
+    $("#month-column-thu-tuc-bp").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI/?_MaBP=" + mabp_thutuc,
@@ -670,8 +677,7 @@ function createMonthCircleThuTucBP() {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
-                createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
-                createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
+                $("#month-column-thu-tuc-bp").prop("readonly", true);
             } else {
                 $("#month-column-thu-tuc-bp").val("09 2018");
             }
@@ -699,7 +705,9 @@ function hideShowMonthBP() {
         $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").hide(); // Ẩn datepicker của chọn tháng
         $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").show(); // Hiện dropdownlist của chọn năm
     } else { // Đã check
-        createMonthCircleThuTucBP();
+        //createMonthCircleThuTucBP();
+        createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
+        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
         $("#cbx-year-thu-tuc-bp").removeAttr("checked")
         $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
@@ -707,7 +715,9 @@ function hideShowMonthBP() {
 }
 function hideShowYearBP() {
     if (!$("#cbx-year-thu-tuc-bp").prop("checked")) { // Chưa check
-        createMonthCircleThuTucBP();
+        //createMonthCircleThuTucBP();
+        createChartThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
+        createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-bp").val() + ")");
         $("#cbx-month-thu-tuc-bp").prop("checked", "checked")
         $("#year-group-thu-tuc-bp-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-bp-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn dropdownlist của chọn năm
@@ -992,8 +1002,10 @@ $("#year-column-thu-tuc-cb").change(function () {
         createGridThuTucCB(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-cb").val());
     }
 })
-// Tạo thanh chọn thời gian cho biểu đồ tròn
+// Tạo thanh chọn thời gian theo tháng
 function createMonthCircleThuTucCB() {
+    $("#month-column-thu-tuc-cb").prop("readonly", false)
+    $("#month-column-thu-tuc-cb").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI/?_MaCB=" + macb_thutuc,
@@ -1010,8 +1022,7 @@ function createMonthCircleThuTucCB() {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
-                createChartThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
-                createGridThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
+                $("#month-column-thu-tuc-cb").prop("readonly", true)
             } else {
                 $("#month-column-thu-tuc-cb").val("09 2018");
             }
@@ -1040,7 +1051,9 @@ function hideShowMonthCB() {
         $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").show(); // Hiện Dropdownlist của chọn năm
 
     } else { // Đã check
-        createMonthCircleThuTucCB();
+        //createMonthCircleThuTucCB();
+        createChartThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
+        createGridThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
         $("#cbx-year-thu-tuc-cb").removeAttr("checked")
         $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm
@@ -1048,7 +1061,9 @@ function hideShowMonthCB() {
 }
 function hideShowYearCB() {
     if (!$("#cbx-year-thu-tuc-cb").prop("checked")) { // Chưa check
-        createMonthCircleThuTucCB();
+        //createMonthCircleThuTucCB();
+        createChartThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc, "Thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
+        createGridThuTucCB(url + "/api/ThuTucAPI/?_Loai=thang&_GiaTri=" + $("#month-column-thu-tuc-cb").val() + "&_MaCB=" + macb_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục (" + $("#month-column-thu-tuc-cb").val() + ")");
         $("#cbx-month-thu-tuc-cb").prop("checked", "checked")
         $("#year-group-thu-tuc-cb-month span.k-widget.k-datepicker.k-header").show(); // Hiện datepicker của chọn tháng
         $("#year-group-thu-tuc-cb-year span.k-widget.k-dropdown.k-header").hide(); // Ẩn Dropdownlist của chọn năm

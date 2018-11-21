@@ -122,6 +122,10 @@ function changeTGbaocao() {
 }
 // Tạo datepicker chọn thời gian
 function createDPbaocao(value) {
+    $("#start-bao-cao").prop("readonly", false);
+    $("#end-bao-cao").prop("readonly", false);
+    $("#start-bao-cao").html("");
+    $("#end-bao-cao").html("");
     var date = new Date(Date.now());
     var start;
     var end;
@@ -235,6 +239,8 @@ function createDPbaocao(value) {
             end.min(endDate);
         }
     }
+    $("#start-bao-cao").prop("readonly", true);
+    $("#end-bao-cao").prop("readonly", true);
 }
 // Tạo nút xem báo cáo
 function createButtonReport() {

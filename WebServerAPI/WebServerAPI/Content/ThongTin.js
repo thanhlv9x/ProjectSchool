@@ -100,7 +100,6 @@ function createTableTk(urlGet) {
                             data: { model: options.data.models },
                             dataType: 'json',
                             success: function (result) {
-                                console.log(result)
                                 if (result == "macbsd") {
                                     alert("Cập nhật không thành công. Mã cán bộ đã tồn tại !");
                                 }
@@ -249,20 +248,10 @@ function createTableTk(urlGet) {
             })
 
             // Nhập file excel
-            var myWindow = $("#windowPopup");
-            myWindow.kendoWindow({
-                width: "600px",
-                height: "250px",
-                title: "Nhập excel",
-                visible: false,
-                actions: [
-                    "Close"
-                ],
-            }).data("kendoWindow").center();
             $("#files").kendoUpload({
-                //validation: {
-                //    allowedExtensions: [".jpg", ".jpeg", ".png", ".bmp", ".gif"]
-                //},
+                validation: {
+                    allowedExtensions: [".xls", ".xlsx"]
+                },
                 //showFileList: false,
                 text: "Chọn file cần nhập",
                 multiple: false
@@ -275,6 +264,7 @@ function createTableTk(urlGet) {
                     url: url + "/TaiKhoan/Upload",
                     type: 'POST',
                     data: excelfile,
+                    dataType: "json",
                     //async: false,
                     success: function (data) {
                         alert(data)

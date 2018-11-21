@@ -204,15 +204,14 @@ namespace WebServerAPI.Controllers
             CheckExcelProcesses();
             if (excelfile == null)
             {
-                ViewBag.Error = "Vui lòng chọn file excel !";
-                //return RedirectToAction("Index", "Home");
                 return Json("Vui lòng chọn file excel !", JsonRequestBehavior.AllowGet);
             }
             else
             {
                 if (excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
                 {
-                    string path = Server.MapPath("~/Files/" + excelfile.FileName);
+                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                    string path = basePath + @"Files\" + excelfile.FileName;
                     if (System.IO.File.Exists(path))
                     {
                         try
@@ -231,12 +230,17 @@ namespace WebServerAPI.Controllers
                     catch 
                     {
                         return Json("Gặp sự cố trong quá trình nhập. Vui lòng nhập lại !", JsonRequestBehavior.AllowGet);
-                    }
-
+                    };
                     // Tạo đối tượng Excel
                     Excel.Application app = new Excel.Application();
                     // Mở tệp Excel
-                    Excel.Workbook wb = app.Workbooks.Open(path);
+                    Excel.Workbook wb;
+                    try { 
+                    wb = app.Workbooks.Open(path);
+                    }catch(Exception ex)
+                    {
+                        return Json(ex.ToString(), JsonRequestBehavior.AllowGet);
+                    }
                     try
                     {
                         // Mở Sheet
@@ -285,7 +289,15 @@ namespace WebServerAPI.Controllers
                         wb.Close(0);
                         app.Quit();
                         KillExcel();
-                        if(error == rows - 1)
+                        if (System.IO.File.Exists(path))
+                        {
+                            try
+                            {
+                                System.IO.File.Delete(path);
+                            }
+                            catch {}
+                        }
+                        if (error == rows - 1)
                         {
                             return Json("Nhập không thành công. Vui lòng kiểm tra lại nội dung file Excel !", JsonRequestBehavior.AllowGet);
                         }
@@ -296,6 +308,14 @@ namespace WebServerAPI.Controllers
                         wb.Close(0);
                         app.Quit();
                         KillExcel();
+                        if (System.IO.File.Exists(path))
+                        {
+                            try
+                            {
+                                System.IO.File.Delete(path);
+                            }
+                            catch { }
+                        }
                         return Json("Dữ liệu không chính xác, vui lòng kiểm tra lại thông tin !", JsonRequestBehavior.AllowGet);
                     }
                 }

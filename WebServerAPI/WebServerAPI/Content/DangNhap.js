@@ -4,6 +4,7 @@ function createBPDangNhap() {
         type: "GET",
         url: url + "/api/BoPhanAPI",
         dataType: "json",
+        async: false,
         success: function (data) {
             if (data.length > 0) {
                 var arr = [];
@@ -33,6 +34,7 @@ function createCBDangNhap(MaBP) {
         type: "GET",
         url: url + "/api/BoPhanAPI/?_MaBP=" + MaBP,
         dataType: "json",
+        async: false,
         success: function (data) {
             if (data.length > 0) {
                 var arr = [];
@@ -236,6 +238,8 @@ function createGridDangNhapNam(MaCB, Loai, ThoiGian) {
 }
 // Tạo dropdownlist tháng
 function createMonthDangNhap(MaCB) {
+    $("#thang-dang-nhap").prop("readonly", false);
+    $("#thang-dang-nhap").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
@@ -253,6 +257,7 @@ function createMonthDangNhap(MaCB) {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
+                $("#thang-dang-nhap").prop("readonly", true);
             } else {
                 $("#thang-dang-nhap").val("09 2018");
             }
@@ -319,12 +324,12 @@ function readonlyDatePicker() {
     if (!$("#cbx-thang-dang-nhap").prop("checked")) {
         $("#cbx-thang-dang-nhap").removeAttr("checked");
         $("#cbx-nam-dang-nhap").prop("checked", "checked");
-        addReadonlyDatePicker();
+        //addReadonlyDatePicker();
     }
     else {
         $("#cbx-nam-dang-nhap").removeAttr("checked");
         $("#cbx-thang-dang-nhap").prop("checked", "checked");
-        addReadonlyDropdownlist();
+        //addReadonlyDropdownlist();
     }
 }
 $("#div-loai-dang-nhap div:first-child div:first-child label").click(function () {
@@ -339,12 +344,12 @@ function readonlyDropdownlist() {
     if (!$("#cbx-nam-dang-nhap").prop("checked")) {
         $("#cbx-nam-dang-nhap").removeAttr("checked");
         $("#cbx-thang-dang-nhap").prop("checked", "checked");
-        addReadonlyDropdownlist();
+        //addReadonlyDropdownlist();
     }
     else {
         $("#cbx-thang-dang-nhap").removeAttr("checked");
         $("#cbx-nam-dang-nhap").prop("checked", "checked");
-        addReadonlyDatePicker();
+        //addReadonlyDatePicker();
     }
 }
 $("#div-loai-dang-nhap div:last-child div:first-child label").click(function () {
@@ -356,5 +361,5 @@ $("#cbx-nam-dang-nhap").change(function () {
 })
 // Tạo sự kiện click của tabstrip xem thông tin đăng nhập
 $("#menu-xem-dang-nhap").click(function () {
-    createBPDangNhap()
+    createBPDangNhap();
 })

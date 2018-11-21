@@ -13,6 +13,7 @@ $("#menu-xem-ket-qua-danh-gia").click(function () {
     createChartTableTHAll();
     $("#footer-th").hide();
     $("#div-month-circle-th").hide();
+    $("#cb-all-th").prop("checked", "checked");
     getBPName();
 })
 // Tạo biểu đồ cột
@@ -242,6 +243,8 @@ function createChartCircleTH(urlStr, titleStr) {
 }
 // Tạo thanh chọn thời gian cho biểu đồ tròn
 function createMonthCircleTH() {
+    $("#month-circle-th").prop("readonly", false)
+    $("#month-circle-th").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI",
@@ -260,6 +263,7 @@ function createMonthCircleTH() {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
+                $("#month-circle-th").prop("readonly", true)
             } else {
                 $("#month-circle-th").val("09 2018");
                 $("#body-th").hide();
@@ -965,7 +969,7 @@ $("#div-month-circle>div:first-child>span").click(function () {
         createChartTableAll();
         $("#div-month-circle-1").hide("slow");
     } else {
-        createMonthCircle(mabp);
+        //createMonthCircle(mabp);
         createChartTableTime();
         $("#div-month-circle-1").show("slow");
     }
@@ -975,13 +979,15 @@ $("#cb-all").change(function () {
         createChartTableAll();
         $("#div-month-circle-1").hide("slow");
     } else {
-        createMonthCircle(mabp);
+        //createMonthCircle(mabp);
         createChartTableTime();
         $("#div-month-circle-1").show("slow");
     }
 });
 // Tạo thanh chọn thời gian cho biểu đồ tròn
 function createMonthCircle(MaBP) {
+    $("#month-circle").prop("readonly", false)
+    $("#month-circle").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI/?_MaBP=" + MaBP,
@@ -999,6 +1005,7 @@ function createMonthCircle(MaBP) {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
+                $("#month-circle").prop("readonly", true)
             } else {
                 $("#month-circle").val("09 2018");
                 $("#content-bp").hide();
@@ -1684,6 +1691,8 @@ $("#cb-all-cb").change(function () {
 });
 // Tạo thanh chọn thời gian cho biểu đồ tròn
 function createMonthCircleCB(MaCB) {
+    $("#month-circle-cb").prop("readonly", false)
+    $("#month-circle-cb").html("");
     $.ajax({
         type: "GET",
         url: url + "/api/ValuesAPI/?_MaCB=" + MaCB,
@@ -1701,6 +1710,7 @@ function createMonthCircleCB(MaCB) {
                     max: new Date(data[1]),
                     //disableDates: ["sa", "su"]
                 });
+                $("#month-circle-cb").prop("readonly", true)
             } else {
                 $("#month-circle-cb").val("09 2018");
                 $("#content-can-bo").hide();

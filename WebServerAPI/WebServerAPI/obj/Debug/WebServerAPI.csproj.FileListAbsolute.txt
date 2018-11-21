@@ -202,7 +202,8 @@ E:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.
 E:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CopyComplete
 E:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.dll
 E:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.pdb
-D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\EntityFramework.xml
+D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.pdb
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\ApplicationInsights.config
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\WebServerAPI.dll.config
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\WebServerAPI.dll
@@ -214,7 +215,6 @@ D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\csi.exe
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\csi.exe.config
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\csi.rsp
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
@@ -279,6 +279,7 @@ D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\System.Web.WebPages.Deploy
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\System.Web.WebPages.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\System.Web.WebPages.Razor.dll
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\WebGrease.dll
+D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\EntityFramework.xml
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\EntityFramework.SqlServer.xml
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\Newtonsoft.Json.xml
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\bin\System.Net.Http.Formatting.xml
@@ -302,5 +303,4 @@ D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CoreCompileInputs.cache
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csproj.CopyComplete
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.dll
-D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.pdb
 D:\GitHub\ProjectSchool\WebServerAPI\WebServerAPI\obj\Debug\WebServerAPI.csprojAssemblyReference.cache
