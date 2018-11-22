@@ -334,7 +334,7 @@
     <Content Include="Content\DangNhap.js" />
     <Content Include="Content\DoiMatKhau.js" />
     <Content Include="Content\KetQua.js" />
-    <Content Include="Content\ServerStyle1.css" />
+    <Content Include="Content\SvStyle.css" />
     <Content Include="Content\ThongTin.js" />
     <Content Include="Content\ThuTuc.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
@@ -351,6 +351,9 @@
     <Content Include="favicon.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="loading.gif" />
+    <Content Include="loading1.gif" />
+    <Content Include="loading2.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

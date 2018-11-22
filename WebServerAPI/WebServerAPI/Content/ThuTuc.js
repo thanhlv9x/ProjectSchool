@@ -1,6 +1,7 @@
 ﻿// ============ Thời gian giải quyết thủ tục ============
 // Tạo sự kiện khi click vào tab xem thời gian giải quyết thủ tục
 $("li#menu-xem-thu-tuc").click(function () {
+    //$("div.white-div-loading").show();
     getBPNameThuTuc();
     createMonthCircleThuTucTH();
     createYearColumnThuTucTH();
@@ -19,6 +20,7 @@ function getBPNameThuTuc() {
         type: "GET",
         url: url + "/api/BoPhanAPI",
         dataType: "json",
+        //async: false,
         success: function (data) {
             $.each(data, function (key, val) {
                 str += "<div id='" + val.MaBP + "' class='btnBPThuTuc'>" + val.TenBP + "</div>";
@@ -61,140 +63,145 @@ function backBPThuTuc() {
 }
 // Tạo biểu đồ miền theo năm/tháng
 function createChartThuTucTH(urlStr, titleStr) {
-    $("#chart-column-thu-tuc-th").kendoChart({
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlStr,
-                    dataType: "json"
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        $("#chart-column-thu-tuc-th").kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlStr,
+                        dataType: "json",
+                        async: false,
+                    }
+                },
+                sort: {
+                    field: "ThoiGian",
+                    //dir: "asc"
                 }
             },
-            sort: {
-                field: "ThoiGian",
-                //dir: "asc"
-            }
-        },
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "area"
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                opacity: 0.2,
-                type: "column",
-                field: "SoLuongGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Tổng số lượng",
-                color: "#ff1c1c",
-                axis: "quantity",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # lần"
-                }
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "area"
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    opacity: 0.2,
+                    type: "column",
+                    field: "SoLuongGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Tổng số lượng",
+                    color: "#ff1c1c",
+                    axis: "quantity",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # lần"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "TongThoiGian",
+                    categoryField: "ThoiGian",
+                    name: "Tổng thời gian trung bình",
+                    color: "#0066FF",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "ThoiGianCho",
+                    categoryField: "ThoiGian",
+                    name: "Thời gian chờ trung bình",
+                    color: "#FFFF00",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "ThoiGianGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Thời gian giải quyết trung bình",
+                    color: "#33FF00",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                crosshair: {
+                    visible: true
+                },
+                axisCrossingValue: [0, 12],
+            },
+            valueAxis: [{
+                name: "time",
+                labels: {
+                    format: "{0:n0} phút",
+                },
+                title: {
+                    text: "Thời gian giải quyết thủ tục (Phút)"
+                },
+                color: "#007eff"
             }, {
-                opacity: 1,
-                type: "line",
-                field: "TongThoiGian",
-                categoryField: "ThoiGian",
-                name: "Tổng thời gian trung bình",
-                color: "#0066FF",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
-            }, {
-                opacity: 1,
-                type: "line",
-                field: "ThoiGianCho",
-                categoryField: "ThoiGian",
-                name: "Thời gian chờ trung bình",
-                color: "#FFFF00",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
-            }, {
-                opacity: 1,
-                type: "line",
-                field: "ThoiGianGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Thời gian giải quyết trung bình",
-                color: "#33FF00",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
+                name: "quantity",
+                labels: {
+                    format: "{0:n0} lần",
+                },
+                title: {
+                    text: "Số lượng thủ tục đã giải quyết (Lần)"
+                },
+                color: "#ff1c1c"
             }],
-        categoryAxis: {
-            labels: {
-                rotation: -90
+            tooltip: {
+                visible: true,
+                shared: true,
+                format: "N0"
             },
-            crosshair: {
-                visible: true
-            },
-            axisCrossingValue: [0, 12],
-        },
-        valueAxis: [{
-            name: "time",
-            labels: {
-                format: "{0:n0} phút",
-            },
-            title: {
-                text: "Thời gian giải quyết thủ tục (Phút)"
-            },
-            color: "#007eff"
-        }, {
-            name: "quantity",
-            labels: {
-                format: "{0:n0} lần",
-            },
-            title: {
-                text: "Số lượng thủ tục đã giải quyết (Lần)"
-            },
-            color: "#ff1c1c"
-        }],
-        tooltip: {
-            visible: true,
-            shared: true,
-            format: "N0"
-        },
-        dataBound: function (e) {
-            var chart = this;
-            var categoriesLen = chart.options.categoryAxis.categories.length;
-            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
-            chart.redraw();
-        }
-        //render: function (e) {
-        // Effective axis range is available in the render event
-        //
-        // See
-        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-        // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-        //    var range = e.sender.getAxis("value").range();
-        //    if (range > 20) var majorUnit = range.max / 4;
-        //    else if (range > 100) var majorUnit = range.max / 20;
-        //    else if (range > 500) var majorUnit = range.max / 100;
-        //    else if (range > 1000) var majorUnit = range.max / 200;
-        //    var axis = e.sender.options.valueAxis;
+            dataBound: function (e) {
+                var chart = this;
+                var categoriesLen = chart.options.categoryAxis.categories.length;
+                chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+                chart.redraw();
+            }
+            //render: function (e) {
+            // Effective axis range is available in the render event
+            //
+            // See
+            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+            // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+            //    var range = e.sender.getAxis("value").range();
+            //    if (range > 20) var majorUnit = range.max / 4;
+            //    else if (range > 100) var majorUnit = range.max / 20;
+            //    else if (range > 500) var majorUnit = range.max / 100;
+            //    else if (range > 1000) var majorUnit = range.max / 200;
+            //    var axis = e.sender.options.valueAxis;
 
-        //    if (axis.majorUnit !== majorUnit) {
-        //        axis.majorUnit = majorUnit;
+            //    if (axis.majorUnit !== majorUnit) {
+            //        axis.majorUnit = majorUnit;
 
-        //        // We need to redraw the chart to apply the changes
-        //        e.sender.redraw();
-        //    }
-        //}
-    });
+            //        // We need to redraw the chart to apply the changes
+            //        e.sender.redraw();
+            //    }
+            //}
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Tạo dropdownlist chọn năm
 function createYearColumnThuTucTH() {
@@ -202,6 +209,7 @@ function createYearColumnThuTucTH() {
         type: "GET",
         url: url + "/api/ValuesAPI",
         dataType: "json",
+        //async: false,
         success: function (data) {
             if (data.length > 0) {
                 $("#body-thu-tuc-th>div:first-child").show();
@@ -247,6 +255,7 @@ function createMonthCircleThuTucTH() {
         type: "GET",
         url: url + "/api/ValuesAPI",
         dataType: "json",
+        //async: false,
         success: function (data) {
             if (data.length > 0) {
                 $("#month-column-thu-tuc-th").kendoDatePicker({
@@ -479,140 +488,145 @@ function backCBThuTuc() {
 }
 // Tạo biểu đồ miền theo năm/tháng
 function createChartThuTucBP(urlStr, titleStr) {
-    $("#chart-column-thu-tuc-bp").kendoChart({
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlStr,
-                    dataType: "json"
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        $("#chart-column-thu-tuc-bp").kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlStr,
+                        dataType: "json",
+                        async: false
+                    }
+                },
+                sort: {
+                    field: "ThoiGian",
+                    //dir: "asc"
                 }
             },
-            sort: {
-                field: "ThoiGian",
-                //dir: "asc"
-            }
-        },
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "area"
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                opacity: 0.2,
-                type: "column",
-                field: "SoLuongGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Tổng số lượng",
-                color: "#ff1c1c",
-                axis: "quantity",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # lần"
-                }
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "area"
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    opacity: 0.2,
+                    type: "column",
+                    field: "SoLuongGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Tổng số lượng",
+                    color: "#ff1c1c",
+                    axis: "quantity",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # lần"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "TongThoiGian",
+                    categoryField: "ThoiGian",
+                    name: "Tổng thời gian trung bình",
+                    color: "#0066FF",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "ThoiGianCho",
+                    categoryField: "ThoiGian",
+                    name: "Thời gian chờ trung bình",
+                    color: "#FFFF00",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "ThoiGianGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Thời gian giải quyết trung bình",
+                    color: "#33FF00",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                }],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                crosshair: {
+                    visible: true
+                },
+                axisCrossingValue: [0, 12],
+            },
+            valueAxis: [{
+                name: "time",
+                labels: {
+                    format: "{0:n0} phút",
+                },
+                title: {
+                    text: "Thời gian giải quyết thủ tục (Phút)"
+                },
+                color: "#007eff"
             }, {
-                opacity: 1,
-                type: "line",
-                field: "TongThoiGian",
-                categoryField: "ThoiGian",
-                name: "Tổng thời gian trung bình",
-                color: "#0066FF",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
-            }, {
-                opacity: 1,
-                type: "line",
-                field: "ThoiGianCho",
-                categoryField: "ThoiGian",
-                name: "Thời gian chờ trung bình",
-                color: "#FFFF00",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
-            }, {
-                opacity: 1,
-                type: "line",
-                field: "ThoiGianGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Thời gian giải quyết trung bình",
-                color: "#33FF00",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
+                name: "quantity",
+                labels: {
+                    format: "{0:n0} lần",
+                },
+                title: {
+                    text: "Số lượng thủ tục đã giải quyết (Lần)"
+                },
+                color: "#ff1c1c"
             }],
-        categoryAxis: {
-            labels: {
-                rotation: -90
+            tooltip: {
+                visible: true,
+                shared: true,
+                format: "N0"
             },
-            crosshair: {
-                visible: true
-            },
-            axisCrossingValue: [0, 12],
-        },
-        valueAxis: [{
-            name: "time",
-            labels: {
-                format: "{0:n0} phút",
-            },
-            title: {
-                text: "Thời gian giải quyết thủ tục (Phút)"
-            },
-            color: "#007eff"
-        }, {
-            name: "quantity",
-            labels: {
-                format: "{0:n0} lần",
-            },
-            title: {
-                text: "Số lượng thủ tục đã giải quyết (Lần)"
-            },
-            color: "#ff1c1c"
-        }],
-        tooltip: {
-            visible: true,
-            shared: true,
-            format: "N0"
-        },
-        dataBound: function (e) {
-            var chart = this;
-            var categoriesLen = chart.options.categoryAxis.categories.length;
-            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
-            chart.redraw();
-        }
-        //render: function (e) {
-        //    // Effective axis range is available in the render event
-        //    //
-        //    // See
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-        //    var range = e.sender.getAxis("value").range();
-        //    if (range > 20) var majorUnit = range.max / 4;
-        //    else if (range > 100) var majorUnit = range.max / 20;
-        //    else if (range > 500) var majorUnit = range.max / 100;
-        //    else if (range > 1000) var majorUnit = range.max / 200;
-        //    var axis = e.sender.options.valueAxis;
+            dataBound: function (e) {
+                var chart = this;
+                var categoriesLen = chart.options.categoryAxis.categories.length;
+                chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+                chart.redraw();
+            }
+            //render: function (e) {
+            //    // Effective axis range is available in the render event
+            //    //
+            //    // See
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+            //    var range = e.sender.getAxis("value").range();
+            //    if (range > 20) var majorUnit = range.max / 4;
+            //    else if (range > 100) var majorUnit = range.max / 20;
+            //    else if (range > 500) var majorUnit = range.max / 100;
+            //    else if (range > 1000) var majorUnit = range.max / 200;
+            //    var axis = e.sender.options.valueAxis;
 
-        //    if (axis.majorUnit !== majorUnit) {
-        //        axis.majorUnit = majorUnit;
+            //    if (axis.majorUnit !== majorUnit) {
+            //        axis.majorUnit = majorUnit;
 
-        //        // We need to redraw the chart to apply the changes
-        //        e.sender.redraw();
-        //    }
-        //}
-    });
+            //        // We need to redraw the chart to apply the changes
+            //        e.sender.redraw();
+            //    }
+            //}
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Tạo dropdownlist chọn năm
 function createYearColumnThuTucBP() {
@@ -838,126 +852,131 @@ function createInfoThuTucCB(MaCB) {
 }
 // Tạo biểu đồ miền theo năm/tháng
 function createChartThuTucCB(urlStr, titleStr) {
-    $("#chart-column-thu-tuc-cb").kendoChart({
-        dataSource: {
-            transport: {
-                read: {
-                    url: urlStr,
-                    dataType: "json"
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        $("#chart-column-thu-tuc-cb").kendoChart({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: urlStr,
+                        dataType: "json",
+                        async: false,
+                    }
+                },
+                sort: {
+                    field: "ThoiGian",
+                    //dir: "asc"
                 }
             },
-            sort: {
-                field: "ThoiGian",
-                //dir: "asc"
-            }
-        },
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "area"
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                opacity: 0.2,
-                type: "column",
-                field: "SoLuongGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Tổng số lượng",
-                color: "#ff1c1c",
-                axis: "quantity",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # lần"
-                }
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "area"
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    opacity: 0.2,
+                    type: "column",
+                    field: "SoLuongGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Tổng số lượng",
+                    color: "#ff1c1c",
+                    axis: "quantity",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # lần"
+                    }
+                }, {
+                    opacity: 1,
+                    type: "line",
+                    field: "ThoiGianGiaiQuyet",
+                    categoryField: "ThoiGian",
+                    name: "Thời gian giải quyết trung bình",
+                    color: "#33FF00",
+                    axis: "time",
+                    tooltip: {
+                        visible: true,
+                        template: "#: value # phút"
+                    }
+                },
+                    //{
+                    //field: "TongThoiGian",
+                    //categoryField: "ThoiGian",
+                    //name: "Tổng phiên",
+                    //color: "#0066FF"
+                    //}
+                ],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                crosshair: {
+                    visible: true
+                },
+                axisCrossingValue: [0, 12],
+            },
+            valueAxis: [{
+                name: "time",
+                labels: {
+                    format: "{0:n0} phút",
+                },
+                title: {
+                    text: "Thời gian giải quyết thủ tục (Phút)"
+                },
+                color: "#007eff"
             }, {
-                opacity: 1,
-                type: "line",
-                field: "ThoiGianGiaiQuyet",
-                categoryField: "ThoiGian",
-                name: "Thời gian giải quyết trung bình",
-                color: "#33FF00",
-                axis: "time",
-                tooltip: {
-                    visible: true,
-                    template: "#: value # phút"
-                }
+                name: "quantity",
+                labels: {
+                    format: "{0:n0} lần",
+                },
+                title: {
+                    text: "Số lượng thủ tục đã giải quyết (Lần)"
+                },
+                color: "#ff1c1c"
+            }],
+            tooltip: {
+                visible: true,
+                shared: true,
+                format: "N0"
             },
-                //{
-                //field: "TongThoiGian",
-                //categoryField: "ThoiGian",
-                //name: "Tổng phiên",
-                //color: "#0066FF"
-                //}
-            ],
-        categoryAxis: {
-            labels: {
-                rotation: -90
-            },
-            crosshair: {
-                visible: true
-            },
-            axisCrossingValue: [0, 12],
-        },
-        valueAxis: [{
-            name: "time",
-            labels: {
-                format: "{0:n0} phút",
-            },
-            title: {
-                text: "Thời gian giải quyết thủ tục (Phút)"
-            },
-            color: "#007eff"
-        }, {
-            name: "quantity",
-            labels: {
-                format: "{0:n0} lần",
-            },
-            title: {
-                text: "Số lượng thủ tục đã giải quyết (Lần)"
-            },
-            color: "#ff1c1c"
-        }],
-        tooltip: {
-            visible: true,
-            shared: true,
-            format: "N0"
-        },
-        dataBound: function (e) {
-            var chart = this;
-            var categoriesLen = chart.options.categoryAxis.categories.length;
-            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
-            chart.redraw();
-        }
-        //render: function (e) {
-        //    // Effective axis range is available in the render event
-        //    //
-        //    // See
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
-        //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
-        //    var range = e.sender.getAxis("value").range();
-        //    if (range > 20) var majorUnit = range.max / 4;
-        //    else if (range > 100) var majorUnit = range.max / 20;
-        //    else if (range > 500) var majorUnit = range.max / 100;
-        //    else if (range > 1000) var majorUnit = range.max / 200;
-        //    var axis = e.sender.options.valueAxis;
+            dataBound: function (e) {
+                var chart = this;
+                var categoriesLen = chart.options.categoryAxis.categories.length;
+                chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+                chart.redraw();
+            }
+            //render: function (e) {
+            //    // Effective axis range is available in the render event
+            //    //
+            //    // See
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/events/render
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/ui/chart/methods/getAxis
+            //    // http://docs.telerik.com/kendo-ui/api/javascript/dataviz/chart/chart_axis
+            //    var range = e.sender.getAxis("value").range();
+            //    if (range > 20) var majorUnit = range.max / 4;
+            //    else if (range > 100) var majorUnit = range.max / 20;
+            //    else if (range > 500) var majorUnit = range.max / 100;
+            //    else if (range > 1000) var majorUnit = range.max / 200;
+            //    var axis = e.sender.options.valueAxis;
 
-        //    if (axis.majorUnit !== majorUnit) {
-        //        axis.majorUnit = majorUnit;
+            //    if (axis.majorUnit !== majorUnit) {
+            //        axis.majorUnit = majorUnit;
 
-        //        // We need to redraw the chart to apply the changes
-        //        e.sender.redraw();
-        //    }
-        //}
-    });
+            //        // We need to redraw the chart to apply the changes
+            //        e.sender.redraw();
+            //    }
+            //}
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Tạo dropdownlist chọn năm
 function createYearColumnThuTucCB() {
