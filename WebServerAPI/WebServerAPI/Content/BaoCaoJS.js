@@ -4,6 +4,7 @@ var macb_report = 0;
 var date_report = 0;
 var start_report;
 var end_report;
+var index = 0;
 // Tạo dropdownlist chọn bộ phận
 function createBPbaocao() {
     $.ajax({
@@ -251,6 +252,8 @@ function createButtonReport() {
 }
 // Tạo sự kiện nút xem báo cáo
 function onClickBtnReport() {
+    index = 0;
+    $("div.white-div-loading").show();
     var day = new Date();
     $("#noi-dung-bao-cao").html('<div id = "grid-report-1" ></div ><div id="grid-report-2"></div><div id="grid-report-3"></div>');
     var start;
@@ -258,6 +261,7 @@ function onClickBtnReport() {
     var title_main = '<div id="title-bao-cao-main" style="padding: 0.8em; font-size: 1.8em"><div>' +
         '<div style="width: 30%; text-align:center; float: left">' +
         '<h4>ỦY BAN NHÂN DÂN</h4>' +
+
         '<h4>QUẬN TÂN BÌNH</h4>' +
         '<div style="width: 30%;text-align:center;padding: 0 0 0 35%;">' +
         '<hr />' +
@@ -352,7 +356,18 @@ function onClickBtnReport() {
         $("#grid-report-3 #title-bao-cao-3").before(title_main);
     }
     //$("#title-bao-cao-main").html(title_main);
+    var myVar = setInterval(function () {
+        var i = 0;
+        if ($("#cb-kq").prop("checked")) i++;
+        if ($("#cb-gy").prop("checked")) i++;
+        if ($("#cb-tt").prop("checked")) i++;
+        if (index == i) {
+            $("div.white-div-loading").hide();
+            clearInterval(myVar);
+        }
+    }, 500);
 }
+
 // Phương thức tạo bảng thời gian giải quyết thủ tục tổng hợp
 function createGridThuTucReportTH(urlStr) {
     dataSource = new kendo.data.DataSource({
@@ -365,9 +380,11 @@ function createGridThuTucReportTH(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -477,9 +494,11 @@ function createGridThuTucReportBP(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -584,9 +603,11 @@ function createGridThuTucReportCB(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -685,9 +706,11 @@ function createGridReportTH(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -894,9 +917,11 @@ function createGridReportBP(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -1132,9 +1157,11 @@ function createGridReportCB(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -1359,9 +1386,11 @@ function createGridFeedBackTH(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -1463,9 +1492,11 @@ function createGridFeedBackBP(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },
@@ -1559,9 +1590,11 @@ function createGridFeedBackCB(urlStr) {
                     dataType: 'json',
                     success: function (result) {
                         options.success(result);
+                        index++;
                     },
                     error: function (result) {
                         options.error(result);
+                        index++;
                     }
                 });
             },

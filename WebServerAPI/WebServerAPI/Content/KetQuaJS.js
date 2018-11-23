@@ -8,6 +8,7 @@ var clickTH = false;
 // Nút tên bộ phận: sự kiện click vào menu xem kết quả
 $("#menu-xem-ket-qua-danh-gia").click(function () {
     // Tổng hợp
+    $("div.white-div-loading").show();
     createYearColumnTH();
     createMonthCircleTH();
     createChartTableTHAll();
@@ -18,101 +19,105 @@ $("#menu-xem-ket-qua-danh-gia").click(function () {
 })
 // Tạo biểu đồ cột
 function createChartColumnTH(urlStr, titleStr) {
-    dataSource = new kendo.data.DataSource({
-        transport: {
-            read: function (options) {
-                $.ajax({
-                    type: "GET",
-                    url: urlStr,
-                    dataType: 'json',
-                    async: false,
-                    success: function (result) {
-                        options.success(result);
-                    },
-                    error: function (result) {
-                        options.error(result);
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        dataSource = new kendo.data.DataSource({
+            transport: {
+                read: function (options) {
+                    $.ajax({
+                        type: "GET",
+                        url: urlStr,
+                        dataType: 'json',
+                        async: false,
+                        success: function (result) {
+                            options.success(result);
+                        },
+                        error: function (result) {
+                            options.error(result);
+                        }
+                    });
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
                     }
-                });
+                }
             },
-            parameterMap: function (options, operation) {
-                if (operation !== "read" && options.models) {
-                    return { models: kendo.stringify(options.models) };
+            schema: {
+                model: {
+                    fields: {
+                        thang: { type: "string" },
+                        RHL: { type: "number" },
+                        HL: { type: "number" },
+                        BT: { type: "number" },
+                        KHL: { type: "number" },
+                    }
                 }
             }
-        },
-        schema: {
-            model: {
-                fields: {
-                    thang: { type: "string" },
-                    RHL: { type: "number" },
-                    HL: { type: "number" },
-                    BT: { type: "number" },
-                    KHL: { type: "number" },
+        });
+        $("#chart-column-th").kendoChart({
+            dataSource: dataSource,
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "column",
+                stack: { type: "100%" }
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    field: "RHL",
+                    categoryField: "thang",
+                    name: "Rất hài lòng",
+                    color: "#37b24d"
+                }, {
+                    field: "HL",
+                    categoryField: "thang",
+                    name: "Hài lòng",
+                    color: "#228be6"
+                }, {
+                    field: "BT",
+                    categoryField: "thang",
+                    name: "Bình thường",
+                    color: "#ffd43b"
+                }, {
+                    field: "KHL",
+                    categoryField: "thang",
+                    name: "Không hài lòng",
+                    color: "#fa5252"
+                }],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                majorGridLines: {
+                    visible: false
                 }
+            },
+            valueAxis: {
+                labels: {
+                    format: "{0:p0}"
+                },
+                line: {
+                    visible: false
+                },
+                axisCrossingValue: 0
+            },
+            tooltip: {
+                visible: true,
+                format: "{0}%",
+                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
             }
-        }
-    });
-    $("#chart-column-th").kendoChart({
-        dataSource: dataSource,
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "column",
-            stack: { type: "100%" }
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                field: "RHL",
-                categoryField: "thang",
-                name: "Rất hài lòng",
-                color: "#37b24d"
-            }, {
-                field: "HL",
-                categoryField: "thang",
-                name: "Hài lòng",
-                color: "#228be6"
-            }, {
-                field: "BT",
-                categoryField: "thang",
-                name: "Bình thường",
-                color: "#ffd43b"
-            }, {
-                field: "KHL",
-                categoryField: "thang",
-                name: "Không hài lòng",
-                color: "#fa5252"
-            }],
-        categoryAxis: {
-            labels: {
-                rotation: -90
-            },
-            majorGridLines: {
-                visible: false
-            }
-        },
-        valueAxis: {
-            labels: {
-                format: "{0:p0}"
-            },
-            line: {
-                visible: false
-            },
-            axisCrossingValue: 0
-        },
-        tooltip: {
-            visible: true,
-            format: "{0}%",
-            template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-        }
-    });
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Tạo dropdownlist chọn năm
 function createYearColumnTH() {
@@ -539,6 +544,7 @@ function getBPName() {
 }
 // Nút tên bộ phận: tạo phương thức click
 function onClickBtnBP(e) {
+    $("div.white-div-loading").show();
     $("#tong-hop").hide("slow");
     $("#cac-bo-phan").hide("slow");
     $("#bo-phan").show("slow");
@@ -820,101 +826,105 @@ function createTableBP_MucDo(urlStr, titleStr, idGrid, idSpan) {
 }
 // Tạo biểu đồ cột
 function createChartColumnBP(urlStr, titleStr) {
-    dataSource = new kendo.data.DataSource({
-        transport: {
-            read: function (options) {
-                $.ajax({
-                    type: "GET",
-                    url: urlStr,
-                    dataType: 'json',
-                    async: false,
-                    success: function (result) {
-                        options.success(result);
-                    },
-                    error: function (result) {
-                        options.error(result);
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        dataSource = new kendo.data.DataSource({
+            transport: {
+                read: function (options) {
+                    $.ajax({
+                        type: "GET",
+                        url: urlStr,
+                        dataType: 'json',
+                        async: false,
+                        success: function (result) {
+                            options.success(result);
+                        },
+                        error: function (result) {
+                            options.error(result);
+                        }
+                    });
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
                     }
-                });
+                }
             },
-            parameterMap: function (options, operation) {
-                if (operation !== "read" && options.models) {
-                    return { models: kendo.stringify(options.models) };
+            schema: {
+                model: {
+                    fields: {
+                        thang: { type: "string" },
+                        RHL: { type: "number" },
+                        HL: { type: "number" },
+                        BT: { type: "number" },
+                        KHL: { type: "number" },
+                    }
                 }
             }
-        },
-        schema: {
-            model: {
-                fields: {
-                    thang: { type: "string" },
-                    RHL: { type: "number" },
-                    HL: { type: "number" },
-                    BT: { type: "number" },
-                    KHL: { type: "number" },
+        });
+        $("#chart-column-bp").kendoChart({
+            dataSource: dataSource,
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "column",
+                stack: { type: "100%" }
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    field: "RHL",
+                    categoryField: "thang",
+                    name: "Rất hài lòng",
+                    color: "#37b24d"
+                }, {
+                    field: "HL",
+                    categoryField: "thang",
+                    name: "Hài lòng",
+                    color: "#228be6"
+                }, {
+                    field: "BT",
+                    categoryField: "thang",
+                    name: "Bình thường",
+                    color: "#ffd43b"
+                }, {
+                    field: "KHL",
+                    categoryField: "thang",
+                    name: "Không hài lòng",
+                    color: "#fa5252"
+                }],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                majorGridLines: {
+                    visible: false
                 }
+            },
+            valueAxis: {
+                labels: {
+                    format: "{0:p0}"
+                },
+                line: {
+                    visible: false
+                },
+                axisCrossingValue: 0
+            },
+            tooltip: {
+                visible: true,
+                format: "{0}%",
+                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
             }
-        }
-    });
-    $("#chart-column-bp").kendoChart({
-        dataSource: dataSource,
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "column",
-            stack: { type: "100%" }
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                field: "RHL",
-                categoryField: "thang",
-                name: "Rất hài lòng",
-                color: "#37b24d"
-            }, {
-                field: "HL",
-                categoryField: "thang",
-                name: "Hài lòng",
-                color: "#228be6"
-            }, {
-                field: "BT",
-                categoryField: "thang",
-                name: "Bình thường",
-                color: "#ffd43b"
-            }, {
-                field: "KHL",
-                categoryField: "thang",
-                name: "Không hài lòng",
-                color: "#fa5252"
-            }],
-        categoryAxis: {
-            labels: {
-                rotation: -90
-            },
-            majorGridLines: {
-                visible: false
-            }
-        },
-        valueAxis: {
-            labels: {
-                format: "{0:p0}"
-            },
-            line: {
-                visible: false
-            },
-            axisCrossingValue: 0
-        },
-        tooltip: {
-            visible: true,
-            format: "{0}%",
-            template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-        }
-    });
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Phương thức tạo đồ thị và bảng
 function createChartTableAll() {
@@ -1009,6 +1019,7 @@ function createMonthCircle(MaBP) {
             } else {
                 $("#month-circle").val("09 2018");
                 $("#content-bp").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
@@ -1060,6 +1071,7 @@ function createYearColumn(MaBP) {
             } else {
                 $("#div-year-column").val(0);
                 $("#content-bp").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
@@ -1086,6 +1098,7 @@ function getCBName(urlStr) {
         url: urlStr,
         dataType: "json",
         success: function (data) {
+            $("#content-ten-can-bo").show();
             if (data.length > 0) {
                 //var i = 0;
                 $.each(data, function (key, val) {
@@ -1101,6 +1114,7 @@ function getCBName(urlStr) {
                 createButtonCB();
             } else {
                 $("#content-ten-can-bo").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
@@ -1118,6 +1132,7 @@ function createButtonCB() {
 }
 // Nút tên cán bộ: tạo phương thức click
 function onClickBtnCB(e) {
+    $("div.white-div-loading").show();
     $("#bo-phan").hide("slow");
     $("#can-bo").show("slow");
     $("#div-month-circle-cb-1").hide();
@@ -1142,100 +1157,105 @@ function onClickBtnCB(e) {
 }
 // Tạo biểu đồ cột
 function createChartColumnCB(urlStr, titleStr) {
-    dataSource = new kendo.data.DataSource({
-        transport: {
-            read: function (options) {
-                $.ajax({
-                    type: "GET",
-                    url: urlStr,
-                    dataType: 'json',
-                    success: function (result) {
-                        options.success(result);
-                    },
-                    error: function (result) {
-                        options.error(result);
+    $("div.white-div-loading").show();
+    setTimeout(function () {
+        dataSource = new kendo.data.DataSource({
+            transport: {
+                read: function (options) {
+                    $.ajax({
+                        type: "GET",
+                        url: urlStr,
+                        dataType: 'json',
+                        async: false,
+                        success: function (result) {
+                            options.success(result);
+                        },
+                        error: function (result) {
+                            options.error(result);
+                        }
+                    });
+                },
+                parameterMap: function (options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return { models: kendo.stringify(options.models) };
                     }
-                });
+                }
             },
-            parameterMap: function (options, operation) {
-                if (operation !== "read" && options.models) {
-                    return { models: kendo.stringify(options.models) };
+            schema: {
+                model: {
+                    fields: {
+                        thang: { type: "string" },
+                        RHL: { type: "number" },
+                        HL: { type: "number" },
+                        BT: { type: "number" },
+                        KHL: { type: "number" },
+                    }
                 }
             }
-        },
-        schema: {
-            model: {
-                fields: {
-                    thang: { type: "string" },
-                    RHL: { type: "number" },
-                    HL: { type: "number" },
-                    BT: { type: "number" },
-                    KHL: { type: "number" },
+        });
+        $("#chart-column-cb").kendoChart({
+            dataSource: dataSource,
+            title: {
+                text: titleStr
+            },
+            legend: {
+                position: "top"
+            },
+            seriesDefaults: {
+                type: "column",
+                stack: { type: "100%" }
+            },
+            plotArea: {
+                background: "blue",
+                opacity: 0.1
+            },
+            series:
+                [{
+                    field: "RHL",
+                    categoryField: "thang",
+                    name: "Rất hài lòng",
+                    color: "#37b24d"
+                }, {
+                    field: "HL",
+                    categoryField: "thang",
+                    name: "Hài lòng",
+                    color: "#228be6"
+                }, {
+                    field: "BT",
+                    categoryField: "thang",
+                    name: "Bình thường",
+                    color: "#ffd43b"
+                }, {
+                    field: "KHL",
+                    categoryField: "thang",
+                    name: "Không hài lòng",
+                    color: "#fa5252"
+                }],
+            categoryAxis: {
+                labels: {
+                    rotation: -90
+                },
+                majorGridLines: {
+                    visible: false
                 }
+            },
+            valueAxis: {
+                labels: {
+                    format: "{0:p0}"
+                },
+                line: {
+                    visible: false
+                },
+                axisCrossingValue: 0
+            },
+            tooltip: {
+                visible: true,
+                format: "{0}%",
+                template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
             }
-        }
-    });
-    $("#chart-column-cb").kendoChart({
-        dataSource: dataSource,
-        title: {
-            text: titleStr
-        },
-        legend: {
-            position: "top"
-        },
-        seriesDefaults: {
-            type: "column",
-            stack: { type: "100%" }
-        },
-        plotArea: {
-            background: "blue",
-            opacity: 0.1
-        },
-        series:
-            [{
-                field: "RHL",
-                categoryField: "thang",
-                name: "Rất hài lòng",
-                color: "#37b24d"
-            }, {
-                field: "HL",
-                categoryField: "thang",
-                name: "Hài lòng",
-                color: "#228be6"
-            }, {
-                field: "BT",
-                categoryField: "thang",
-                name: "Bình thường",
-                color: "#ffd43b"
-            }, {
-                field: "KHL",
-                categoryField: "thang",
-                name: "Không hài lòng",
-                color: "#fa5252"
-            }],
-        categoryAxis: {
-            labels: {
-                rotation: -90
-            },
-            majorGridLines: {
-                visible: false
-            }
-        },
-        valueAxis: {
-            labels: {
-                format: "{0:p0}"
-            },
-            line: {
-                visible: false
-            },
-            axisCrossingValue: 0
-        },
-        tooltip: {
-            visible: true,
-            format: "{0}%",
-            template: "#= series.name #: #= value # ( #= kendo.format('{0:P}', percentage) # )"
-        }
-    });
+        });
+        $("div.white-div-loading").hide();
+    }, 1000);
 }
 // Tạo biểu đồ tròn
 function createChartCircleCB(urlStr, titleStr) {
@@ -1714,6 +1734,7 @@ function createMonthCircleCB(MaCB) {
             } else {
                 $("#month-circle-cb").val("09 2018");
                 $("#content-can-bo").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
@@ -1778,6 +1799,7 @@ function createYearColumnCB(MaCB) {
             } else {
                 $("#div-year-column-cb").val(0);
                 $("#content-can-bo").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
