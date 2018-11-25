@@ -96,7 +96,7 @@ namespace WebServerAPI.Controllers
                     md.PW = pw;
                     db.SaveChanges();
                 }
-                catch (Exception ex)
+                catch
                 {
                     db.CANBOes.Remove(md);
                     db.SaveChanges();
@@ -204,7 +204,7 @@ namespace WebServerAPI.Controllers
             CheckExcelProcesses();
             if (excelfile == null)
             {
-                return Json("Vui lòng chọn file excel !", JsonRequestBehavior.AllowGet);
+                return Json("Vui lòng chọn file !", JsonRequestBehavior.AllowGet);
             }
             else
             {

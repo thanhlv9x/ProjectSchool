@@ -16,6 +16,8 @@ var clickBPThuTuc = false;
 var clickCBThuTuc = false;
 var mabp_thutuc = 0;
 var macb_thutuc = 0;
+var tenbp_thuctuc;
+var tencb_thuctuc;
 // Nút tên bộ phận: sử dụng ajax để lấy dữ liệu tên và mã bộ phận
 function getBPNameThuTuc() {
     var str = "";
@@ -46,6 +48,7 @@ function onClickBtnBPThuTuc(e) {
     clickBPThuTuc = false;
     setTimeout(function () {
         mabp_thutuc = $(e.event.target).attr("id");
+        tenbp_thuctuc = $(e.event.target).text();
         $("#header-thu-tuc-bp h1").text($(e.event.target).text());
         getCBNameThuTuc(url + "/api/BoPhanAPI/?_MaBP=" + mabp_thutuc);
         createMonthCircleThuTucBP();
@@ -64,6 +67,10 @@ function createButtonBPThuc() {
 function backBPThuTuc() {
     $("#thu-tuc-th").show("slow");
     $("#thu-tuc-bp").hide("slow");
+}
+// Tạo sự kiện nút so sánh cán bộ
+function compareBPThuTuc() {
+    createWindowCompare(0, mabp_thutuc, tenbp_thuctuc, 0, 2);
 }
 // Tạo biểu đồ miền theo năm/tháng
 function createChartThuTucTH(urlStr, titleStr) {
@@ -482,6 +489,7 @@ function onClickBtnCBThuTuc(e) {
     $("#thu-tuc-cb").show("slow");
     //createInfoCB(macb);
     setTimeout(function () {
+        tencb_thuctuc = $(e.event.target).text();
         $("#header-thu-tuc-cb h1").text("Cán bộ: " + $(e.event.target).text());
         createMonthCircleThuTucCB();
         createYearColumnThuTucCB();
@@ -491,6 +499,10 @@ function onClickBtnCBThuTuc(e) {
 function backCBThuTuc() {
     $("#thu-tuc-bp").show("slow");
     $("#thu-tuc-cb").hide("slow");
+}
+// Tạo sự kiện nút so sánh cán bộ
+function compareCBThuTuc() {
+    createWindowCompare(macb_thutuc, mabp_thutuc, " Cán bộ: " + tencb_thuctuc, 0, 3);
 }
 // Tạo biểu đồ miền theo năm/tháng
 function createChartThuTucBP(urlStr, titleStr) {
@@ -639,6 +651,7 @@ function createYearColumnThuTucBP() {
             if (data.length > 0) {
                 $("#body-thu-tuc-bp>div:first-child").show();
                 $("#footer-thu-tuc-bp").show();
+                $(".compareBP").show();
                 var arr = [];
                 var j = 0;
                 var arr1 = data[0].split(" ");
@@ -656,8 +669,10 @@ function createYearColumnThuTucBP() {
                 createGridThuTucBP(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaBP=" + mabp_thutuc + "&_CB=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-bp").val());
             } else {
                 $("#year-column-thu-tuc-bp").val(0);
+                $(".compareBP").hide();
                 $("#body-thu-tuc-bp>div:first-child").hide();
                 $("#footer-thu-tuc-bp").hide();
+                $("div.white-div-loading").hide();
             }
         },
         error: function (xhr) {
@@ -989,6 +1004,7 @@ function createYearColumnThuTucCB() {
             $("#body-thu-tuc-cb>div:first-child").show();
             if (data.length > 0) {
                 $("#body-thu-tuc-cb>div:first-child").show();
+                $(".compareCB").show();
                 $("#footer-thu-tuc-cb").show();
                 var arr = [];
                 var j = 0;
@@ -1007,6 +1023,7 @@ function createYearColumnThuTucCB() {
                 createGridThuTucCB(url + "/api/ThuTucAPI/?_Loai=nam&_GiaTri=" + $("#year-column-thu-tuc-bp").val() + "&_MaCB=" + macb_thutuc + "&_Tong=1", "Bảng thời gian giải quyết thủ tục năm " + $("#year-column-thu-tuc-cb").val());
             } else {
                 $("#year-column-thu-tuc-cb").val(0);
+                $(".compareCB").hide();
                 $("#body-thu-tuc-cb>div:first-child").hide();
                 $("#footer-thu-tuc-cb").hide();
                 $("div.white-div-loading").hide();

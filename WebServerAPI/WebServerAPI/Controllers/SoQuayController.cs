@@ -79,7 +79,7 @@ namespace WebServerAPI.Controllers
                     db.SaveChanges();
                     success = true;
                 }
-                catch { }
+                catch (Exception ex){ }
             }
             return Json(success, JsonRequestBehavior.AllowGet);
         }

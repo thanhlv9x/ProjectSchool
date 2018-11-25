@@ -52,12 +52,12 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetPort(int _Port)
         {
             List<int> lstMD = new List<int>();
-            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAMAY).ToList();
+            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAC).ToList();
             if (lstEF != null)
             {
                 foreach (var item in lstEF)
                 {
-                    lstMD.Add(item.MAMAY);
+                    lstMD.Add(item.MAC);
                 }
                 return Request.CreateResponse<List<int>>(HttpStatusCode.OK, lstMD);
             }
@@ -73,7 +73,7 @@ namespace WebServerAPI.Controllers
         {
             DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime dtEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-            var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == _MaMay &&
+            var lstEF = db.TRANGTHAIDANGNHAPs.Where(p => p.MAYDANHGIA.MAC == _MaMay &&
                                                          p.BD != null &&
                                                          p.KT == null &&
                                                          p.BD >= dt &&
@@ -96,7 +96,7 @@ namespace WebServerAPI.Controllers
                             MaBP = item.CANBO.MABP,
                             TenBP = item.CANBO.BOPHAN.TENBP,
                             MaDN = item.MADN,
-                            MaMay = item.MAMAY,
+                            MaMay = item.MAYDANHGIA.MAC,
                             MaCBSD = item.CANBO.MACBSD,
                             VietTat = item.CANBO.BOPHAN.VIETTAT
                         };
@@ -453,15 +453,15 @@ namespace WebServerAPI.Controllers
                 var stt = listEF.STT;
                 var macb = listEF.MACB;
                 var mamay = db.TRANGTHAIDANGNHAPs.Where(p => p.MACB == macb &&
-                                                           p.BD != null &&
-                                                           p.KT == null &&
-                                                           p.BD >= start &&
-                                                           p.BD <= end)
+                                                             p.BD != null &&
+                                                             p.KT == null &&
+                                                             p.BD >= start &&
+                                                             p.BD <= end)
                                                  .OrderByDescending(p => p.BD)
                                                  .FirstOrDefault();
                 if (mamay != null)
                 {
-                    var soquay = mamay.MAMAY;
+                    var soquay = mamay.MAYDANHGIA.MAC;
                     InfoNumber md = new InfoNumber()
                     {
                         MaSTT = mastt,
@@ -486,7 +486,7 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetSoQuay(int _isSoQuay)
         {
             List<int> listMD = new List<int>();
-            listMD = db.MAYDANHGIAs.Select(p => p.MAMAY).ToList(); // Lấy tất cả số quầy
+            listMD = db.MAYDANHGIAs.Select(p => p.MAC).ToList(); // Lấy tất cả số quầy
             DateTime now = DateTime.Now;
             DateTime start = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
             DateTime end = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
@@ -504,7 +504,7 @@ namespace WebServerAPI.Controllers
                 {
                     // Tìm tất cả trạng thái đăng nhập có thời gian xác thực trong ít hơn 2 phút
                     // Thêm vào danh sách các quầy đang hoạt động
-                    listAction.Add((int)item.MAMAY);
+                    listAction.Add((int)item.MAYDANHGIA.MAC);
                 }
             }
 

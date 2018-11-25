@@ -1,5 +1,7 @@
 ﻿var mabp;
 var macb;
+var tenbp;
+var tencb;
 var clickBP = false;
 var clickCB = false;
 var clickTH = false;
@@ -555,6 +557,7 @@ function onClickBtnBP(e) {
     clickBP = false;
     setTimeout(function () {
         mabp = $(e.event.target).attr("id");
+        tenbp = $(e.event.target).text();
         $("#bo-phan div h1").text($(e.event.target).text());
         createMonthCircle(mabp);
         createChartTableAll();
@@ -576,6 +579,10 @@ function backBP() {
     $("#cac-bo-phan").show("slow");
     $("#bo-phan").hide("slow");
     $("#tong-hop").show("slow");
+}
+// Tạo sự kiện nút so sánh bộ phận
+function compareBP() {
+    createWindowCompare(0, mabp, tenbp, 0, 0);
 }
 // Tạo biểu đồ tròn
 function createChartCircleBP(urlStr, titleStr) {
@@ -1054,6 +1061,7 @@ function createYearColumn(MaBP) {
         success: function (data) {
             if (data.length > 0) {
                 $("#content-bp").show();
+                $(".compareBP").show();
                 var arr = [];
                 var j = 0;
                 var arr1 = data[0].split(" ");
@@ -1070,6 +1078,7 @@ function createYearColumn(MaBP) {
                 createChartColumnBP(url + "/api/CotDanhGiaAPI/?_MaBP=" + mabp + "&_Year=" + $("#year-column").val(), "Kết quả tổng hợp năm " + $("#year-column").val());
             } else {
                 $("#div-year-column").val(0);
+                $(".compareBP").hide();
                 $("#content-bp").hide();
                 $("div.white-div-loading").hide();
             }
@@ -1089,6 +1098,10 @@ $("#year-column").change(function () {
 function backCB() {
     $("#bo-phan").show("slow");
     $("#can-bo").hide("slow");
+}
+// Tạo sự kiện nút so sánh cán bộ
+function compareCB() {
+    createWindowCompare(macb, mabp, " Cán bộ: " + tencb, 0, 1);
 }
 // Nút tên cán bộ: sử dụng ajax để lấy dữ liệu tên và mã cán bộ
 function getCBName(urlStr) {
@@ -1143,6 +1156,7 @@ function onClickBtnCB(e) {
     macb = $(e.event.target).attr("id");
     createInfoCB(macb);
     setTimeout(function () {
+        tencb = "Cán bộ: " + $(e.event.target).text();
         $("#can-bo div h1").text("Cán bộ: " + $(e.event.target).text());
         createYearColumnCB(macb);
         createChartCircleCB(url + "/api/KetQuaDanhGiaAPI/?_MaCB=" + macb, "Kết quả đánh giá (Tổng hợp)");
@@ -1782,6 +1796,7 @@ function createYearColumnCB(MaCB) {
         success: function (data) {
             if (data.length > 0) {
                 $("#content-can-bo").show();
+                $(".compareCB").show();
                 var arr = [];
                 var j = 0;
                 var arr1 = data[0].split(" ");
@@ -1798,6 +1813,7 @@ function createYearColumnCB(MaCB) {
                 createChartColumnCB(url + "/api/CotDanhGiaAPI/?_MaCB=" + MaCB + "&_Year=" + $("#year-column-cb").val(), "Kết quả tổng hợp năm " + $("#year-column-cb").val());
             } else {
                 $("#div-year-column-cb").val(0);
+                $(".compareCB").hide();
                 $("#content-can-bo").hide();
                 $("div.white-div-loading").hide();
             }

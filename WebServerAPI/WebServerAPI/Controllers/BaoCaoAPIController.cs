@@ -128,7 +128,7 @@ namespace WebServerAPI.Controllers
                             int namE = Convert.ToInt32(arrE[1]);
                             end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                         }
-                        else if (arrS.Length == 1)
+                        else if (arrE.Length == 1)
                         {
                             int namE = Convert.ToInt32(arrE[0]);
                             end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -270,7 +270,7 @@ namespace WebServerAPI.Controllers
                         int namE = Convert.ToInt32(arrE[1]);
                         end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                     }
-                    else if (arrS.Length == 1)
+                    else if (arrE.Length == 1)
                     {
                         int namE = Convert.ToInt32(arrE[0]);
                         end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -418,7 +418,7 @@ namespace WebServerAPI.Controllers
                             int namE = Convert.ToInt32(arrE[1]);
                             end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                         }
-                        else if (arrS.Length == 1)
+                        else if (arrE.Length == 1)
                         {
                             int namE = Convert.ToInt32(arrE[0]);
                             end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -550,7 +550,7 @@ namespace WebServerAPI.Controllers
                             int namE = Convert.ToInt32(arrE[1]);
                             end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                         }
-                        else if (arrS.Length == 1)
+                        else if (arrE.Length == 1)
                         {
                             int namE = Convert.ToInt32(arrE[0]);
                             end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -686,7 +686,7 @@ namespace WebServerAPI.Controllers
                         int namE = Convert.ToInt32(arrE[1]);
                         end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                     }
-                    else if (arrS.Length == 1)
+                    else if (arrE.Length == 1)
                     {
                         int namE = Convert.ToInt32(arrE[0]);
                         end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -854,7 +854,7 @@ namespace WebServerAPI.Controllers
                             int namE = Convert.ToInt32(arrE[1]);
                             end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                         }
-                        else if (arrS.Length == 1)
+                        else if (arrE.Length == 1)
                         {
                             int namE = Convert.ToInt32(arrE[0]);
                             end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -1014,7 +1014,7 @@ namespace WebServerAPI.Controllers
                             int namE = Convert.ToInt32(arrE[1]);
                             end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                         }
-                        else if (arrS.Length == 1)
+                        else if (arrE.Length == 1)
                         {
                             int namE = Convert.ToInt32(arrE[0]);
                             end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);
@@ -1168,7 +1168,7 @@ namespace WebServerAPI.Controllers
                         int namE = Convert.ToInt32(arrE[1]);
                         end = new DateTime(namE, thangE, DateTime.DaysInMonth(namE, thangE), 23, 59, 59);
                     }
-                    else if (arrS.Length == 1)
+                    else if (arrE.Length == 1)
                     {
                         int namE = Convert.ToInt32(arrE[0]);
                         end = new DateTime(namE, 12, DateTime.DaysInMonth(namE, 12), 23, 59, 59);

@@ -11,7 +11,7 @@
     margin: 20% 0 20% 0;
 }
 
-.white-div-loading {
+.white-div-loading, #big-white-div-loading {
     text-align: center;
     background-color: ghostwhite;
     position: absolute;
@@ -19,6 +19,24 @@
     height: 100%;
     z-index: 100;
     opacity: 0.8;
+}
+
+#spanCbCompareBP, #spanCbCompareCB, #spanCbCompareBPThuTuc, #spanCbCompareCBThuTuc,
+#cbCompareBP, #cbCompareCB, #cbCompareBPThuTuc, #cbCompareCBThuTuc
+{
+    cursor: pointer;
+}
+
+.compareBP, .compareCB {
+    float: right;
+    height: 2em;
+    width: 4em;
+    cursor: pointer;
+    line-height: 2em;
+}
+
+.span.k-icon.k-i-arrows-swap.compareBP, span.k-icon.k-i-arrows-swap.compareCB {
+    width: 2em;
 }
 
 #banner {

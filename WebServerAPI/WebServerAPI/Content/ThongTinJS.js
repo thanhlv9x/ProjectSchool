@@ -292,6 +292,7 @@ function createTableTk(urlGet) {
             // Tạo nút nhập excel
             var importBtn = $(".k-button.k-button-icontext.k-grid-custom");
             importBtn.click(function () {
+                $("div#big-white-div-loading").show();
                 $("input[type='file']").siblings("span").text("Chọn file...")
                 var myWindow = $("#windowPopup");
                 myWindow.kendoWindow({
@@ -305,6 +306,7 @@ function createTableTk(urlGet) {
                 }).data("kendoWindow").center();
                 function onClose() {
                     importBtn.fadeIn();
+                    $("div#big-white-div-loading").hide();
                 }
                 myWindow.data("kendoWindow").open();
                 importBtn.fadeOut();

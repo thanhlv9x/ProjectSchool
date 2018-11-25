@@ -203,6 +203,7 @@
     <Compile Include="Controllers\KetQuaDanhGiaAPIController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SoQuayController.cs" />
+    <Compile Include="Controllers\SoSanhAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Controllers\ThuTucAPIController.cs" />
     <Compile Include="Controllers\ValuesAPIController.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\Number.cs" />
     <Compile Include="Models\PhienClient.cs" />
     <Compile Include="Models\SoQuay.cs" />
+    <Compile Include="Models\SoSanhKetQuaDanhGia.cs" />
     <Compile Include="Models\SoThuTuUser.cs" />
     <Compile Include="Models\TaiKhoanUser.cs" />
     <Compile Include="Models\TaiKhoanUserNew.cs" />
@@ -331,12 +333,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CompareJS.js" />
     <Content Include="Content\DangNhap.js" />
     <Content Include="Content\DoiMatKhau.js" />
-    <Content Include="Content\KetQuaJS.js" />
-    <Content Include="Content\SvStyle.css" />
-    <Content Include="Content\ThongTin.js" />
-    <Content Include="Content\ThuTucJS.js" />
+    <Content Include="Content\KetQua.js" />
+    <Content Include="Content\ServerStyle1.css" />
+    <Content Include="Content\ThongTinJS.js" />
+    <Content Include="Content\ThuTuc.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>HeThongDanhGia.edmx</DependentUpon>

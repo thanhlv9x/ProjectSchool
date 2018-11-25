@@ -131,6 +131,8 @@
                                 <h1 style="display: inline">@*Tên bộ phận*@</h1>
                                 <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBP()"></span>
                                 <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBP()">Quay lại</span>
+                                <span class="k-icon k-i-arrows-swap compareBP" onclick="compareBP()"></span>
+                                <span class="compareBP" onclick="compareBP()">So sánh</span>
                                 <hr />
                                 <div id="content-ten-can-bo" style="width: 30%; float: right">
                                     <div class="border-style" style="margin: 2em; border-color: #88aff5; border-radius: 10px; overflow:hidden">
@@ -207,6 +209,8 @@
                                 <h1 style="display: inline">@*Tên cán bộ*@</h1>
                                 <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCB()"></span>
                                 <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCB()">Quay lại</span>
+                                <span class="k-icon k-i-arrows-swap compareCB" onclick="compareCB()"></span>
+                                <span class="compareCB" onclick="compareCB()">So sánh</span>
                                 <hr />
                                 <div id="table-core-cb">
                                     <div id="image-cb" style="text-align: center"><input type="image" @*src="~/user.png"*@ alt="Hình ảnh cán bộ" /></div>
@@ -320,6 +324,8 @@
                                 <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
                                 <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backBPThuTuc()"></span>
                                 <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backBPThuTuc()">Quay lại</span>
+                                <span class="k-icon k-i-arrows-swap compareBP" onclick="compareBPThuTuc()"></span>
+                                <span class="compareBP" onclick="compareBPThuTuc()">So sánh</span>
                             </div>
                             <hr />
                             <div id="body-thu-tuc-bp">
@@ -358,6 +364,8 @@
                                 <h1 style="display: inline">Thời gian giải quyết thủ tục</h1>
                                 <span class="k-icon k-i-undo" style="float: right; height: 2em; width: 2em; cursor: pointer" onclick="backCBThuTuc()"></span>
                                 <span style="float: right; height: 2em; line-height: 2em; cursor: pointer" onclick="backCBThuTuc()">Quay lại</span>
+                                <span class="k-icon k-i-arrows-swap compareCB" onclick="compareCBThuTuc()"></span>
+                                <span class="compareCB" onclick="compareCBThuTuc()">So sánh</span>
                             </div>
                             <hr />
                             <div id="body-thu-tuc-cb">
@@ -633,6 +641,7 @@
         </div> @*#main-menu*@
 
     </div> @*#container*@
+    <div id="big-white-div-loading" style="position: fixed; top: 0; display: none"></div>
     <div id="windowPopup" hidden="hidden">
         @using (Html.BeginForm("Upload", "TaiKhoan", FormMethod.Post, new { id = "formUpload" }))
         {
@@ -641,6 +650,70 @@
             <br />
             <button type="submit" id="btn-import" class="k-button k-primary">Nhập</button>
         }
+    </div>
+    <div id="windowCompareBP" hidden="hidden">
+        Thời gian:
+        <input id="thoigianCompareBP" value="0" style="width: 10%" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="startCompareBP" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="endCompareBP" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" id="cbCompareBP" />
+        <span id="spanCbCompareBP">
+            &nbsp;So sánh nhiều
+        </span>
+        <div id="btnCompareBP" style="float: right">So sánh</div>
+        <div id="chartCompareBP"></div>
+    </div>
+    <div id="windowCompareCB" hidden="hidden">
+        Thời gian:
+        <input id="thoigianCompareCB" value="0" style="width: 10%" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="startCompareCB" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="endCompareCB" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" id="cbCompareCB" />
+        <span id="spanCbCompareCB">
+            &nbsp;So sánh nhiều
+        </span>
+        <div id="btnCompareCB" style="float: right">So sánh</div>
+        <div id="chartCompareCB"></div>
+    </div>
+    <div id="windowCompareBPThuTuc" hidden="hidden">
+        Thời gian:
+        <input id="thoigianCompareBPThuTuc" value="0" style="width: 10%" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="startCompareBPThuTuc" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="endCompareBPThuTuc" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" id="cbCompareBPThuTuc" />
+        <span id="spanCbCompareBPThuTuc">
+            &nbsp;So sánh nhiều
+        </span>
+        <div id="btnCompareBPThuTuc" style="float: right">So sánh</div>
+        <div id="chartCompareBPThuTuc"></div>
+    </div>
+    <div id="windowCompareCBThuTuc" hidden="hidden">
+        Thời gian:
+        <input id="thoigianCompareCBThuTuc" value="0" style="width: 10%" />&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="startCompareCBThuTuc" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+        <div style="width: 20%; display: inline-table">
+            <input id="endCompareCBThuTuc" value="1" />
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" id="cbCompareCBThuTuc" />
+        <span id="spanCbCompareCBThuTuc">
+            &nbsp;So sánh nhiều
+        </span>
+        <div id="btnCompareCBThuTuc" style="float: right">So sánh</div>
+        <div id="chartCompareCBThuTuc"></div>
     </div>
 </body>
 </html>
@@ -783,10 +856,11 @@
         getBPName();
     })
 </script>
-<script src="~/Content/KetQuaJS.js"></script>
-<script src="~/Content/ThuTucJS.js"></script>
+<script src="~/Content/CompareJS.js"></script>
+<script src="~/Content/KetQua.js"></script>
+<script src="~/Content/ThuTuc.js"></script>
 <script src="~/Content/DangNhap.js"></script>
-<script src="~/Content/ThongTin.js"></script>
+<script src="~/Content/ThongTinJS.js"></script>
 <script src="~/Content/BaoCaoJS.js"></script>
 <script src="~/Content/DoiMatKhau.js"></script>
-<link href="~/Content/SvStyle.css" rel="stylesheet" />
+<link href="~/Content/ServerStyle1.css" rel="stylesheet" />
