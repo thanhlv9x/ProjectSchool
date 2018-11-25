@@ -62,6 +62,8 @@ namespace WebServerAPI.Controllers
                             DateTime startCompare = new DateTime(i, 1, 1, 0, 0, 0); // Ngày bắt đầu (Đầu năm)
                             DateTime endCompare = new DateTime(i, 12, DateTime.DaysInMonth(i, 12), 23, 59, 59); // Ngày kết thúc (Cuối năm)
                             double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                            double diem = 0;
+                            int total = 0;
                             foreach (var item in lstMucDo) // Mỗi năm sẽ gồm có tổng các mức độ đánh giá
                             {
                                 var mucdo = item.MUCDO;
@@ -72,6 +74,12 @@ namespace WebServerAPI.Controllers
                                                                          p.MUCDO == mucdo)
                                                              .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                 arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                total += count;
+                                diem += count * (5 - mucdo);
+                            }
+                            if (total > 0)
+                            {
+                                arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
                             }
                             SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                             {
@@ -90,7 +98,9 @@ namespace WebServerAPI.Controllers
                                 // Lấy khoảng thời gian so sánh
                                 DateTime startCompare = new DateTime(start.Year, i, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                 DateTime endCompare = new DateTime(start.Year, i, DateTime.DaysInMonth(start.Year, i), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                double diem = 0;
+                                int total = 0;
                                 foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                 {
                                     var mucdo = item.MUCDO;
@@ -101,8 +111,14 @@ namespace WebServerAPI.Controllers
                                                                              p.MUCDO == mucdo)
                                                                  .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                     arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                    total += count;
+                                    diem += count * (5 - mucdo);
                                 }
                                 string date = i + "/" + start.Year;
+                                if (total > 0)
+                                {
+                                    arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                }
                                 SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                 {
                                     name = date,
@@ -122,7 +138,9 @@ namespace WebServerAPI.Controllers
                                         // Lấy khoảng thời gian so sánh
                                         DateTime startCompare = new DateTime(start.Year, j, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                         DateTime endCompare = new DateTime(start.Year, j, DateTime.DaysInMonth(start.Year, j), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                        double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double diem = 0;
+                                        int total = 0;
                                         foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                         {
                                             var mucdo = item.MUCDO;
@@ -133,8 +151,14 @@ namespace WebServerAPI.Controllers
                                                                                      p.MUCDO == mucdo)
                                                                          .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                             arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                            total += count;
+                                            diem += count * (5 - mucdo);
                                         }
                                         string date = j + "/" + i;
+                                        if (total > 0)
+                                        {
+                                            arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                        }
                                         SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                         {
                                             name = date,
@@ -150,7 +174,9 @@ namespace WebServerAPI.Controllers
                                         // Lấy khoảng thời gian so sánh
                                         DateTime startCompare = new DateTime(end.Year, j, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                         DateTime endCompare = new DateTime(end.Year, j, DateTime.DaysInMonth(end.Year, j), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                        double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double diem = 0;
+                                        int total = 0;
                                         foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                         {
                                             var mucdo = item.MUCDO;
@@ -161,8 +187,14 @@ namespace WebServerAPI.Controllers
                                                                                      p.MUCDO == mucdo)
                                                                          .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                             arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                            total += count;
+                                            diem += count * (5 - mucdo);
                                         }
                                         string date = j + "/" + i;
+                                        if (total > 0)
+                                        {
+                                            arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                        }
                                         SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                         {
                                             name = date,
@@ -187,7 +219,9 @@ namespace WebServerAPI.Controllers
                             // Lấy khoảng thời gian so sánh
                             DateTime startCompare = new DateTime(i, 1, 1, 0, 0, 0); // Ngày bắt đầu (Đầu năm)
                             DateTime endCompare = new DateTime(i, 12, DateTime.DaysInMonth(i, 12), 23, 59, 59); // Ngày kết thúc (Cuối năm)
-                            double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                            double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                            double diem = 0;
+                            int total = 0;
                             foreach (var item in lstMucDo) // Mỗi năm sẽ gồm có tổng các mức độ đánh giá
                             {
                                 var mucdo = item.MUCDO;
@@ -198,6 +232,12 @@ namespace WebServerAPI.Controllers
                                                                          p.MUCDO == mucdo)
                                                              .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                 arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                total += count;
+                                diem += count * (5 - mucdo);
+                            }
+                            if (total > 0)
+                            {
+                                arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
                             }
                             SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                             {
@@ -216,7 +256,9 @@ namespace WebServerAPI.Controllers
                                 // Lấy khoảng thời gian so sánh
                                 DateTime startCompare = new DateTime(start.Year, i, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                 DateTime endCompare = new DateTime(start.Year, i, DateTime.DaysInMonth(start.Year, i), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                double diem = 0;
+                                int total = 0;
                                 foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                 {
                                     var mucdo = item.MUCDO;
@@ -227,8 +269,14 @@ namespace WebServerAPI.Controllers
                                                                              p.MUCDO == mucdo)
                                                                  .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                     arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                    total += count;
+                                    diem += count * (5 - mucdo);
                                 }
                                 string date = i + "/" + start.Year;
+                                if (total > 0)
+                                {
+                                    arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                }
                                 SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                 {
                                     name = date,
@@ -248,7 +296,9 @@ namespace WebServerAPI.Controllers
                                         // Lấy khoảng thời gian so sánh
                                         DateTime startCompare = new DateTime(start.Year, j, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                         DateTime endCompare = new DateTime(start.Year, j, DateTime.DaysInMonth(start.Year, j), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                        double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double diem = 0;
+                                        int total = 0;
                                         foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                         {
                                             var mucdo = item.MUCDO;
@@ -259,8 +309,14 @@ namespace WebServerAPI.Controllers
                                                                                      p.MUCDO == mucdo)
                                                                          .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                             arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                            total += count;
+                                            diem += count * (5 - mucdo);
                                         }
                                         string date = j + "/" + i;
+                                        if (total > 0)
+                                        {
+                                            arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                        }
                                         SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                         {
                                             name = date,
@@ -276,7 +332,9 @@ namespace WebServerAPI.Controllers
                                         // Lấy khoảng thời gian so sánh
                                         DateTime startCompare = new DateTime(end.Year, j, 1, 0, 0, 0); // Ngày bắt đầu (Đầu tháng)
                                         DateTime endCompare = new DateTime(end.Year, j, DateTime.DaysInMonth(end.Year, j), 23, 59, 59); // Ngày kết thúc (Cuối tháng)
-                                        double[] arr = new double[lstMucDo.Count]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double[] arr = new double[lstMucDo.Count + 1]; // Tạo mảng chứa dữ liệu kết quả đánh giá trung bình theo khoảng thời gian đang xét
+                                        double diem = 0;
+                                        int total = 0;
                                         foreach (var item in lstMucDo) // Mỗi tháng sẽ có tổng các mức độ đánh giá
                                         {
                                             var mucdo = item.MUCDO;
@@ -287,8 +345,14 @@ namespace WebServerAPI.Controllers
                                                                                      p.MUCDO == mucdo)
                                                                          .Count(); // Đếm kết quả đánh giá với mức độ đánh giá tương ứng trong khoảng thời gian đang xét
                                             arr[mucdo - 1] = count; // Gán giá trị vào các phần tử trong mảng tương ứng với các mức độ đánh giá
+                                            total += count;
+                                            diem += count * (5 - mucdo);
                                         }
                                         string date = j + "/" + i;
+                                        if (total > 0)
+                                        {
+                                            arr[lstMucDo.Count] = Math.Round((diem / total) * 25, 2);
+                                        }
                                         SoSanhKetQuaDanhGia md = new SoSanhKetQuaDanhGia() // Tạo đối tượng chứa năm và kết quả đánh giá trung bình tương ứng
                                         {
                                             name = date,

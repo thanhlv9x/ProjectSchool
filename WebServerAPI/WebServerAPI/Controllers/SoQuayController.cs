@@ -75,7 +75,13 @@ namespace WebServerAPI.Controllers
                 {
                     var mac = item.Mac;
                     var md = db.MAYDANHGIAs.Where(p => p.MAC == mac).FirstOrDefault();
-                    md.MAMAY = item.MaMay;
+                    db.MAYDANHGIAs.Remove(md); // Xóa số quầy cũ - có thể xảy ra ngoại lệ khi số quầy đã được sử dụng và có dữ liệu
+                    //db.SaveChanges();
+                    MAYDANHGIA mdNew = new MAYDANHGIA() // Tạo số quầy mới - có thể xảy ra ngoại lệ trùng số quầy
+                    {
+                        MAMAY = item.MaMay
+                    };
+                    db.MAYDANHGIAs.Add(mdNew);
                     db.SaveChanges();
                     success = true;
                 }
@@ -98,7 +104,7 @@ namespace WebServerAPI.Controllers
                 {
                     var mac = item.Mac;
                     var md = db.MAYDANHGIAs.Where(p => p.MAC == mac).FirstOrDefault();
-                    db.MAYDANHGIAs.Remove(md);
+                    db.MAYDANHGIAs.Remove(md); // Xóa số quầy cũ - có thể xảy ra ngoại lệ khi số quầy đã được sử dụng và có dữ liệu
                     db.SaveChanges();
                     success = true;
                 }

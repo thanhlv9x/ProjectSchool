@@ -225,7 +225,7 @@ function createDPCompare(value, startCompare, endCompare) {
 // Phương thức xác định loại giá trị cần so sánh (kết quả đánh giá, thời gian giải quyết thủ tục)
 function getCompareValue(MABP, MACB, START, END, LOAITHOIGIAN, LOAI, TITLE) {
     var _Url;
-    if (LOAI == 0) { _Url = url + "/api/SoSanhAPI?_MaBP=" + MABP + "&_MaCB=" + MACB + "&_Start=" + START + "&_End=" + END + "&_LoaiThoiGian=" + LOAITHOIGIAN + "&_Loai=" + LOAI }
+    if (LOAI == 0 || LOAI == 1) { _Url = url + "/api/SoSanhAPI?_MaBP=" + MABP + "&_MaCB=" + MACB + "&_Start=" + START + "&_End=" + END + "&_LoaiThoiGian=" + LOAITHOIGIAN + "&_Loai=" + LOAI }
     else { _Url = url + "/api/SoSanhAPI?_MaBP=" + MABP + "&_MaCB=" + MACB + "&_Start=" + START + "&_End=" + END + "&_LoaiThoiGian=" + LOAITHOIGIAN }
     $.ajax({
         url: _Url,
