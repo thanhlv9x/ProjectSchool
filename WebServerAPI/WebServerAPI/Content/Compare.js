@@ -246,16 +246,28 @@ function getCompareValue(MABP, MACB, START, END, LOAITHOIGIAN, LOAI, TITLE) {
                     type: "GET",
                     dataType: "json",
                     success: function (resultMD) {
-                        createChartCompare(result, resultMD, "Bảng so sánh - " + TITLE + "(" + START + " - " + END + ")");
+                        if (!$(cbx).prop("checked")) {
+                            createChartCompare(result, resultMD, "Bảng so sánh - " + TITLE + "(" + START + " - " + END + ")");
+                        } else {
+                            createChartCompareManyTimes(result, "Bảng so sánh - " + TITLE + "(" + START + " - " + END + ")");
+                        }
                     },
                     error: function (xhr) { }
                 })
             } else if (LOAI == 2) {
-                resultMD = ["Thời gian chờ trung bình (Phút)", "Thời gian xử lý trung bình (Phút)", "Tổng thời gian trung bình (Phút)", "Số lượng thủ tục đã giải quyết (Lần)"]
-                createChartCompare(result, resultMD, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")");
+                if (!$(cbx).prop("checked")) {
+                    resultMD = ["Thời gian chờ trung bình (Phút)", "Thời gian xử lý trung bình (Phút)", "Tổng thời gian trung bình (Phút)", "Số lượng thủ tục đã giải quyết (Lần)"]
+                    createChartCompare(result, resultMD, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")");
+                } else {
+                    createChartCompareManyTimesThuTuc(result, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")");
+                }
             } else if (LOAI == 3) {
-                resultMD = ["Thời gian xử lý trung bình (Phút)", "Số lượng thủ tục đã giải quyết (Lần)"]
-                createChartCompare(result, resultMD, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")");
+                if (!$(cbx).prop("checked")) {
+                    resultMD = ["Thời gian xử lý trung bình (Phút)", "Số lượng thủ tục đã giải quyết (Lần)"]
+                    createChartCompare(result, resultMD, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")");
+                } else {
+                    createChartCompareManyTimesThuTucCB(result, "Bảng so sánh -" + TITLE + "(" + START + " - " + END + ")")
+                }
             }
         },
         error: function (xhr) { }
@@ -299,6 +311,368 @@ function createChartCompare(array, categories, title) {
         }
     });
 }
+// Tạo biểu đồ so sánh kết quả đánh giá của nhiều khoảng thời gian 
+function createChartCompareManyTimes(arr, titleStr) {
+    var RHL = []
+    var HL = []
+    var BT = []
+    var KHL = []
+    var Diem = []
+    for (i in arr) {
+        for (j in arr[i]["data"]) {
+            if (j == 0) RHL.push(arr[i]["data"][j])
+            if (j == 1) HL.push(arr[i]["data"][j])
+            if (j == 2) BT.push(arr[i]["data"][j])
+            if (j == 3) KHL.push(arr[i]["data"][j])
+            if (j == 4) Diem.push(arr[i]["data"][j])
+        }
+    }
+    var a = []
+    a["name"] = "Rất hài lòng"
+    a["data"] = RHL
+    a["type"] = "line"
+    a["color"] = "#73c100"
+    a["opacity"] = 1
+    a["axis"] = "quantity"
+    a["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var b = []
+    b["name"] = "Hài lòng"
+    b["data"] = HL
+    b["type"] = "line"
+    b["color"] = "#007eff"
+    b["opacity"] = 1
+    b["axis"] = "quantity"
+    b["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var c = []
+    c["name"] = "Bình thường"
+    c["data"] = BT
+    c["type"] = "line"
+    c["color"] = "#ffae00"
+    c["opacity"] = 1
+    c["axis"] = "quantity"
+    c["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var d = []
+    d["name"] = "Không hài lòng"
+    d["data"] = KHL
+    d["type"] = "line"
+    d["color"] = "#ff1c1c"
+    d["opacity"] = 1
+    d["axis"] = "quantity"
+    d["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var e = []
+    e["name"] = "Điểm"
+    e["data"] = Diem
+    e["type"] = "column"
+    e["tooltip"] = {
+        "visible": true,
+        "template": "#: value # điểm"
+    }
+    var array = new Array()
+    array.push(a)
+    array.push(b)
+    array.push(c)
+    array.push(d)
+    array.push(e)
+
+    var categories = []
+    for (i in arr) {
+        categories.push(arr[i]["name"])
+    }
+
+    $(ch).kendoChart({
+        title: {
+            text: titleStr
+        },
+        legend: {
+            position: "top"
+        },
+        seriesDefaults: {
+            type: "area"
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
+        series: array,
+        categoryAxis: {
+            categories: categories,
+            labels: {
+                rotation: -90
+            },
+            crosshair: {
+                visible: true
+            },
+            axisCrossingValue: [0, 1000],
+        },
+        valueAxis: [{
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Mức độ đánh giá (Lần)"
+            },
+            color: "#007eff"
+        }, {
+            name: "time",
+            labels: {
+                format: "{0:n0} điểm",
+            },
+            title: {
+                text: "Điểm số"
+            },
+            color: "#ff1c1c"
+        }],
+        tooltip: {
+            visible: true,
+            shared: true,
+            format: "N0"
+        },
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
+        }
+    });
+}
+// Tạo biểu đồ so sánh thời gian giải quyết thủ tục bộ phận của nhiều khoảng thời gian 
+function createChartCompareManyTimesThuTuc(arr, titleStr) {
+    var Cho = []
+    var XuLy = []
+    var Tong = []
+    var Total = []
+    for (i in arr) {
+        for (j in arr[i]["data"]) {
+            if (j == 0) Cho.push(arr[i]["data"][j])
+            if (j == 1) XuLy.push(arr[i]["data"][j])
+            if (j == 2) Tong.push(arr[i]["data"][j])
+            if (j == 3) Total.push(arr[i]["data"][j])
+        }
+    }
+    var a = []
+    a["name"] = "Thời gian chờ trung bình"
+    a["data"] = Cho
+    a["type"] = "line"
+    a["color"] = "#ffae00"
+    a["opacity"] = 1
+    a["axis"] = "time"
+    a["tooltip"] = {
+        "visible": true,
+        "template": "#: value # phút"
+    }
+    var b = []
+    b["name"] = "Thời gian xử lý trung bình"
+    b["data"] = XuLy
+    b["type"] = "line"
+    b["color"] = "#73c100"
+    b["opacity"] = 1
+    b["axis"] = "time"
+    b["tooltip"] = {
+        "visible": true,
+        "template": "#: value # phút"
+    }
+    var c = []
+    c["name"] = "Tổng thời gian trung bình"
+    c["data"] = Tong
+    c["type"] = "line"
+    c["color"] = "#007eff"
+    c["opacity"] = 1
+    c["axis"] = "time"
+    c["tooltip"] = {
+        "visible": true,
+        "template": "#: value # phút"
+    }
+    var d = []
+    d["name"] = "Số lượng thủ tục đã giải quyết"
+    d["data"] = Total
+    d["type"] = "column"
+    d["color"] = "#ff1c1c"
+    d["opacity"] = 1
+    d["axis"] = "quantity"
+    d["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var array = new Array()
+    array.push(a)
+    array.push(b)
+    array.push(c)
+    array.push(d)
+
+    var categories = []
+    for (i in arr) {
+        categories.push(arr[i]["name"])
+    }
+
+    $(ch).kendoChart({
+        title: {
+            text: titleStr
+        },
+        legend: {
+            position: "top"
+        },
+        seriesDefaults: {
+            type: "area"
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
+        series: array,
+        categoryAxis: {
+            categories: categories,
+            labels: {
+                rotation: -90
+            },
+            crosshair: {
+                visible: true
+            },
+            axisCrossingValue: [0, 1000],
+        },
+        valueAxis: [{
+            name: "time",
+            labels: {
+                format: "{0:n0} phút",
+            },
+            title: {
+                text: "Thời gian giải quyết thủ tục (Phút)"
+            },
+            color: "#007eff"
+        }, {
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Số lượng thủ tục đã giải quyết (Lần)"
+            },
+            color: "#ff1c1c"
+        }],
+        tooltip: {
+            visible: true,
+            shared: true,
+            format: "N0"
+        },
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
+        }
+    });
+}
+// Tạo biểu đồ so sánh thời gian giải quyết thủ tục bộ phận của nhiều khoảng thời gian 
+function createChartCompareManyTimesThuTucCB(arr, titleStr) {
+    var XuLy = []
+    var Total = []
+    for (i in arr) {
+        for (j in arr[i]["data"]) {
+            if (j == 0) XuLy.push(arr[i]["data"][j])
+            if (j == 1) Total.push(arr[i]["data"][j])
+        }
+    }
+    var b = []
+    b["name"] = "Thời gian xử lý trung bình"
+    b["data"] = XuLy
+    b["type"] = "line"
+    b["color"] = "#73c100"
+    b["opacity"] = 1
+    b["axis"] = "time"
+    b["tooltip"] = {
+        "visible": true,
+        "template": "#: value # phút"
+    }
+    var d = []
+    d["name"] = "Số lượng thủ tục đã giải quyết"
+    d["data"] = Total
+    d["type"] = "column"
+    d["color"] = "#ff1c1c"
+    d["opacity"] = 1
+    d["axis"] = "quantity"
+    d["tooltip"] = {
+        "visible": true,
+        "template": "#: value # lần"
+    }
+    var array = new Array()
+    array.push(b)
+    array.push(d)
+
+    var categories = []
+    for (i in arr) {
+        categories.push(arr[i]["name"])
+    }
+
+    $(ch).kendoChart({
+        title: {
+            text: titleStr
+        },
+        legend: {
+            position: "top"
+        },
+        seriesDefaults: {
+            type: "area"
+        },
+        plotArea: {
+            background: "blue",
+            opacity: 0.1
+        },
+        series: array,
+        categoryAxis: {
+            categories: categories,
+            labels: {
+                rotation: -90
+            },
+            crosshair: {
+                visible: true
+            },
+            axisCrossingValue: [0, 1000],
+        },
+        valueAxis: [{
+            name: "time",
+            labels: {
+                format: "{0:n0} phút",
+            },
+            title: {
+                text: "Thời gian giải quyết thủ tục (Phút)"
+            },
+            color: "#007eff"
+        }, {
+            name: "quantity",
+            labels: {
+                format: "{0:n0} lần",
+            },
+            title: {
+                text: "Số lượng thủ tục đã giải quyết (Lần)"
+            },
+            color: "#ff1c1c"
+        }],
+        tooltip: {
+            visible: true,
+            shared: true,
+            format: "N0"
+        },
+        dataBound: function (e) {
+            var chart = this;
+            var categoriesLen = chart.options.categoryAxis.categories.length;
+            chart.options.categoryAxis.axisCrossingValue = [0, categoriesLen];
+            chart.redraw();
+        }
+    });
+}
+
 $("#spanCbCompareBP").click(function () {
     $("#cbCompareBP").prop("checked", !$("#cbCompareBP").prop("checked"))
 })
