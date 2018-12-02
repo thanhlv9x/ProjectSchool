@@ -51,7 +51,7 @@ namespace WebServerAPI.Controllers
                         DateTime now = new DateTime(dt.Year, dt.Month, dt.Day, 0, 0, 0);
                         ThoiGianDangNhap md = new ThoiGianDangNhap()
                         {
-                            MaMay = (int)item.MAMAY,
+                            MaMay = (int)item.MAYDANHGIA.MAC,
                             Ngay = now,
                             Thang = start,
                             BD = (DateTime)item.BD,
@@ -85,7 +85,7 @@ namespace WebServerAPI.Controllers
                     DateTime now = new DateTime(dt.Year, dt.Month, dt.Day, 0, 0, 0);
                     ThoiGianDangNhap md = new ThoiGianDangNhap()
                     {
-                        MaMay = (int)item.MAMAY,
+                        MaMay = (int)item.MAYDANHGIA.MAC,
                         Ngay = now,
                         BD = (DateTime)item.BD,
                         KT = (DateTime)item.KT,

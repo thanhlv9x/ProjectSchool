@@ -33,7 +33,7 @@ namespace WebServerAPI.EF
         public virtual DbSet<SOTOIDA> SOTOIDAs { get; set; }
         public virtual DbSet<TAIKHOANADMIN> TAIKHOANADMINs { get; set; }
         public virtual DbSet<TRANGTHAIDANGNHAP> TRANGTHAIDANGNHAPs { get; set; }
-        public virtual DbSet<MAYDANHGIA> MAYDANHGIAs { get; set; }
         public virtual DbSet<BOPHAN> BOPHANs { get; set; }
+        public virtual DbSet<MAYDANHGIA> MAYDANHGIAs { get; set; }
     }
 }

@@ -150,11 +150,6 @@
       <End Role="CANBO" EntitySet="CANBOes" />
       <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
     </AssociationSet>
-    <EntitySet Name="MAYDANHGIAs" EntityType="HETHONGDANHGIAsaModel.MAYDANHGIA" />
-    <AssociationSet Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA" Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
-      <End Role="MAYDANHGIA" EntitySet="MAYDANHGIAs" />
-      <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
-    </AssociationSet>
     <EntitySet Name="BOPHANs" EntityType="HETHONGDANHGIAsaModel.BOPHAN" />
     <AssociationSet Name="FK_CANBO_BOPHAN" Association="HETHONGDANHGIAsaModel.FK_CANBO_BOPHAN">
       <End Role="BOPHAN" EntitySet="BOPHANs" />
@@ -163,6 +158,11 @@
     <AssociationSet Name="FK_SOTOIDA_BOPHAN" Association="HETHONGDANHGIAsaModel.FK_SOTOIDA_BOPHAN">
       <End Role="BOPHAN" EntitySet="BOPHANs" />
       <End Role="SOTOIDA" EntitySet="SOTOIDAs" />
+    </AssociationSet>
+    <EntitySet Name="MAYDANHGIAs" EntityType="HETHONGDANHGIAsaModel.MAYDANHGIA" />
+    <AssociationSet Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA" Association="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
+      <End Role="MAYDANHGIA" EntitySet="MAYDANHGIAs" />
+      <End Role="TRANGTHAIDANGNHAP" EntitySet="TRANGTHAIDANGNHAPs" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="TRANGTHAIDANGNHAP">
@@ -187,26 +187,6 @@
       </Principal>
       <Dependent Role="TRANGTHAIDANGNHAP">
         <PropertyRef Name="MACB" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="MAYDANHGIA">
-    <Key>
-      <PropertyRef Name="MAMAY" />
-    </Key>
-    <Property Name="MAMAY" Type="Int32" Nullable="false" />
-    <Property Name="MAC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
-  </EntityType>
-  <Association Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
-    <End Type="HETHONGDANHGIAsaModel.MAYDANHGIA" Role="MAYDANHGIA" Multiplicity="0..1" />
-    <End Type="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Role="TRANGTHAIDANGNHAP" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MAYDANHGIA">
-        <PropertyRef Name="MAMAY" />
-      </Principal>
-      <Dependent Role="TRANGTHAIDANGNHAP">
-        <PropertyRef Name="MAMAY" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -241,6 +221,26 @@
       </Principal>
       <Dependent Role="SOTOIDA">
         <PropertyRef Name="MABP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MAYDANHGIA">
+    <Key>
+      <PropertyRef Name="MAMAY" />
+    </Key>
+    <Property Name="MAMAY" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MAC" Type="Int32" />
+    <NavigationProperty Name="TRANGTHAIDANGNHAPs" Relationship="HETHONGDANHGIAsaModel.FK_TRANGTHAIDANGNHAP_MAYDANHGIA" FromRole="MAYDANHGIA" ToRole="TRANGTHAIDANGNHAP" />
+  </EntityType>
+  <Association Name="FK_TRANGTHAIDANGNHAP_MAYDANHGIA">
+    <End Type="HETHONGDANHGIAsaModel.MAYDANHGIA" Role="MAYDANHGIA" Multiplicity="0..1" />
+    <End Type="HETHONGDANHGIAsaModel.TRANGTHAIDANGNHAP" Role="TRANGTHAIDANGNHAP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MAYDANHGIA">
+        <PropertyRef Name="MAMAY" />
+      </Principal>
+      <Dependent Role="TRANGTHAIDANGNHAP">
+        <PropertyRef Name="MAMAY" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

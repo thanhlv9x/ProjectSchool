@@ -52,12 +52,12 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetPort(int _Port)
         {
             List<int> lstMD = new List<int>();
-            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAC).ToList();
+            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAC).ToList(); // Gửi thông số mac (Số quầy) tới client
             if (lstEF != null)
             {
                 foreach (var item in lstEF)
                 {
-                    lstMD.Add(item.MAC);
+                    lstMD.Add((int)item.MAC);
                 }
                 return Request.CreateResponse<List<int>>(HttpStatusCode.OK, lstMD);
             }
@@ -461,7 +461,7 @@ namespace WebServerAPI.Controllers
                                                  .FirstOrDefault();
                 if (mamay != null)
                 {
-                    var soquay = mamay.MAYDANHGIA.MAC;
+                    var soquay = mamay.MAYDANHGIA.MAC; // Lấy thông số mac (Số quầy) cho client
                     InfoNumber md = new InfoNumber()
                     {
                         MaSTT = mastt,
@@ -485,7 +485,7 @@ namespace WebServerAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetSoQuay(int _isSoQuay)
         {
-            List<int> listMD = new List<int>();
+            List<int?> listMD = new List<int?>();
             listMD = db.MAYDANHGIAs.Select(p => p.MAC).ToList(); // Lấy tất cả số quầy
             DateTime now = DateTime.Now;
             DateTime start = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
@@ -554,8 +554,7 @@ namespace WebServerAPI.Controllers
                     DateTime start = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 0, 0, 0);
                     DateTime end = new DateTime(dtNow.Year, dtNow.Month, dtNow.Day, 23, 59, 59);
                     int macb = userEF.MACB;
-                    int mamay = db.MAYDANHGIAs.Where(p => p.MAMAY == mac).Count(); // Kiểm tra số quầy có tồn tại
-                    var isLogin = db.TRANGTHAIDANGNHAPs.Where(p => p.MAMAY == mac && // Kiểm tra quầy có đang hoạt động không
+                    var isLogin = db.TRANGTHAIDANGNHAPs.Where(p => p.MAYDANHGIA.MAC == mac && // Kiểm tra quầy có đang hoạt động không
                                                                    p.BD >= start &&
                                                                    p.BD <= end &&
                                                                    p.KT == null &&
@@ -575,12 +574,13 @@ namespace WebServerAPI.Controllers
                             return httpResponse;
                         }
                     }
-                    if (mamay > 0) // Nếu số quầy tồn tại
+                    var mamay = db.MAYDANHGIAs.Where(p => p.MAC == mac).FirstOrDefault(); // Kiểm tra số quầy có tồn tại
+                    if (mamay != null) // Nếu số quầy tồn tại
                     {
                         TRANGTHAIDANGNHAP login = new TRANGTHAIDANGNHAP()
                         {
                             MACB = macb,
-                            MAMAY = mac,
+                            MAMAY = mamay.MAMAY,
                             BD = dtNow,
                             ISLOGIN = dtNow
                         };

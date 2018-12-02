@@ -41,8 +41,8 @@
     <Key>
       <PropertyRef Name="MAMAY" />
     </Key>
-    <Property Name="MAMAY" Type="int" Nullable="false" />
-    <Property Name="MAC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MAMAY" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MAC" Type="int" />
   </EntityType>
   <EntityType Name="MUCDODANHGIA">
     <Key>

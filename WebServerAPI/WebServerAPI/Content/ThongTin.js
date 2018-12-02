@@ -1,4 +1,4 @@
-﻿// Phương thức hiển thị hình upload
+﻿ // Phương thức hiển thị hình upload
 function readURL(input) {
     if (input.files && input.files[0]) {
         var extend = input.files[0].name.split('.').pop();
@@ -587,7 +587,7 @@ function createTableTTQ(urlGet) {
                 id: "MaMay",
                 fields: {
                     MaMay: { type: "number", validation: { required: { message: "Số quầy không được để trống" }, min: 1, default: 1 } },
-                    Mac: { type: "string", validation: { required: { message: "Mã máy không được để trống" } } }
+                    Mac: { type: "number", validation: { required: { message: "Mã máy không được để trống" } } }
                 }
             }
         }
@@ -605,8 +605,8 @@ function createTableTTQ(urlGet) {
         },
         toolbar: [{ name: "create", text: "Thêm mới" }],
         columns: [
-            { field: "MaMay", title: "Số quầy", width: 80 },
-            //{ field: "Mac", title: "Mã máy", width: 100 },
+            //{ field: "MaMay", title: "Số quầy", width: 80 },
+            { field: "Mac", title: "Số quầy", width: 100 },
             { command: [{ name: "edit", text: "Cập nhật" }, { name: "myDelete", text: "Xóa bỏ", iconClass: "k-icon k-i-delete" } ], title: "&nbsp;", width: "250px" }
         ],
         editable: {

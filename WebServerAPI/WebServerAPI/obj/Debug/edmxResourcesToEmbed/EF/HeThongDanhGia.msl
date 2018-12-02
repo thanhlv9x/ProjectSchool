@@ -82,20 +82,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MAYDANHGIAs">
-      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MAYDANHGIA">
-        <MappingFragment StoreEntitySet="MAYDANHGIA">
-          <ScalarProperty Name="MAC" ColumnName="MAC" />
-          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="BOPHANs">
       <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.BOPHAN">
         <MappingFragment StoreEntitySet="BOPHAN">
           <ScalarProperty Name="VIETTAT" ColumnName="VIETTAT" />
           <ScalarProperty Name="TENBP" ColumnName="TENBP" />
           <ScalarProperty Name="MABP" ColumnName="MABP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MAYDANHGIAs">
+      <EntityTypeMapping TypeName="HETHONGDANHGIAsaModel.MAYDANHGIA">
+        <MappingFragment StoreEntitySet="MAYDANHGIA">
+          <ScalarProperty Name="MAC" ColumnName="MAC" />
+          <ScalarProperty Name="MAMAY" ColumnName="MAMAY" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
