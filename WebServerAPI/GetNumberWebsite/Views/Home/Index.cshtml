@@ -19,8 +19,7 @@
 <body>
     <div id="banner">
         <img src="~/favicon.png" />
-        <span>THÀNH PHỐ HỒ CHÍ MINH</span>
-        <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
+        <img src="~/tieu-de.png" style="height: 100%;left: 50%;transform: translate(-50%, -50%);width: 38.5%;"/>
     </div>
     <div id="container">
         <table>
@@ -83,7 +82,7 @@
             var dataItem = e.dataItem;
             printer_name = dataItem.value;
             $("span.k-widget.k-dropdown.k-header").fadeOut();
-            $("#printer-name").prop("title",dataItem.text);
+            $("#printer-name").prop("title", dataItem.text);
         } else { }
     };
     // Tạo danh sách các nút bộ phận và số thứ tự
@@ -178,4 +177,4 @@
         getPrinterName();
     })
 </script>
-<link href="~/Content/style2.css" rel="stylesheet" />
+<link href="~/Content/Style.css" rel="stylesheet" />

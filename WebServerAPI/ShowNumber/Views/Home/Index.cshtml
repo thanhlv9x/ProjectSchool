@@ -19,8 +19,7 @@
 <body>
     <div id="banner">
         <img src="~/favicon.png" />
-        <span>THÀNH PHỐ HỒ CHÍ MINH</span>
-        <span>ỦY BAN NHÂN DÂN QUẬN TÂN BÌNH</span>
+        <img src="~/tieu-de.png" style="height: 100%;left: 50%;transform: translate(-50%, -50%);width: 38.5%;" />
     </div>
     <div id="container">
         <div class="header">
@@ -57,10 +56,10 @@
         dataType: "json",
         success: function (result) {
             var js = JSON.parse(result);
-            console.log(js)
             var i = 0;
+            var index = js.length;
             $.each(js, function (key, value) {
-                if (i < 7) {
+                if (i < Math.round(index / 2)) {
                     $(".info-left .quay").append("<div>" + value + "</div><hr />");
                     $(".info-left .stt").append("<div id=" + value + ">" + 0 + "</div><hr />");
                 } else {
@@ -108,4 +107,4 @@
         })
     }, 500);
 </script>
-<link href="~/Content/style1.css" rel="stylesheet" />
+<link href="~/Content/Style.css" rel="stylesheet" />
