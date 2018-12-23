@@ -27,7 +27,7 @@ namespace WebServerAPI.EF
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GOPY> GOPies { get; set; }
-        public virtual MUCDODANHGIA MUCDODANHGIA { get; set; }
         public virtual SOTHUTU SOTHUTU { get; set; }
+        public virtual MUCDODANHGIA MUCDODANHGIA { get; set; }
     }
 }

@@ -26,6 +26,7 @@
                 <ul>
                     <li id="menu-xem-ket-qua" onclick="showSubTabstrip();" class="k-state-active">Thống kê</li>
                     <li id="menu-thong-tin-can-bo" onclick="showSubTabstrip();">Thông tin</li>
+                    <li id="menu-danh-muc" onclick="showSubTabstrip();">Danh mục</li>
                     <li id="menu-thong-ke-bao-cao" onclick="showSubTabstrip();">Báo cáo</li>
                     <li id="menu-change-pw">Đổi mật khẩu</li>
                     <li>@Html.ActionLink("Đăng xuất", "Logout", "Login")</li>
@@ -455,6 +456,7 @@
                         <li id="menu-thong-tin-can-bo-tk" class="k-state-active">Tài khoản cán bộ</li>
                         <li id="menu-thong-tin-can-bo-bp">Bộ phận</li>
                         <li id="menu-thong-tin-can-bo-sq">Số quầy</li>
+                        <li id="menu-sms">Tin nhắn thông báo</li>
                     </ul>
                     <div>
                         <div id="div-tai-khoan-can-bo" class="border-style title-border-style">
@@ -472,6 +474,51 @@
                         <div id="div-thong-tin-quay" class="border-style title-border-style">
                             <h3>Thông tin quầy</h3>
                             <div id="grid-thong-tin-quay"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="div-sms" class="border-style title-border-style">
+                            <h3>Thông tin tin nhắn thông báo</h3>
+                            <div id="grid-sms"></div>
+                        </div>
+                    </div>
+                </div> @*#sub-tabstrip-thong-tin*@
+
+                <div id="sub-tabstrip-danh-muc">
+                    <ul>
+                        <li id="menu-danh-muc-xep-loai" class="k-state-active">Bảng xếp loại</li>
+                        <li id="menu-danh-muc-danh-gia">Mức độ đánh giá</li>
+                        <li id="menu-danh-muc-he-thong">Thông tin mã vùng</li>
+                        <li id="menu-danh-muc-API">Thông tin tài khoản</li>
+                    </ul>
+                    <div>
+                        <div id="div-danh-muc-xep-loai" class="border-style title-border-style">
+                            <h3>Bảng xếp loại</h3>
+                            <div id="grid-danh-muc-xep-loai"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="div-danh-muc-danh-gia" class="border-style title-border-style">
+                            <h3>Mức độ đánh giá</h3>
+                            <div id="grid-danh-muc-danh-gia"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="div-danh-muc-he-thong" class="border-style title-border-style">
+                            <h3>Thông tin mã vùng</h3>
+                            <div id="grid-danh-muc-he-thong"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="div-danh-muc-API" class="border-style title-border-style">
+                            <h3>Thông tin tài khoản</h3>
+                            <input type="hidden" id="APIId" value="" />
+                            <div>
+                                <label>Số dư tài khoản: </label><input type="text" id="Balance" value="" />
+                                <label>APIKey: </label><input type="text" id="APIKey" value="" />
+                                <label>SecretKey: </label><input type="text" id="SecretKey" value="" />
+                                <button id="btnAPIKey">Thay đổi</button>
+                            </div>
                         </div>
                     </div>
                 </div> @*#sub-tabstrip-thong-tin*@
@@ -796,6 +843,13 @@
         });
     }
     createSubTabStripKQ();
+    function createSubTabStripDM() {
+        $("#sub-tabstrip-danh-muc").kendoTabStrip({
+            tabPosition: "top",
+            animation: { open: { effects: "fadeIn" } }
+        });
+    }
+    createSubTabStripDM();
     function showSubTabstrip() {
         if ($("#menu-thong-tin-can-bo.k-state-active").length > 0) {
             $("#sub-tabstrip-thong-tin").show();
@@ -807,6 +861,12 @@
             $("#sub-tabstrip-ket-qua").show();
         } else {
             $("#sub-tabstrip-ket-qua").hide();
+        }
+
+        if ($("#menu-danh-muc.k-state-active").length > 0) {
+            $("#sub-tabstrip-danh-muc").show();
+        } else {
+            $("#sub-tabstrip-danh-muc").hide();
         }
     }
     $(document).ready(function () {
@@ -863,4 +923,9 @@
 <script src="~/Content/ThongTin.js"></script>
 <script src="~/Content/BaoCaoJS.js"></script>
 <script src="~/Content/DoiMatKhau.js"></script>
+<script src="~/Content/SmsJS.js"></script>
+<script src="~/Content/DanhMucJS.js"></script>
+<script src="~/Content/MucDoDanhGiaJS.js"></script>
+<script src="~/Content/MaVungJS.js"></script>
+<script src="~/Content/API.js"></script>
 <link href="~/Content/ServerStyle1.css" rel="stylesheet" />

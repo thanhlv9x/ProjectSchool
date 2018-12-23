@@ -19,6 +19,7 @@ namespace WebServerAPI.EF
         {
             this.CANBOes = new HashSet<CANBO>();
             this.SOTOIDAs = new HashSet<SOTOIDA>();
+            this.BOPHAN_SDT = new HashSet<BOPHAN_SDT>();
         }
     
         public int MABP { get; set; }
@@ -29,5 +30,7 @@ namespace WebServerAPI.EF
         public virtual ICollection<CANBO> CANBOes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTOIDA> SOTOIDAs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BOPHAN_SDT> BOPHAN_SDT { get; set; }
     }
 }

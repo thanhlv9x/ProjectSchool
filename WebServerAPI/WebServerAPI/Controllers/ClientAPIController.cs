@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
@@ -52,7 +53,7 @@ namespace WebServerAPI.Controllers
         public HttpResponseMessage GetPort(int _Port)
         {
             List<int> lstMD = new List<int>();
-            var lstEF = db.MAYDANHGIAs.OrderBy(p=>p.MAC).ToList(); // Gửi thông số mac (Số quầy) tới client
+            var lstEF = db.MAYDANHGIAs.OrderBy(p => p.MAC).ToList(); // Gửi thông số mac (Số quầy) tới client
             if (lstEF != null)
             {
                 foreach (var item in lstEF)
@@ -691,9 +692,99 @@ namespace WebServerAPI.Controllers
                             var httpResponse = Request.CreateResponse<DateTime>(HttpStatusCode.Created, dt);
                             string uri = Url.Link("DefaultApi", new { id = kqEF.MADG });
                             httpResponse.Headers.Location = new Uri(uri);
+                            if (kqEF.MUCDO == 4)
+                            {
+                                string APIKey = db.SMSKEYs.FirstOrDefault().APIKEY;//Login to eSMS.vn to get this";//Dang ky tai khoan tai esms.vn de lay key//Register account at esms.vn to get key
+                                string SecretKey = db.SMSKEYs.FirstOrDefault().SECRETKEY;//Login to eSMS.vn to get this";//Send SMS with Sender is a number
+                                var bp = db.SOTHUTUs.Where(p => p.MASTT == kqEF.MASTT).FirstOrDefault();
+                                var ef = db.BOPHAN_SDT.Where(p => p.BP == bp.CANBO.BOPHAN.MABP).FirstOrDefault();
+                                string message = "Can bo: " + bp.CANBO.HOTEN + " - Ma so: " + bp.CANBO.MACBSD + " - Muc do: " + db.MUCDODANHGIAs.Where(p => p.MUCDO == kqEF.MUCDO).FirstOrDefault().LOAI + " - Gop y: " + gop_y;
+                                var tnEF = db.TINNHANs.ToList();
+                                foreach (var item in tnEF)
+                                {
+                                    switch (ef.STT)
+                                    {
+                                        case 1:
+                                            var tn = tnEF.Where(p => p.BP1 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 2:
+                                            tn = tnEF.Where(p => p.BP2 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 3:
+                                            tn = tnEF.Where(p => p.BP3 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 4:
+                                            tn = tnEF.Where(p => p.BP4 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 5:
+                                            tn = tnEF.Where(p => p.BP5 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 6:
+                                            tn = tnEF.Where(p => p.BP6 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 7:
+                                            tn = tnEF.Where(p => p.BP7 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 8:
+                                            tn = tnEF.Where(p => p.BP8 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 9:
+                                            tn = tnEF.Where(p => p.BP9 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 10:
+                                            tn = tnEF.Where(p => p.BP10 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 11:
+                                            tn = tnEF.Where(p => p.BP11 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 12:
+                                            tn = tnEF.Where(p => p.BP12 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 13:
+                                            tn = tnEF.Where(p => p.BP13 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 14:
+                                            tn = tnEF.Where(p => p.BP14 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                        case 15:
+                                            tn = tnEF.Where(p => p.BP15 == true).FirstOrDefault();
+                                            if (tn != null)
+                                                SendJson(tn.SODIENTHOAI.VUNG1.MAVUNG + tn.SODIENTHOAI.SDT, message, APIKey, SecretKey);
+                                            break;
+                                    }
+                                }
+                            }
                             return httpResponse;
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             return Request.CreateResponse(HttpStatusCode.BadRequest);
                         }
@@ -748,6 +839,65 @@ namespace WebServerAPI.Controllers
             byte[] data = ms.ToArray();
             string strImg = Convert.ToBase64String(data);
             return strImg;
+        }
+        public string SendJson(string phone, string message, string APIKey, string SecretKey)
+        {
+            //Sample Request
+            //http://rest.esms.vn/SendMultipleMessage_V4_get?Phone={Phone}&Content={Content}&ApiKey={ApiKey}&SecretKey={SecretKey}&IsUnicode={IsUnicode}&Brandname={Brandname}&SmsType={SmsType}&Sandbox={Sandbox}&Priority={Priority}&RequestId={RequestId}&SendDate={SendDate}
+
+            // Create URL, method 1:
+            string URL = "http://rest.esms.vn/MainService.svc/json/SendMultipleMessage_V4_get?Phone=" + phone + "&Content=" + message + "&ApiKey=" + APIKey + "&SecretKey=" + SecretKey + "&IsUnicode=0&Brandname=QCAO_ONLINE&SmsType=2";
+            //De dang ky brandname rieng vui long lien he hotline 0902435340 hoac nhan vien kinh Doanh cua ban
+            //-----------------------------------
+
+            //-----------------------------------
+            string result = SendGetRequest(URL);
+            JObject ojb = JObject.Parse(result);
+            int CodeResult = (int)ojb["CodeResult"];//100 is successfull
+
+            string SMSID = (string)ojb["SMSID"];//id of SMS
+            return "success1";
+        }
+        private string SendGetRequest(string RequestUrl)
+        {
+            Uri address = new Uri(RequestUrl);
+            HttpWebRequest request;
+            HttpWebResponse response = null;
+            StreamReader reader;
+            if (address == null) { throw new ArgumentNullException("address"); }
+            try
+            {
+                request = WebRequest.Create(address) as HttpWebRequest;
+                request.UserAgent = ".NET Sample";
+                request.KeepAlive = false;
+                request.Timeout = 15 * 1000;
+                response = request.GetResponse() as HttpWebResponse;
+                if (request.HaveResponse == true && response != null)
+                {
+                    reader = new StreamReader(response.GetResponseStream());
+                    string result = reader.ReadToEnd();
+                    result = result.Replace("</string>", "");
+                    return result;
+                }
+            }
+            catch (WebException wex)
+            {
+                if (wex.Response != null)
+                {
+                    using (HttpWebResponse errorResponse = (HttpWebResponse)wex.Response)
+                    {
+                        Console.WriteLine(
+                            "The server returned '{0}' with the status code {1} ({2:d}).",
+                            errorResponse.StatusDescription, errorResponse.StatusCode,
+                            errorResponse.StatusCode);
+                    }
+                }
+            }
+            finally
+            {
+                if (response != null) { response.Close(); }
+            }
+            return null;
         }
     }
 }

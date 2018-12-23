@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="HETHONGDANHGIAsaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BANGXEPLOAI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DIEM" Type="float" />
+    <Property Name="XEPLOAI" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="BOPHAN">
     <Key>
       <PropertyRef Name="MABP" />
@@ -7,6 +15,14 @@
     <Property Name="MABP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TENBP" Type="nvarchar" MaxLength="100" />
     <Property Name="VIETTAT" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BOPHAN_SDT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="STT" Type="int" />
+    <Property Name="BP" Type="int" />
   </EntityType>
   <EntityType Name="CANBO">
     <Key>
@@ -50,6 +66,24 @@
     </Key>
     <Property Name="MUCDO" Type="int" Nullable="false" />
     <Property Name="LOAI" Type="nvarchar" MaxLength="100" />
+    <Property Name="DIEM" Type="float" />
+  </EntityType>
+  <EntityType Name="SMSKEY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="APIKEY" Type="nvarchar" MaxLength="50" />
+    <Property Name="SECRETKEY" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SODIENTHOAI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HOTEN" Type="nvarchar" MaxLength="50" />
+    <Property Name="VUNG" Type="int" />
+    <Property Name="SDT" Type="int" />
   </EntityType>
   <EntityType Name="SOTHUTU">
     <Key>
@@ -77,6 +111,28 @@
     <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="PW" Type="varchar" MaxLength="32" />
   </EntityType>
+  <EntityType Name="TINNHAN">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SDT" Type="int" />
+    <Property Name="BP1" Type="bit" />
+    <Property Name="BP2" Type="bit" />
+    <Property Name="BP3" Type="bit" />
+    <Property Name="BP4" Type="bit" />
+    <Property Name="BP5" Type="bit" />
+    <Property Name="BP6" Type="bit" />
+    <Property Name="BP7" Type="bit" />
+    <Property Name="BP8" Type="bit" />
+    <Property Name="BP9" Type="bit" />
+    <Property Name="BP10" Type="bit" />
+    <Property Name="BP11" Type="bit" />
+    <Property Name="BP12" Type="bit" />
+    <Property Name="BP13" Type="bit" />
+    <Property Name="BP14" Type="bit" />
+    <Property Name="BP15" Type="bit" />
+  </EntityType>
   <EntityType Name="TRANGTHAIDANGNHAP">
     <Key>
       <PropertyRef Name="MADN" />
@@ -88,6 +144,26 @@
     <Property Name="KT" Type="datetime" />
     <Property Name="ISLOGIN" Type="datetime" />
   </EntityType>
+  <EntityType Name="VUNG">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TENVUNG" Type="nvarchar" MaxLength="50" />
+    <Property Name="MAVUNG" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_BOPHANSDT_BOPHAN">
+    <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
+    <End Role="BOPHAN_SDT" Type="Self.BOPHAN_SDT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOPHAN">
+        <PropertyRef Name="MABP" />
+      </Principal>
+      <Dependent Role="BOPHAN_SDT">
+        <PropertyRef Name="BP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CANBO_BOPHAN">
     <End Role="BOPHAN" Type="Self.BOPHAN" Multiplicity="0..1" />
     <End Role="CANBO" Type="Self.CANBO" Multiplicity="*" />
@@ -136,6 +212,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SODIENTHOAI_VUNG">
+    <End Role="VUNG" Type="Self.VUNG" Multiplicity="0..1" />
+    <End Role="SODIENTHOAI" Type="Self.SODIENTHOAI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VUNG">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SODIENTHOAI">
+        <PropertyRef Name="VUNG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SOTHUTU_CANBO">
     <End Role="CANBO" Type="Self.CANBO" Multiplicity="0..1" />
     <End Role="SOTHUTU" Type="Self.SOTHUTU" Multiplicity="*" />
@@ -157,6 +245,18 @@
       </Principal>
       <Dependent Role="SOTOIDA">
         <PropertyRef Name="MABP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TINNHAN_SODIENTHOAI">
+    <End Role="SODIENTHOAI" Type="Self.SODIENTHOAI" Multiplicity="0..1" />
+    <End Role="TINNHAN" Type="Self.TINNHAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SODIENTHOAI">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TINNHAN">
+        <PropertyRef Name="SDT" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -185,16 +285,26 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="HETHONGDANHGIAsaModelStoreContainer">
+    <EntitySet Name="BANGXEPLOAI" EntityType="Self.BANGXEPLOAI" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BOPHAN" EntityType="Self.BOPHAN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BOPHAN_SDT" EntityType="Self.BOPHAN_SDT" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CANBO" EntityType="Self.CANBO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GOPY" EntityType="Self.GOPY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KETQUADANHGIA" EntityType="Self.KETQUADANHGIA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MAYDANHGIA" EntityType="Self.MAYDANHGIA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MUCDODANHGIA" EntityType="Self.MUCDODANHGIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SMSKEY" EntityType="Self.SMSKEY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SODIENTHOAI" EntityType="Self.SODIENTHOAI" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SOTHUTU" EntityType="Self.SOTHUTU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SOTOIDA" EntityType="Self.SOTOIDA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TAIKHOANADMIN" EntityType="Self.TAIKHOANADMIN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TINNHAN" EntityType="Self.TINNHAN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TRANGTHAIDANGNHAP" EntityType="Self.TRANGTHAIDANGNHAP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VUNG" EntityType="Self.VUNG" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BOPHANSDT_BOPHAN" Association="Self.FK_BOPHANSDT_BOPHAN">
+      <End Role="BOPHAN" EntitySet="BOPHAN" />
+      <End Role="BOPHAN_SDT" EntitySet="BOPHAN_SDT" />
+    </AssociationSet>
     <AssociationSet Name="FK_CANBO_BOPHAN" Association="Self.FK_CANBO_BOPHAN">
       <End Role="BOPHAN" EntitySet="BOPHAN" />
       <End Role="CANBO" EntitySet="CANBO" />
@@ -211,6 +321,10 @@
       <End Role="SOTHUTU" EntitySet="SOTHUTU" />
       <End Role="KETQUADANHGIA" EntitySet="KETQUADANHGIA" />
     </AssociationSet>
+    <AssociationSet Name="FK_SODIENTHOAI_VUNG" Association="Self.FK_SODIENTHOAI_VUNG">
+      <End Role="VUNG" EntitySet="VUNG" />
+      <End Role="SODIENTHOAI" EntitySet="SODIENTHOAI" />
+    </AssociationSet>
     <AssociationSet Name="FK_SOTHUTU_CANBO" Association="Self.FK_SOTHUTU_CANBO">
       <End Role="CANBO" EntitySet="CANBO" />
       <End Role="SOTHUTU" EntitySet="SOTHUTU" />
@@ -218,6 +332,10 @@
     <AssociationSet Name="FK_SOTOIDA_BOPHAN" Association="Self.FK_SOTOIDA_BOPHAN">
       <End Role="BOPHAN" EntitySet="BOPHAN" />
       <End Role="SOTOIDA" EntitySet="SOTOIDA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TINNHAN_SODIENTHOAI" Association="Self.FK_TINNHAN_SODIENTHOAI">
+      <End Role="SODIENTHOAI" EntitySet="SODIENTHOAI" />
+      <End Role="TINNHAN" EntitySet="TINNHAN" />
     </AssociationSet>
     <AssociationSet Name="FK_TRANGTHAIDANGNHAP_CANBO" Association="Self.FK_TRANGTHAIDANGNHAP_CANBO">
       <End Role="CANBO" EntitySet="CANBO" />

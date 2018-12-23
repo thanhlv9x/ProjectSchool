@@ -195,19 +195,30 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BoPhanAPIController.cs" />
     <Compile Include="Controllers\BoPhanController.cs" />
+    <Compile Include="Controllers\BXLController.cs" />
     <Compile Include="Controllers\DangNhapAPIController.cs" />
+    <Compile Include="Controllers\GetKeyAPIController.cs" />
     <Compile Include="Controllers\GetNumberAPIController.cs" />
     <Compile Include="Controllers\ClientAPIController.cs" />
     <Compile Include="Controllers\CotDanhGiaAPIController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KetQuaDanhGiaAPIController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MucDoDanhGiaController.cs" />
+    <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\SoQuayController.cs" />
     <Compile Include="Controllers\SoSanhAPIController.cs" />
     <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\ThongTinMaVungController.cs" />
     <Compile Include="Controllers\ThuTucAPIController.cs" />
     <Compile Include="Controllers\ValuesAPIController.cs" />
+    <Compile Include="EF\BANGXEPLOAI.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\BOPHAN.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\BOPHAN_SDT.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\CANBO.cs">
@@ -240,6 +251,12 @@
     <Compile Include="EF\MUCDODANHGIA.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\SMSKEY.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SODIENTHOAI.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\SOTHUTU.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
@@ -249,7 +266,13 @@
     <Compile Include="EF\TAIKHOANADMIN.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\TINNHAN.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\TRANGTHAIDANGNHAP.cs">
+      <DependentUpon>HeThongDanhGia.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\VUNG.cs">
       <DependentUpon>HeThongDanhGia.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -258,6 +281,7 @@
     <Compile Include="Models\BangGopY%28BaoCao%29.cs" />
     <Compile Include="Models\BangGopY.cs" />
     <Compile Include="Models\BangThuTuc%28BaoCao%29.cs" />
+    <Compile Include="Models\BangXepLoai.cs" />
     <Compile Include="Models\BoPhan.cs" />
     <Compile Include="Models\CanBo.cs" />
     <Compile Include="Models\DanhGiaUser.cs" />
@@ -269,8 +293,11 @@
     <Compile Include="Models\KetQuaDanhGia%28Table%29.cs" />
     <Compile Include="Models\KetQuaDanhGiaUser.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\MucDoDanhGia.cs" />
     <Compile Include="Models\Number.cs" />
     <Compile Include="Models\PhienClient.cs" />
+    <Compile Include="Models\SMS.cs" />
+    <Compile Include="Models\SMSKey.cs" />
     <Compile Include="Models\SoQuay.cs" />
     <Compile Include="Models\SoSanhKetQuaDanhGia.cs" />
     <Compile Include="Models\SoThuTuUser.cs" />
@@ -280,6 +307,7 @@
     <Compile Include="Models\ThoiGianDangNhap.cs" />
     <Compile Include="Models\ThongTinCanBo.cs" />
     <Compile Include="Models\ThuTucChart.cs" />
+    <Compile Include="Models\ThongTinMaVung.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +356,7 @@
     <Content Include="Assets\vendor\select2\select2.js" />
     <Content Include="Assets\vendor\select2\select2.min.css" />
     <Content Include="Assets\vendor\select2\select2.min.js" />
+    <Content Include="Content\API.js" />
     <Content Include="Content\BaoCaoJS.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -335,9 +364,13 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Compare.js" />
     <Content Include="Content\DangNhap.js" />
+    <Content Include="Content\DanhMucJS.js" />
     <Content Include="Content\DoiMatKhau.js" />
     <Content Include="Content\KetQua.js" />
+    <Content Include="Content\MaVungJS.js" />
+    <Content Include="Content\MucDoDanhGiaJS.js" />
     <Content Include="Content\ServerStyle1.css" />
+    <Content Include="Content\SmsJS.js" />
     <Content Include="Content\ThongTin.js" />
     <Content Include="Content\ThuTuc.js" />
     <Content Include="EF\HeThongDanhGia.Context.tt">
@@ -475,9 +508,13 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\BoPhan\" />
+    <Folder Include="Views\BXL\" />
     <Folder Include="Views\GetDiemSo\" />
+    <Folder Include="Views\MucDoDanhGia\" />
+    <Folder Include="Views\SMS\" />
     <Folder Include="Views\SoQuay\" />
     <Folder Include="Views\TaiKhoan\" />
+    <Folder Include="Views\ThongTinMaVung\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>

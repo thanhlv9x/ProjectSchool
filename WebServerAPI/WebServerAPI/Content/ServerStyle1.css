@@ -361,6 +361,15 @@ span.k-widget.k-maskedtextbox {
     cursor: pointer;
 }
 
+#div-danh-muc-API div {
+    padding: 1em 2em
+}
+
+#div-danh-muc-API span.k-widget.k-maskedtextbox {
+    width: 20%;
+    margin: 0 1em;
+}
+
 @media screen and (min-width: 1024px) {
     #banner {
         height: 10%;

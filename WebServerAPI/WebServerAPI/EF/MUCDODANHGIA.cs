@@ -22,6 +22,7 @@ namespace WebServerAPI.EF
     
         public int MUCDO { get; set; }
         public string LOAI { get; set; }
+        public Nullable<double> DIEM { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KETQUADANHGIA> KETQUADANHGIAs { get; set; }
