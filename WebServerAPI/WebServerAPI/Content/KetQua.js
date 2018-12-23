@@ -5,6 +5,24 @@ var tencb;
 var clickBP = false;
 var clickCB = false;
 var clickTH = false;
+function getBXL(diem) {
+    var xeploai = "Không hoàn thành nhiệm vụ";
+    $.ajax({
+        url: url + "/api/KetQuaDanhGiaAPI?_BXL=1",
+        type: "GET",
+        dataType: "json",
+        async: false,
+        success: function (result) {
+            result.map(function (item) {
+                if (diem >= item["Diem"]) {
+                    xeploai = item["XepLoai"];
+                }
+            })
+        },
+        error: function (xhr) {}
+    })
+    return xeploai;
+}
 
 // ============ Tổng hợp =============
 // Nút tên bộ phận: sự kiện click vào menu xem kết quả
@@ -308,11 +326,11 @@ function createTableTH(urlStr, titleStr) {
                             trungbinh = diem / solan;
                             trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
-                        var xeploai = "";
-                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
+                        var xeploai = getBXL(trungbinh);
+                        //if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        //else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        //else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        //else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-tong").val(trungbinh);
                         $("#xep-loai-tong").val(xeploai);
                         options.success(result);
@@ -677,11 +695,11 @@ function createTableBP(urlStr, titleStr) {
                             trungbinh = diem / solan;
                             trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
-                        var xeploai = "";
-                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
+                        var xeploai = getBXL(trungbinh);
+                        //if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        //else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        //else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        //else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-bp").val(trungbinh);
                         $("#xep-loai-bp").val(xeploai);
                         options.success(result);
@@ -1363,11 +1381,11 @@ function createTableCB(urlStr, titleStr) {
                             trungbinh = diem / solan;
                             trungbinh = Math.round(trungbinh * 25 * 100) / 100;
                         };
-                        var xeploai = "";
-                        if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
-                        else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
-                        else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
-                        else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
+                        var xeploai = getBXL(trungbinh);
+                        //if (trungbinh >= 90) xeploai = "Hoàn thành xuất sắc nhiệm vụ";
+                        //else if (trungbinh >= 70) xeploai = "Hoàn thành tốt nhiệm vụ";
+                        //else if (trungbinh >= 50) xeploai = "Hoàn thành nhiệm vụ";
+                        //else if (trungbinh < 50) xeploai = "Không hoàn thành nhiệm vụ";
                         $("#diem-cb").val(trungbinh);
                         $("#xep-loai-cb").val(xeploai);
                         options.success(result);

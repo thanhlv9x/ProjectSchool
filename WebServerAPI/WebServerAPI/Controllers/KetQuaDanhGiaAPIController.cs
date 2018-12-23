@@ -251,5 +251,29 @@ namespace WebServerAPI.Controllers
             }
             return listMD;
         }
+        /// <summary>
+        /// Lấy dữ liệu bảng xếp loại
+        /// </summary>
+        /// <param name="_BXL">Tham số xác định</param>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<BangXepLoai> GetBXL(int _BXL)
+        {
+            IList<BangXepLoai> listMD = new List<BangXepLoai>();
+            using (HETHONGDANHGIAsaEntities db = new HETHONGDANHGIAsaEntities())
+            {
+                var listEF = db.BANGXEPLOAIs.ToList();
+                foreach (var itemEF in listEF)
+                {
+                    BangXepLoai md = new BangXepLoai()
+                    {
+                        Diem = itemEF.DIEM,
+                        XepLoai = itemEF.XEPLOAI
+                    };
+                    listMD.Add(md);
+                }
+                return listMD;
+            }
+        }
     }
 }

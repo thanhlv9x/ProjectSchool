@@ -35,15 +35,15 @@ namespace WebServerAPI.Controllers
                 int so_luong = db.KETQUADANHGIAs.Where(p => p.MUCDO == ma_muc_do)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -90,15 +90,15 @@ namespace WebServerAPI.Controllers
                                                             p.TG <= end)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -136,15 +136,15 @@ namespace WebServerAPI.Controllers
                                                             p.SOTHUTU.CANBO.MABP == _MaBP)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -194,15 +194,15 @@ namespace WebServerAPI.Controllers
                                                             p.TG <= end)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -241,15 +241,15 @@ namespace WebServerAPI.Controllers
                                                 .Count();
 
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (_MucDo)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(_MucDo, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
                 {
                     MaCB = Convert.ToInt32(item.MABP),
@@ -301,15 +301,15 @@ namespace WebServerAPI.Controllers
                                                 .Count();
 
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (_MucDo)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(_MucDo, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
                 {
                     MaCB = Convert.ToInt32(item.MABP),
@@ -351,16 +351,15 @@ namespace WebServerAPI.Controllers
                                                 .Count();
 
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-
-                int diem = 0;
-                switch (_MucDo)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(_MucDo, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
                 {
                     MaCB = Convert.ToInt32(item.MACB),
@@ -414,15 +413,15 @@ namespace WebServerAPI.Controllers
                                                 .Count();
 
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (_MucDo)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(_MucDo, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_ChiTiet_ BangDanhGiaMD = new KetQuaDanhGia_ChiTiet_()
                 {
                     MaCB = Convert.ToInt32(item.MACB),
@@ -461,15 +460,15 @@ namespace WebServerAPI.Controllers
                                                             p.SOTHUTU.MACB == _MaCB)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -519,15 +518,15 @@ namespace WebServerAPI.Controllers
                                                             p.TG <= end)
                                                 .Count();
                 double ty_le = Math.Round(((double)so_luong / (double)tong) * 100.00, 2);
-                int diem = 0;
-                switch (ma_muc_do)
-                {
-                    case 1: diem = 4; break;
-                    case 2: diem = 3; break;
-                    case 3: diem = 2; break;
-                    case 4: diem = 1; break;
-                }
-                diem *= so_luong;
+                int diem = LayDiem(ma_muc_do, so_luong);
+                //switch (ma_muc_do)
+                //{
+                //    case 1: diem = 4; break;
+                //    case 2: diem = 3; break;
+                //    case 3: diem = 2; break;
+                //    case 4: diem = 1; break;
+                //}
+                //diem *= so_luong;
                 KetQuaDanhGia_Table_ BangDanhGiaMD = new KetQuaDanhGia_Table_()
                 {
                     MucDo = ma_muc_do,
@@ -802,6 +801,18 @@ namespace WebServerAPI.Controllers
                 listMD.Add(md);
             }
             return listMD;
+        }
+        /// <summary>
+        /// Phương thức lấy điểm
+        /// </summary>
+        /// <param name="MaMucDo">Mã mức độ</param>
+        /// <returns></returns>
+        public int LayDiem(int MaMucDo, int soluong)
+        {
+            int diem = 0;
+            var ef = db.MUCDODANHGIAs.Where(p=>p.MUCDO == MaMucDo).FirstOrDefault();
+            if (ef != null) diem = (int)ef.DIEM;
+            return diem * soluong;
         }
     }
 }

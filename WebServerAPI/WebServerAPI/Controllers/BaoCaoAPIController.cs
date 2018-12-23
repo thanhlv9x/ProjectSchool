@@ -61,13 +61,13 @@ namespace WebServerAPI.Controllers
                         double diem = 0;
                         if (count > 0)
                         {
-                            diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                            diem = TinhDiem(count_RHL, count_HL, count_BT, count_KHL, count);
                         }
-                        string xeploai = "";
-                        if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
-                        else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
-                        else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
-                        else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
+                        string xeploai = XepLoai(diem);
+                        //if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                        //else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                        //else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                        //else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -152,13 +152,13 @@ namespace WebServerAPI.Controllers
                         double diem = 0;
                         if (count > 0)
                         {
-                            diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                            diem = TinhDiem(count_RHL, count_HL, count_BT, count_KHL, count);
                         }
-                        string xeploai = "";
-                        if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
-                        else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
-                        else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
-                        else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
+                        string xeploai = XepLoai(diem);
+                        //if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                        //else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                        //else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                        //else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                         KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                         {
                             MaBP = mabp,
@@ -204,13 +204,13 @@ namespace WebServerAPI.Controllers
                     double diem = 0;
                     if (count > 0)
                     {
-                        diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                        diem = TinhDiem(count_RHL, count_HL, count_BT, count_KHL, count);
                     }
-                    string xeploai = "";
-                    if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
-                    else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
-                    else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
-                    else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
+                    string xeploai = XepLoai(diem);
+                    //if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                    //else if (diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                    //else if (diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                    //else if (diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -289,13 +289,13 @@ namespace WebServerAPI.Controllers
                     double diem = 0;
                     if (count > 0)
                     {
-                        diem = Math.Round(((count_RHL * 4 + count_HL * 3 + count_BT * 2 + count_KHL) / (double)count) * 25, 2);
+                        diem = TinhDiem(count_RHL, count_HL, count_BT, count_KHL, count);
                     }
-                    string xeploai = "";
-                    if(diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
-                    else if(diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
-                    else if(diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
-                    else if(diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
+                    string xeploai = XepLoai(diem);
+                    //if (diem >= 90) { xeploai = "Hoàn thành xuất sắc nhiệm vụ"; }
+                    //else if(diem >= 70) { xeploai = "Hoàn thành tốt nhiệm vụ"; }
+                    //else if(diem >= 50) { xeploai = "Hoàn thành nhiệm vụ"; }
+                    //else if(diem < 50) { xeploai = "Không hoàn thành nhiệm vụ"; }
                     KetQuaDanhGia_BaoCao_ md = new KetQuaDanhGia_BaoCao_()
                     {
                         MaBP = _MaBP,
@@ -1224,6 +1224,60 @@ namespace WebServerAPI.Controllers
                 }
             }
             return listMD;
+        }
+        /// <summary>
+        /// Phương thức xếp loại
+        /// </summary>
+        /// <param name="Diem">Tham số điểm</param>
+        /// <returns></returns>
+        public string XepLoai(double Diem)
+        {
+            string xeploai = "Không hoàn thành nhiệm vụ";
+            var listEF = db.BANGXEPLOAIs.ToList();
+            foreach (var itemEF in listEF)
+            {
+                if (Diem >= itemEF.DIEM)
+                {
+                    xeploai = itemEF.XEPLOAI;
+                }
+            }
+            return xeploai;
+        }
+
+        /// <summary>
+        /// Phương thức tính điểm
+        /// </summary>
+        /// <param name="RHL">Số lượng đánh giá Rất hài lòng</param>
+        /// <param name="HL">Số lượng đánh giá Hài lòng</param>
+        /// <param name="BT">Số lượng đánh giá Bình thường</param>
+        /// <param name="KHL">Số lượng đánh giá Không hài lòng</param>
+        /// <param name="count">Số lượng tổng</param>
+        /// <returns></returns>
+        public double TinhDiem(int RHL, int HL, int BT, int KHL, int count)
+        {
+            double total = 0;
+            var listEF = db.MUCDODANHGIAs.ToList();
+            foreach (var itemEF in listEF)
+            {
+                if (itemEF.MUCDO == 1)
+                {
+                    total += RHL * (int)itemEF.DIEM;
+                }
+                else if (itemEF.MUCDO == 2)
+                {
+                    total += HL * (int)itemEF.DIEM;
+                }
+                else if (itemEF.MUCDO == 3)
+                {
+                    total += BT * (int)itemEF.DIEM;
+                }
+                else if (itemEF.MUCDO == 4)
+                {
+                    total += KHL * (int)itemEF.DIEM;
+                }
+            }
+            total = Math.Round((total / (double)count) * 25, 2);
+            return total;
         }
     }
 }
