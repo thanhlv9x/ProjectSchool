@@ -79,11 +79,11 @@ namespace GetNumberWebsite.Controllers
                         createFile(value, _TenBP);
                         convertTextToPDF();
                         printPDF(_PrinterName);
-                        var files = Directory.EnumerateFiles(@"C:\Windows\System32\config\systemprofile\Documents", "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".pdf"));
-                        foreach (var item in files)
-                        {
-                            System.IO.File.Delete(item);
-                        }
+                        //var files = Directory.EnumerateFiles(@"C:\Windows\System32\config\systemprofile\Documents", "*.*", SearchOption.AllDirectories).Where(s => s.EndsWith(".pdf"));
+                        //foreach (var item in files)
+                        //{
+                        //    System.IO.File.Delete(item);
+                        //}
                         return Json(value, JsonRequestBehavior.AllowGet);
                     }
                     else

@@ -11,6 +11,7 @@ namespace WebServerAPI.Models
         public string HoTen { get; set; }
         public Nullable<int> Vung { get; set; }
         public Nullable<int> Sdt { get; set; }
+        public Nullable<int> Email { get; set; }
     }
 
     public class MaVung
@@ -27,6 +28,7 @@ namespace WebServerAPI.Models
         public int Id { get; set; }
         public string HoTen { get; set; }
         public int MaVung { get; set; }
+        public string Email { get; set; }
         public Nullable<int> IdSdt { get; set; }
         public Nullable<int> Sdt { get; set; }
         public Nullable<bool> Bp1 { get; set; }

@@ -129,7 +129,8 @@ function createGridSMS() {
                     HoTen: { type: "string", validation: { required: { message: "Họ tên không được để trống" } } },
                     IdSdt: { type: "number", validation: { required: { message: "Mã số điện thoại không được để trống" } } },
                     MaVung: { field: "MaVung", type: "number", validation: { required: { message: "Mã vùng không được để trống" } }, defaultValue: -1 },
-                    Sdt: { type: "number", validation: { required: { message: "Số điện thoại không được để trống" } } },
+                    Sdt: { type: "string", validation: { required: { message: "Số điện thoại không được để trống" } } },
+                    Email: { type: "string", validation: { required: { message: "Email không được để trống" } } },
                     Bp1: { type: "boolean" },
                     Bp2: { type: "boolean" },
                     Bp3: { type: "boolean" },
@@ -165,6 +166,7 @@ function createGridSMS() {
             { field: "HoTen", title: "Họ tên", width: 100 },
             { field: "MaVung", title: "Mã vùng", width: 80, values: getMaVung() },
             { field: "Sdt", title: "Số điện thoại", width: 100 },
+            { field: "Email", title: "Email", width: 100 },
             {
                 field: "Bp1", title: "Bộ phận 1", width: 100,
                 template: function (dataItem) { return dataItem.Bp1 ? "Nhận" : "" },

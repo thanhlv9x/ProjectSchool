@@ -33,6 +33,7 @@ namespace WebServerAPI.Controllers
                         MaVung = itemEF.SODIENTHOAI.VUNG1.ID,
                         IdSdt = itemEF.SODIENTHOAI.ID,
                         Sdt = itemEF.SODIENTHOAI.SDT,
+                        Email = itemEF.SODIENTHOAI.EMAIL,
                         Bp1 = itemEF.BP1,
                         Bp2 = itemEF.BP2,
                         Bp3 = itemEF.BP3,
@@ -64,7 +65,8 @@ namespace WebServerAPI.Controllers
                 {
                     var ef = db.SODIENTHOAIs.Where(p => p.HOTEN == item.HoTen &&
                                                         p.SDT == item.Sdt &&
-                                                        p.VUNG == item.MaVung).FirstOrDefault();
+                                                        p.VUNG == item.MaVung &&
+                                                        p.EMAIL == item.Email).FirstOrDefault();
                     if (ef != null)
                     {
                         item.IdSdt = ef.ID;
@@ -76,6 +78,7 @@ namespace WebServerAPI.Controllers
                             HOTEN = item.HoTen,
                             SDT = item.Sdt,
                             VUNG = item.MaVung,
+                            EMAIL = item.Email
                         };
                         try
                         {
@@ -88,6 +91,7 @@ namespace WebServerAPI.Controllers
                     TINNHAN tn = new TINNHAN()
                     {
                         SDT = item.IdSdt,
+                        EMAIL = item.Email,
                         BP1 = item.Bp1,
                         BP2 = item.Bp2,
                         BP3 = item.Bp3,
@@ -133,7 +137,8 @@ namespace WebServerAPI.Controllers
                     var ef = db.TINNHANs.Where(p => p.ID == item.Id).FirstOrDefault();
                     var sdtEF = db.SODIENTHOAIs.Where(p => p.HOTEN == item.HoTen &&
                                                            p.SDT == item.Sdt &&
-                                                           p.VUNG == item.MaVung).FirstOrDefault();
+                                                           p.VUNG == item.MaVung &&
+                                                           p.EMAIL == item.Email).FirstOrDefault();
                     if (sdtEF != null)
                     {
                         item.IdSdt = sdtEF.ID;
@@ -145,6 +150,7 @@ namespace WebServerAPI.Controllers
                             HOTEN = item.HoTen,
                             SDT = item.Sdt,
                             VUNG = item.MaVung,
+                            EMAIL = item.Email
                         };
                         try
                         {
@@ -155,6 +161,7 @@ namespace WebServerAPI.Controllers
                         catch { }
                     }
                     ef.SDT = item.IdSdt;
+                    ef.EMAIL = item.Email;
                     ef.BP1 = item.Bp1;
                     ef.BP2 = item.Bp2;
                     ef.BP3 = item.Bp3;

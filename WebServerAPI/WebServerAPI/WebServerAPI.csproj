@@ -205,6 +205,7 @@
     <Compile Include="Controllers\KetQuaDanhGiaAPIController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MucDoDanhGiaController.cs" />
+    <Compile Include="Controllers\SendMail.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\SoQuayController.cs" />
     <Compile Include="Controllers\SoSanhAPIController.cs" />
@@ -488,6 +489,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\HtmlEmailTemplate\Template1.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

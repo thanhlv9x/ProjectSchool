@@ -24,6 +24,7 @@ namespace WebServerAPI.EF
         public string HOTEN { get; set; }
         public Nullable<int> VUNG { get; set; }
         public Nullable<int> SDT { get; set; }
+        public string EMAIL { get; set; }
     
         public virtual VUNG VUNG1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

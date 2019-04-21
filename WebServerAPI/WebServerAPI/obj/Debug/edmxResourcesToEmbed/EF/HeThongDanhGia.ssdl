@@ -84,6 +84,7 @@
     <Property Name="HOTEN" Type="nvarchar" MaxLength="50" />
     <Property Name="VUNG" Type="int" />
     <Property Name="SDT" Type="int" />
+    <Property Name="EMAIL" Type="char" MaxLength="255" />
   </EntityType>
   <EntityType Name="SOTHUTU">
     <Key>
@@ -132,6 +133,7 @@
     <Property Name="BP13" Type="bit" />
     <Property Name="BP14" Type="bit" />
     <Property Name="BP15" Type="bit" />
+    <Property Name="EMAIL" Type="char" MaxLength="255" />
   </EntityType>
   <EntityType Name="TRANGTHAIDANGNHAP">
     <Key>

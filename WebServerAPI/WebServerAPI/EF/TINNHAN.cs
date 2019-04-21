@@ -31,6 +31,7 @@ namespace WebServerAPI.EF
         public Nullable<bool> BP13 { get; set; }
         public Nullable<bool> BP14 { get; set; }
         public Nullable<bool> BP15 { get; set; }
+        public string EMAIL { get; set; }
     
         public virtual SODIENTHOAI SODIENTHOAI { get; set; }
     }
